@@ -1,0 +1,67 @@
+.vlTaggableInput{
+	display: flex;
+	justify-content: space-between;
+	align-items: stretch;
+	.vlTaggableContent{
+		display: flex;
+		flex: 1;
+		min-width: 0; //important for a Firefox flex bug where children were overflowing the parent		
+		flex-wrap: wrap;
+	}
+	.vlSingle{
+		padding: $form-control-padding;
+		>div{
+			@include ellipsis1();
+			i{
+				color: gainsboro;
+				cursor: pointer;
+			}
+			&.vlCustomLabel{ // to align x with customLabel, don't remove
+				display: flex;
+	    		align-items: center;
+	    	}
+		}
+	}
+	.vlTags{
+		padding-top: calc(#{$form-control-padding-t} - 0.1rem);
+		padding-bottom: calc(#{$form-control-padding-b} - 0.1rem);
+		padding-left: calc(#{$form-control-padding-l} - 0.25rem);
+		padding-right: calc(#{$form-control-padding-r} - 0.25rem);
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-end;
+		>div{
+			margin: 0.1rem;
+			@include tag($form-primary-color);
+			@include ellipsis1();
+		    padding: 0.1rem 0.5rem 0.1rem 0.2rem; //has to be after @include tag()
+			&.vlCustomLabel{ // to align x with customLabel, don't remove
+				display: flex;
+	    		align-items: center;
+	    	}
+		}
+	}
+}
+.vlDirtyField .vlTaggableInput{
+	.vlFormControl{
+		position: absolute;
+		opacity: 0;
+		width: 1px;
+		right: 0;
+	}
+}
+.vlFocusedField .vlTaggableInput{
+	.vlSingle{
+		display: none;
+	}
+	.vlFormControl{
+		position: initial;
+		opacity: 1;
+		width: 100%;
+	}
+}
+.vlFocusedField.vlDirtyField .vlTaggableInput{
+	.vlTags{
+		padding-bottom: 0;
+	}
+}

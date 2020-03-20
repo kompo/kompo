@@ -1,0 +1,30 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Vuravel
+@import 'vuravel-form/sass/bootstrap-style';
+@import 'vuravel-menu/sass/classic-style';
+@import 'vuravel-catalog/sass/catalog';
+
+
+@import "tailwindcss/base";
+h1 {
+	@apply text-3xl;
+}
+h2 {
+  	@apply text-2xl;
+}
+h3 {
+  	@apply text-xl;
+}
+h4 {
+  	@apply text-lg;
+}
+@import "tailwindcss/components";
+
+/*@import 'components';*/
+
+@import "tailwindcss/utilities";

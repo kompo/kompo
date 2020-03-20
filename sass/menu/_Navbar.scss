@@ -1,0 +1,15 @@
+.vl-nav{
+    display: flex;
+    flex-wrap: wrap; //this makes nav toggler work on mobile
+    justify-content: space-between;
+    align-items:stretch;
+    width: 100%;
+    &.vlFixed{
+        z-index: 100;
+    }
+}
+@include media-breakpoint-up(lg) {
+    .vl-nav{
+        flex-wrap: nowrap; //this makes nav toggler work on mobile
+    }
+}

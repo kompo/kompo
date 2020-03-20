@@ -1,0 +1,95 @@
+.vlAbsoluteInset{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+.vlFlexCenter{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.vlFlexCol{
+	display: flex;
+	flex-direction: column;
+}
+.vlP2{ padding: 0.5rem; }
+.vlCursorPointer{
+	cursor: pointer;
+}
+
+/* Display, Position */
+.vlFixed{
+	position: fixed;
+}
+.vlHidden{
+	display: none;
+}
+.vlBlock{
+	display: block;
+}
+.vlInlineBlock{
+	display: inline-block;
+}
+.vlInline{
+	display: inline;
+}
+.vlFlex{
+	display: flex;
+}
+.vlFlex1{
+	flex: 1;
+}
+.vlWFull{
+	width: 100%;
+}
+.vlJustifyCenter{
+	justify-content: center;
+}
+.vlJustifyEnd{
+	justify-content: flex-end;
+}
+.vlJustifyBetween{
+	justify-content: space-between;
+}
+.vlJustifyAround{
+	justify-content: space-around;
+}
+.vlAlignStart{
+	align-items: flex-start;
+}
+.vlAlignCenter{
+	align-items: center;
+}
+.vlAlignEnd{
+	align-items: flex-end;
+}
+.vlAlignStretch{
+	align-items: stretch;
+}
+.vlAlignBaseline{
+	align-items: baseline;
+}
+
+@include media-breakpoint-up(md) {
+	.vlAlignCenterMd{
+		align-items: center;
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	.vlFixedLg{
+		position: fixed;
+	}
+	.vlFlexLg{
+		display: flex;
+	}
+	.vlHiddenLg{
+		display: none;
+	}
+	.vlBlockLg{
+		display: block;
+	}
+}

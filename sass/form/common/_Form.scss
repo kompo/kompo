@@ -1,0 +1,13 @@
+.vlMargins{
+	margin-top: $form-row-margin-t;
+	margin-bottom: $form-row-margin-b;
+}
+
+.vlForm, .vlRows{ //to disable margin collapsing in div that are display:block
+	display: flex;
+	flex-direction: column;
+}
+
+.vlFormField{
+	position: relative;
+}

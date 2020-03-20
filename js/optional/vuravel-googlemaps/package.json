@@ -1,0 +1,22 @@
+{
+  "name": "vuravel-googlemaps",
+  "version": "1.0.0",
+  "description": "Vuravel Google Maps Places form components and mixins",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "google", "maps", "places", "api",
+    "markers", "vuravel", "multiple",
+    "vue", "laravel", "components",
+    "form", "forms", "style"    
+  ],
+  "author": "Seba Hmi <contact@vuravel.com> (https://vuravel.com)",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.5.7",
+    "vuravel-form": "^1.0.0",
+    "vue2-google-maps": "^0.10.5"
+  }
+}

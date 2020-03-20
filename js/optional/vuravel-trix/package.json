@@ -1,0 +1,22 @@
+{
+  "name": "vuravel-trix",
+  "version": "1.0.0",
+  "description": "Vuravel Lightweight Trix WYSIWYG Text Editor form components and mixins",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "trix", "wysiwyg", "editor", "text",
+    "basecamp", "vuravel", "lightweight",
+    "vue", "laravel", "components",
+    "form", "forms", "style"    
+  ],
+  "author": "Seba Hmi <contact@vuravel.com> (https://vuravel.com)",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.5.7",
+    "vuravel-form": "^1.0.0",
+    "trix": "^0.11.2"
+  }
+}

@@ -1,0 +1,19 @@
+import "@babel/polyfill"; //for IE..
+
+require('./bootstrap');
+
+window.Vue = require('vue');
+
+// Vuravel packages
+require('vuravel-dashboard')
+require('vuravel-ckeditor')
+require('vuravel-flatpickr')
+require('vuravel-googlemaps')
+require('vuravel-trix')
+
+require('vuravel-components')
+
+const files = require.context('./', true, /\.vue$/i)
+files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+
+const app = new Vue({ el: '#app' })

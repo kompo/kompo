@@ -1,0 +1,32 @@
+.vlImage{
+	.vlFormControl{
+	    height: 7.7rem;
+	    position: relative;
+
+	    input[type=file]{
+	    	opacity: 0; /* invisible but it's there! */
+		    width: 100%;
+		    height: 7.7rem;
+		    @extend .vlAbsoluteInset;
+		    cursor: pointer;
+		    //z-index: 5;
+	    }
+	}
+	&.vlDirtyField{
+		.vlFormControl{
+			height: auto;
+		}
+	}
+}
+.vlImageMsg{
+	@extend .vlAbsoluteInset, .vlFlexCenter;
+	line-height: 1.1rem;
+	color: $form-control-placeholder-color;
+    i{
+    	font-size: 2rem;
+    }
+    span{
+	    font-size: 90%;
+		font-weight: 700;
+	}
+}

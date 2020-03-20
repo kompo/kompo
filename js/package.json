@@ -1,0 +1,37 @@
+{
+  "name": "laravel-kompo",
+  "version": "1.0.0",
+  "description": "Laravel RAD components and mixins",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vue",
+    "laravel",
+    "components",
+    "form",
+    "menu",
+    "catalog",
+    "table",
+    "filter",
+    "sort",
+    "validation",
+    "style",
+    "menus",
+    "rad",
+    "map",
+    "file",
+    "upload",
+    "select",
+    "multiselect",
+    "input",
+    "form-controls",
+    "relationships"
+  ],
+  "author": "Seba Hmi <contact@vuravel.com> (https://vuravel.com)",
+  "license": "MIT",
+  "dependencies": {
+    "vue": "^2.5.7"
+  }
+}

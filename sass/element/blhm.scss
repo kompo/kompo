@@ -1,0 +1,41 @@
+$btn-depth: 1px !default;
+
+body, html {
+    height: 100%;
+    color: #434242;
+    @extend .mini-scroll;
+}
+
+a{
+	text-decoration: none;
+	color: inherit;
+	&:hover{
+		text-decoration: none;
+	}
+}
+
+.vlFieldErrors {
+	white-space: nowrap;
+}
+
+.vlModalHeader{
+	background-color: mix($primary, white, 30%);
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding: 1rem;
+	h1{
+        color: mix($primary, black, 50%);
+		font-size: 1.5rem;
+	}
+}
+
+.vlPaginationT{
+	margin-bottom: 0.5rem;
+}
+.vlPaginationB{
+	margin-top: 0.5rem;
+}
+
+.vlTags{
+	font-size: 90%;
+}

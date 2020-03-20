@@ -1,0 +1,67 @@
+
+.ck-rounded-corners .ck.ck-editor__top .ck-sticky-panel .ck-toolbar{
+	border: 0;
+	border-bottom: 1px solid $form-control-border-color;
+	background: transparent;
+	.ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
+	    max-width: 4rem;
+	}
+}
+.ck-content{
+	min-height: 5.5rem;
+	max-height: 80vh;
+}
+.ck-rounded-corners .ck.ck-editor__main .ck-content{
+	border: 0;
+	background: transparent;
+	ul{
+		padding-left: 2rem; 
+		list-style: disc outside none;
+	}
+	ol{
+		padding-left: 2rem; 
+		list-style: decimal;
+	}
+	a{
+		color: $primary;
+		cursor: pointer;
+	}
+	&.ck-editor__editable_inline>:first-child{
+		margin-top: $form-control-padding-t;
+	}
+	&.ck-editor__editable_inline>:last-child{
+		margin-bottom: $form-control-padding-b;
+	}
+	&.ck-focused{
+		border: 0;
+		box-shadow: none;	
+	}
+}
+
+/* Fixing bad CKEditor CSS, bugs */
+
+.ck.ck-toolbar__items>:last-child	{ //fixing stupid tooltip overflowing...
+	.ck.ck-tooltip{
+		right: 50%;left: initial;
+		.ck-tooltip__text{
+			right: -40%;left: initial;
+		}
+	}
+}
+
+.ck.ck.ck-balloon-panel{
+	z-index: 3000; //for links balloon in editor
+}
+
+svg.ck.ck-icon{
+	will-change: auto; //fixing svgs appearing above than z-indexes of 1000...
+}
+
+//more stupid fixes. This is the tooltip when toolbar too narrow to contain all buttons
+.ck.ck-tooltip.ck-tooltip_s{
+	right: 0;
+}
+.ck.ck-tooltip .ck.ck-tooltip__text{
+	right: 0; position: absolute;
+	left: initial;
+}

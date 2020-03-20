@@ -1,0 +1,8 @@
+.vl-footer{
+	>.vl-nav-item{
+		border-bottom: $nav-item-border;
+		&:hover,&.active{
+			border-bottom: $nav-item-border-hover;
+		}
+	}
+}
