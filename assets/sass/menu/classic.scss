@@ -1,0 +1,11 @@
+@import 'minimal';
+
+$nav-item-border: 3px solid transparent !default;
+$nav-item-border-hover: 3px solid $primary !default;
+
+@import 'classic/Navbar';
+@import 'classic/Footer';
+@import 'classic/Sidebar';
+@import 'classic/NavItem';
+@import 'classic/Dropdown';
+@import 'classic/Menu';

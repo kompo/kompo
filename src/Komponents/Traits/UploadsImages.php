@@ -13,7 +13,7 @@ trait UploadsImages
      *
      * @param     string   $height  The height in rem, px, %...
      *
-     * @return     self
+     * @return self
      */
     public function thumbHeight($height)
     {
@@ -51,7 +51,7 @@ trait UploadsImages
     /**
      * By default, the image component resizes the image to a web-friendly format with a maximum of 2000px width. To disable this feature, you may use this method.
      *
-     * @return     self
+     * @return self
      */
     public function dontOptimzeForWeb()
     {
@@ -62,9 +62,9 @@ trait UploadsImages
     /**
      * To also add a 300px wide thumbnail of the image, you may chain this method. 
      * The thumbnail will be stored in the same folder as the main image and will have '_thumb' appended to it's filename.
-     * There's also a vuravel helper `assetThumb()` available to easily display it. It works exactly the same as Laravel's `asset()` helper function except it targets the filename with '_thumb'.
+     * There's also a kompo helper `assetThumb()` available to easily display it. It works exactly the same as Laravel's `asset()` helper function except it targets the filename with '_thumb'.
      *
-     * @return     self  ( description_of_the_return_value )
+     * @return self
      */
     public function withThumbnail()
     {

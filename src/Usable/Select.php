@@ -3,17 +3,16 @@
 namespace Kompo;
 
 use Closure;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Kompo\Card;
 use Kompo\Eloquent\ModelManager;
 use Kompo\Komponents\Field;
-use Vuravel\Catalog\Card;
-use Illuminate\Database\Eloquent\Model;
+use Kompo\Routing\RouteFinder;
 
 class Select extends Field
 {
     public $component = 'Select';
-
-    const DB_OPTIONS_ROUTE = 'vuravel-form.select-ajax-options';
 
     const NO_OPTIONS_FOUND = 'No results found';
 
@@ -43,10 +42,7 @@ class Select extends Field
 
     protected function setValueForFront($value)
     {
-        if(!$value)
-            return;
-
-        $this->value = ($key = $this->valueKeyName($value)) ? $value->{$key} : $value;
+        $this->value = !$value ? null : (($key = $this->valueKeyName($value)) ? $value->{$key} : $value);
     }
 
     protected function valueKeyName($value)
@@ -86,44 +82,48 @@ class Select extends Field
      */
     public static function transformOptions($options = [], $optionsKey = null, $optionsLabel = null)
     {
-
-        $results = [];
         foreach ($options as $key => $value) {
 
-            if($optionsLabel)
-            {
-                if($optionsLabel instanceof Card){
-                    $computedLabel = clone $optionsLabel;
-                    $components = collect($computedLabel->components)->map(function($mapping, $column) use($value) {
-                        return $mapping instanceof Closure && is_callable($mapping) ? 
-                                $mapping($value) : $value->{$mapping};
-                    })->all();
-                    $computedLabel->components = $components;
-
-                }elseif(is_array($optionsLabel)){
-                    $computedLabel = collect($optionsLabel)->map(function($mapping, $column) use($value) {
-                        return $mapping instanceof Closure && is_callable($mapping) ? 
-                                $mapping($value) : $value->{$mapping};
-                    });
-                }else{ //if string 
-                    $computedLabel = $value->{$optionsLabel};
-                }
-            }
-
-            array_push($results, [
-                'label' => $optionsLabel ? $computedLabel : $value, 
+            $results[] = [
+                'label' => $optionsLabel ? static::transformLabel($optionsLabel, $value) : $value, 
                 'value' => $optionsKey ? $value->{$optionsKey} : $key 
-            ]);
+            ];
         }
 
-        return $results;
+        return $results ?? [];
+    }
+
+    protected static function transformLabel($optionsLabel, $value)
+    {
+        if($optionsLabel instanceof Card){
+            $computedLabel = clone $optionsLabel;
+            $computedLabel->components = static::transformLabelKey($computedLabel->components, $value);
+            return $computedLabel;
+
+        }elseif(is_array($optionsLabel)){
+            return static::transformLabelKey($optionsLabel, $value);
+
+        }elseif($optionsLabel instanceof Closure && is_callable($optionsLabel)){
+            return $optionsLabel($value);
+
+        }else{ //if string 
+            return $value->{$optionsLabel};
+        }
+        
+    }
+
+    protected static function transformLabelKey($specsArray, $value)
+    {
+        return collect($specsArray)->map(function($mapping) use($value) {
+            return $mapping instanceof Closure && is_callable($mapping) ? $mapping($value) : $mapping;
+        })->all();
     }
 
 
     /**
      * A cleaner way, <u>when you are using Eloquent relationships</u>, is to use this method that does the query for you. You need to specify the value/label columns in the parameters. For example:
      * <php>Select::form('Pick the tags')
-     *    ->name('tags')  //<--Vuravel will know this is the Tag Model
+     *    ->name('tags')  //<-- Kompo will know this is the Tag Model
      *    ->optionsFrom('tag_id', 'tag_name') //<-- value / label convention</php>
      * When displaying a <b>CustomLabel</b>, `$labelColumns` accepts an array of <b>strings</b> or <b>Closures</b>:
      * <php>Select::form('Pick the tags')->name('tags')
@@ -133,7 +133,7 @@ class Select extends Field
      *    ]))</php>
      * 
      * @param  string  $keyColumn The key representing the value of the element saved in the DB.
-     * @param  string|array|Vuravel\Components\Card  $labelColumns Can be a simple string, an associative array of <b>strings</b> or <b>Closures</b> or a Card component.
+     * @param  string|array|Kompo\Card  $labelColumns Can be a simple string, an associative array of <b>strings</b> or <b>Closures</b> or a Card component.
      * @return self
      */
     public function optionsFrom($keyColumn, $labelColumns)
@@ -170,16 +170,15 @@ class Select extends Field
      * @param      integer  $minSearchLength  The minimum search length
      * @param      string   $methodName       The public method name
      *
-     * @return     self 
+     * @return self 
      */
     public function searchOptions($minSearchLength = 0, $methodName = null)
     {
-        $this->setAjaxOptionsRoute($methodName);
-        $this->data([
+        return RouteFinder::activateRoute($this)->data([
             'ajaxMinSearchLength' => $minSearchLength,
-            'enterMoreCharacters' => __(self::ENTER_MORE_CHARACTERS, ['min' => $minSearchLength])
+            'enterMoreCharacters' => __(self::ENTER_MORE_CHARACTERS, ['min' => $minSearchLength]),
+            'ajaxOptionsMethod' => $methodName ?: $this->inferAjaxOptionsMethod($methodName),
         ]);
-        return $this;
     }
 
     /**
@@ -209,23 +208,19 @@ class Select extends Field
      * @param      string  $otherFieldName  The other field's name.
      * @param      string|null  $methodName      The public method name
      *
-     * @return     self 
+     * @return self 
      */
     public function optionsFromField($otherFieldName, $methodName = null)
     {
-        $this->setAjaxOptionsRoute($methodName);
-        $this->data([
+        return RouteFinder::activateRoute($this)->data([
             'ajaxOptionsFromField' => $otherFieldName,
+            'ajaxOptionsMethod' => $methodName ?: $this->inferAjaxOptionsMethod($methodName),
         ]);
-        return $this;
     }
 
-    protected function setAjaxOptionsRoute($methodName = null)
+    protected function inferAjaxOptionsMethod($methodName = null)
     {
-        $this->data(['ajaxOptionsRoute' => route(self::DB_OPTIONS_ROUTE)]);
-        $this->data([
-            'ajaxOptionsMethod' => $methodName ?: ('search'.ucfirst(Str::camel($this->name)))
-        ]);
+        return 'search'.ucfirst(Str::camel($this->name));
     }
 
 }

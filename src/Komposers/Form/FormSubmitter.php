@@ -11,7 +11,7 @@ class FormSubmitter extends FormBooter
 { 
     public static function callCustomHandle($form)
     {
-        if(($method = request()->header('X-Vuravel-Handle')) && !method_exists($form, $method))
+        if(($method = request()->header('X-Kompo-Handle')) && !method_exists($form, $method))
             throw new FormMethodNotFoundException($method);
 
         $method = $method ?: 'handle';

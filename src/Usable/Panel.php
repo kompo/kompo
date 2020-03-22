@@ -18,7 +18,7 @@ class Panel extends Layout
      *
      * @param      string  $hidingId  The id of the element to be hidden.
      *
-     * @return     self   
+     * @return self   
      */
     public function hidesOnLoad($hideId)
     {

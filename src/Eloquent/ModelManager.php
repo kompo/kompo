@@ -2,22 +2,25 @@
 
 namespace Kompo\Eloquent;
 
+use BadMethodCallException;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany, HasOne, HasMany, MorphOne, MorphMany, MorphTo, MorphToMany};
 use Kompo\Exceptions\NotOneToOneRelationException;
 use Kompo\Exceptions\RelationNotFoundException;
-use Illuminate\Database\Eloquent\Relations\Relation;
 use Kompo\Form;
+use Kompo\Utilities\Arr;
 use RuntimeException;
-use BadMethodCallException;
 use Schema;
-use Illuminate\Database\Eloquent\Collection;
 
 class ModelManager
 {
     /**
      * Initialize or find the model (if komposer linked to a model).
      *
+     * @param Kompo\Komposer\Komposer $komposer
+     * @param Illuminate\Database\Eloquent\Model|null $model
      * @return void
      */
 	public static function fetchConfig($komposer, $model = null)
@@ -28,12 +31,19 @@ class ModelManager
         $komposer->model = $model instanceof Model ? $model : $model::findOrNew($komposer->modelKey());
         $komposer->modelKey($komposer->model()->getKey()); //set if it wasn't (ex: dynamic model set in created() phase)
 
-        $komposer->_kompo('columns', Schema::connection($komposer->model->connection)->getColumnListing($komposer->model->table));
-
         return $komposer->model;
 	}
 
-
+    /**
+     * { function_description }
+     *
+     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  string  $initialName
+     *
+     * @throws \Kompo\Exceptions\NotOneToOneRelationException  (description)
+     *
+     * @return array
+     */
     public static function parseFromFieldName($model, $initialName)
     {
         $name = explode('.', $initialName);
@@ -57,7 +67,8 @@ class ModelManager
      * Gets all the models that could be related.
      * This is used for Selects and works only with BelongsTo and BelongsToMany.
      *
-     * @param  string $relation
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param string $relation
      * 
      * @return \Illuminate\Database\Eloquent\Collection
      */
@@ -100,7 +111,9 @@ class ModelManager
     /**
      * Get the model's eloquent relation from a string.
      *
-     * @param  string $relationName
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param string $relationName
+     * 
      * @return Eloquent\Relationship|null
      */
     public static function findRelation($model, $relationName)
@@ -111,7 +124,9 @@ class ModelManager
     /**
      * Gets a related instance for a specific relation.
      *
-     * @param  string $relationName
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param string $relationName
+     * 
      * @return Eloquent\Relationship|null
      */
     public static function findOrFailRelated($model, $relationName)
@@ -122,8 +137,9 @@ class ModelManager
     /**
      * Gets the value according to the name and optional select columns.
      *
+     * @param Illuminate\Database\Eloquent\Model $model
      * @param  string $name
-     * @param  array $select
+     * 
      * @return mixed
      */
     public static function getValueFromDb($model, $name)
@@ -139,30 +155,30 @@ class ModelManager
     /**
      * Fill the model's attribute value according to the field's name.
      *
+     * @param Illuminate\Database\Eloquent\Model $model
      * @param  string $name
+     * 
      * @return boolean
      */
-    public static function fillAttribute($model, $name, $value, $extraAttrbutes = null)
+    public static function fillAttribute($model, $name, $value, $extraAttributes = null)
     {
         if(($relation = static::findRelation($model, $name)) && $relation instanceOf BelongsTo){
+
             $model->{$relation->getForeignKeyName()} = $value;
-            $belongsTo = $model->{$relation};
-            collect($extraAttrbutes)->each(function($val, $key) use($belongsTo){
-                $belongsTo->{$key} = $val;
-            });
-            $belongsTo->save();
+            static::fillExtraAttributes($model->{$name}, $extraAttributes, true);
+            $model->load($name); //reload fresh belongsTo
+
         }else{
             $model->{$name} = $value;
-            collect($extraAttrbutes)->each(function($val, $key) use($model){
-                $model->{$key} = $val;
-            });
+            static::fillExtraAttributes($model, $extraAttributes);
         }
     }
 
     /**
      * Saves the model with it's attributes to the DB.
      *
-     * @param  string $name
+     * @param Illuminate\Database\Eloquent\Model $model
+     * 
      * @return boolean
      */
     public static function saveAttributes($model)
@@ -178,37 +194,37 @@ class ModelManager
     /**
      * Fill the model's relations value according to the field's name.
      *
+     * @param Illuminate\Database\Eloquent\Model $model
      * @param  string $name
+     * 
      * @return boolean
      */
-    public static function fillRelation($model, $name, $value)
+    public static function saveAndLoadRelation($model, $name, $value, $extraAttributes = null)
     {
         $relation = static::findOrFailRelation($model, $name);
 
         if($relation instanceOf HasMany || $relation instanceOf MorphMany){
 
+            $value = Arr::merge($value, $extraAttributes);
             static::saveMany($relation, $name, $value);
 
         }elseif($relation instanceOf HasOne || $relation instanceOf MorphOne){
 
+            $value = Arr::merge($value, $extraAttributes); //merges collections
             static::saveOne($relation, $name, $value);
 
-        }elseif ($relation instanceOf BelongsToMany) {
-            
-            //To review if Pivot has Author...
-            /*$relationIds = Arr::pluck($value, 'value');
-            $relationIds = array_combine($relationIds, array_fill(0, count($relationIds), ['user_id' => \Auth::user()->id]));*/
-            $relation->sync($value);
+        }elseif ($relation instanceOf BelongsToMany || $relation instanceOf MorphToMany){
 
-        }elseif ($relation instanceOf BelongsTo) {
-            
-            //just delete the old one
-            
-        }elseif($relation instanceOf MorphToMany){
+            if($value && $extraAttributes && count($extraAttributes))
+                $value = array_combine($value, array_fill(0, count($value), $extraAttributes));
 
             $relation->sync($value);
 
         }
+        //elseif ($relation instanceOf BelongsTo) { do nothing-- handled in attributes. 
+            
+
+        $model->load($name);
     }
 
 
@@ -226,7 +242,9 @@ class ModelManager
     /**
      * Get the model's eloquent relation or fail.
      *
+     * @param Illuminate\Database\Eloquent\Model $model
      * @param  string $relation
+     * 
      * @return Eloquent\Relationship|null
      */
     protected static function findOrFailRelation($model, $relation)
@@ -235,6 +253,23 @@ class ModelManager
             throw new RuntimeException("The relation {$relation} was not found on Model {$model}");
 
         return $relation;
+    }
+
+    /**
+     * Fill the desired additional attributes.
+     *
+     * @param Illuminate\Database\Eloquent\Model $model  The model
+     * @param array $extraAttributes  The extra attributes
+     */
+    protected static function fillExtraAttributes($model, $extraAttributes, $saveIfBelongsTo = false)
+    {
+        if($model && $extraAttributes && count($extraAttributes)){
+            collect($extraAttributes)->each(function($val, $key) use($model){
+                $model->{$key} = $val;
+            });
+            if($saveIfBelongsTo)
+                $model->save();
+        }
     }
 
 

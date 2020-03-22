@@ -8,8 +8,8 @@ class RouterMixin
 {
     public function kompo()
     {
-        return function ($uri, $objClass) {
-            return Router::registerRoute($this, $uri, $objClass);
+        return function ($uri, $komposerClass) {
+            return Router::registerRoute($this, $uri, $komposerClass);
         };
     }
 

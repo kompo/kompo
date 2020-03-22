@@ -63,7 +63,7 @@ trait HasClasses
      *
      * @param      string  $col    The col attribute. Ex: `col-8`.
      *
-     * @return     self 
+     * @return self 
      */
     public function col($col)
     {

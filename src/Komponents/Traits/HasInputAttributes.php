@@ -9,7 +9,7 @@ trait HasInputAttributes
      *
      * @param      string  $type   The HTML input type attribute
      *
-     * @return     self  
+     * @return self  
      */
     public function type($type = 'text') //user-shortcut only
     {
@@ -29,7 +29,7 @@ trait HasInputAttributes
      *
      * @param      number  $maxlength   The HTML input maxlength attribute
      *
-     * @return     self  
+     * @return self  
      */
     public function maxlength($maxlength)
     {
@@ -44,7 +44,7 @@ trait HasInputAttributes
      *
      * @param      number  $min   The HTML input min attribute
      *
-     * @return     self  
+     * @return self  
      */
     public function min($min)
     {
@@ -59,7 +59,7 @@ trait HasInputAttributes
      *
      * @param      number  $max   The HTML input max attribute
      *
-     * @return     self  
+     * @return self  
      */
     public function max($max)
     {
@@ -74,7 +74,7 @@ trait HasInputAttributes
      *
      * @param      number  $step   The HTML input step attribute
      *
-     * @return     self  
+     * @return self  
      */
     public function step($step)
     {
@@ -89,7 +89,7 @@ trait HasInputAttributes
      *
      * @param      string  $pattern   The HTML input pattern attribute
      *
-     * @return     self  
+     * @return self  
      */
     public function pattern($pattern)
     {

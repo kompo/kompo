@@ -7,7 +7,7 @@ trait VerticalAlignmentTrait {
      * Centers the content vertically in the columns on md screens only. 
      * <u>Note</u> This is the default setting, no need to set it initially. 
      *
-     * @return     self  
+     * @return self  
      */
     public function centerVertically()
     {
@@ -18,7 +18,7 @@ trait VerticalAlignmentTrait {
     /**
      * Aligns the items vertically to the top.
      *
-     * @return     self
+     * @return self
      */
     public function alignStart()
     {
@@ -29,7 +29,7 @@ trait VerticalAlignmentTrait {
     /**
      * Centers the items vertically.
      *
-     * @return     self
+     * @return self
      */
     public function alignCenter()
     {
@@ -40,7 +40,7 @@ trait VerticalAlignmentTrait {
     /**
      * Aligns the items vertically to the bottom.
      *
-     * @return     self 
+     * @return self 
      */
     public function alignEnd()
     {
@@ -51,7 +51,7 @@ trait VerticalAlignmentTrait {
     /**
      * Aligns the items according to the baseline.
      *
-     * @return     self
+     * @return self
      */
     public function alignBaseline()
     {
@@ -62,7 +62,7 @@ trait VerticalAlignmentTrait {
     /**
      * Stretches the items vertically.
      *
-     * @return     self
+     * @return self
      */
     public function alignStretch()
     {

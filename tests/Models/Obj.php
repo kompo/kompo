@@ -25,12 +25,12 @@ class Obj extends Model
 		return $this->belongsTo(User::class, 'user_id');
 	}
 
-	public function belongsToOrdered()
+	public function belongsToOrdered() //even though doesn't make sense, helps prove they don't mess with the relationship
 	{
 		return $this->belongsTo(User::class, 'user_id')->orderBy('name');
 	}
 
-	public function belongsToFiltered()
+	public function belongsToFiltered() //even though doesn't make sense, helps prove they don't mess with the relationship
 	{
 		return $this->belongsTo(User::class, 'user_id')->where('name', '<', 'm');
 	}

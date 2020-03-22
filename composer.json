@@ -1,6 +1,6 @@
 {
-    "name": "kompo/kompo",
-    "description": "Vue.js & Laravel FullStack Components - Rapid Application Development",
+    "name": "kompophp/kompo",
+    "description": "Laravel & Vue.js FullStack Components for Rapid Application Development",
     "keywords": [
         "laravel","php","vue","vuejs",
         "component","components",

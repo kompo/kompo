@@ -30,6 +30,21 @@ class Arr
 		throw new RuntimeException("The variable [{$variable}] could not be decoded.");
 	}
 
+	public static function count($variable)
+	{
+		if(!$variable)
+			return 0;
+
+		if(is_array($variable))
+			return count($variable);
+
+		if(static::isCollection($variable))
+			return $variable->count();
+
+		throw new RuntimeException("The variable [{$variable}] could not be counted.");
+
+	}
+
 	public static function merge($variable, $extraAttributes)
 	{
 		if(!$variable || !$extraAttributes || count($extraAttributes) == 0)

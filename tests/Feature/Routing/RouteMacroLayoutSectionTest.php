@@ -101,7 +101,7 @@ class RouteMacroLayoutSectionTest extends EnvironmentBoot
 	private function view_assertions($response, $expectedLayout, $expectedSection)
 	{
 		$response->assertViewIs('kompo::view')
-			->assertViewHas('object')
+			->assertViewHas('vueComponent')
 			->assertViewHas('layout', $expectedLayout)
 			->assertViewHas('section', $expectedSection);
 

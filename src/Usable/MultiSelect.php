@@ -19,9 +19,6 @@ class MultiSelect extends Select
 
     protected function setValueForFront($value)
     {
-        if(!$value)
-            return;
-
-        $this->value = ($key = $this->valueKeyName($value)) ? $value->pluck($key) : Arr::decode($value);
+        $this->value = !Arr::count($value) ? null : (($key = $this->valueKeyName($value)) ? $value->pluck($key) : Arr::decode($value));
     }
 }

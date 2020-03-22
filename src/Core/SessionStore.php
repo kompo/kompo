@@ -24,7 +24,7 @@ class SessionStore
 
     public static function getKompo()
     {
-        if(!array_key_exists($kompoId = request()->header('X-Vuravel-Id'), session('bootedElements')))
+        if(!array_key_exists($kompoId = request()->header('X-Kompo-Id'), session('bootedElements')))
             throw new AuthorizationUnavailableException($kompoId);
 
         return session('bootedElements')[$kompoId];

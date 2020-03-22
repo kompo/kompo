@@ -69,7 +69,7 @@ class MultiForm extends Field
      * @param      array|null  $parameters   The route parameters (optional).
      * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
      *
-     * @return     self    
+     * @return self    
      */
     public function formRoute($route, $parameters = null, $ajaxPayload = null)
     {

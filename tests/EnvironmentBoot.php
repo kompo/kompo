@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Permission;
 
 class EnvironmentBoot extends TestCase
 {
-    use ExtendsRoutingTrait, PerformsTestRequestsTrait, KompoUtilitiesTrait;
+    use ExtendsRoutingTrait, KompoTestRequestsTrait, KompoUtilitiesTrait;
 
     /**
      * Setup the test case.

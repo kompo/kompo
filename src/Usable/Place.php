@@ -54,7 +54,7 @@ class Place extends Field
      * Use this flag if your files table has this default schema: id, name, path, mime_type, size.
      * Note: the name of the field should correspond to the path column.
      *
-     * @return     self 
+     * @return self 
      */
     public function attributesToColumns()
     {

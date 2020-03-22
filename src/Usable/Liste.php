@@ -37,7 +37,7 @@ class Liste extends Input
      *
      * @param      string  $keyLabel  The key label for the json Object.
      *
-     * @return     self  
+     * @return self  
      */
     public function keyLabel($keyLabel)
     {

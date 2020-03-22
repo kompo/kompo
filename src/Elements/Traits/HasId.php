@@ -16,7 +16,7 @@ trait HasId
      *
      * @param      string  $id     The id attribute.
      *
-     * @return     self
+     * @return self
      */
     public function id($id)
     {

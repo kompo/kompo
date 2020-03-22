@@ -5,9 +5,8 @@
 @import 'variables';
 
 // Vuravel
-@import 'vuravel-form/sass/bootstrap-style';
-@import 'vuravel-menu/sass/classic-style';
-@import 'vuravel-catalog/sass/catalog';
+@import 'vue-kompo/sass/bootstrap-style';
+@import 'vue-kompo/sass/menu/classic';
 
 
 @import "tailwindcss/base";

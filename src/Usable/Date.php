@@ -14,7 +14,7 @@ class Date extends Field
 
         $this->icon('icon-calendar');
         
-        $this->dateFormat(config('vuravel.default_date_format') ?: 'Y-m-d');
+        $this->dateFormat(config('kompo.default_date_format') ?: 'Y-m-d');
     }
 
     /**
@@ -22,7 +22,7 @@ class Date extends Field
      *
      * @param      string  $dateFormat  The date format
      *
-     * @return     self   
+     * @return self   
      */
     public function dateFormat($dateFormat)
     {

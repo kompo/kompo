@@ -20,7 +20,7 @@ class Textarea extends Field
      *
      * @param      integer  $rows   The number of rows
      *
-     * @return     self    
+     * @return self    
      */
     public function rows($rows =  3)
     {

@@ -72,15 +72,15 @@
 	    {
 	    	@if($LeftSidebar) 
 
-				@if($LeftSidebar->isFixed())
+				@if($LeftSidebar->fixed)
 
-					var lst = {{ $LeftSidebar->isTop() ? 'true' : 'false' }}
+					var lst = {{ $LeftSidebar->top ? 'true' : 'false' }}
 					vlFixedSidebar(vlSidebarLContainer, lst)
 					vlFixedSidebar(vlSidebarLPanel, lst)
 
 				@else
 
-					@if(!$LeftSidebar->isTop() && optional($Navbar)->isFixed())
+					@if(!$LeftSidebar->top && optional($Navbar)->fixed )
 						vlSidebarLContainer.css('margin-top', height(vlNav))
 						vlSidebarLPanel.css('margin-top', height(vlNav))
 					@endif
@@ -91,15 +91,15 @@
 
 	    	@if($RightSidebar) 
 
-				@if($RightSidebar->isFixed())
+				@if($RightSidebar->fixed)
 
-					var rst = {{ $RightSidebar->isTop() ? 'true' : 'false' }}
+					var rst = {{ $RightSidebar->top ? 'true' : 'false' }}
 					vlFixedSidebar(vlSidebarRContainer, rst, true)
 					vlFixedSidebar(vlSidebarRPanel, rst, true)
 
 				@else
 
-					@if(!$RightSidebar->isTop() && optional($Navbar)->isFixed())
+					@if(!$RightSidebar->top && optional($Navbar)->fixed)
 						vlSidebarRContainer.css('margin-top', height(vlNav))
 						vlSidebarRPanel.css('margin-top', height(vlNav))
 					@endif
@@ -112,10 +112,10 @@
 	    function fixWrapperOnDesktop()
 	    {
 	    	if(!vlMobile){
-				@if(optional($LeftSidebar)->isFixed())
+				@if(optional($LeftSidebar)->fixed)
 					vlWrapper.css('margin-left', width(vlSidebarL))
 				@endif
-				@if(optional($RightSidebar)->isFixed())
+				@if(optional($RightSidebar)->fixed)
 					vlWrapper.css('margin-right', width(vlSidebarR))
 				@endif
 	    	}else{
@@ -164,7 +164,7 @@
 		if(height(vlContent) <= verticalSpace)
 			vlContent.css('min-height', verticalSpace)
 
-    	@if( optional($Navbar)->isFixed())
+    	@if( optional($Navbar)->fixed)
 
 			vlNav.addClass('vlFixed')
 				 //.css('z-index', 1) //because rotate of collapse icon gives it a higher z-index :/
@@ -172,13 +172,13 @@
 			vlContent.css('margin-top', height(vlNav))
 
 	    	if(!vlMobile){
-				@if(optional($LeftSidebar)->isTop() || optional($RightSidebar)->isTop())
+				@if(optional($LeftSidebar)->top || optional($RightSidebar)->top)
 					vlNav.css('width', 'auto') //to remove width: 100%
 				@endif
-				@if(optional($LeftSidebar)->isTop())
+				@if(optional($LeftSidebar)->top)
 					vlNav.css('left', width(vlSidebarLContainer)).css('right', 0)
 				@endif
-				@if(optional($RightSidebar)->isTop())
+				@if(optional($RightSidebar)->top)
 					vlNav.css('right', width(vlSidebarRContainer))
 				@endif
 	    	}else{

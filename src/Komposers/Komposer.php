@@ -14,9 +14,15 @@ abstract class Komposer extends Element
     protected $_kompo = [
         'parameters' => [],
         'store' => [],
-        'fields' => [],
-        'columns' => []
+        'fields' => []
     ];
+
+    /**
+     * The komposer's meta tags array that are displayed if the komposer is booted in a layout from route.
+     *
+     * @var array
+     */
+    protected $metaTags = [];
 
 	/**
 	 * This method is fired at the very beginning of the booting process (even before created).
@@ -30,7 +36,7 @@ abstract class Komposer extends Element
 	}
 
     /**
-     * Assign additional session data to the element. Or retrieve it if parameter is a string key.
+     * Assign additional session data to the komposer. Or retrieve it if parameter is a string key.
      *
      * @param  mixed  $data
      * @return mixed
@@ -69,6 +75,17 @@ abstract class Komposer extends Element
     public function prepareForSave($komposer)
     {
 
+    }
+
+    /**
+     * The komposer's meta tags array that are displayed if the komposer is booted in a layout from route.
+     * Can be overriden.
+     *
+     * @var array
+     */
+    public function getMetaTags()
+    {
+        return ($this->metaTags && count($this->metaTags)) ? $this->metaTags : null;
     }
     
 }

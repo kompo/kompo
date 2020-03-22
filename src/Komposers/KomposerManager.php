@@ -2,7 +2,7 @@
 
 namespace Kompo\Komposers;
 
-class KomposerManager
+class KomposerManager extends Komposer
 {
 	public static function created($komposer)
     {

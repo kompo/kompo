@@ -42,6 +42,7 @@ class CreateObjsTable extends Migration
             $table->string('model_type')->nullable();
             $table->integer('obj_id')->unsigned()->index();
             $table->integer('file_id')->unsigned()->index();
+            $table->unsignedInteger('order')->nullable();
             $table->timestamps();
         });
     }

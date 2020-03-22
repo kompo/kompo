@@ -21,7 +21,7 @@ trait HasConfig
     {
         //ugly code to avoid adding polluting methods to the class
 
-        if(in_array($key, ['modelKey', 'columns'])){ //not arrays: set if not found
+        if(in_array($key, ['modelKey'])){ //not arrays: set if not found
 
             if($data === null){
                 return $this->_kompo[$key] ?? null;

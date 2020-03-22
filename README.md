@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://vuravel.com" target="_blank">
-    <img src="https://vuravel.com/img/vuravel-logo-big.png" width="200" height="133" alt="Vuravel-logo" />
+  <a href="https://kompophp.com" target="_blank">
+    <img src="https://kompophp.com/img/vuravel-logo-big.png" width="200" height="133" alt="Kompo-logo" />
   </a>
 </p>
 <h6 align="center">
@@ -10,11 +10,11 @@
     <img src="https://img.shields.io/npm/l/vuravel-components.svg?style=flat-square" alt="License" />
 </h6>
 <h3 align="center">
-    <a href="https://vuravel.com" target="_blank">vuravel.com</a>
+    <a href="https://kompophp.com" target="_blank">kompophp.com</a>
     &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-    <a href="https://vuravel.com/docs" target="_blank">Documentation</a>
+    <a href="https://kompophp.com/docs" target="_blank">Documentation</a>
     &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-    <a href="https://vuravel.com/examples" target="_blank">Demos</a>
+    <a href="https://kompophp.com/examples" target="_blank">Demos</a>
     &nbsp;&nbsp;&bull;&nbsp;&nbsp;
     <a href="https://twitter.com/vuravel" target="_blank">Twitter</a>
 </h3>
@@ -23,7 +23,7 @@
 
 `kompo\kompo` is a library of components to help you write forms in a matter of seconds. No matter how complex the user input you need, you can find a component that handles that. You can also pick from different styles to suit your needs.
 
-> Refer to the the website for the most up-to-date information, demos and the complete detailed documentation on how to use this package: <a href="https://vuravel.com">vuravel.com</a>
+> Refer to the the website for the most up-to-date information, demos and the complete detailed documentation on how to use this package: <a href="https://kompophp.com">kompophp.com</a>
 
 
 ## REQUIREMENTS
@@ -100,12 +100,12 @@ You are now ready to start creating Vuravel components!
 
 ## DOCUMENTATION
 
-Please refer to the website's complete <a href="https://vuravel.com/docs" target="_blank">Documentation</a>
+Please refer to the website's complete <a href="https://kompophp.com/docs" target="_blank">Documentation</a>
 
 ## COMPONENTS API
 
-<a href="https://vuravel.com/api" target="_blank">API</a>
+<a href="https://kompophp.com/api" target="_blank">API</a>
 
 ## DEMOS
 
-<a href="https://vuravel.com/examples" target="_blank">Examples</a>
+<a href="https://kompophp.com/examples" target="_blank">Examples</a>

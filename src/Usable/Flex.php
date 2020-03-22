@@ -24,7 +24,7 @@ class Flex extends Layout
     /**
      * Justify the content of the columns to the start.
      *
-     * @return     self 
+     * @return self 
      */
     public function justifyStart()
     {
@@ -36,7 +36,7 @@ class Flex extends Layout
     /**
      * Justify the content of the columns to the center.
      *
-     * @return     self 
+     * @return self 
      */
     public function justifyCenter()
     {
@@ -48,7 +48,7 @@ class Flex extends Layout
     /**
      * Justify the content of the columns to the end.
      *
-     * @return     self 
+     * @return self 
      */
     public function justifyEnd()
     {
@@ -60,7 +60,7 @@ class Flex extends Layout
     /**
      * Justify the content of the columns with space between.
      *
-     * @return     self 
+     * @return self 
      */
     public function justifyBetween()
     {
@@ -72,7 +72,7 @@ class Flex extends Layout
     /**
      * Justify the content of the columns with space around.
      *
-     * @return     self 
+     * @return self 
      */
     public function justifyAround()
     {

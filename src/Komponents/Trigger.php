@@ -14,7 +14,7 @@ abstract class Trigger extends Komponent
      */
     public function prepareForDisplay($komposer)
     {
-        if(config('vuravel.smart_readonly_fields') && $this->data('submitsForm') && method_exists($komposer, 'authorize') && !$komposer->authorize())
+        if(config('kompo.smart_readonly_fields') && $this->data('submitsForm') && method_exists($komposer, 'authorize') && !$komposer->authorize())
             $this->displayNone();
     }
 

@@ -227,7 +227,7 @@ abstract class Field extends Komponent
      *
      * @param      array  $attributes  Constant columns/values pairs (associative array).
      *
-     * @return     self  
+     * @return self  
      */
     public function extraAttributes($attributes = [])
     {
@@ -280,7 +280,6 @@ abstract class Field extends Komponent
     /**
      * Sets the field value from the Eloquent instance.
      *
-     * @param Vuravel\Form\Builder|Model $record
      * @return void
      */
     protected function setValueFromDB($komposer)
@@ -312,7 +311,7 @@ abstract class Field extends Komponent
      */
     protected function checkSetReadonly($komposer)
     {
-        if(config('vuravel.smart_readonly_fields') && method_exists($komposer, 'authorize')){
+        if(config('kompo.smart_readonly_fields') && method_exists($komposer, 'authorize')){
 
             $authorization = $komposer->authorize();
 
@@ -328,8 +327,7 @@ abstract class Field extends Komponent
     /**
      * Gets the value from the request and fills the attributes of the eloquent record.
      *
-     * @param Illuminate\Http\Request $request
-     * @param Vuravel\Form\Eloquent $record
+     * @param Model $model
      * @return void
      */
     public function fillBeforeSave($request, $model)
@@ -362,7 +360,8 @@ abstract class Field extends Komponent
      * Gets the value from the request and parses it optionally (see methods overrides).
      *
      * @param Illuminate\Http\Request $request
-     * @param Vuravel\Form\Eloquent $record
+     * @param Illuminate\Database\Eloquent\Model $model
+     * 
      * @return void
      */
     public function fillAfterSave($request, $model)
@@ -385,9 +384,7 @@ abstract class Field extends Komponent
                 $this->setRelationFromRequest($name, $model) :
                 request()->input($name);
 
-            ModelManager::fillRelation($model, $name, Arr::merge($value, $this->extraAttributes));
-
-            $model->load($name);
+            ModelManager::saveAndLoadRelation($model, $name, $value, $this->extraAttributes);
         });
     }
 

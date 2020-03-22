@@ -47,10 +47,25 @@ class File extends Field
     }
 
     /**
+     * Saves the uploaded file or image to the specified disk. 
+     * By default, it is stored in the 'local' disk.
+     *
+     * @param string $disk   The disk instance key.
+     *
+     * @return self
+     */
+    public function disk($disk)
+    {
+        return $this->data([
+            'disk' => $disk
+        ]);
+    }
+
+    /**
      * Use this flag if your files table has this default schema: id, name, path, mime_type, size.
      * Note: the name of the field should correspond to the path column.
      *
-     * @return     self 
+     * @return self 
      */
     public function attributesToColumns()
     {
@@ -140,7 +155,8 @@ class File extends Field
     protected function fileToDB($file, $name, $model, $withId = false)
     {
         $modelPath = ModelManager::getStoragePath($model, $this->attributesToColumns ? $this->pathKey  : $name);
-        $file->store('public/'.$modelPath);
+        
+        $file->store('public/'.$modelPath, $this->data('disk') ?: 'local');
 
         return array_merge([
             $this->nameKey => $file->getClientOriginalName(),

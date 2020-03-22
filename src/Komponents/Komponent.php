@@ -26,18 +26,7 @@ abstract class Komponent extends Element
     }
 
     /**
-     * Another way to construct a Kompo\Komponent object
-     *
-     * @param  mixed $arguments
-     * @return void
-     */
-    public static function form(...$arguments)
-    {
-        return new static(...$arguments);
-    }
-
-    /**
-     * Initializes a vuravel component.
+     * Initializes a komponent.
      *
      * @param  string $label
      * @return void
@@ -120,7 +109,7 @@ abstract class Komponent extends Element
      *
      * @param      string  $id     The id of the element to be toggled.
      *
-     * @return     self 
+     * @return self 
      */
     public function togglesId($id)
     {

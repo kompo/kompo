@@ -8,6 +8,12 @@ class _RouteParametersCatalog extends Catalog
 {
 	public $id = 'obj-id';
 
+	protected $metaTags = [
+		'title' => 'meta-title',
+		'description' => 'meta description',
+		'keywords' => 'key,word'
+	];
+
 	public $store; //Had to expose it to see it in a route response
 	public $parameters; //I had to expose the parameters to see them in a route response
 

@@ -20,4 +20,16 @@ abstract class Catalog extends Komposer
             CatalogBooter::bootForDisplay($this, $store);
 	}
 
+
+
+    /**
+     * Shortcut method to render a Catalog into it's Vue component.
+     *
+     * @return string
+     */
+    public static function render($store = [])
+    {
+        return CatalogBooter::renderVueComonent(new static($store));
+    }
+
 }

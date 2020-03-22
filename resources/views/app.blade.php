@@ -2,21 +2,15 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <?php 
-/*
-$Navbar = Vuravel\Core\VlMenuBooter::boot($Navbar ?? false);
-$Footer = Vuravel\Core\VlMenuBooter::boot($Footer ?? false);
-$LeftSidebar = Vuravel\Core\VlMenuBooter::bootSidebar($LeftSidebar ?? false, 'vl-sidebar-l');
-$RightSidebar = Vuravel\Core\VlMenuBooter::bootSidebar($RightSidebar ?? false, 'vl-sidebar-r');
-*/
-$Navbar = false;
-$Footer = false;
-$LeftSidebar = false;
-$RightSidebar = false;
 
+$Navbar = $Navbar ?? false;
+$Footer = $Footer ?? false;
+$LeftSidebar = isset($LeftSidebar) ? $LeftSidebar->data(['menuType' => 'vl-sidebar-l']) : false;
+$RightSidebar = isset($RightSidebar) ? $RightSidebar->data(['menuType' => 'vl-sidebar-r']) : false;
 
 $VlHasAnySidebar = $LeftSidebar || $RightSidebar;
-$VlHasAnyTopSidebar = optional($LeftSidebar)->isTop() || optional($RightSidebar)->isTop();
-$VlFooterOutside = optional($Footer)->isOut();
+$VlHasAnyTopSidebar = optional($LeftSidebar)->top || optional($RightSidebar)->top;
+$VlFooterOutside = optional($Footer)->out;
 $VlCentered = ($VlHasAnySidebar || $Navbar) ? '' : (($neverCenter ?? false) ? '' : 'justify-center items-center');
 
 ?>

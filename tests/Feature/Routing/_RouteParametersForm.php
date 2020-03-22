@@ -10,6 +10,12 @@ class _RouteParametersForm extends Form
 {
 	public $id = 'obj-id';
 
+	protected $metaTags = [
+		'title' => 'meta-title',
+		'description' => 'meta description',
+		'keywords' => 'key,word'
+	];
+
 	public $model = Post::class; //otherwise modelKey is not set
 
 	public $modelKey; //Had to expose it to see it in a route response

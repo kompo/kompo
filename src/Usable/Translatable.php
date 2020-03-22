@@ -14,7 +14,7 @@ class Translatable extends Textarea
     {
         parent::vlInitialize($label);
 
-    	$this->locales = config('vuravel.locales');
+    	$this->locales = config('kompo.locales');
         $this->data([
         	'locales' => $this->locales,
         	'currentLocale' => session('locale')

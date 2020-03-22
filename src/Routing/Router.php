@@ -2,63 +2,60 @@
 
 namespace Kompo\Routing;
 
-use Kompo\Catalog;
-use Kompo\Core\SessionStore;
-use Kompo\Exceptions\NotBootableFromRouteException;
-use Kompo\Form;
-use Kompo\Komposers\Catalog\CatalogBooter;
-use Kompo\Komposers\Form\FormBooter;
-use Kompo\Komposers\Menu\MenuBooter;
-use Kompo\Menu;
-use Kompo\Routing\Traits\RouteFinding;
-use Kompo\Routing\Traits\RouteMaking;
+use Kompo\Routing\Dispatcher;
+use Kompo\Komposers\KomposerManager;
 
 class Router
 {
-    use RouteMaking, RouteFinding;
-    
-    public static function dispatchConnection()
+    public static function registerRoute($router, $uri, $komposerClass)
     {
-        $x = SessionStore::getKompo();
-        $manager = static::getManagerClass($x['kompoClass']);
-        return $manager::performAction($x);        
+        return ($layout = static::getMergedLayout($router)) ? 
+            static::getViewInLayout($router, $uri, $komposerClass, $layout) :
+            static::getAsJson($router, $uri, $komposerClass);
     }
 
-    public static function dispatchBooter($komposerClass)
+    /*********************** PRIVATE ***********************/
+
+    private static function getAsJson($router, $uri, $komposerClass)
     {
-        $manager = static::getManagerClass($komposerClass);
-        return $manager::bootForDisplay(
-            $komposerClass, 
-            request('id'), //TODO: change to header(X-Kompo-modelKey) one day
-            request('store') //TODO: change to header - think of something);
-        );
+        return $router->get($uri, function() use($komposerClass) {
+            return with(new Dispatcher($komposerClass))->bootFromRoute();
+        });
     }
 
-    public static function getManagerClass($komposerClass)
+    private static function getViewInLayout($router, $uri, $komposerClass, $layout)
     {
-        if(is_a($komposerClass, Form::class, true)){
-            return FormBooter::class;
-        }elseif (is_a($komposerClass, Catalog::class, true)) {
-            return CatalogBooter::class;
-        }elseif (is_a($komposerClass, Menu::class, true)) {
-            return MenuBooter::class;
-        }
-        throw new NotBootableFromRouteException($komposerClass);
+        //still need to add this
+        //$route->action['extends'] = $extends; //for smart turbolinks
+
+        return $router->get($uri, function () use ($layout, $router, $komposerClass) {
+
+            $dispatcher = new Dispatcher($komposerClass);
+            $komposer = $dispatcher->bootFromRoute();
+            $booter = $dispatcher->booter;
+
+            return view('kompo::view', [
+                'vueComponent' => $booter::renderVueComponent($komposer),
+                'metaTags' => $komposer->getMetaTags($komposer),
+                'layout' => $layout,
+                'section' => static::getLastSection($router)
+            ]);
+        });
     }
 
-
-    public static function getRouteParameters()
+    private static function getMergedLayout($router)
     {
-        return request()->route() ? request()->route()->parameters() : [];
-        //Other options:
+        $groupStack = $router->getGroupStack();
+        $lastLayouts = end($groupStack)['layout'] ?? false;
         
-        //Option: 1
-        //$request->route()->parametersWithoutNulls()
+        return is_array($lastLayouts) ? implode('.', $lastLayouts) : $lastLayouts; //concatenate layout with '.'
+
+    }
+
+    private static function getLastSection($router)
+    {
+        $sections = $router->current()->getAction('section') ?? 'content';
         
-        //Option: 2
-        //$names = $request->route()->parameterNames();
-        //return collect($request->route()->parameters())->filter(function($param, $key) use ($names){
-        //    return in_array($key, $names);
-        //})->all();
+        return is_array($sections) ? end($sections) : $sections; //get last section only
     }
 }

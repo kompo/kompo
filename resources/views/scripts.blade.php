@@ -22,9 +22,9 @@
 @endif
 
 <!-- additional global custom scripts included if available -->
-@includeIf('vuravel.scripts')
+@includeIf('kompo.scripts')
 
-<!-- vuravel internal scripts -->
+<!-- kompo internal scripts -->
 @include('kompo::layout-scripts')
 @include('kompo::keep-session-active-script')
 

@@ -8,7 +8,7 @@
 
 
 	function keepAlive(){
-		axios.get('{{ route('vuravel.keep-alive') }}')
+		axios.get('{{ route('kompo.keep-alive') }}')
 	}
 	--}}
 

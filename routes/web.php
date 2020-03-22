@@ -1,7 +1,7 @@
 <?php
 
-use Kompo\Routing\Router;
+use Kompo\Routing\Dispatcher;
 
 Route::middleware('web')->post('_kompo', function(){
-	return Router::dispatchConnection(request());
+	return Dispatcher::dispatchConnection();
 })->name('_kompo');

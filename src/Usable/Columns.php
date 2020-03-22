@@ -21,7 +21,7 @@ class Columns extends Layout
     /**
      * The content will remain in columns no matter the viewport - i.e. the columns will not rearrange, even on mobile.
      *
-     * @return     self
+     * @return self
      */
     public function notResponsive()
     {
@@ -33,7 +33,7 @@ class Columns extends Layout
      *
      * @param      string  $breakpoint  A breakpoint value: 'xs', 'sm', 'md', 'lg', 'xl'.
      *
-     * @return     self   
+     * @return self   
      */
     public function breakpoint($breakpoint = null)
     {
@@ -44,7 +44,7 @@ class Columns extends Layout
     /**
      * Removes the gutters (no padding between the columns).
      *
-     * @return     self 
+     * @return self 
      */
     public function noGutters()
     {

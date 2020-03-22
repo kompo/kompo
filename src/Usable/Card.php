@@ -21,7 +21,7 @@ class Card extends Layout
      *
      * @param      string  $component  The vue component name. 
      *
-     * @return     self  
+     * @return self  
      */
     public function component($component)
     {

@@ -16,7 +16,7 @@ class Time extends Field
 
         $this->icon('icon-clock');
 
-        $this->timeFormat(config('vuravel.default_time_format') ?: 'H:i');
+        $this->timeFormat(config('kompo.default_time_format') ?: 'H:i');
 
         $this->data([
             'enableTime' => true,
@@ -29,7 +29,7 @@ class Time extends Field
      *
      * @param      string  $timeFormat  The time format.
      *
-     * @return     self   
+     * @return self   
      */
     public function timeFormat($timeFormat = 'H:i')
     {
@@ -43,7 +43,7 @@ class Time extends Field
     /**
      * If your DB column is a DATETIME, use this method to convert it to that type.
      *
-     * @return     self 
+     * @return self 
      */
     public function savedAsDateTime()
     {

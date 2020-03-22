@@ -36,6 +36,18 @@ abstract class Element
     abstract public function prepareForSave($komposer);
 
     /**
+     * A helpful way to construct a Kompo object and chain it additional methods.
+     * ! Works for Komposers too - because ... handles variable # of arguments.
+     *
+     * @param  mixed $arguments
+     * @return void
+     */
+    public static function form(...$arguments)
+    {
+        return new static(...$arguments);
+    }
+
+    /**
      * Handle dynamic method calls into the method.
      *
      * @param  string  $method

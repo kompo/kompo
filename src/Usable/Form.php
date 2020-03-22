@@ -54,14 +54,7 @@ abstract class Form extends Komposer
 	public function __construct($modelKey = null, $store = [], $dontBoot = false)
 	{
 		if(!$dontBoot)
-        	FormBooter::bootForDisplay(
-                $this, 
-                $modelKey, 
-                $store,
-                Router::getRouteParameters(request()),
-                optional(request()->route())->uri(),
-                optional(request()->route())->methods()[0]
-            );
+        	FormBooter::bootForDisplay($this, $modelKey, $store);
 	}
 
     /**
@@ -105,6 +98,17 @@ abstract class Form extends Komposer
 
         if($komposer->noMargins ?? false)
             $this->noMargins();
+    }
+
+
+    /**
+     * Shortcut method to render a Form into it's Vue component.
+     *
+     * @return string
+     */
+    public static function render($modelKey = null, $store = [])
+    {
+        return FormBooter::renderVueComonent(new static($modelKey, $store));
     }
 
 }

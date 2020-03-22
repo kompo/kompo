@@ -23,7 +23,7 @@ class Json extends Liste
      *
      * @param      string  $valueLabel  The value label for the json Object.
      *
-     * @return     self  
+     * @return self  
      */
     public function valueLabel($valueLabel)
     {

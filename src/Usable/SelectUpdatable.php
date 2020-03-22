@@ -2,14 +2,11 @@
 
 namespace Kompo;
 
-use Kompo\Select;
-use Closure;
+use Kompo\Routing\RouteFinder;
 
 class SelectUpdatable extends Select
 {
     public $component = 'SelectUpdatable';
-
-    const DB_UPDATE_OPTIONS_ROUTE = 'vuravel-form.select-updated-options';
 
     public function mounted($form)
     {
@@ -31,7 +28,7 @@ class SelectUpdatable extends Select
      * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
      * @param      string|null  $label      The label of the link that loads the new form. Default is 'Add a new option'.
      *
-     * @return     self 
+     * @return self 
      */
     public function addsRelatedOption(
         $route, 
@@ -46,10 +43,9 @@ class SelectUpdatable extends Select
         if($ajaxPayload)
             $this->data(['ajaxPayload' => $ajaxPayload]);
 
-        return $this->data([
+        return RouteFinder::activateRoute($this)->data([
             'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
-            'updateOptionsLabel' => $label,
-            'updateOptionsRoute' => route(self::DB_UPDATE_OPTIONS_ROUTE)
+            'updateOptionsLabel' => $label
         ]);
     }
     

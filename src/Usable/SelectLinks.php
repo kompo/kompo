@@ -26,7 +26,7 @@ class SelectLinks extends Select
      *
      * @param      string  $class  The class
      *
-     * @return     self
+     * @return self
      */
     public function containerClass($class)
     {
@@ -40,7 +40,7 @@ class SelectLinks extends Select
      *
      * @param      string  $class  The class
      *
-     * @return     self
+     * @return self
      */
     public function optionClass($class)
     {
@@ -54,7 +54,7 @@ class SelectLinks extends Select
      *
      * @param      string  $class  The class
      *
-     * @return     self
+     * @return self
      */
     public function optionInnerClass($class)
     {

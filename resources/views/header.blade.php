@@ -30,7 +30,7 @@
 @endif
 
 <!-- additional global custom styles included if available -->
-@includeIf('vuravel.styles')
+@includeIf('kompo.styles')
 
 <!-- Header -->
 @stack('header')

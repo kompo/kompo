@@ -21,9 +21,8 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 	{
 		$this->prepareRoute(_RouteParametersForm::class);
 
-		$response = $this->make_route_assertions();
-
-		$this->assertEquals(1, $response['object']->modelKey);
+		$this->make_route_assertions('vl-form')
+			->assertSee('"modelKey":"1"');
 	}
 
     /** @test */
@@ -31,7 +30,7 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 	{
 		$this->prepareRoute(_RouteParametersCatalog::class);
 
-		$response = $this->make_route_assertions();
+		$this->make_route_assertions('vl-catalog');
 	}
 
     /** @test */
@@ -39,29 +38,35 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 	{
 		$this->prepareRoute(_RouteParametersMenu::class);
 
-		$response = $this->make_route_assertions();
+		$this->make_route_assertions('vl-menu');
 	}
 
 	/** ------------------ PRIVATE --------------------------- */ 
 
-	private function prepareRoute($objClass)
+	private function prepareRoute($komposerClass)
 	{
-		\Route::layout('kompo::app')->group(function() use($objClass) {
-			\Route::kompo('test/{id}', $objClass);
+		\Route::layout('kompo::app')->group(function() use($komposerClass) {
+			\Route::kompo('test/{id}', $komposerClass);
 		});
 	} 
 
-	private function make_route_assertions()
+	private function make_route_assertions($vueComponent)
 	{
-		$response = $this->get('test/1')
+		return $this->get('test/1')
 			->assertViewIs('kompo::view')
-			->assertViewHas('object')
+			->assertViewHas('vueComponent')
+			->assertViewHas('metaTags', [
+				'title' => 'meta-title',
+				'description' => 'meta description',
+				'keywords' => 'key,word'
+			])
 			->assertViewHas('layout', 'kompo::app')
-			->assertViewHas('section', 'content');
-
-		$this->assertEquals(1, $response['object']->parameters['id']);
-		$this->assertEquals('obj-id', $response['object']->id);
-
-		return $response;
+			->assertViewHas('section', 'content')
+			->assertSee($vueComponent.' :vcomponent=')
+			->assertSee('"id":"obj-id"')
+			->assertSee('"parameters":{"id":"1"}')
+			->assertSee('meta-title')
+			->assertSee('meta description')
+			->assertSee('key,word');
 	}
 }

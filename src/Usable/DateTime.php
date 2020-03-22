@@ -10,7 +10,7 @@ class DateTime extends Date
     {
         parent::vlInitialize($label);
 
-        $this->dateFormat(config('vuravel.default_datetime_format') ?: 'Y-m-d H:i');
+        $this->dateFormat(config('kompo.default_datetime_format') ?: 'Y-m-d H:i');
 
         $this->data([
             'enableTime' => true

@@ -1,30 +1,27 @@
 @extends($layout)
 
-{{--
-@if($object->hasMetaTags())
+@if($metaTags)
 	
 	@section('metaTags')
 
-		@if($object->metaTags('title'))
-			<title>{{ $object->metaTags('title') }}</title>
+		@if($metaTags['title'] ?? false)
+			<title>{{ $metaTags['title'] }}</title>
 		@endif
 
-		@if($object->metaTags('description'))
-			<meta name="description" content="{{ $object->metaTags('description') }}">
+		@if($metaTags['description'] ?? false)
+			<meta name="description" content="{{ $metaTags['description'] }}">
 		@endif
 
-		@if($object->metaTags('keywords'))
-			<meta name="keywords" content="{{ $object->metaTags('keywords') }}">
+		@if($metaTags['keywords'] ?? false)
+			<meta name="keywords" content="{{ $metaTags['keywords'] }}">
 		@endif
 
 	@endsection
 
 @endif
 
---}}
-
 @section($section)
 	<div class="container">
-		{{ $object }}
+		{!! $vueComponent !!}
 	</div>
 @endsection
