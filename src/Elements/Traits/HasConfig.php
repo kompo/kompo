@@ -21,7 +21,7 @@ trait HasConfig
     {
         //ugly code to avoid adding polluting methods to the class
 
-        if(in_array($key, ['modelKey'])){ //not arrays: set if not found
+        if(in_array($key, ['modelKey', 'currentPage'])){ //not arrays: set if not found
 
             if($data === null){
                 return $this->_kompo[$key] ?? null;
@@ -32,7 +32,7 @@ trait HasConfig
 
         }elseif($key === 'fields'){ //storing field Komponents: push
 
-            if(is_array($data)){
+            if($data){
                 array_push($this->_kompo[$key], $data);
                 return $this;
             }else{

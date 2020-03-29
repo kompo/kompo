@@ -75,14 +75,21 @@ class MultiForm extends Field
     {
         $this->setRoute($route, $parameters);
         $this->setRouteMethod('POST');
-
+        
         $this->data(['sessionTimeoutMessage' => __('sessionTimeoutMessage')]);
 
         if($ajaxPayload)
             $this->data(['ajaxPayload' => $ajaxPayload]);
 
-        if(!$this->formClass)
-            $this->formClass($this->getVuravelObjectFromRoute());
+        if(!$this->formClass){
+            $routeObject = RouteFinder::getRouteObject($route, $parameters);
+            if(!$routeObject)
+                throw new NoNamedRouteFoundException($route);
+
+            $func = new \ReflectionFunction($routeObject->action['uses']);
+            $func = new \ReflectionFunction($func->getStaticVariables()['object']);
+            $this->formClass($func->getStaticVariables()['kompoClass']);
+        }
 
         return $this;
     }

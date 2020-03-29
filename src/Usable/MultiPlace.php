@@ -2,7 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Eloquent\ModelManager;
+use Kompo\Database\ModelManager;
+use Kompo\Place;
 use LogicException;
 
 class MultiPlace extends Place

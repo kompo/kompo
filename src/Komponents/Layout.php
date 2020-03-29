@@ -22,13 +22,13 @@ abstract class Layout extends Komponent
     {        
         $this->vlInitialize( class_basename($this) );
 
-        $this->components = LayoutManager::collectComponents($args, $this)->filter()->values()->all();
+        $this->components = LayoutManager::collectFilteredComponents($args, $this)->values()->all();
     }
 
     /**
      * Prepares the child components of the layout.
      *
-     * @var Komposer
+     * @param Komposer
      */
     public function prepareForDisplay($komposer)
     {
@@ -38,11 +38,11 @@ abstract class Layout extends Komponent
     /**
      * Prepares the child components of the layout.
      *
-     * @var Komposer
+     * @param Komposer
      */
-    public function prepareForSave($komposer)
+    public function prepareForAction($komposer)
     {
-        $this->prepareFor('prepareForSave', $komposer);
+        $this->prepareFor('prepareForAction', $komposer);
     }
 
     /**

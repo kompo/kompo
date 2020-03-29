@@ -12,7 +12,7 @@ class Card extends Layout
     {
         $this->vlInitialize( LayoutManager::getNormalizedLabel($args, $this) );
 
-        $this->components = LayoutManager::collectComponents($args, $this)->filter()->all(); //no ->values() chained to preserve 'keys' (but Layout has it)
+        $this->components = LayoutManager::collectFilteredComponents($args, $this)->all(); //no ->values() chained to preserve 'keys' (but Layout has it)
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Kompo;
 
 use Kompo\Komponents\Traits\CKEditorTrait;
+use Kompo\Translatable;
 
 class TranslatableEditor extends Translatable
 {

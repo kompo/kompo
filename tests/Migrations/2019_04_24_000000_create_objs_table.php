@@ -16,9 +16,9 @@ class CreateObjsTable extends Migration
         Schema::create('objs', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('post_id')->unsigned()->nullable();
             $table->integer('model_id')->unsigned()->nullable();
             $table->string('model_type')->nullable();
-            $table->string('title')->nullable();
             $table->string('tag')->nullable();
             $table->string('tags')->nullable();
             $table->string('tags_cast')->nullable();
@@ -32,6 +32,18 @@ class CreateObjsTable extends Migration
             $table->text('places')->nullable();
             $table->text('places_cast')->nullable();
             $table->text('multiform')->nullable();
+
+            //for filters
+            $table->string('title')->nullable(); //empty fitler
+            $table->string('equal')->nullable();
+            $table->string('greater')->nullable(); //should work for >= too
+            $table->integer('lower')->nullable();   //should work for <= too
+            $table->string('like')->nullable();
+            $table->string('startswith')->nullable();
+            $table->string('endswith')->nullable();
+            $table->datetime('between')->nullable();
+            $table->string('in')->nullable();
+
             $table->timestamps();
         });
 
@@ -40,8 +52,8 @@ class CreateObjsTable extends Migration
             $table->increments('id');
             $table->integer('model_id')->unsigned()->nullable();
             $table->string('model_type')->nullable();
-            $table->integer('obj_id')->unsigned()->index();
-            $table->integer('file_id')->unsigned()->index();
+            $table->integer('obj_id')->unsigned()->index()->nullable();
+            $table->integer('file_id')->unsigned()->index()->nullable();
             $table->unsignedInteger('order')->nullable();
             $table->timestamps();
         });

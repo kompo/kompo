@@ -2,6 +2,8 @@
 
 namespace Kompo;
 
+use Kompo\Input;
+
 class Liste extends Input
 {	
     public $component = 'Liste';

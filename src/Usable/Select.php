@@ -4,11 +4,11 @@ namespace Kompo;
 
 use Closure;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use Kompo\Card;
-use Kompo\Eloquent\ModelManager;
+use Kompo\Database\EloquentField;
 use Kompo\Komponents\Field;
 use Kompo\Routing\RouteFinder;
+use Kompo\Core\Util;
 
 class Select extends Field
 {
@@ -22,6 +22,9 @@ class Select extends Field
 
     protected $optionsKey;
     protected $optionsLabel;
+    protected $morphToModel;
+
+    protected $retrieveMethod;
 
     protected $orderBy = [];
 
@@ -31,13 +34,43 @@ class Select extends Field
         $this->data(['noOptionsFound' => __(self::NO_OPTIONS_FOUND)]);
     }
 
-    public function prepareValueForFront($name, $value, $model)
+    public function prepareValueForFront($name, $value, $komposer)
     {
         //Load options...
         if($this->optionsKey && $this->optionsLabel)
-            $this->options( ModelManager::getRelatedCandidates($model, $name), $this->optionsKey, $this->optionsLabel );
+            $this->options( 
+                EloquentField::getRelatedCandidates($komposer->model, $name, $this->morphToModel),
+                $this->optionsKey, 
+                $this->optionsLabel 
+            );
+
+        if($this->data('ajaxOptions') && $value)
+            $this->retrieveOptionsFromValue($name, $value, $komposer);
 
         $this->setValueForFront($value);
+    }
+
+    protected function retrieveOptionsFromValue($name, $value, $komposer)
+    {
+        if($this->retrieveMethod && method_exists($komposer, $this->retrieveMethod)){
+            $this->options(Util::collect($value)->mapWithKeys(function($optionKey) use($komposer){
+                return $komposer->{$this->retrieveMethod}($optionKey)->all();
+            }));
+        }elseif($this->optionsKey && $this->optionsLabel){
+            $this->options(Util::collect($value), $this->optionsKey, $this->optionsLabel);
+        }else{
+            //Not recommended last case scenario. This will load all options which may not be desired.
+            //User should fix by using the above scenarios. Should I throw error or not?? No for now, worst case, the query will be slow.
+            $allOptions = $komposer->{$this->data('ajaxOptionsMethod')}('')->all();
+
+            $this->options(Util::collect($value)->mapWithKeys(function($optionKey) use($allOptions){
+
+                if($optionKey instanceOf Model)
+                    $optionKey = $optionKey->getKey();
+
+                return [$optionKey => $allOptions[$optionKey]];
+            }));
+        }
     }
 
     protected function setValueForFront($value)
@@ -134,12 +167,32 @@ class Select extends Field
      * 
      * @param  string  $keyColumn The key representing the value of the element saved in the DB.
      * @param  string|array|Kompo\Card  $labelColumns Can be a simple string, an associative array of <b>strings</b> or <b>Closures</b> or a Card component.
+     * @param string|null $morphToModel If MorphTo relation, we need to specify the model because it is unknown in the model's relationship.
+     * 
      * @return self
      */
-    public function optionsFrom($keyColumn, $labelColumns)
+    public function optionsFrom($keyColumn, $labelColumns, $morphToModel = null)
     {
         $this->optionsKey = $keyColumn;
         $this->optionsLabel = $labelColumns;
+        
+        $this->morphToModel = $morphToModel;
+
+        return $this;
+    }
+
+    /**
+     * If dealing with a MorphTo relation, we need to specify the model because it is unknown in the model's relationship.
+     * No need to use this method if already specified with optionsFrom().
+     *
+     * @param string $morphToModel  The morph to model class as stored in the DB.
+     *
+     * @return self
+     */
+    public function morphToModel($morphToModel)
+    {        
+        $this->morphToModel = $morphToModel;
+
         return $this;
     }
 
@@ -154,30 +207,35 @@ class Select extends Field
      *       //User can search and matched options will be loaded from the backend
      *       Select::form('Users')
      *          ->optionsFrom('id','name')
-     *          ->searchOptions(2, 'getMatchedUsers')  
+     *          ->searchOptions(2, 'searchUsers')  
      *    ]
      * }
      * 
      * //A new method is added to the Form class to send the matched options back.
-     * public function getMatchedUsers($value = '') //<-- The search value (can be empty)
+     * public function searchUsers($search = '') //<-- The search value (can be empty)
      * {
-     *     return Users::where('name', 'LIKE', '%'.$value.'%')
+     *     return Users::where('name', 'LIKE', '%'.$search.'%')
      *        ->pluck('name', 'id'); //return an associative array.
      * }
      * </php>
-     * If the `$methodName` parameter is left blank, the default method will be 'search{camel_case(field_name)}'. For example, for a field name of users, you may directly declare a searchUsers method in your Form Class to return the options.
+     * If the `$searchMethod` parameter is left blank, the default method will be 'search{ucfirst(field_name)}'. 
+     * For example, for a field name of users, you may directly declare a searchUsers method in your Form Class to return the options.
      *
      * @param      integer  $minSearchLength  The minimum search length
-     * @param      string   $methodName       The public method name
+     * @param      string   $searchMethod     The method to search the options from the AJAX request.
+     * @param      string|null   $retrieveMethod   (optional) The method to convert a DB value into an option on display.
      *
      * @return self 
      */
-    public function searchOptions($minSearchLength = 0, $methodName = null)
+    public function searchOptions($minSearchLength = 0, $searchMethod = null, $retrieveMethod = null)
     {
+        $this->retrieveMethod = $retrieveMethod ?: $this->inferOptionsMethod('retrieve', $retrieveMethod);
+
         return RouteFinder::activateRoute($this)->data([
+            'ajaxOptions' => true,
             'ajaxMinSearchLength' => $minSearchLength,
             'enterMoreCharacters' => __(self::ENTER_MORE_CHARACTERS, ['min' => $minSearchLength]),
-            'ajaxOptionsMethod' => $methodName ?: $this->inferAjaxOptionsMethod($methodName),
+            'ajaxOptionsMethod' => $searchMethod ?: $this->inferOptionsMethod('search', $searchMethod),
         ]);
     }
 
@@ -203,24 +261,30 @@ class Select extends Field
      *       ->pluck('tag_name', 'tag_id'); //return an associative array.
      * }
      * </php>
-     * If the `$methodName` parameter is left blank, the default method will be 'search{camel_case(field_name)}'. For example, for a field name of first_name, you may directly declare a searchFirstName method in your Form Class to return the options.
+     * If the `$searchMethod` parameter is left blank, the default method will be 'search{ucfirst(field_name)}'. 
+     * For example, for a field name of first_name, you may directly declare a searchFirstName method in your Form Class to return the options.
      * 
      * @param      string  $otherFieldName  The other field's name.
-     * @param      string|null  $methodName      The public method name
+     * @param      string|null  $searchMethod      The public method name
+     * @param      string   $retrieveMethod   The method to convert a DB value into an option on display.
      *
      * @return self 
      */
-    public function optionsFromField($otherFieldName, $methodName = null)
+    public function optionsFromField($otherFieldName, $searchMethod = null, $retrieveMethod = null)
     {
+        $this->retrieveMethod = $searchMethod ?: $this->inferOptionsMethod('search', $searchMethod);
+
         return RouteFinder::activateRoute($this)->data([
+            'ajaxOptions' => true,
             'ajaxOptionsFromField' => $otherFieldName,
-            'ajaxOptionsMethod' => $methodName ?: $this->inferAjaxOptionsMethod($methodName),
+            'ajaxOptionsMethod' => $this->retrieveMethod
         ]);
     }
 
-    protected function inferAjaxOptionsMethod($methodName = null)
+    protected function inferOptionsMethod($step = 'search', $methodName = null)
     {
-        return 'search'.ucfirst(Str::camel($this->name));
+        $cleanName = array_map('ucfirst', explode('.', $this->name));
+        return $step.implode('', $cleanName);
     }
 
 }

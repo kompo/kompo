@@ -45,7 +45,7 @@ export default {
     },
     data: () => ({
         currentPage: 1,
-        vuravelSort: '',
+        currentSort: '',
         filters: [],
         cards: [],
         pagination: null,
@@ -111,7 +111,7 @@ export default {
     },
     methods: {
         getCards(catalog){ return this.getPagination(catalog).data },
-        getPagination(catalog){ return catalog.paginator.pagination },
+        getPagination(catalog){ return catalog.query },
         filtersAttributes(placement){
             return {
                 filters: this.filters[placement.toLowerCase()],
@@ -128,7 +128,6 @@ export default {
             for ( var key in jsonFormData ) {
                 formData.append(key, jsonFormData[key])
             }
-            formData.append('vuravelSort', this.vuravelSort)
             return formData
         },
         refreshItem(index){
@@ -152,7 +151,8 @@ export default {
                 data: this.preparedFormData(),
                 headers: {
                     'X-Kompo-Id': this.$_elementId(),
-                    'X-Kompo-Page': this.currentPage
+                    'X-Kompo-Page': this.currentPage,
+                    'X-Kompo-Sort': this.currentSort
                 }
             }).then(r => {
                 this.$_state({ loading: false })
@@ -182,7 +182,7 @@ export default {
                 this.browseCatalog()
             })
             this.$_vlOn('vlSort'+this.$_elementId(), (sortValue, emitterId) => {
-                this.vuravelSort = sortValue == this.vuravelSort ? '' : sortValue
+                this.currentSort = sortValue == this.currentSort ? '' : sortValue
                 this.currentPage = 1
                 this.$_resetSort(emitterId)
                 this.browseCatalog()

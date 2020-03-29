@@ -3,6 +3,7 @@
 namespace Kompo;
 
 use Kompo\Komponents\Traits\UploadsImages;
+use Kompo\MultiFile;
 
 class MultiImage extends MultiFile
 {

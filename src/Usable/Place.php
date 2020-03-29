@@ -2,9 +2,9 @@
 
 namespace Kompo;
 
-use Kompo\Eloquent\ModelManager;
+use Kompo\Database\ModelManager;
 use Kompo\Komponents\Field;
-use Kompo\Utilities\Arr;
+use Kompo\Core\Util;
 
 class Place extends Field
 {
@@ -138,7 +138,7 @@ class Place extends Field
 
     protected function placeToDB($place)
     {
-    	$place = Arr::decode($place);
+    	$place = Util::decode($place);
 
     	if($address_components = $place['address_components']){
 	    	$result = [];

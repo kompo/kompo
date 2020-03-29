@@ -16,9 +16,9 @@ class Obj extends Model
 		'places_cast' => 'array'
 	];
 
-	/********************************************************************************************************* 
-	 * ********************* BELONGS *************************************************************************
-	 * ******************************************************************************************************/
+	/**************************************************************** 
+	 ************** BELONGS *****************************************
+	 ***************************************************************/
 
 	public function belongsToPlain() //could'nt use belongsTo because reserved
 	{
@@ -50,9 +50,9 @@ class Obj extends Model
 		return $this->belongsToMany(File::class)->where('name', '<', 'm');
 	}
 
-	/********************************************************************************************************* 
-	 * ********************* HAS *************************************************************************
-	 * ******************************************************************************************************/
+	/************************************************************** 
+	 ********************* HAS ************************************
+	 *************************************************************/
 
 	public function hasOnePlain()
 	{
@@ -116,9 +116,9 @@ class Obj extends Model
 
 
 
-	/********************************************************************************************************* 
-	 * ********************* Morphs *************************************************************************
-	 * ******************************************************************************************************/
+	/**************************************************************** 
+	 ****** MorphsOne/Many and inverse MorphTo **********************
+	 ***************************************************************/
 
 	public function morphOnePlain()
 	{
@@ -180,41 +180,60 @@ class Obj extends Model
 		return $this->morphMany(Place::class, 'model')->where('order', 1);
 	}
 
-
-
-	/********************************************************************************************************* 
-	 * ********************* MORPHS TO *************************************************************************
-	 * ******************************************************************************************************/
-	/******** BELOW Morphs was put on hold for Selects. To load the options, we need to know the Model they relate to, which is not known in advance in morphs... ***/
-
+	//For morphTo, to load the options, we need to know the Model they relate to...
 	public function morphToPlain()
 	{
-		return $this->morphTo('model');
+		return $this->morphTo(null, 'model_type', 'model_id');
 	}
+
+	//public function morphToPlain(){ return $this->morphTo('model'); } 
+	//NOTE: this is wrong, it assigns the relations in ->model instead of ->morphToPlain!! 
 
 	public function morphToOrdered()
 	{
-		return $this->morphTo('model')->orderBy('name');
+		return $this->morphTo(null, 'model_type', 'model_id')->orderBy('name');
 	}
 
 	public function morphToFiltered()
 	{
-		return $this->morphTo('model')->where('name', '<', 'm');
+		return $this->morphTo(null, 'model_type', 'model_id')->where('name', '<', 'm');
 	}
+
+
+
+	/***************************************************************************************************** 
+	 ************* MANY to MANY MORPHS (MorphToMany vs MorphedByMany) ************************************
+	 ****************************************************************************************************/
+
 
 	public function morphToManyPlain()
 	{
-		return $this->morphToMany('model');
+		return $this->morphToMany(File::class, 'model', 'file_obj'); //file_id links to file
 	}
 
 	public function morphToManyOrdered()
 	{
-		return $this->morphToMany('model')->orderBy('name');
+		return $this->morphToMany(File::class, 'model', 'file_obj')->orderBy('name'); //file_id links to file
 	}
 
 	public function morphToManyFiltered()
 	{
-		return $this->morphToMany('model')->where('name', '<', 'm');
+		return $this->morphToMany(File::class, 'model', 'file_obj')->where('name', '<', 'm'); //file_id links to file
+	}
+
+	public function morphedByManyPlain()
+	{
+		return $this->morphedByMany(File::class, 'model', 'file_obj'); //obj_id is the link here
+	}
+
+	public function morphedByManyOrdered()
+	{
+		return $this->morphedByMany(File::class, 'model', 'file_obj')->orderBy('name'); //obj_id is the link here
+	}
+
+	public function morphedByManyFiltered()
+	{
+		return $this->morphedByMany(File::class, 'model', 'file_obj')->where('name', '<', 'm'); //obj_id is the link here
 	}
 
 }

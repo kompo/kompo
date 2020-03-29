@@ -2,7 +2,7 @@
 
 namespace Kompo\Komposers\Form;
 
-use Kompo\Eloquent\ModelManager;
+use Kompo\Komposers\Form\FormBooter;
 
 trait HasModel
 {
@@ -24,7 +24,7 @@ trait HasModel
      */
     public function model($model = null) //the model can also be set dynamically in the created phase
     {
-        return $model ? ModelManager::fetchConfig($this, $model) : $this->model;
+        return $model ? FormBooter::setModel($this, $model) : $this->model;
     }
 
 }

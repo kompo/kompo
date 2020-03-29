@@ -3,62 +3,42 @@ namespace Kompo\Komposers\Form;
 
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\ValidationManager;
-use Kompo\Eloquent\ModelManager;
+use Kompo\Database\ModelManager;
 use Kompo\Exceptions\FormMethodNotFoundException;
 use Kompo\Komposers\KomposerManager;
 
 class FormSubmitter extends FormBooter
-{ 
-    public static function callCustomHandle($form)
+{
+    protected static function prepareForSubmit($form)
     {
-        if(($method = request()->header('X-Kompo-Handle')) && !method_exists($form, $method))
-            throw new FormMethodNotFoundException($method);
-
-        $method = $method ?: 'handle';
-
         AuthorizationGuard::checkBoot($form);
+
+        AuthorizationGuard::checkPreventSubmit($form);
 
         KomposerManager::created($form);
 
-        static::prepareComponentsForSave($form);
+        KomposerManager::prepareComponentsForAction($form, 'components'); //mainly to retrieve rules from fields
 
         ValidationManager::addRulesToKomposer($form->rules(), $form);
 
         AuthorizationGuard::mainGate($form);
+    } 
+
+    public static function callCustomHandle($form)
+    {
+        if(($method = request()->header('X-Kompo-Handle') ?: 'handle') && !method_exists($form, $method))
+            throw new FormMethodNotFoundException($method);
+
+        static::prepareForSubmit($form);
 
         return $form->{$method}(request());
-
     }
 
     public static function eloquentSave($form)
     {
-        AuthorizationGuard::checkBoot($form);
-
-        KomposerManager::created($form);
-
-        static::prepareComponentsForSave($form);
-
-        ValidationManager::addRulesToKomposer($form->rules(), $form);
-
-        AuthorizationGuard::mainGate($form);
+        static::prepareForSubmit($form);
 
         return static::saveModel($form, request()); //TODO remove  request()
-    }
-
-    /**
-     * Prepare the Form's components.
-     *
-     * @return void
-     */
-    protected static function prepareComponentsForSave($komposer, $includes = null)
-    {
-        static::collectFrom($komposer, $includes)->filter()->each( function($component) use ($komposer) {
-
-            $component->prepareForSave($komposer);
-
-            $component->mountedHook($komposer);
-
-        }); //components are pushed in fields
     }
 
     /**
@@ -68,7 +48,7 @@ class FormSubmitter extends FormBooter
      */
     protected static function saveModel($komposer, $request)
     {
-        collect($komposer->components)->each( function($field) use ($request, $komposer) {
+        KomposerManager::collectFields($komposer)->each( function($field) use ($request, $komposer) {
 
             $field->fillBeforeSave($request, $komposer->model);
 
@@ -83,7 +63,7 @@ class FormSubmitter extends FormBooter
         static::afterSaveHook($komposer);
 
 
-        collect($komposer->components)->each( function($field) use ($request, $komposer) {
+        KomposerManager::collectFields($komposer)->each( function($field) use ($request, $komposer) {
 
             $field->fillAfterSave($request, $komposer->model);
 

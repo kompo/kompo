@@ -15,21 +15,34 @@ class CatalogBooter extends Catalog
         //overriden
 	}
 
+    public static function performAction($session)
+    {
+        $catalog = static::instantiateUnbooted($session['kompoClass']);
+
+        $catalog->store($session['store']);
+        $catalog->parameter($session['parameters']);
+
+        switch(request()->header('X-Kompo-Action'))
+        {
+            case 'browse':
+                return CatalogDisplayer::browseCards($catalog);
+
+            case 'order':
+                return FormSubmitter::callCustomHandle($catalog);
+
+            case 'delete':
+                return FormManager::getMatchedSelectOptions($catalog);
+        }
+
+    }
+
 	public static function bootForDisplay($catalog, $store = [])
 	{
         $catalog = static::instantiateUnbooted($catalog);
         $catalog->store($store);
         $catalog->parameter(RouteFinder::getRouteParameters());
 
-        AuthorizationGuard::checkBoot($catalog);
-
-        KomposerManager::created($catalog);
-
-		//continue boot
-
-		SessionStore::saveKomposer($catalog);
-
-		return $catalog;
+		return CatalogDisplayer::displayFiltersAndCards($catalog);
 	}
 
     /**

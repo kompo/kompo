@@ -46,7 +46,7 @@ export default {
                                     response.data.form.record.record : 
                                     response.data
 
-            if(this.$_data('ajaxOptionsMethod')){
+            if(this.$_data('ajaxOptions')){
                 var newLabel = relatedValue[this.$_data('optionsLabel')] //!! does not work if label is array
                 var newKey = relatedValue[this.$_data('optionsKey')]
                 this.updateComponentOptionsAndValue([{value: newKey, label: newLabel}], relatedValue)

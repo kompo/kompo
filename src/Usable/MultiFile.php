@@ -3,10 +3,16 @@
 namespace Kompo;
 
 use Illuminate\Http\UploadedFile;
-use Kompo\Eloquent\ModelManager;
+use Kompo\Database\EloquentField;
+use Kompo\Database\ModelManager;
 
 class MultiFile extends File
 {
+    /**
+     * Flag indicating multiple files are allowed.
+     *
+     * @var boolean
+     */
     public $multiple = true;
 
     protected function setAttributeFromRequest($name, $model)
@@ -14,14 +20,15 @@ class MultiFile extends File
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
         $value = collect(request()->__get($name))->map(function($file) use($model, $name){
-            return $file instanceOf UploadedFile ? $this->fileToDB($file, $name, $model, true) : json_decode($file, true);
+
+            return $file instanceOf UploadedFile ? 
+                
+                $this->fileHandler->fileToDB($file, $model, $name, true) : 
+                
+                json_decode($file, true);
         });
 
-        if($oldFiles)
-            collect($oldFiles)->map(function($file) use($value){
-                if(!in_array($file[$this->idKey] ?? null, $value->pluck($this->idKey)->all() ))
-                    $this->unlinkFileIfExists($file);
-            });
+        $this->fileHandler->unlinkOldFilesInAttribute($oldFiles, $value);
 
         return $value->count() ? $value : null;
     }
@@ -44,20 +51,24 @@ class MultiFile extends File
 
             })->each(function($file) {
 
-                $this->unlinkFileIfExists($file);
+                $this->fileHandler->unlinkFileIfExists($file);
+
                 $file->delete(); //No detach, onDelete('cascade') should give the choice.
 
             });
         }
         
         //Has Many these files will be attached
-        if($uploadedFiles = request()->file($name))
+        if($uploadedFiles = request()->file($name)){
 
-            return collect($uploadedFiles)->map(function($file) use($name, $model){
+            $relatedModel = EloquentField::findOrFailRelated($model, $name);
 
-                return $this->fileToDB($file, $this->pathKey, ModelManager::findOrFailRelated($model, $name));
+            return collect($uploadedFiles)->map(function($file) use($relatedModel){
+
+                return $this->fileHandler->fileToDB($file, $relatedModel);
 
             });
+        }
     }
 
 }

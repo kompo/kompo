@@ -12,22 +12,62 @@ abstract class Form extends Komposer
 {
 	use HasModel;
 
-    public $component = 'Rows';
-    public $menuComponent = 'Form';
-    public $partial = 'VlForm';
+    /**
+     * The vue component to render the Form.
+     *
+     * @var        string
+     */
+    public $component = 'Rows'; //--> TODO: move to data
+    public $menuComponent = 'Form'; //--> TODO: move to data
     
+    /**
+     * Disable adding default margins for Form components.
+     *
+     * @var boolean
+     */
     public $noMargins = false;
 
-    protected $preventSubmit = false; //prevent submitting a form (emits only)
-    protected $emitFormData = true;
+    /**
+     * Prevent emitting the form data to it's closest parent.
+     *
+     * @var boolean
+     */
+    public $emitFormData = true;
 
-    protected $submitTo = null; //if the route is simple (no parameters)
+    /**
+     * Prevent submitting a form.
+     *
+     * @var boolean
+     */
+    protected $preventSubmit = false;
+
+    /**
+     * Custom submit route for quick use (if the route has no parameters)
+     *
+     * @var string
+     */
+    protected $submitTo; //if the route is simple (no parameters)
+
+    /**
+     * Custom submit method (POST|PUT) for quick use.
+     *
+     * @var string
+     */
     protected $submitMethod = 'POST';
-    //protected $failedAuthorizationMessage; //still active but removed so we can extend in Trait
 
-    protected $redirectTo = null;
+    /**
+     * Custom redirect route for quick use (for simple route with no parameters).
+     *
+     * @var string
+     */
+    protected $redirectTo;
+
+    /**
+     * Default redirect message after successful submit (or translation key if multi-language app).
+     *
+     * @var string
+     */
     protected $redirectMessage = 'Success! Redirecting...';
-
 
     /**
      * The model's namespace that the form links to.
@@ -41,7 +81,7 @@ abstract class Form extends Komposer
      *
      * @var array
      */
-    public $components = [];
+    public $components = [];  //--> TODO: move to data
 
 	/**
      * Constructs a Form
@@ -53,6 +93,14 @@ abstract class Form extends Komposer
      */
 	public function __construct($modelKey = null, $store = [], $dontBoot = false)
 	{
+        $this->_kompo('options', [
+            'preventSubmit' => $this->preventSubmit,
+            'submitTo' => $this->submitTo,
+            'submitMethod' => $this->submitMethod,
+            'redirectTo' => $this->redirectTo,
+            'redirectMessage' => $this->redirectMessage
+        ]);
+
 		if(!$dontBoot)
         	FormBooter::bootForDisplay($this, $modelKey, $store);
 	}
@@ -108,7 +156,7 @@ abstract class Form extends Komposer
      */
     public static function render($modelKey = null, $store = [])
     {
-        return FormBooter::renderVueComonent(new static($modelKey, $store));
+        return FormBooter::renderVueComponent(new static($modelKey, $store));
     }
 
 }

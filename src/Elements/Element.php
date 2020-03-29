@@ -3,20 +3,21 @@
 namespace Kompo\Elements;
 
 use BadMethodCallException;
+use Kompo\Elements\Traits\HasAnimation;
 use Kompo\Elements\Traits\HasClasses;
 use Kompo\Elements\Traits\HasConfig;
 use Kompo\Elements\Traits\HasData;
 use Kompo\Elements\Traits\HasId;
 use Kompo\Elements\Traits\HasStyles;
-use Kompo\Elements\Traits\HasTriggers;
 use Kompo\Elements\Traits\IsMountable;
+use Kompo\Elements\Traits\ElementHelperMethods;
 
 abstract class Element
 {
     /**
      * TODO: Refactor component to vueComponent
      */
-    use HasId, HasClasses, HasConfig, HasData, HasStyles, HasTriggers, IsMountable;
+    use HasId, HasClasses, HasConfig, HasData, HasStyles, HasAnimation, IsMountable, ElementHelperMethods;
     
     /**
      * The related Vue component name.
@@ -33,7 +34,7 @@ abstract class Element
     /**
      * Prepares an element and passes important information for submit.
      */
-    abstract public function prepareForSave($komposer);
+    abstract public function prepareForAction($komposer);
 
     /**
      * A helpful way to construct a Kompo object and chain it additional methods.
@@ -58,11 +59,9 @@ abstract class Element
     {
         if(in_array($method, static::duplicateStaticMethods())){
             $method .= 'Static';
-            return (new static(true))->$method(...$parameters);
+            return (new static())->$method(...$parameters);
         }
-        throw new BadMethodCallException(sprintf(
-            'Method %s::%s does not exist.', static::class, $method
-        ));
+        throw new BadMethodCallException('Method '.static::class.'::'.$method.' does not exist.');
     }
 
     /**
@@ -78,9 +77,7 @@ abstract class Element
             $method .= 'NonStatic';
             return $this->$method(...$parameters);
         }
-        throw new BadMethodCallException(sprintf(
-            'Method %s::%s does not exist.', static::class, $method
-        ));
+        throw new BadMethodCallException('Method '.static::class.'::'.$method.' does not exist.');
     }
 
     /**

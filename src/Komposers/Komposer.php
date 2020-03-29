@@ -14,7 +14,8 @@ abstract class Komposer extends Element
     protected $_kompo = [
         'parameters' => [],
         'store' => [],
-        'fields' => []
+        'fields' => [],
+        'options' => []
     ];
 
     /**
@@ -72,7 +73,7 @@ abstract class Komposer extends Element
      *
      * @return void
      */
-    public function prepareForSave($komposer)
+    public function prepareForAction($komposer)
     {
 
     }

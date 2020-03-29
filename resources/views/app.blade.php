@@ -2,7 +2,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <?php 
-
 $Navbar = $Navbar ?? false;
 $Footer = $Footer ?? false;
 $LeftSidebar = isset($LeftSidebar) ? $LeftSidebar->data(['menuType' => 'vl-sidebar-l']) : false;

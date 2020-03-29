@@ -8,10 +8,11 @@ export default class Trigger {
         this.kompoid = trigger.kompoid
 
 		this.route = trigger.route 
-        this.routeMethod = trigger.routeMethod 
+        this.routeMethod = trigger.routeMethod
+        this.kompoMethod = trigger.kompoMethod  
 		this.ajaxPayload = trigger.ajaxPayload
 
-        this.included = trigger.included
+        this.includeMethod = trigger.includeMethod
         this.handle = trigger.handle
 		this.sessionTimeoutMessage = trigger.sessionTimeoutMessage
 		this.redirectUrl = trigger.redirectUrl
@@ -49,7 +50,8 @@ export default class Trigger {
             data: this.getPayloadForStore(),
             headers: Object.assign(
                 {'X-Kompo-Id': this.vue.kompoid}, 
-                this.included ? { 'X-Kompo-Includes': this.included} : {}
+                this.includeMethod ? { 'X-Kompo-Includes': this.includeMethod} : {},
+                this.kompoMethod ? {'X-Kompo-Method': this.kompoMethod} : {}
             )
         }).then(response => {
 
@@ -94,8 +96,16 @@ export default class Trigger {
             method: this.vue.formInfo.method,
             data: this.getFormData(),
             headers: Object.assign(
-                {'X-Kompo-Id': this.vue.kompoid}, 
-                this.handle ? {'X-Kompo-Handle': this.handle} : {}
+                {
+                    'X-Kompo-Id': this.vue.kompoid
+                }, 
+                this.vue.formInfo.action ? {
+                    'X-Kompo-Action': this.vue.formInfo.action
+                } : {},
+                this.handle ? {
+                    'X-Kompo-Handle': this.handle,
+                    'X-Kompo-Action': 'handle-submit' //X-Kompo-Action above will be overwritten if this.handle
+                } : {}
             )
         }).then(response => {
 

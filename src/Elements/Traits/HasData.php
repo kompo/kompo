@@ -1,4 +1,5 @@
 <?php 
+
 namespace Kompo\Elements\Traits;
 
 trait HasData 
@@ -18,24 +19,14 @@ trait HasData
      * @param  array  $data Key/value associative array.
      * @return mixed
      */
-    public function data($data)
+    public function data($data = null)
     {
         if(is_array($data)){
             $this->data = array_replace($this->data, $data);
             return $this;
         }else{
-            return $this->data[$data] ?? null;
+            return $data ? ($this->data[$data] ?? null) : $this->data;
         }
-    }
-
-    /**
-     * Hides the field or element on the Front-end with Vue's v-if. 
-     *
-     * @return self
-     */
-    public function displayNone()
-    {
-        return $this->data(['displayNone' => true]);
     }
 
 }

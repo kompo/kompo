@@ -2,6 +2,8 @@
 
 namespace Kompo;
 
+use Kompo\Select;
+
 class Search extends Select
 {
     protected function vlInitialize($label)

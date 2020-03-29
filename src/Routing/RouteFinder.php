@@ -7,6 +7,16 @@ use Kompo\Exceptions\EmptyRouteException;
 class RouteFinder
 {
     /**
+     * Gets the default route that handles all Kompo requests.
+     *
+     * @return string.
+     */
+    public static function getKompoRoute()
+    {
+        return route('_kompo');
+    }
+
+    /**
      * Guesses the desired route and method from the parameters.
      *
      * @param  string  $route
@@ -33,7 +43,7 @@ class RouteFinder
     public static function activateRoute($kompo)
     {
         return $kompo->data([
-            'kompoRoute' => route('_kompo')
+            'kompoRoute' => static::getKompoRoute()
         ]);
     }
 
@@ -58,8 +68,34 @@ class RouteFinder
         //})->all();
     }
 
-    protected static function getRouteByName($route)
+    /**
+     * Guesses the desired route and method from the parameters.
+     *
+     * @param  string  $route
+     * @param  mixed  $parameters
+     * @return mixed
+     */
+    public static function guessRoute($route, $parameters = null)
+    {
+        if(!$route)
+            throw new EmptyRouteException();
+        
+        $routeObject = static::getRouteByName($route);
+
+        return is_null( $routeObject ) ? url($route, $parameters) : route($route, $parameters);
+    }
+
+    public static function getRouteByName($route)
     {
         return \Route::getRoutes()->getByName($route);
+    }
+
+    public static function getRouteObject($route, $parameters = null)
+    {
+        $routeObject = static::getRouteByName($route);
+
+        return is_null($routeObject) ? collect(\Route::getRoutes())->first(function($r) use($route, $parameters){
+            return $r->matches(request()->create(url($route, $parameters)));
+        }) : $routeObject;
     }
 }

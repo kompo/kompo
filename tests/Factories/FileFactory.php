@@ -6,6 +6,7 @@ use Kompo\Tests\Models\File;
 use Illuminate\Http\UploadedFile;
 
 $factory->define(File::class, function (Faker $faker) {
+    
 	static $order = 1;
 
 	$file = UploadedFile::fake()->create($faker->word.'.'.$faker->fileExtension);

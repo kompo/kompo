@@ -17,6 +17,6 @@ class Input extends Field
 
         $this->inputType('text');
 
-        $this->submitsOnEnter();
+        //$this->submitsOnEnter(); TODO: uncomment
     }
 }

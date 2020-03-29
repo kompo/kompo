@@ -3,6 +3,7 @@
 namespace Kompo;
 
 use Illuminate\Support\Facades\Hash;
+use Kompo\Input;
 
 class Password extends Input
 {

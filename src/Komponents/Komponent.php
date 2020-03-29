@@ -2,8 +2,9 @@
 
 namespace Kompo\Komponents;
 
-use Kompo\Elements\Element;
 use Kompo\Core\KompoIdCreator;
+use Kompo\Elements\Element;
+use Kompo\Komposers\KomposerManager;
 
 abstract class Komponent extends Element
 {
@@ -52,10 +53,10 @@ abstract class Komponent extends Element
      *
      * @return void
      */
-    public function prepareForSave($komposer)
+    public function prepareForAction($komposer)
     {
         if($this->data('includes')) //need to check authorize here!
-            Blueprint::prepareComponentsForSave($komposer, $this->data('includes'));
+            KomposerManager::prepareComponentsForAction($komposer, $this->data('includes'));
     }
 
     /**
@@ -116,7 +117,6 @@ abstract class Komponent extends Element
         $this->data(['togglesId' => $id]);
         return $this;
     }
-
 
 
     public static function duplicateStaticMethods()

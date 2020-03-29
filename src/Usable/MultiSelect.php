@@ -2,7 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Utilities\Arr;
+use Kompo\Select;
+use Kompo\Core\Util;
 
 class MultiSelect extends Select
 {
@@ -15,10 +16,8 @@ class MultiSelect extends Select
 
     public $multiple = true;
 
-    public $value = [];
-
     protected function setValueForFront($value)
     {
-        $this->value = !Arr::count($value) ? null : (($key = $this->valueKeyName($value)) ? $value->pluck($key) : Arr::decode($value));
+        $this->value = !Util::count($value) ? null : (($key = $this->valueKeyName($value)) ? $value->pluck($key) : Util::decode($value));
     }
 }

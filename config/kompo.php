@@ -12,6 +12,19 @@ return [
 	'default_time_format' => 'H:i',
 	'default_datetime_format' => 'Y-m-d H:i',
 
+
+    'locales' => [
+        //'en' => 'English',
+        //'fr' => 'Français'
+    ],
+
+    'files' => [
+    	'isMonogamous' => true //to review
+    ],
+
+	/**
+	 * Default file column names.
+	 */
 	'files_attributes' => [
 		'name' => 'name',
 		'path' => 'path',
@@ -20,6 +33,9 @@ return [
 		'id' => 'id' //not used when files are relationships => the model's primary key is used
 	],
 
+	/**
+	 * Default place column names.
+	 */
 	'places_attributes' => [
 		'address' => 'address',
 		'street_number' => 'street_number',
@@ -32,13 +48,4 @@ return [
 		'lng' => 'lng',
 		'external_id' => 'external_id', //not the primary key, just to check unicity
 	],
-
-    'locales' => [
-        //'en' => 'English',
-        //'fr' => 'Français'
-    ],
-
-    'files' => [
-    	'isMonogamous' => true //to review
-    ]
 ];

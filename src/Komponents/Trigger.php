@@ -2,11 +2,16 @@
 
 namespace Kompo\Komponents;
 
-use Kompo\Komponents\Traits\DoesFormSubmits;
+use Kompo\Komponents\Traits\FormSubmitConfigurations;
+use Kompo\Komponents\Traits\PerformsAjax;
+use Kompo\Interactions\Traits\HasInteractions;
+use Kompo\Interactions\Traits\NestsInteractions;
 
 abstract class Trigger extends Komponent
 {
-    use DoesFormSubmits;
+    use HasInteractions, NestsInteractions, FormSubmitConfigurations;
+    //use PerformsAjax;
+
 	/**
      * Passes Komposer information to the component.
      *
@@ -23,9 +28,9 @@ abstract class Trigger extends Komponent
      *
      * @return void
      */
-    public function prepareForSave($komposer)
+    public function prepareForAction($komposer)
     {
-        parent::prepareForSave($komposer);        
+        parent::prepareForAction($komposer);        
     }
     
 }

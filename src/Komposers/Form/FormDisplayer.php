@@ -5,7 +5,7 @@ use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\SessionStore;
 use Kompo\Core\ValidationManager;
 use Kompo\Komposers\KomposerManager;
-use Kompo\Routing\Router;
+use Kompo\Routing\RouteFinder;
 
 class FormDisplayer extends FormBooter
 {
@@ -19,7 +19,7 @@ class FormDisplayer extends FormBooter
 
         ValidationManager::addRulesToKomposer($form->rules(), $form); //for Front-end validations TODO:
 
-        static::prepareComponentsForDisplay($form);
+        $form->components = KomposerManager::prepareComponentsForDisplay($form, request()->header('X-Kompo-Includes') ?: 'components');
 
         SessionStore::saveKomposer($form, ['modelKey' => $form->modelKey()]); 
 
@@ -37,36 +37,28 @@ class FormDisplayer extends FormBooter
             'emitFormData' => $form->emitFormData
         ]);
 
-        if($form->preventSubmit)
+        $options = $form->_kompo('options');
+
+        if($options['preventSubmit'])
             return;
 
         $form->data([
-            'submitUrl' => $form->submitTo ? Router::matchRoute($form->submitTo) :
-                ($form->submitUrl() ? : 
-                    ((method_exists($form, 'handle') || $form->model) ? route('_kompo') : null)),
-            'submitMethod' => $form->submitMethod
+            'submitUrl' => $options['submitTo'] ? RouteFinder::matchRoute($options['submitTo']) :
+                    ($form->submitUrl() ? : 
+                    ((method_exists($form, 'handle') || $form->model) ? RouteFinder::getKompoRoute() : null)),
+            'submitMethod' => $options['submitMethod']
         ]);
 
-        $form->data([
-            'redirectUrl' => $form->redirectTo ? Router::matchRoute($form->redirectTo) : null,
-            'redirectMessage' => __($form->redirectMessage)
-        ]);
-    }
+        if($form->data('submitUrl') == RouteFinder::getKompoRoute())
+            $form->data([
+                'submitAction' => method_exists($form, 'handle') ? 'handle-submit' : 'eloquent-submit'
+            ]);
 
-    /**
-     * Prepare the Form's components.
-     *
-     * @return void
-     */
-    public static function prepareComponentsForDisplay($komposer)
-    {
-        $komposer->components = static::collectFrom($komposer, request()->header('X-Kompo-Includes'))->filter()->each( function($component) use ($komposer) {
-
-            $component->prepareForDisplay($komposer);
-
-            $component->mountedHook($komposer);
-
-        })->values()->all();
+        if($options['redirectTo'])
+            $form->data([
+                'redirectUrl' => RouteFinder::matchRoute($options['redirectTo']),
+                'redirectMessage' => __($options['redirectMessage'])
+            ]);
     }
 
 }

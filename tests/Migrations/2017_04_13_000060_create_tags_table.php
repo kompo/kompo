@@ -16,6 +16,7 @@ class CreateTagsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name', 100);
+			$table->integer('category_id')->nullable();
 			$table->timestamps();
 		});
 	}

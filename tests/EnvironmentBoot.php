@@ -52,6 +52,9 @@ class EnvironmentBoot extends TestCase
     protected function loadRoutes()
     {
         require(__DIR__.'/../routes/web.php');
+
+
+        $this->kompoRoute = route($this->kompoUri);
     }
 
     /**

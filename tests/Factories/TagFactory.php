@@ -6,6 +6,6 @@ use Kompo\Tests\Models\Tag;
 
 $factory->define(Tag::class, function (Faker $faker) {
     return [
-        'name' => $faker->word
+        'name' => Str::random(40) //to ensure none are the same
     ];
 });

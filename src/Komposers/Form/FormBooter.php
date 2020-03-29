@@ -3,8 +3,9 @@
 namespace Kompo\Komposers\Form;
 
 use Kompo\Form;
+use Kompo\Core\Util;
 use Kompo\Routing\RouteFinder;
-use Kompo\Utilities\Arr;
+use Illuminate\Database\Eloquent\Model;
 
 class FormBooter extends Form
 {
@@ -27,6 +28,9 @@ class FormBooter extends Form
             case 'eloquent-submit':
                 return FormSubmitter::eloquentSave($form);
 
+            case 'post-to-form':
+                return FormManager::handlePost($form);
+
             case 'include-fields':
                 return FormDisplayer::includeFields($form);
 
@@ -34,10 +38,10 @@ class FormBooter extends Form
                 return FormSubmitter::callCustomHandle($form);
 
             case 'search-options':
-                return FormCaller::getMatchedSelectOptions($form);
+                return FormManager::getMatchedSelectOptions($form);
 
             case 'updated-option':
-                return FormCaller::reloadUpdatedSelectOptions($form);
+                return FormManager::reloadUpdatedSelectOptions($form);
         }
 
     }
@@ -53,6 +57,24 @@ class FormBooter extends Form
 
 		return FormDisplayer::displayComponents($form);
 	}
+
+    /**
+     * Initialize or find the model (if komposer linked to a model).
+     *
+     * @param Kompo\Komposer\Komposer $komposer
+     * @param Illuminate\Database\Eloquent\Model|null $model
+     * @return void
+     */
+    public static function setModel($komposer, $model = null)
+    {
+        if(is_null($model))
+            return;
+
+        $komposer->model = $model instanceof Model ? $model : $model::findOrNew($komposer->modelKey());
+        $komposer->modelKey($komposer->model()->getKey()); //set if it wasn't (ex: dynamic model set in created() phase)
+
+        return $komposer->model;
+    }
 
     /**
      * Shortcut method to render a Form into it's Vue component.
@@ -75,14 +97,6 @@ class FormBooter extends Form
     protected static function instantiateUnbooted($class)
     {
         return $class instanceOf Form ? $class : new $class(null, null, true);
-    }
-
-    protected static function collectFrom($komposer, $includes)
-    {
-        if($includes && !method_exists($komposer, $includes))
-            throw new IncludesMethodNotFoundException($includes);
-
-        return Arr::collect($includes ? $komposer->{$includes}() : $komposer->components());
     }
 
 }

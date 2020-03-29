@@ -23,6 +23,9 @@ class KompoServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'kompo');
 
         $this->extendRouting();
+
+        if (file_exists($file = __DIR__.'/../Core/KompoHelpers.php'))
+            require_once $file;
     }
 
     /**

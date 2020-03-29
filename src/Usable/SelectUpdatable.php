@@ -3,6 +3,7 @@
 namespace Kompo;
 
 use Kompo\Routing\RouteFinder;
+use Kompo\Select;
 
 class SelectUpdatable extends Select
 {
@@ -37,9 +38,6 @@ class SelectUpdatable extends Select
         $label = 'Add a new option'
     )
     {
-        $this->setRoute($route, $parameters);
-        $this->setRouteMethod('POST');
-
         if($ajaxPayload)
             $this->data(['ajaxPayload' => $ajaxPayload]);
 

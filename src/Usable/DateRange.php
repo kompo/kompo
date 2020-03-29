@@ -2,14 +2,15 @@
 
 namespace Kompo;
 
+use Kompo\Date;
+
 class DateRange extends Date
 {
     public $component = 'DateRange';
 
-    public $value = [];
-
     public function prepareValueForFront($name, $value, $model)
     {
-        $this->value[] = $value;
+    	if($value)
+        	$this->value[] = $value;
     }
 }

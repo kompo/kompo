@@ -22,10 +22,10 @@ class Translatable extends Textarea
         $this->value([]);
     }
 
-    public function prepareValueForFront($name, $value, $model)
+    public function prepareValueForFront($name, $value, $komposer)
     {
-        $this->value = collect($this->locales)->mapWithKeys(function($language, $locale) use($name, $model) {
-            return [$locale => $model->getTranslation($name, $locale, false)];
+        $this->value = collect($this->locales)->mapWithKeys(function($language, $locale) use($name, $komposer) {
+            return [$locale => $komposer->model->getTranslation($name, $locale, false)];
         })->all();
     }
 

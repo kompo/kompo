@@ -3,11 +3,11 @@
 namespace Kompo\Komponents;
 
 use Illuminate\Support\Collection;
-use Kompo\Utilities\Arr;
+use Kompo\Core\Util;
 
 class LayoutManager extends Layout
 {
-	public static function collectComponents($args, $layout)
+	public static function collectFilteredComponents($args, $layout)
 	{
 		if(static::argsIsString($args))
             return collect([]);
@@ -19,7 +19,7 @@ class LayoutManager extends Layout
 
         $args = static::flattenIfNestedArray($args); //if instantiation argument was an array or Collection
 
-        return Arr::collect($args);
+        return Util::collect($args)->filter();
 	}
 
     public static function getNormalizedLabel($args, $layout)

@@ -2,14 +2,13 @@
 
 namespace Kompo;
 
+use Kompo\Komponents\Traits\TriggerStyles;
 use Kompo\Komponents\Trigger;
-use Vuravel\Menu\MenuItems\Traits\Clickable;
 
 class Button extends Trigger
 { 	
-	use Clickable; //When in Menus
-
+	use TriggerStyles;
+	
     public $component = 'FormButton';
     public $menuComponent = 'Button';
-
 }

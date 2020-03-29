@@ -35,6 +35,7 @@ export default {
 
         formUrl(){ return this.$_data('submitUrl') },
         formMethod(){ return this.$_data('submitMethod') },
+        submitAction(){ return this.$_data('submitAction') },
 
         redirectUrl(){ return this.$_data('redirectUrl') },
         redirectMessage(){ return this.$_data('redirectMessage') }
@@ -119,7 +120,8 @@ export default {
                     canSubmit: this.canSubmit,
                     jsonFormData: this.getJsonFormData(),
                     url: this.formUrl, 
-                    method: this.formMethod
+                    method: this.formMethod,
+                    action: this.submitAction
                 })
             })
         },

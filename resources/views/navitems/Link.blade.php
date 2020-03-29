@@ -1,4 +1,4 @@
-@if($component->hasTriggers())
+@if(count($component->interactions))
 
 	<vl-link class="vl-nav-item {{ $component->class() }} {{ $component->data('active') }}"
 		@include('kompo::partials.IdStyle')

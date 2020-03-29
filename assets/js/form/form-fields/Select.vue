@@ -55,7 +55,7 @@ export default {
     },
     mounted(){
         this.filteredOptions = this.options
-        this.optionsMessage = this.ajaxOptionsMethod ? this.enterMoreCharacters : this.noOptionsFound
+        this.optionsMessage = this.ajaxOptions ? this.enterMoreCharacters : this.noOptionsFound
     },
     computed: {
         $_attributes() {
@@ -80,6 +80,7 @@ export default {
         enterMoreCharacters(){ return this.$_data('enterMoreCharacters')},
         $_pristine() { return this.$_value.length === 0 },
         $_emptyValue() { return [] },
+        ajaxOptions(){ return this.$_data('ajaxOptions') },
         ajaxOptionsMethod(){ return this.$_data('ajaxOptionsMethod') },
         ajaxMinSearchLength(){ return this.$_data('ajaxMinSearchLength') },
         ajaxOptionsFromField(){ return this.$_data('ajaxOptionsFromField') },
@@ -118,7 +119,7 @@ export default {
             if(this.$_readOnly)
                 return
 
-            if(this.ajaxOptionsMethod){
+            if(this.ajaxOptions){
                 if(this.ajaxOptionsFromField){
                     this.inputValue ? this.filterOptions() : this.debouncedAjaxFunction()
                 }else{
@@ -182,7 +183,7 @@ export default {
         },
         reset(){
             this.$_emptyInput()
-            if(this.ajaxOptionsMethod){
+            if(this.ajaxOptions){
                 this.component.options = []
                 this.filteredOptions = []
             }

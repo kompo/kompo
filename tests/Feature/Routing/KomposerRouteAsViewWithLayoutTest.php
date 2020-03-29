@@ -7,7 +7,7 @@ use Kompo\Tests\EnvironmentBoot;
 class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 {
     /** @test */
-	public function boot_error_for_unbootable_komponent_from_route()
+	public function boot_error_for_unbootable_komponent_from_route_as_view()
 	{
 		$this->prepareRoute('someFakeClassString');
 
@@ -17,7 +17,7 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function boot_form_from_route()
+	public function boot_form_from_route_as_view()
 	{
 		$this->prepareRoute(_RouteParametersForm::class);
 
@@ -26,7 +26,7 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function boot_catalog_from_route()
+	public function boot_catalog_from_route_as_view()
 	{
 		$this->prepareRoute(_RouteParametersCatalog::class);
 
@@ -34,7 +34,7 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function boot_menu_from_route()
+	public function boot_menu_from_route_as_view()
 	{
 		$this->prepareRoute(_RouteParametersMenu::class);
 

@@ -3,7 +3,9 @@
 namespace Kompo;
 
 use Illuminate\Http\UploadedFile;
-use Kompo\Eloquent\ModelManager;
+use Kompo\Core\FileHandler;
+use Kompo\Database\EloquentField;
+use Kompo\Database\ModelManager;
 use Kompo\Komponents\Field;
 use LogicException;
 
@@ -25,12 +27,10 @@ class File extends Field
      */
     protected $attributesToColumns = false;
 
-    protected $allKeys;
-    protected $idKey;
-    protected $pathKey;
-    protected $nameKey;
-    protected $mime_typeKey;
-    protected $sizeKey;
+    /**
+     * The file's handler
+     */
+    protected $fileHandler;
 
     /**
      * Assign the config columns
@@ -41,9 +41,7 @@ class File extends Field
     {
         parent::vlInitialize($label);
 
-        collect($this->allKeys = config('kompo.files_attributes'))->each(function($column, $key){
-            $this->{$key.'Key'} = $column;
-        });
+        $this->fileHandler = new FileHandler();
     }
 
     /**
@@ -56,9 +54,7 @@ class File extends Field
      */
     public function disk($disk)
     {
-        return $this->data([
-            'disk' => $disk
-        ]);
+        return $this->fileHandler->setDisk($disk);
     }
 
     /**
@@ -73,15 +69,30 @@ class File extends Field
             throw new LogicException("Only Kompo\File accepts the attributesToColumns() method.");
         
         $this->attributesToColumns = true;
-        $this->name = $this->pathKey; //mandatory
+        
+        $this->name = $this->fileHandler->activateAttributesToColumns(); //mandatory
+
         return $this;
     }
 
+    /**
+     * Overriden because of attributesToColumns. Checks if the field deals with array value
+     *
+     * @return     Boolean  
+     */
+    protected function shouldCastToArray($model, $name)
+    {
+        return parent::shouldCastToArray($model, $name) && !$this->attributesToColumns;
+    }
+
+
     public function getValueFromModel($model, $name)
     {
-        return !$this->attributesToColumns ? ModelManager::getValueFromDb($model, $name) : collect($this->allKeys)->map(function($key) use ($model){
-            return $key !== $this->idKey ? $model->{$key} : null;
-        })->filter()->all();      
+        return !$this->attributesToColumns ? 
+
+            ModelManager::getValueFromDb($model, $name) : 
+
+            $this->fileHandler->mapFromDB($model);
     }
 
     protected function setAttributeFromRequest($name, $model)
@@ -90,9 +101,9 @@ class File extends Field
 
         if( ($uploadedFile = request()->__get($name)) && $uploadedFile instanceOf UploadedFile){
 
-            $this->unlinkFileIfExists($oldFile);
+            $this->fileHandler->unlinkFileIfExists($oldFile);
 
-            $newFile = $this->fileToDB($uploadedFile, $name, $model, !$this->attributesToColumns);
+            $newFile = $this->fileHandler->fileToDB($uploadedFile, $model, $name, !$this->attributesToColumns);
 
             if(!$this->attributesToColumns)
                 return $newFile;
@@ -106,15 +117,14 @@ class File extends Field
 
         }elseif(!request()->__get($name)){
 
-            $this->unlinkFileIfExists($oldFile);
+            $this->fileHandler->unlinkFileIfExists($oldFile);
 
             if(!$this->attributesToColumns)
                 return null;
 
             if($oldFile->exists)
-                collect($this->allKeys)->each(function($key){
-                    if(!in_array($key, [$this->idKey, $this->pathKey]))
-                        $this->extraAttributes[$key] = null;
+                $this->fileHandler->getKeysWithoutIdPath()->each(function($key){
+                    $this->extraAttributes[$key] = null;
                 });
 
             return null;
@@ -127,57 +137,26 @@ class File extends Field
         
         if( ($uploadedFile = request()->__get($name)) && ($uploadedFile instanceOf UploadedFile)){
 
-            $this->unlinkFileIfExists($oldFile);
+            $this->fileHandler->unlinkFileIfExists($oldFile);
+
             $oldFile && $oldFile->delete();
-            $value = $this->fileToDB($uploadedFile, $this->pathKey, ModelManager::findOrFailRelated($model, $name));
+
+            $relatedModel = EloquentField::findOrFailRelated($model, $name);
+
+            $value = $this->fileHandler->fileToDB($uploadedFile, $relatedModel);
 
         }else{
             if(!request()->__get($name) && $oldFile){
-                $this->unlinkFileIfExists($oldFile);
+
+                $this->fileHandler->unlinkFileIfExists($oldFile);
+
                 $oldFile->delete();
+
             }
             $value = null;
         }
 
         return $value;
-    }
-
-    /**
-     * Overriden because of attributesToColumns. Checks if the field deals with array value
-     *
-     * @return     Boolean  
-     */
-    protected function shouldCastToArray($model, $name)
-    {
-        return parent::shouldCastToArray($model, $name) && !$this->attributesToColumns;
-    }
-
-    protected function fileToDB($file, $name, $model, $withId = false)
-    {
-        $modelPath = ModelManager::getStoragePath($model, $this->attributesToColumns ? $this->pathKey  : $name);
-        
-        $file->store('public/'.$modelPath, $this->data('disk') ?: 'local');
-
-        return array_merge([
-            $this->nameKey => $file->getClientOriginalName(),
-            $this->pathKey => 'storage/'.$modelPath.'/'.$file->hashName(),
-            $this->mime_typeKey => $file->getClientMimeType(),
-            $this->sizeKey => $file->getSize()
-        ], $withId ? [
-            $this->idKey => $file->hashName()
-        ] : []);
-    }
-
-    protected function unlinkFileIfExists($file)
-    {
-        if($file){
-            $filePath = $file[$this->pathKey] ?? $file->{$this->pathKey};
-            if($filePath && file_exists($path = storage_path('app/public'.substr($filePath, 7)) )){
-                unlink($path);
-                if(($this->withThumbnail ?? false) && file_exists(thumb($path)))
-                    unlink(thumb($path));
-            }
-        }
     }
 
 }

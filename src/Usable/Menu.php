@@ -75,7 +75,7 @@ abstract class Menu extends Komposer
      */
     public static function render($store = [])
     {
-        return MenuBooter::renderVueComonent(new static($store));
+        return MenuBooter::renderVueComponent(new static($store));
     }
 
 }

@@ -16,7 +16,7 @@
     	 {{ ($component->data('expandByDefault') || 
         ($component->data('expandIfActive') && $component->data('active') )) ? '' : 'vl-menu-closed' }}">
         
-        @include('kompo::menus.components', [ 'components' => $component->submenu ])
+        @include('kompo::menus.components', [ 'components' => $component->components ])
     
     </div>
 
