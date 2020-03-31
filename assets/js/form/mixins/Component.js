@@ -22,7 +22,7 @@ export default {
     },
     methods:{
         $_getPathById(id, path){
-            if(this.$_elementId(null) == id)
+            if(this.$_elKompoId == id)
                 return path.substring(1) //because the first . should not be taken into account
         },
         $_togglesForm(toggleId){
@@ -34,7 +34,7 @@ export default {
             this.$kompo.vlSubmit(this.kompoid, this)
         },
         $_resetSort(exceptId) {
-            if(this.$_sortsCatalog && this.$_elementId() != exceptId){
+            if(this.$_sortsCatalog && this.$_elKompoId != exceptId){
                 this.$_state({ activeSort: false })
                 this.$_resetSortValue()
             }
@@ -46,7 +46,7 @@ export default {
         },
         $_revertFormRow(){
             if(this.$_revertsFormRow)
-                this.$_closestParentOfType('VlMultiForm').revertFormRow(this.$_elementId())
+                this.$_closestParentOfType('VlMultiForm').revertFormRow(this.$_elKompoId)
         },
         $_closestParentOfType(type){
             let vm = this.$parent
@@ -54,13 +54,13 @@ export default {
             return vm 
         },
         $_attachEvents(){
-            this.$_vlOn('vlDeliverFormInfo'+this.$_elementId(), (formInfo) => {
+            this.$_vlOn('vlDeliverFormInfo'+this.$_elKompoId, (formInfo) => {
                 this.formInfo = formInfo
             })
         },
         $_destroyEvents(){
             this.$_vlOff([
-                'vlDeliverFormInfo'+this.$_elementId()
+                'vlDeliverFormInfo'+this.$_elKompoId
             ])
         }
 

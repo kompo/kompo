@@ -20,11 +20,11 @@ export default {
         $_clickAction(){
             this.$_togglesForm()
             
-            this.$_runOwnTriggersWithAction('click', 'emitFrom')
+            this.$_runOwnInteractionsWithAction('click', 'emitFrom')
             
-            this.$_runOwnTriggersWithAction('click', 'submitForm')
-            this.$_runOwnTriggersWithAction('click', 'refreshCatalog')
-            this.$_runOwnTriggersWithAction('click', 'sortCatalog')
+            this.$_runOwnInteractionsWithAction('click', 'submitForm')
+            this.$_runOwnInteractionsWithAction('click', 'refreshCatalog')
+            this.$_runOwnInteractionsWithAction('click', 'sortCatalog')
             
             this.$_revertPanel()
             this.$_revertFormRow()

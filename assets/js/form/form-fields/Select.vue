@@ -205,7 +205,7 @@ export default {
 
             if(this.ajaxOptionsFromField){
                 
-                this.$kompo.vlDeliverJsonFormData(this.kompoid, this.$_elementId())
+                this.$kompo.vlDeliverJsonFormData(this.kompoid, this.$_elKompoId)
                 this.performAjax(this.$_getFromStore(this.ajaxOptionsFromField))
 
             }else{

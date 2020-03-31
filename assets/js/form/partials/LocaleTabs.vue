@@ -2,6 +2,7 @@
     <div class="vlLocales">
         <a :class="localeKey === activeLocale ? 'vlSelected' : ''" 
             :key="`a-${localeKey}`" 
+            href="javascript:void(0)"
             v-for="(locale, localeKey) in locales"
             @click.stop="changeLocale(localeKey)">
             {{ locale }}

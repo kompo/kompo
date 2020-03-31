@@ -22,6 +22,8 @@ class FormSubmitter extends FormBooter
         ValidationManager::addRulesToKomposer($form->rules(), $form);
 
         AuthorizationGuard::mainGate($form);
+
+        ValidationManager::validateRequest($form);
     } 
 
     public static function callCustomHandle($form)

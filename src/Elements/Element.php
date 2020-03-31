@@ -3,21 +3,21 @@
 namespace Kompo\Elements;
 
 use BadMethodCallException;
-use Kompo\Elements\Traits\HasAnimation;
-use Kompo\Elements\Traits\HasClasses;
-use Kompo\Elements\Traits\HasConfig;
-use Kompo\Elements\Traits\HasData;
-use Kompo\Elements\Traits\HasId;
-use Kompo\Elements\Traits\HasStyles;
-use Kompo\Elements\Traits\IsMountable;
-use Kompo\Elements\Traits\ElementHelperMethods;
 
 abstract class Element
 {
     /**
      * TODO: Refactor component to vueComponent
      */
-    use HasId, HasClasses, HasConfig, HasData, HasStyles, HasAnimation, IsMountable, ElementHelperMethods;
+
+    use Traits\HasId, 
+        Traits\HasClasses, 
+        Traits\HasConfig, 
+        Traits\HasData, 
+        Traits\HasStyles, 
+        Traits\HasAnimation, 
+        Traits\IsMountable, 
+        Traits\ElementHelperMethods;
     
     /**
      * The related Vue component name.

@@ -1,5 +1,15 @@
 <?php 
 
+if (! function_exists('form')) {
+    function form($form, $dontBoot = false)
+    {
+        if(class_exists($formClass = 'App\\Http\\Komposers\\'.$formClass)){
+            return new $formClass();
+        }
+        throw new \RuntimeException("Form [{$formClass}] does not exist when called with menu().");
+    }
+}
+
 if (! function_exists('menu')) {
     function menu($menuClass)
     {
@@ -468,11 +478,11 @@ if(! function_exists('VlStripe'))
     }
 }
 
-if(! function_exists('VlTableCatalog'))
+if(! function_exists('VlTable'))
 {
-    function VlTableCatalog()
+    function VlTable()
     {
-        return Kompo\TableCatalog::form(...func_get_args());
+        return Kompo\Table::form(...func_get_args());
     }
 }
 

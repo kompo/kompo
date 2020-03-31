@@ -67,6 +67,7 @@ export default {
         this.attachEvents()
     },
     computed: {
+        filtersPlacement(){ return [ 'top', 'left', 'bottom', 'right' ] },
         catalogAttributes(){
             return {
                 ...this.$_defaultElementAttributes,
@@ -150,7 +151,7 @@ export default {
                 method: 'POST',
                 data: this.preparedFormData(),
                 headers: {
-                    'X-Kompo-Id': this.$_elementId(),
+                    'X-Kompo-Id': this.$_elKompoId,
                     'X-Kompo-Page': this.currentPage,
                     'X-Kompo-Sort': this.currentSort
                 }
@@ -164,7 +165,7 @@ export default {
                 if (e.response.status == 422){
                     this.$_validate(e.response.data.errors)
                 }else{
-                    this.$modal.showFill('modal'+this.$_elementId(), 
+                    this.$modal.showFill('modal'+this.$_elKompoId, 
                         '<div>Error '+e.response.status+' | '+e.response.data.message+'</div>')
                 }
 
@@ -172,60 +173,60 @@ export default {
             })
         },
         attachEvents(){
-            this.$_vlOn('vlEmit'+this.$_elementId(), (eventName, eventPayload) => {
+            this.$_vlOn('vlEmit'+this.$_elKompoId, (eventName, eventPayload) => {
                 this.$emit(eventName, eventPayload)
                 if(this.kompoid)
                     this.$_vlEmitFrom(eventName, eventPayload)
             })
-            this.$_vlOn('vlRefreshCatalog'+this.$_elementId(), (page) => {
+            this.$_vlOn('vlRefreshCatalog'+this.$_elKompoId, (page) => {
                 this.currentPage = page ? page : this.currentPage
                 this.browseCatalog()
             })
-            this.$_vlOn('vlSort'+this.$_elementId(), (sortValue, emitterId) => {
+            this.$_vlOn('vlSort'+this.$_elKompoId, (sortValue, emitterId) => {
                 this.currentSort = sortValue == this.currentSort ? '' : sortValue
                 this.currentPage = 1
                 this.$_resetSort(emitterId)
                 this.browseCatalog()
             })
-            this.$_vlOn('vlToggle'+this.$_elementId(), (toggleId) => {
+            this.$_vlOn('vlToggle'+this.$_elKompoId, (toggleId) => {
                 this.$_toggle(toggleId)
             })
-            this.$_vlOn('vlPreview'+this.$_elementId(), (index) => {
+            this.$_vlOn('vlPreview'+this.$_elKompoId, (index) => {
                 this.preview(index)
             })
         },
         destroyEvents(){
             this.$_vlOff([
-                'vlEmit'+this.$_elementId(),
-                'vlRefreshCatalog'+this.$_elementId(),
-                'vlSort'+this.$_elementId(),
-                'vlToggle'+this.$_elementId(),
-                'vlPreview'+this.$_elementId()
+                'vlEmit'+this.$_elKompoId,
+                'vlRefreshCatalog'+this.$_elKompoId,
+                'vlSort'+this.$_elKompoId,
+                'vlToggle'+this.$_elKompoId,
+                'vlPreview'+this.$_elKompoId
             ])
         },
         $_fillRecursive(jsonFormData){
-            this.component.filtersPlacement.forEach(placement => 
+            this.filtersPlacement.forEach(placement => 
                 this.filters[placement].forEach( item => item.$_fillRecursive(jsonFormData) )
             )
         },
         $_resetSort(emitterId){
-            this.component.filtersPlacement.forEach(placement => 
+            this.filtersPlacement.forEach(placement => 
                 this.filters[placement].forEach( item => item.$_resetSort(emitterId) )
             )
             this.columns.forEach( item => item.$_resetSort(emitterId) )
         },
         $_state(state){
-            this.component.filtersPlacement.forEach(placement => 
+            this.filtersPlacement.forEach(placement => 
                 this.filters[placement].forEach( item => item.$_state(state) )
             )
         },
         $_toggle(toggleId){
-            this.component.filtersPlacement.forEach(placement => 
+            this.filtersPlacement.forEach(placement => 
                 this.filters[placement].forEach( item => item.$_toggle(toggleId) )
             )
         },
         $_validate(errors) {
-            this.component.filtersPlacement.forEach(placement => 
+            this.filtersPlacement.forEach(placement => 
                 this.filters[placement].forEach( item => item.$_validate(errors) )
             )
         },

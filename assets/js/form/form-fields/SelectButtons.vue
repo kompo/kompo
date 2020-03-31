@@ -25,11 +25,6 @@ import Field from '../mixins/Field'
 
 export default {
     mixins: [Field],
-    data(){
-        return{
-            initialComponentKey: 0
-        }
-    },
     computed:{
         containerClass(){ return this.$_data('containerClass') },
         optionClass(){ return this.$_data('optionClass') },
@@ -45,7 +40,7 @@ export default {
                 option.selected = option.value == this.component.value ? true : false
             })
         },
-        componentKey(key){ return this.$_elementId(key) + this.initialComponentKey },
+        componentKey(key){ return this.$_elKompoId + key },
         setValue(selectedKey) {
             var oldValue = this.component.value
             this.component.value = null

@@ -51,7 +51,7 @@ export default {
         },
 
         attachEvents(){
-            this.$_vlOn('vlEmit'+this.$_elementId(), (eventName, eventPayload) => {
+            this.$_vlOn('vlEmit'+this.$_elKompoId, (eventName, eventPayload) => {
                 this.$emit(eventName, eventPayload)
                 if(this.kompoid)
                     this.$_vlEmitFrom(eventName, eventPayload)
@@ -59,7 +59,7 @@ export default {
         },
         destroyEvents(){
             this.$_vlOff([
-                'vlEmit'+this.$_elementId()
+                'vlEmit'+this.$_elKompoId
             ])
         }
     },

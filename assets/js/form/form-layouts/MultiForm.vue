@@ -34,9 +34,9 @@ export default {
     methods:{
         addRow(){
             axios({
-                url: this.$_route, 
-                method: 'POST',
-                data: this.$_ajaxPayload,
+                url: this.$_data('route'), 
+                method: this.$_data('routeMethod'),
+                data: this.$_data('ajaxPayload'),
                 headers: {
                     'X-Kompo-Id': this.kompoid
                 }

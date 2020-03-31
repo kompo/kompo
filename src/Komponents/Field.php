@@ -11,16 +11,15 @@ use Kompo\Database\ModelManager;
 use Kompo\Form;
 use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Interactions\Traits\NestsInteractions;
-use Kompo\Komponents\Traits\FiltersCatalog;
-use Kompo\Komponents\Traits\FormSubmitConfigurations;
-use Kompo\Komponents\Traits\PerformsAjax;
 use Kompo\Komposers\KomposerManager;
 
 abstract class Field extends Komponent
 {
-    use HasInteractions, NestsInteractions, FormSubmitConfigurations;
+    use HasInteractions, NestsInteractions;
     //use PerformsAjax, 
-    use FiltersCatalog; //for tests to work but should review the trait since new Interactions feature
+    use Traits\FiltersCatalog,//for tests to work but should review the trait since new Interactions feature
+        Traits\FormSubmitConfigurations,
+        Traits\LabelInfoComment; 
 
     public $menuComponent = 'Field';
 

@@ -11,10 +11,10 @@ class AuthLogoutForm extends Form
 	public function handle($request)
     {
         \Auth::guard()->logout();
-        $locale = session('locale'); //for multi-lang sites
+        $locale = session('kompo_locale'); //for multi-lang sites
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        session( ['locale' => $locale] ); //for multi-lang sites
+        session( ['kompo_locale' => $locale] ); //for multi-lang sites
     }
 
 	public function components()

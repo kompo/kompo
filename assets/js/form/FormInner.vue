@@ -62,7 +62,7 @@ export default {
             }
             //check responseInModal() helper
             if(r.data.inModal)
-                this.$modal.showFill('modal'+this.$_elementId(), r.data.message || r.data)
+                this.$modal.showFill('modal'+this.$_elKompoId, r.data.message || r.data)
 
             if(r.status === 202){
                 this.destroyEvents()
@@ -93,29 +93,29 @@ export default {
         },
 
         attachEvents(){
-            this.$_vlOn('vlPreSubmit'+this.$_elementId(), () => {
+            this.$_vlOn('vlPreSubmit'+this.$_elKompoId, () => {
                 this.preSubmit()
             })
-            this.$_vlOn('vlSubmitSuccess'+this.$_elementId(), (response) => {
+            this.$_vlOn('vlSubmitSuccess'+this.$_elKompoId, (response) => {
                 this.submitSuccess(response)
             })
-            this.$_vlOn('vlSubmitError'+this.$_elementId(), (error) => {
+            this.$_vlOn('vlSubmitError'+this.$_elKompoId, (error) => {
                 this.submitError(error)
             })
-            this.$_vlOn('vlToggle'+this.$_elementId(), (toggleId) => {
+            this.$_vlOn('vlToggle'+this.$_elKompoId, (toggleId) => {
                 this.$_toggle(toggleId)
             })
-            this.$_vlOn('vlUpdateErrorState'+this.$_elementId(), () => {
+            this.$_vlOn('vlUpdateErrorState'+this.$_elKompoId, () => {
                 var errors = []
                 this.$_getErrors(errors)
             })
-            this.$_vlOn('vlDeliverJsonFormData'+this.$_elementId(), (toComponentId) => {
+            this.$_vlOn('vlDeliverJsonFormData'+this.$_elKompoId, (toComponentId) => {
                 this.$_deliverJsonTo(toComponentId, this.getJsonFormData())
             })
-            this.$_vlOn('vlToggleSubmit'+this.$_elementId(), (canSubmit) => {
+            this.$_vlOn('vlToggleSubmit'+this.$_elKompoId, (canSubmit) => {
                 this.canSubmit = canSubmit
             })
-            this.$_vlOn('vlRequestFormInfo'+this.$_elementId(), (askerId) => {
+            this.$_vlOn('vlRequestFormInfo'+this.$_elKompoId, (askerId) => {
                 this.$kompo.vlDeliverFormInfo(askerId, {
                     canSubmit: this.canSubmit,
                     jsonFormData: this.getJsonFormData(),
@@ -127,14 +127,14 @@ export default {
         },
         destroyEvents(){
             this.$_vlOff([
-                'vlPreSubmit'+this.$_elementId(),
-                'vlSubmitSuccess'+this.$_elementId(),
-                'vlSubmitError'+this.$_elementId(),
-                'vlToggle'+this.$_elementId(),
-                'vlUpdateErrorState'+this.$_elementId(),
-                'vlDeliverJsonFormData'+this.$_elementId(),
-                'vlToggleSubmit'+this.$_elementId(),
-                'vlRequestFormInfo'+this.$_elementId()
+                'vlPreSubmit'+this.$_elKompoId,
+                'vlSubmitSuccess'+this.$_elKompoId,
+                'vlSubmitError'+this.$_elKompoId,
+                'vlToggle'+this.$_elKompoId,
+                'vlUpdateErrorState'+this.$_elKompoId,
+                'vlDeliverJsonFormData'+this.$_elKompoId,
+                'vlToggleSubmit'+this.$_elKompoId,
+                'vlRequestFormInfo'+this.$_elKompoId
             ])
         }
 

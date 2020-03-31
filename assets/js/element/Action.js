@@ -1,11 +1,13 @@
-export default class Trigger {
-	constructor(vue, trigger){
+export default class Action {
+	constructor(action, vue){
 
+        this.actionData = action.data
 		this.vue = vue
+        
         this.warningConfirmed = false
 
-		this.action = trigger.action
-        this.kompoid = trigger.kompoid
+		this.actionType = action.actionType
+        /*this.kompoid = trigger.kompoid
 
 		this.route = trigger.route 
         this.routeMethod = trigger.routeMethod
@@ -31,13 +33,16 @@ export default class Trigger {
         this.emitPayload = trigger.emitPayload
 
 		this.success = trigger.triggers ? trigger.triggers.success : []
-		this.error = trigger.triggers ? trigger.triggers.error : []
+		this.error = trigger.triggers ? trigger.triggers.error : []*/
 	}
+    aData(key){
+        return this.actionData[key] || null
+    }
 	run(response, parentTrigger){
-        if(!this.action)
+        if(!this.actionType)
             return
 
-		var actionFunction = this.action + 'Action'
+		var actionFunction = this.actionType + 'Action'
         this[actionFunction](response, parentTrigger) 
 	}
     axiosRequestAction(){
@@ -45,8 +50,8 @@ export default class Trigger {
         this.vue.$kompo.vlToggleSubmit(this.vue.kompoid, false) //disable submit while loading
 
         axios({
-            url: this.route, 
-            method: this.routeMethod || 'POST', //POST when used outside PHP
+            url: this.aData('route'), 
+            method: this.aData('routeMethod') || 'POST', //POST when used outside PHP
             data: this.getPayloadForStore(),
             headers: Object.assign(
                 {'X-Kompo-Id': this.vue.kompoid}, 
@@ -58,13 +63,13 @@ export default class Trigger {
 			this.vue.$_state({ loading: false })
             this.vue.$kompo.vlToggleSubmit(this.vue.kompoid, true)
 
-        	this.vue.$_runTriggers(this.success, response, this)
+        	this.vue.$_runAllActionsIn(this.success, response, this)
 
         }).catch(error => {
 
             this.vue.$_state({ loading: false })
 
-        	this.vue.$_runTriggers(this.error, error, this)
+        	this.vue.$_runAllActionsIn(this.error, error, this)
         	this.handleAjaxError(error) 
 
         })
@@ -79,7 +84,7 @@ export default class Trigger {
         this.vue.$_state({ isSuccess: false })
         this.vue.$_state({ hasError: false })
 
-        this.vue.$kompo.vlRequestFormInfo(this.vue.kompoid, this.vue.$_elementId())
+        this.vue.$kompo.vlRequestFormInfo(this.vue.kompoid, this.vue.$_elKompoId)
 
         if(!this.vue.formInfo.canSubmit){
             setTimeout( () => { this.submitAction() }, 100)
@@ -113,7 +118,7 @@ export default class Trigger {
             this.vue.$_state({ isSuccess: true })
 
             this.vue.$kompo.vlSubmitSuccess(this.vue.kompoid, response)
-            this.vue.$_runTriggers(this.success, response, this)
+            this.vue.$_runAllActionsIn(this.success, response, this)
 
         })
         .catch(error => {
@@ -128,7 +133,7 @@ export default class Trigger {
                 }
             }else{
                 this.vue.$kompo.vlSubmitError(this.vue.kompoid, error)
-                this.vue.$_runTriggers(this.error, error, this)
+                this.vue.$_runAllActionsIn(this.error, error, this)
             }
             
         })
@@ -141,7 +146,7 @@ export default class Trigger {
         if(this.vue.customBeforeSort)
             this.vue.customBeforeSort()
 
-        this.vue.$kompo.vlSort(this.vue.kompoid, this.vue.$_sortValue, this.vue.$_elementId())
+        this.vue.$kompo.vlSort(this.vue.kompoid, this.vue.$_sortValue, this.vue.$_elKompoId)
     }
     emitFromAction(response){
         this.vue.$_vlEmitFrom(this.event, Object.assign(

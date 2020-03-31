@@ -11,7 +11,6 @@ class SelectUpdatable extends Select
 
     public function mounted($form)
     {
-        parent::mounted($form);
         $this->components = [ clone $this ];
         $this->components[0]->component = 'Select';
 
@@ -24,24 +23,23 @@ class SelectUpdatable extends Select
     /**
      * Specifies which form class to open in the modal. After submit, the object will be added to the select options (and selected).
      *
-     * @param      string  $route    The route name or uri.
-     * @param      array|null  $parameters   The route parameters (optional).
-     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
-     * @param      string|null  $label      The label of the link that loads the new form. Default is 'Add a new option'.
+     * @param string  $formClass  The fully qualified form class. Ex: App\Http\Komposers\MyForm::class
+     * @param array|null  $ajaxPayload  Additional custom data to add to the request (optional).
+     * @param string|null  $label      The label of the link that loads the new form. Default is 'Add a new option'.
      *
      * @return self 
      */
     public function addsRelatedOption(
-        $route, 
-        $parameters = null, 
+        $formClass, 
         $ajaxPayload = null, 
         $label = 'Add a new option'
     )
     {
-        if($ajaxPayload)
-            $this->data(['ajaxPayload' => $ajaxPayload]);
-
-        return RouteFinder::activateRoute($this)->data([
+        return $this->data([
+            'route' => RouteFinder::getKompoRoute(),
+            'routeMethod' => 'GET',
+            'formClass' => $formClass,
+            'ajaxPayload' => $ajaxPayload,
             'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
             'updateOptionsLabel' => $label
         ]);

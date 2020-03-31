@@ -3,6 +3,7 @@
 namespace Kompo;
 
 use Illuminate\Support\ServiceProvider;
+use Kompo\Http\Middleware\SetKompoLocaleMiddleware;
 use Kompo\Routing\Mixins\ExtendsRoutingTrait;
 
 class KompoServiceProvider extends ServiceProvider
@@ -26,6 +27,11 @@ class KompoServiceProvider extends ServiceProvider
 
         if (file_exists($file = __DIR__.'/../Core/KompoHelpers.php'))
             require_once $file;
+
+
+        /** @var Router $router */
+        $router = $this->app['router'];
+        $router->pushMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);
     }
 
     /**

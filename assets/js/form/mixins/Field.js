@@ -78,26 +78,26 @@ export default {
             this.$_keyUp(key)
             this.$_clearErrors()
 
-            this.$_runOwnTriggers('keyup')
+            this.$_runOwnInteractions('keyup')
             if(key.code === 'Enter'){
                 if(this.$_data('noSubmitOnEnter')){
-                    this.$_runOwnTriggersWithoutActions('enter', ['submitForm'])
+                    this.$_runOwnInteractionsWithoutActions('enter', ['submitForm'])
                 }else{
-                    this.$_runOwnTriggers('enter')
+                    this.$_runOwnInteractions('enter')
                 }
             }
         },
         $_changeAction(){
             this.$kompo.vlUpdateErrorState(this.kompoid)
             
-            this.$_runOwnTriggersWithAction('change', 'emitFrom')
+            this.$_runOwnInteractionsWithAction('change', 'emitFrom')
 
             if(!this.$_pristine)
-                this.$_runOwnTriggersWithAction('change', 'axiosRequest')
+                this.$_runOwnInteractionsWithAction('change', 'axiosRequest')
             
-            this.$_runOwnTriggersWithAction('change', 'submitForm')
-            this.$_runOwnTriggersWithAction('change', 'refreshCatalog')
-            this.$_runOwnTriggersWithAction('change', 'sortCatalog')
+            this.$_runOwnInteractionsWithAction('change', 'submitForm')
+            this.$_runOwnInteractionsWithAction('change', 'refreshCatalog')
+            this.$_runOwnInteractionsWithAction('change', 'sortCatalog')
 
             this.$_clearErrors()
         },
@@ -113,7 +113,7 @@ export default {
         },
         $_blurAction(){
             this.$_updateFieldState()
-            this.$_runOwnTriggers('blur')
+            this.$_runOwnInteractions('blur')
         },
         $_blurActionDelayed(delay){
             setTimeout(()=> this.$_blurAction(), delay || 200)            
@@ -154,7 +154,7 @@ export default {
             this.$_togglesForm()
         
 
-        this.$_runOwnTriggersWithAction('load', 'axiosRequest')
+        this.$_runOwnInteractionsWithAction('load', 'axiosRequest')
     },
     created() {
         this.$_setInitialValue()

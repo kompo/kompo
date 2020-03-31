@@ -2,9 +2,18 @@
 
 namespace Kompo\Core;
 
-
 class ValidationManager
 {
+    /**
+     * Validates the incoming request with the komposer's rules.
+     *
+     * @param      <type>  $komposer  The komposer
+     */
+    public static function validateRequest($komposer)
+    {
+        request()->validate(static::getRules($komposer));
+    }
+
     /**
      * Sets the field validation rules.
      *
@@ -42,6 +51,18 @@ class ValidationManager
     {
         if($field->data('rules'))
             static::addRulesToKomposer($field->data('rules'), $komposer);
+    }
+
+    /**
+     * Gets the validation rules from a komposer or komponent.
+     *
+     * @param <type>  $element  The komposer or komponent
+     *
+     * @return array
+     */
+    public static function getRules($element)
+    {
+        return $element->data('rules');
     }
 
 

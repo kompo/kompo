@@ -148,6 +148,16 @@ abstract class Form extends Komposer
             $this->noMargins();
     }
 
+    /**
+     * Prepares the components of the Form when included in another Komposer.
+     *
+     * @var array
+     */
+    public function prepareForAction($komposer)
+    {
+        ValidationManager::addRulesToKomposer($this->data('rules'), $komposer);
+    }
+
 
     /**
      * Shortcut method to render a Form into it's Vue component.

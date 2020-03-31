@@ -2,14 +2,15 @@
 
 namespace Kompo\Komponents;
 
-use Kompo\Komponents\Traits\FormSubmitConfigurations;
-use Kompo\Komponents\Traits\PerformsAjax;
 use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Interactions\Traits\NestsInteractions;
 
 abstract class Trigger extends Komponent
 {
-    use HasInteractions, NestsInteractions, FormSubmitConfigurations;
+    use HasInteractions, NestsInteractions;
+
+    use Traits\FormSubmitConfigurations,
+        Traits\LabelInfoComment;
     //use PerformsAjax;
 
 	/**

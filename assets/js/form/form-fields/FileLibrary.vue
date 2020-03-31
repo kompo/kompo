@@ -17,7 +17,7 @@
             </template>
         </vlTaggableInput>
 
-        <modal :name="'modal-'+$_elementId()">
+        <modal :name="'modal-'+$_elKompoId">
             
             <vl-thumbnail-gallery 
                 :images="options || []" 

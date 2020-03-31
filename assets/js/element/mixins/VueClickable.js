@@ -12,7 +12,7 @@ export default {
             if(!this.vcomponent)
                 return
 
-            this.$_runOwnTriggersWithoutActions('click', ['submitForm', 'sortCatalog', 'emitFrom'])
+            this.$_runOwnInteractionsWithoutActions('click', ['submitForm', 'sortCatalog', 'emitFrom'])
 
         }
     }

@@ -16,7 +16,7 @@ export default {
     mixins: [Other],
     methods: {
     	activate(){
-            if(!this.$_triggersOfType('click'))
+            if(!this.$_interactionsOfType('click'))
                 return
             
             this.$emit('activate') //for catalog activation

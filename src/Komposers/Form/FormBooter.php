@@ -2,10 +2,11 @@
 
 namespace Kompo\Komposers\Form;
 
-use Kompo\Form;
-use Kompo\Core\Util;
-use Kompo\Routing\RouteFinder;
 use Illuminate\Database\Eloquent\Model;
+use Kompo\Core\Util;
+use Kompo\Exceptions\NotFoundKompoActionException;
+use Kompo\Form;
+use Kompo\Routing\RouteFinder;
 
 class FormBooter extends Form
 {
@@ -43,6 +44,8 @@ class FormBooter extends Form
             case 'updated-option':
                 return FormManager::reloadUpdatedSelectOptions($form);
         }
+
+        throw new NotFoundKompoActionException(get_class($form));
 
     }
 

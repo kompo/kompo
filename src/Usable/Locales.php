@@ -11,7 +11,7 @@ class Locales extends Dropdown
 
     protected function vlInitialize($label)
     {
-        parent::vlInitialize($label ?: strtoupper(session('locale')));
+        parent::vlInitialize($label ?: strtoupper(session('kompo_locale')));
 
     	$this->submenu(
             collect(config('vuravel.locales'))->map(function($language, $locale){

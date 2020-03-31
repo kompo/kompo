@@ -7,7 +7,7 @@
             <a class="vlFormComment" href="javascript:void(0)" @click.stop="loadUpdateForm">
                 <i class="icon-plus" /><span v-html="$_data('updateOptionsLabel')"/>
             </a>
-            <vl-modal :name="'modal'+$_elementId()">
+            <vl-modal :name="'modal'+$_elKompoId">
                 <vl-form :vcomponent="updateForm" @success="updateOptionsAndValue"/>
             </vl-modal>
         </div>
@@ -38,7 +38,7 @@ export default {
                 }
             }).then(r => {
                 this.updateForm = r.data
-                this.$modal.show('modal'+this.$_elementId())
+                this.$modal.show('modal'+this.$_elKompoId)
             }).catch(e => this.$_handleAjaxError(e) )
         },
         updateOptionsAndValue(response){
@@ -74,7 +74,7 @@ export default {
             this.components.splice(0, 1, newSelect)
             this.renderKey += 1
             if(!this.$_data('keepModalOpen'))
-                this.$modal.close('modal'+this.$_elementId())
+                this.$modal.close('modal'+this.$_elKompoId)
         }
     }
 }

@@ -24,6 +24,7 @@
             "Kompo\\Database\\": "src/Database",
             "Kompo\\Eloquent\\": "src/Eloquent",
             "Kompo\\Exceptions\\": "src/Exceptions",
+            "Kompo\\Http\\": "src/Http",
             "Kompo\\Interactions\\": "src/Interactions",
             "Kompo\\Komponents\\": "src/Komponents",
             "Kompo\\Komposers\\": "src/Komposers",

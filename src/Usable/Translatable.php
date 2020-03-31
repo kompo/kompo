@@ -15,9 +15,10 @@ class Translatable extends Textarea
         parent::vlInitialize($label);
 
     	$this->locales = config('kompo.locales');
+
         $this->data([
         	'locales' => $this->locales,
-        	'currentLocale' => session('locale')
+        	'currentLocale' => session('kompo_locale')
         ]);
         $this->value([]);
     }

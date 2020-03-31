@@ -4,10 +4,10 @@ import HasClasses from './HasClasses'
 import HasStyles from './HasStyles'
 import HasData from './HasData'
 import PerformsAjax from './PerformsAjax'
-import RunsTriggers from './RunsTriggers'
+import RunsInteractions from './RunsInteractions'
 
 export default {
-    mixins: [ EmitsEvents, HasId, HasClasses, HasStyles, HasData, PerformsAjax, RunsTriggers ],
+    mixins: [ EmitsEvents, HasId, HasClasses, HasStyles, HasData, PerformsAjax, RunsInteractions ],
     props: {
         vcomponent: { type: Object, required: true }
     },
@@ -64,11 +64,11 @@ export default {
             }
         },
         $_toggle(toggleId){
-            if(this.$_elementId() == toggleId)
+            if(this.$_elKompoId == toggleId)
                 this.$_state({ vlHidden: this.$_state('vlHidden') ? false : true })
         },
         $_deliverJsonTo(componentId, json){
-            if(this.$_elementId() == componentId)
+            if(this.$_elKompoId == componentId)
                 this.elementStore = json
         },
         //do nothing because fields/trigger functions
