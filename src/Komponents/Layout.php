@@ -66,5 +66,15 @@ abstract class Layout extends Komponent
 
         });
     }
+
+    /**
+     * Removes the default margins applied to rows and columns layouts.
+     *
+     * @return     self
+     */
+    public function noMargins()
+    {
+        return $this->data(['noMargins' => true]);
+    }
     
 }

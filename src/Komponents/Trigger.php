@@ -10,8 +10,8 @@ abstract class Trigger extends Komponent
     use HasInteractions, NestsInteractions;
 
     use Traits\FormSubmitConfigurations,
+        Traits\AjaxConfigurations,
         Traits\LabelInfoComment;
-    //use PerformsAjax;
 
 	/**
      * Passes Komposer information to the component.

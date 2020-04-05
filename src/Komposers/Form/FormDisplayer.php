@@ -1,7 +1,6 @@
 <?php
 namespace Kompo\Komposers\Form;
 
-use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\SessionStore;
 use Kompo\Core\ValidationManager;
 use Kompo\Komposers\KomposerManager;
@@ -11,10 +10,6 @@ class FormDisplayer extends FormBooter
 {
     public static function displayComponents($form)
     {
-        AuthorizationGuard::checkBoot($form);
-
-        KomposerManager::created($form);
-
         static::prepareSubmitRedirectRoutes($form);
 
         ValidationManager::addRulesToKomposer($form->rules(), $form); //for Front-end validations TODO:

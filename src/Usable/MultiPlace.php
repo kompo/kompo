@@ -15,9 +15,9 @@ class MultiPlace extends Place
         throw new LogicException("Only Kompo\Place accepts the attributesToColumns() method.");
     }
 
-    protected function setAttributeFromRequest($name, $model)
+    protected function setAttributeFromRequest($requestName, $name, $model)
     {
-		$value = collect(request()->input($name))->map(function($place){
+		$value = collect(request()->__get($requestName))->map(function($place){
 
             return $this->placeToDB($place);
 
@@ -26,11 +26,11 @@ class MultiPlace extends Place
         return $value->count() ? $value : null;
     }
 
-    protected function setRelationFromRequest($name, $model)
+    protected function setRelationFromRequest($requestName, $name, $model)
     {
         $oldPlaces = ModelManager::getValueFromDb($model, $name);
 
-        $newPlaces = request()->input($name);
+        $newPlaces = request()->__get($requestName);
 
         $keepExtIds = [];
 

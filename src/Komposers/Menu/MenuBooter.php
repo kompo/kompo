@@ -4,16 +4,22 @@ namespace Kompo\Komposers\Menu;
 
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\SessionStore;
-use Kompo\Komposers\KomposerManager;
 use Kompo\Menu;
 use Kompo\Routing\RouteFinder;
 
-class MenuBooter extends Menu
+class MenuBooter
 {
-	public function __construct()
-	{
-        //overriden
-	}
+    public static function bootForAction($session)
+    {
+        $menu = static::instantiateUnbooted($session['kompoClass']);
+
+        $menu->store($session['store']);
+        $menu->parameter($session['parameters']); //Parameters necessary for menus??
+
+        AuthorizationGuard::checkBoot($menu);
+
+        return $menu;
+    }
 
 	public static function bootForDisplay($menu, $store = [])
 	{
@@ -22,8 +28,6 @@ class MenuBooter extends Menu
         $menu->parameter(RouteFinder::getRouteParameters());
 
         AuthorizationGuard::checkBoot($menu);
-
-        KomposerManager::created($menu);
 
 		$menu->components = collect($menu->components())->filter()->all();
 

@@ -43,7 +43,7 @@ trait HasSubmenu
 
     public function prependMenu($args)
     {
-        $this->components = $this->prepareMenu(func_get_args())->concat($this->components);
+        $this->components = $this->prepareMenu(array_merge(func_get_args(), $this->components));
         
         return $this;
     }

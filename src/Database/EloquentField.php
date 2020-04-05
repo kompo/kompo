@@ -8,37 +8,11 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+
 class EloquentField
 {
-    /**
-     * Gets the appropriate model and it's attribute from the field's name.
-     * Its goal is to handle nested One to One relations with dot notation.
-     *
-     * @param  Illuminate\Database\Eloquent\Model $model
-     * @param  string  $initialName
-     *
-     * @throws \Kompo\Exceptions\NotOneToOneRelationException  (description)
-     *
-     * @return array
-     */
-    public static function parseName($model, $initialName)
-    {
-        $name = explode('.', $initialName);
-
-        while ( count($name) > 1) {
-
-            $relationName = $name[0];
-
-            if(!Lineage::isOneToOne($model, $relationName))
-                throw new NotOneToOneRelationException($initialName, $relationName);
-
-            $model = $model->{$relationName} ?: $model->{$relationName}()->getRelated()->newInstance();
-            array_shift($name);
-        }
-
-        return [$model, $name[0]];
-    }
-
     /**
      * Gets a related instance for a specific relation.
      *
@@ -77,7 +51,7 @@ class EloquentField
 
         if($relation instanceOf BelongsToMany){
             $relationQuery = $relation->getBaseQuery();
-            array_shift($relationQuery->joins); //removing a join that stays after noConstraints for some reason...
+            array_shift($relationQuery->joins); //removing a join that Laravel does not remove with noConstraints for some reason...
             return $relationQuery->get();
         }
 
@@ -85,29 +59,52 @@ class EloquentField
     }
 
     /**
-     * If the field should fill before saving the model.
+     * Returns the stage during which the model should be filled.
      *
-     * @param Illuminate\Database\Eloquent\Model  $model
-     * @param string                              $name
+     * @param Illuminate\Database\Eloquent\Model  $mainModel
+     * @param string                              $requestName
      *
      * @return Boolean
      */
-    public static function fillsBeforeSave($model, $name)
+    public static function getFillStage($mainModel, $requestName)
     {
-        return !static::fillsAfterSave($model, $name);
+        if(strpos($requestName, '.') > -1)
+            return 'fillHasMorphOne';
+
+        return ($relation = Lineage::findRelation($mainModel, $requestName)) && !($relation instanceof BelongsTo) ? //morphTo is a belongsTo
+            'fillAfterSave' : 'fillBeforeSave'; 
     }
 
     /**
-     * If the field should fill after saving the model.
+     * Gets the appropriate model and it's attribute from the field's name.
+     * Its goal is to handle nested One to One relations with dot notation.
      *
-     * @param Illuminate\Database\Eloquent\Model  $model
-     * @param string                              $name
+     * @param  Illuminate\Database\Eloquent\Model $model
+     * @param  string  $requestName
      *
-     * @return Boolean
+     * @throws \Kompo\Exceptions\NotOneToOneRelationException  (description)
+     *
+     * @return array
      */
-    public static function fillsAfterSave($model, $name)
+    public static function parseName($model, $requestName)
     {
-        return ($relation = Lineage::findRelation($model, $name)) && !($relation instanceof BelongsTo); //morphTo is a belongsTo
+        $name = explode('.', $requestName);
+
+        while ( count($name) > 1) {
+
+            $relationName = $name[0];
+
+            if(!Lineage::isOneToOne($model, $relationName))
+                throw new NotOneToOneRelationException($requestName, $relationName);
+
+            if(!$model->{$relationName})
+                $model->{$relationName} = $model->{$relationName}()->getRelated()->newInstance();
+
+            $model = $model->{$relationName};
+            array_shift($name);
+        }
+
+        return [$model, $name[0]];
     }
 
     /**

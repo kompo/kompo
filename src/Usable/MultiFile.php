@@ -15,11 +15,11 @@ class MultiFile extends File
      */
     public $multiple = true;
 
-    protected function setAttributeFromRequest($name, $model)
+    protected function setAttributeFromRequest($requestName, $name, $model)
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
-        $value = collect(request()->__get($name))->map(function($file) use($model, $name){
+        $value = collect(request()->__get($requestName))->map(function($file) use($model, $name){
 
             return $file instanceOf UploadedFile ? 
                 
@@ -33,13 +33,13 @@ class MultiFile extends File
         return $value->count() ? $value : null;
     }
 
-    protected function setRelationFromRequest($name, $model)
+    protected function setRelationFromRequest($requestName, $name, $model)
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
         if($oldFiles && $oldFiles->count()){
 
-            $keepIds = collect(request()->input($name))->map(function($file, $model){ 
+            $keepIds = collect(request()->__get($requestName))->map(function($file) use($model){ 
 
                 return json_decode($file)->{$model->getKeyName()} ?? null; 
 
@@ -59,7 +59,7 @@ class MultiFile extends File
         }
         
         //Has Many these files will be attached
-        if($uploadedFiles = request()->file($name)){
+        if($uploadedFiles = request()->file($requestName)){
 
             $relatedModel = EloquentField::findOrFailRelated($model, $name);
 

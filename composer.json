@@ -96,7 +96,7 @@
                 "VlSelectLinks": "Kompo\\SelectLinks",
                 "VlSelectUpdatable": "Kompo\\SelectUpdatable",
                 "VlStripe": "Kompo\\Stripe",
-                "VlTableCatalog": "Kompo\\TableCatalog",
+                "VlTable": "Kompo\\Table",
                 "VlTab": "Kompo\\Tab",
                 "VlTabs": "Kompo\\Tabs",
                 "VlTextarea": "Kompo\\Textarea",

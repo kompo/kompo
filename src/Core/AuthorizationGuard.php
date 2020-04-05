@@ -3,6 +3,7 @@
 namespace Kompo\Core;
 
 use Kompo\Exceptions\UnauthorizedException;
+use Kompo\Komposers\KomposerManager;
 
 class AuthorizationGuard
 {
@@ -10,12 +11,11 @@ class AuthorizationGuard
     {
         if(!$komposer->bootAuthorization())
             throw new UnauthorizedException( get_class($komposer), 'boot' );
-    }
 
-    public static function checkPreventSubmit($komposer)
-    {
-        if($komposer->_kompo('options')['preventSubmit'])
-            throw new UnauthorizedException( get_class($komposer), 'submit' );
+        if(in_array(request()->header('X-Kompo-Action'),['eloquent-submit', 'handle-submit']))
+            static::checkPreventSubmit($komposer);
+
+        KomposerManager::created($komposer);
     }
 
     public static function mainGate($komposer)
@@ -34,5 +34,11 @@ class AuthorizationGuard
         //todo
     }
 
-    /**** PRIVATE ****/
+    /**** PRIVATE / PROTECTED ****/
+
+    protected static function checkPreventSubmit($komposer)
+    {
+        if($komposer->_kompo('options')['preventSubmit'])
+            throw new UnauthorizedException( get_class($komposer), 'submit' );
+    }
 }

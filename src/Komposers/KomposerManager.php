@@ -5,7 +5,7 @@ namespace Kompo\Komposers;
 use Kompo\Exceptions\ComponentsMethodNotFoundException;
 use Kompo\Core\Util;
 
-class KomposerManager extends Komposer
+class KomposerManager
 {
     /**
      * A method that gets executed at the beginning of the lifecycle.
@@ -86,6 +86,19 @@ class KomposerManager extends Komposer
     public static function pushField($komposer, $field)
     {
     	$komposer->_kompo('fields', $field);
+    }
+
+    /**
+     * Remove a field from the Komposer after use
+     *
+     * @param Kompo\Komposers\Komposer $komposer
+     * @param integer   $fieldKey
+     * 
+     * @return void
+     */
+    public static function removeField($komposer, $fieldKey)
+    {
+        $komposer->_kompo('fields', $fieldKey);
     }
 
     /**

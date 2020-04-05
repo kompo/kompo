@@ -13,12 +13,10 @@ export default {
     },
     computed: {
     	customLabel(){
-    		return _.isString(this.vcomponent) ? 'VlPlainSpan' : 'Vl'+this.vcomponent.component
+    		return (_.isString(this.vcomponent) || !this.vcomponent) ? 'VlPlainSpan' : 'Vl'+this.vcomponent.component
     	},
     	component(){
-    		return _.isString(this.vcomponent) ? {
-    			label: this.vcomponent
-    		} : this.vcomponent
+    		return (_.isString(this.vcomponent)  || !this.vcomponent) ? {label: this.vcomponent} : this.vcomponent
     	}
     }
 }

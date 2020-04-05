@@ -2,6 +2,8 @@
 
 namespace Kompo\Elements\Traits;
 
+use Kompo\Komponents\Field;
+
 trait HasConfig
 {
     /**
@@ -32,8 +34,11 @@ trait HasConfig
 
         }elseif($key === 'fields'){ //storing field Komponents: push
 
-            if($data){
+            if($data instanceOf Field){
                 array_push($this->_kompo[$key], $data);
+                return $this;
+            }elseif(is_integer($data)){
+                unset($this->_kompo[$key][$data]);
                 return $this;
             }else{
                 return $this->_kompo[$key];

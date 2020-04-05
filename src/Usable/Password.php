@@ -14,9 +14,9 @@ class Password extends Input
         $this->inputType('password');
     }
 
-    protected function setAttributeFromRequest($name, $record)
+    protected function setAttributeFromRequest($requestName, $name, $model)
     {
-        return Hash::make(request()->input($name));
+        return Hash::make(request()->__get($requestName));
     }
 
 }

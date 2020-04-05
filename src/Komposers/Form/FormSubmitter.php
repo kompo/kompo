@@ -2,7 +2,9 @@
 namespace Kompo\Komposers\Form;
 
 use Kompo\Core\AuthorizationGuard;
+use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
+use Kompo\Database\EloquentField;
 use Kompo\Database\ModelManager;
 use Kompo\Exceptions\FormMethodNotFoundException;
 use Kompo\Komposers\KomposerManager;
@@ -11,12 +13,6 @@ class FormSubmitter extends FormBooter
 {
     protected static function prepareForSubmit($form)
     {
-        AuthorizationGuard::checkBoot($form);
-
-        AuthorizationGuard::checkPreventSubmit($form);
-
-        KomposerManager::created($form);
-
         KomposerManager::prepareComponentsForAction($form, 'components'); //mainly to retrieve rules from fields
 
         ValidationManager::addRulesToKomposer($form->rules(), $form);
@@ -40,7 +36,7 @@ class FormSubmitter extends FormBooter
     {
         static::prepareForSubmit($form);
 
-        return static::saveModel($form, request()); //TODO remove  request()
+        return static::saveModel($form);
     }
 
     /**
@@ -48,13 +44,9 @@ class FormSubmitter extends FormBooter
      *
      * @return void
      */
-    protected static function saveModel($komposer, $request)
+    protected static function saveModel($komposer)
     {
-        KomposerManager::collectFields($komposer)->each( function($field) use ($request, $komposer) {
-
-            $field->fillBeforeSave($request, $komposer->model);
-
-        });
+        static::loopOverFieldsFor('fillBeforeSave', $komposer);
 
         static::beforeSaveHook($komposer);
 
@@ -64,12 +56,9 @@ class FormSubmitter extends FormBooter
 
         static::afterSaveHook($komposer);
 
+        static::loopOverFieldsFor('fillAfterSave', $komposer);
 
-        KomposerManager::collectFields($komposer)->each( function($field) use ($request, $komposer) {
-
-            $field->fillAfterSave($request, $komposer->model);
-
-        });
+        static::loopOverFieldsFor('fillHasMorphOne', $komposer);
 
         static::completedHook($komposer);
 
@@ -124,4 +113,39 @@ class FormSubmitter extends FormBooter
         return $komposer->model;
     }
 
+
+
+    protected static function loopOverFieldsFor($action, $komposer)
+    {
+        $hasMorphOneModels = [];
+
+        foreach (KomposerManager::collectFields($komposer) as $fieldKey => $field) {
+
+            if($field->doesNotFillCondition())
+                return;
+
+            $processed = Util::collect($field->name)->map(function($requestName) use($field, $komposer, $action) {
+
+                if(!request()->has($requestName))
+                    return;
+
+                if(EloquentField::getFillStage($komposer->model, $requestName) == $action)
+                    return $field->{$action}($requestName, $komposer->model);
+
+            })->filter();
+
+            if($processed->count()){
+                
+                KomposerManager::removeField($komposer, $fieldKey);
+                
+                if($action == 'fillHasMorphOne')
+                    $hasMorphOneModels = array_unique(array_merge($hasMorphOneModels, $processed->toArray()));
+            }
+        }
+
+        foreach ($hasMorphOneModels as $nestedModel) {
+            $komposer->model->{$nestedModel}()->save($komposer->model->{$nestedModel});
+            $komposer->model->load($nestedModel);
+        }
+    }
 }

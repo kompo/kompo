@@ -22,7 +22,7 @@ trait KompoTestRequestsTrait
 
     protected function browse($komposer, $data, $sort = null, $page = null)
     {
-        return $this->kompoAction($komposer, 'browse', $data, [ 
+        return $this->kompoAction($komposer, 'browse-items', $data, [ 
             'X-Kompo-Page' => $page,
             'X-Kompo-Sort' => $sort,
         ]);

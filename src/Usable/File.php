@@ -95,11 +95,11 @@ class File extends Field
             $this->fileHandler->mapFromDB($model);
     }
 
-    protected function setAttributeFromRequest($name, $model)
+    protected function setAttributeFromRequest($requestName, $name, $model)
     {
         $oldFile = $this->attributesToColumns ? $model : ModelManager::getValueFromDb($model, $name);
 
-        if( ($uploadedFile = request()->__get($name)) && $uploadedFile instanceOf UploadedFile){
+        if( ($uploadedFile = request()->__get($requestName)) && $uploadedFile instanceOf UploadedFile){
 
             $this->fileHandler->unlinkFileIfExists($oldFile);
 
@@ -115,7 +115,7 @@ class File extends Field
 
             return $newFile[$name];
 
-        }elseif(!request()->__get($name)){
+        }elseif(!request()->__get($requestName)){
 
             $this->fileHandler->unlinkFileIfExists($oldFile);
 
@@ -131,11 +131,11 @@ class File extends Field
         }
     }
 
-    protected function setRelationFromRequest($name, $model)
+    protected function setRelationFromRequest($requestName, $name, $model)
     {
         $oldFile = ModelManager::getValueFromDb($model, $name);
         
-        if( ($uploadedFile = request()->__get($name)) && ($uploadedFile instanceOf UploadedFile)){
+        if( ($uploadedFile = request()->__get($requestName)) && ($uploadedFile instanceOf UploadedFile)){
 
             $this->fileHandler->unlinkFileIfExists($oldFile);
 
@@ -146,7 +146,7 @@ class File extends Field
             $value = $this->fileHandler->fileToDB($uploadedFile, $relatedModel);
 
         }else{
-            if(!request()->__get($name) && $oldFile){
+            if(!request()->__get($requestName) && $oldFile){
 
                 $this->fileHandler->unlinkFileIfExists($oldFile);
 

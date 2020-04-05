@@ -16,8 +16,8 @@ use Kompo\Komposers\KomposerManager;
 abstract class Field extends Komponent
 {
     use HasInteractions, NestsInteractions;
-    //use PerformsAjax, 
     use Traits\FiltersCatalog,//for tests to work but should review the trait since new Interactions feature
+        Traits\AjaxConfigurations,
         Traits\FormSubmitConfigurations,
         Traits\LabelInfoComment; 
 
@@ -367,66 +367,63 @@ abstract class Field extends Komponent
     }
 
     /**
-     * Gets the value from the request and fills the attributes of the eloquent record.
+     * Gets the value from the request and fills the model's attributes.
      *
-     * @param Model $model
+     * @param string                             $requestName
+     * @param Illuminate\Database\Eloquent\Model $model
+     * 
      * @return void
      */
-    public function fillBeforeSave($request, $model)
+    public function fillBeforeSave($requestName, $model, $name = null)
     {
-        if($this->doesNotFillCondition())
-            return;
+        $name = $name ?: $requestName;
 
-        Util::collect($this->name)->each(function($name) use($model) {
+        if($this->shouldCastToArray($model, $name))
+            $model->mergeCasts([$name => 'array']);
 
-            if(!request()->has($name))
-                return;
+        $value = method_exists($this, 'setAttributeFromRequest') ?
+            $this->setAttributeFromRequest($requestName, $name, $model) :
+            request()->__get($requestName); //->input() has special operations for dot notations...
 
-            list($model, $name) = EloquentField::parseName($model, $name);
+        ModelManager::fillAttribute($model, $name, $value, $this->extraAttributes, $this->morphToModel ?? null);
 
-            if(!EloquentField::fillsBeforeSave($model, $name))
-                return;
-
-            if($this->shouldCastToArray($model, $name))
-                $model->mergeCasts([$name => 'array']);
-
-            $value = method_exists($this, 'setAttributeFromRequest') ?
-                $this->setAttributeFromRequest($name, $model) :
-                request()->input($name);
-
-            ModelManager::fillAttribute($model, $name, $value, $this->extraAttributes, $this->morphToModel ?? null);
-        });
+        return true;
     }
 
     /**
      * Gets the value from the request and parses it optionally (see methods overrides).
      *
-     * @param Illuminate\Http\Request $request
+     * @param string                             $requestName
      * @param Illuminate\Database\Eloquent\Model $model
      * 
      * @return void
      */
-    public function fillAfterSave($request, $model)
+    public function fillAfterSave($requestName, $model)
     {
-        if($this->doesNotFillCondition())
-            return;
+        $value = method_exists($this, 'setRelationFromRequest') ?
+            $this->setRelationFromRequest($requestName, $requestName, $model) :
+            request()->__get($requestName);
 
-        Util::collect($this->name)->each(function($name) use($model) {
+        ModelManager::saveAndLoadRelation($model, $requestName, $value, $this->extraAttributes);
+        
+        return true;
+    }
 
-            if(!request()->has($name))
-                return;
+    /**
+     * Gets the value from the request and parses it optionally (see methods overrides).
+     *
+     * @param string                             $requestName
+     * @param Illuminate\Database\Eloquent\Model $mainModel
+     * 
+     * @return void
+     */
+    public function fillHasMorphOne($requestName, $mainModel)
+    {
+        list($model, $name) = EloquentField::parseName($mainModel, $requestName);
 
-            list($model, $name) = EloquentField::parseName($model, $name);
-
-            if(!EloquentField::fillsAfterSave($model, $name))
-                return;
-
-            $value = method_exists($this, 'setRelationFromRequest') ?
-                $this->setRelationFromRequest($name, $model) :
-                request()->input($name);
-
-            ModelManager::saveAndLoadRelation($model, $name, $value, $this->extraAttributes);
-        });
+        $this->fillBeforeSave($requestName, $model, $name);
+        
+        return str_replace('.'.$name, '', $requestName); //returning the nested model for save
     }
 
     /**
@@ -434,7 +431,7 @@ abstract class Field extends Komponent
      *
      * @return     Boolean  
      */
-    protected function doesNotFillCondition()
+    public function doesNotFillCondition()
     {
         return EloquentField::getConfig($this, 'doesNotFill') || $this->isReadOnly();
     }

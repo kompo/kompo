@@ -4,36 +4,20 @@ namespace Kompo\Komposers\Catalog;
 
 use Kompo\Catalog;
 use Kompo\Core\AuthorizationGuard;
-use Kompo\Core\SessionStore;
-use Kompo\Komposers\KomposerManager;
 use Kompo\Routing\RouteFinder;
 
-class CatalogBooter extends Catalog
+class CatalogBooter
 {
-	public function __construct()
-	{
-        //overriden
-	}
-
-    public static function performAction($session)
+    public static function bootForAction($session)
     {
         $catalog = static::instantiateUnbooted($session['kompoClass']);
 
         $catalog->store($session['store']);
         $catalog->parameter($session['parameters']);
+        
+        AuthorizationGuard::checkBoot($catalog);
 
-        switch(request()->header('X-Kompo-Action'))
-        {
-            case 'browse':
-                return CatalogDisplayer::browseCards($catalog);
-
-            case 'order':
-                return FormSubmitter::callCustomHandle($catalog);
-
-            case 'delete':
-                return FormManager::getMatchedSelectOptions($catalog);
-        }
-
+        return $catalog;
     }
 
 	public static function bootForDisplay($catalog, $store = [])
@@ -41,6 +25,8 @@ class CatalogBooter extends Catalog
         $catalog = static::instantiateUnbooted($catalog);
         $catalog->store($store);
         $catalog->parameter(RouteFinder::getRouteParameters());
+
+        AuthorizationGuard::checkBoot($catalog);
 
 		return CatalogDisplayer::displayFiltersAndCards($catalog);
 	}

@@ -20,10 +20,6 @@ class CatalogBrowser extends CatalogBooter
 
     public static function browseCards($catalog)
     {
-        AuthorizationGuard::checkBoot($catalog);
-
-        KomposerManager::created($catalog);
-
         CatalogDisplayer::prepareQuery($catalog);
 
         static::prepareFiltersForAction($catalog);

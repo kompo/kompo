@@ -153,12 +153,15 @@ export default {
                 headers: {
                     'X-Kompo-Id': this.$_elKompoId,
                     'X-Kompo-Page': this.currentPage,
-                    'X-Kompo-Sort': this.currentSort
+                    'X-Kompo-Sort': this.currentSort,
+                    'X-Kompo-Action': 'browse-items'
                 }
             }).then(r => {
                 this.$_state({ loading: false })
-                this.pagination = this.getPagination(r.data)
-                Vue.set(this, 'cards', this.getCards(r.data))
+                //this.pagination = this.getPagination(r.data)
+                //Vue.set(this, 'cards', this.getCards(r.data))
+                this.pagination = r.data
+                Vue.set(this, 'cards', r.data.data)
                 this.cardsKey += 1 //to re-render cards
             })
             .catch(e => {

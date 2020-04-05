@@ -5,8 +5,10 @@ namespace Kompo\Tests\Feature\Validation;
 use Illuminate\Support\Str;
 use Kompo\DeleteLink;
 use Kompo\Form;
+use Kompo\KompoServiceProvider;
 use Kompo\Komponents\Field;
 use Kompo\Komposers\Komposer;
+use Kompo\Model;
 
 class _AllFieldsValidationsForm extends Form
 {
@@ -22,7 +24,7 @@ class _AllFieldsValidationsForm extends Form
 			$komponent = str_replace('.php', '', $komponent);
 			$komponentClass = 'Kompo\\'.$komponent;
 
-			if(is_dir($dir.'/'.$komponent) || is_a($komponentClass, Komposer::class, true) || is_a($komponentClass, DeleteLink::class, true))
+			if($this->excludedFiles($dir, $komponent, $komponentClass))
 				return null;
 			
 			if(($komponent = new $komponentClass($komponent)) instanceOf Field)
@@ -39,6 +41,12 @@ class _AllFieldsValidationsForm extends Form
 	public function components()
 	{
 		return $this->fields;
+	}
+
+	public function excludedFiles($dir, $komponent, $komponentClass)
+	{
+		return is_dir($dir.'/'.$komponent) || is_a($komponentClass, Komposer::class, true) || is_a($komponentClass, DeleteLink::class, true)
+			|| is_a($komponentClass, Model::class, true) || is_a($komponentClass, KompoServiceProvider::class, true);
 	}
 
 	public function rules()

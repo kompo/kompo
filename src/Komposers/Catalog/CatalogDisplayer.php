@@ -16,17 +16,12 @@ use Kompo\Database\DatabaseQuery;
 use Kompo\Database\EloquentQuery;
 use Kompo\Exceptions\BadQueryDefinitionException;
 use Kompo\Komposers\Catalog\CatalogBrowser;
-use Kompo\Komposers\KomposerManager;
 use Kompo\Routing\RouteFinder;
 
 class CatalogDisplayer extends CatalogBrowser
 {
     public static function displayFiltersAndCards($catalog)
     {
-        AuthorizationGuard::checkBoot($catalog);
-
-        KomposerManager::created($catalog);
-
         static::prepareCatalog($catalog);
 
         static::prepareQuery($catalog);

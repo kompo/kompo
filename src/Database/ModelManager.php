@@ -71,12 +71,24 @@ class ModelManager
      */
     public static function saveAttributes($model)
     {
-        if(defined(get_class($model).'::CREATED_BY') && !$model->getKey() && $model::CREATED_BY && auth()->check())
-            $model->{$model::CREATED_BY} = auth()->user()->id;
-        if(defined(get_class($model).'::UPDATED_BY') && $model::UPDATED_BY && auth()->check())
-            $model->{$model::UPDATED_BY} = auth()->user()->id;
+        static::setCreatedUpdatedBy($model);
 
         $model->save();
+    }
+
+    /**
+     * Saves a HasOne model with it's attributes to the DB.
+     *
+     * @param Illuminate\Database\Eloquent\Model $mainModel
+     * @param Illuminate\Database\Eloquent\Model $hasOneModel
+     * 
+     * @return boolean
+     */
+    public static function saveHasOne($mainModel, $hasOneModel)
+    {
+        static::setCreatedUpdatedBy($hasOneModel);
+
+        $mainModel->save($hasOneModel);
     }
 
     /**
@@ -140,6 +152,14 @@ class ModelManager
             if($saveIfBelongsTo)
                 $model->save();
         }
+    }
+
+    protected static function setCreatedUpdatedBy($model)
+    {
+        if(defined(get_class($model).'::CREATED_BY') && !$model->getKey() && $model::CREATED_BY && auth()->check())
+            $model->{$model::CREATED_BY} = auth()->user()->id;
+        if(defined(get_class($model).'::UPDATED_BY') && $model::UPDATED_BY && auth()->check())
+            $model->{$model::UPDATED_BY} = auth()->user()->id;        
     }
 
 

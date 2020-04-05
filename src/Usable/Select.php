@@ -37,7 +37,7 @@ class Select extends Field
     public function prepareValueForFront($name, $value, $komposer)
     {
         //Load options...
-        if($this->optionsKey && $this->optionsLabel)
+        if($this->optionsKey && $this->optionsLabel && !$this->data('ajaxOptions'))
             $this->options( 
                 EloquentField::getRelatedCandidates($komposer->model, $name, $this->morphToModel),
                 $this->optionsKey, 
@@ -176,7 +176,7 @@ class Select extends Field
         $this->optionsKey = $keyColumn;
         $this->optionsLabel = $labelColumns;
         
-        $this->morphToModel = $morphToModel;
+        $this->morphToModel($morphToModel);
 
         return $this;
     }

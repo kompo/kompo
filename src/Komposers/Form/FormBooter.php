@@ -3,19 +3,13 @@
 namespace Kompo\Komposers\Form;
 
 use Illuminate\Database\Eloquent\Model;
-use Kompo\Core\Util;
-use Kompo\Exceptions\NotFoundKompoActionException;
+use Kompo\Core\AuthorizationGuard;
 use Kompo\Form;
 use Kompo\Routing\RouteFinder;
 
-class FormBooter extends Form
+class FormBooter
 {
-	public function __construct()
-	{
-        //overriden
-	}
-
-    public static function performAction($session)
+    public static function bootForAction($session)
     {
         $form = static::instantiateUnbooted($session['kompoClass']);
 
@@ -24,29 +18,9 @@ class FormBooter extends Form
         $form->modelKey($session['modelKey']);
         $form->model($form->model);
 
-        switch(request()->header('X-Kompo-Action'))
-        {
-            case 'eloquent-submit':
-                return FormSubmitter::eloquentSave($form);
+        AuthorizationGuard::checkBoot($form);
 
-            case 'post-to-form':
-                return FormManager::handlePost($form);
-
-            case 'include-fields':
-                return FormDisplayer::includeFields($form);
-
-            case 'handle-submit':
-                return FormSubmitter::callCustomHandle($form);
-
-            case 'search-options':
-                return FormManager::getMatchedSelectOptions($form);
-
-            case 'updated-option':
-                return FormManager::reloadUpdatedSelectOptions($form);
-        }
-
-        throw new NotFoundKompoActionException(get_class($form));
-
+        return $form;
     }
 
 	public static function bootForDisplay($form, $modelKey = null, $store = [])
@@ -57,6 +31,8 @@ class FormBooter extends Form
         $form->parameter(RouteFinder::getRouteParameters());
         $form->modelKey($modelKey);
         $form->model($form->model);
+        
+        AuthorizationGuard::checkBoot($form);
 
 		return FormDisplayer::displayComponents($form);
 	}

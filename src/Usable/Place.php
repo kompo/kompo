@@ -69,11 +69,11 @@ class Place extends Field
         })->all();      
     }
 
-    protected function setAttributeFromRequest($name, $model)
+    protected function setAttributeFromRequest($requestName, $name, $model)
     {
         $oldPlace = $this->attributesToColumns ? $model : ModelManager::getValueFromDb($model, $name);
 
-        if($newPlace = request()->input($name)){
+        if($newPlace = request()->__get($requestName)){
 
         	$newPlace = $this->placeToDB($newPlace[0]);
 
@@ -99,11 +99,11 @@ class Place extends Field
         }
     }
 
-    protected function setRelationFromRequest($name, $model)
+    protected function setRelationFromRequest($requestName, $name, $model)
     {
     	$oldPlace = ModelManager::getValueFromDb($model, $name);
 
-        if($place = request()->input($name)){
+        if($place = request()->__get($requestName)){
 
         	$place = $this->placeToDB($place[0]);
 

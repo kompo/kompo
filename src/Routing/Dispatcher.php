@@ -2,11 +2,12 @@
 
 namespace Kompo\Routing;
 
-use Kompo\Form;
-use Kompo\Menu;
 use Kompo\Catalog;
 use Kompo\Core\SessionStore;
 use Kompo\Exceptions\NotBootableFromRouteException;
+use Kompo\Form;
+use Kompo\Komposers\KomposerHandler;
+use Kompo\Menu;
 
 class Dispatcher
 {
@@ -36,7 +37,7 @@ class Dispatcher
         $dispatcher = new static();
         $booter = $dispatcher->booter;
 
-        return $booter::performAction($dispatcher->sessionKomposer);        
+        return KomposerHandler::performAction($booter::bootForAction($dispatcher->sessionKomposer));
     }
 
     public function bootFromRoute() //no store when booted from route. Use parameters instead.
