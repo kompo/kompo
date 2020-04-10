@@ -1,7 +1,6 @@
 <?php 
-namespace Kompo\Komponents\Traits;
 
-use Kompo\Triggers\TriggerHandler;
+namespace Kompo\Komponents\Traits;
 
 trait AjaxConfigurations 
 {

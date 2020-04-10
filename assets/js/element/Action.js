@@ -7,22 +7,16 @@ export default class Action {
         this.warningConfirmed = false
 
 		this.actionType = action.actionType
+        this.interactions = action.interactions
+
         /*this.kompoid = trigger.kompoid
 
-		this.route = trigger.route 
-        this.routeMethod = trigger.routeMethod
-        this.kompoMethod = trigger.kompoMethod  
-		this.ajaxPayload = trigger.ajaxPayload
-
-        this.includeMethod = trigger.includeMethod
         this.handle = trigger.handle
 		this.sessionTimeoutMessage = trigger.sessionTimeoutMessage
 		this.redirectUrl = trigger.redirectUrl
 		
 		this.modalName = trigger.modalName
 		this.warnBeforeClose = trigger.warnBeforeClose
-		this.panelId = trigger.panelId
-		this.response = trigger.response
 		this.message = trigger.message
 		this.alertClass = trigger.alertClass
         this.debounce = trigger.debounce
@@ -30,20 +24,17 @@ export default class Action {
         this.page = trigger.page
 		
 		this.event = trigger.event
-        this.emitPayload = trigger.emitPayload
-
-		this.success = trigger.triggers ? trigger.triggers.success : []
-		this.error = trigger.triggers ? trigger.triggers.error : []*/
+        this.emitPayload = trigger.emitPayload*/
 	}
     aData(key){
         return this.actionData[key] || null
     }
-	run(response, parentTrigger){
+	run(response, parentAction){
         if(!this.actionType)
             return
 
 		var actionFunction = this.actionType + 'Action'
-        this[actionFunction](response, parentTrigger) 
+        this[actionFunction](response, parentAction) 
 	}
     axiosRequestAction(){
     	this.vue.$_state({ loading: true })
@@ -55,21 +46,32 @@ export default class Action {
             data: this.getPayloadForStore(),
             headers: Object.assign(
                 {'X-Kompo-Id': this.vue.kompoid}, 
-                this.includeMethod ? { 'X-Kompo-Includes': this.includeMethod} : {},
-                this.kompoMethod ? {'X-Kompo-Method': this.kompoMethod} : {}
+                this.aData('kompoAction') ? { 'X-Kompo-Action': this.aData('kompoAction')} : {},
+                this.aData('kompoMethod') ? {'X-Kompo-Method': this.aData('kompoMethod')} : {}
             )
         }).then(response => {
 
 			this.vue.$_state({ loading: false })
             this.vue.$kompo.vlToggleSubmit(this.vue.kompoid, true)
 
-        	this.vue.$_runAllActionsIn(this.success, response, this)
+        	//this.vue.$_runAllActionsIn(this.success, response, this)
+            if(this.interactions && this.interactions.length)
+                this.interactions.forEach( interaction => {
+                    if(interaction.interactionType == 'success')
+                        this.vue.$_runAction(interaction.action, response, this)
+                })
+
 
         }).catch(error => {
 
             this.vue.$_state({ loading: false })
 
-        	this.vue.$_runAllActionsIn(this.error, error, this)
+        	//this.vue.$_runAllActionsIn(this.error, error, this)
+            if(this.interactions && this.interactions.length)
+                this.interactions.forEach( interaction => {
+                    if(interaction.interactionType == 'error')
+                        this.vue.$_runAction(interaction.action, error, this) 
+                })
         	this.handleAjaxError(error) 
 
         })
@@ -155,7 +157,7 @@ export default class Action {
         ))
     }
     emitDirectAction(response){
-    	this.vue.$emit(this.event, response.data)
+    	this.vue.$emit(this.aData('event'), response.data)
     }
     fillModalAction(response){
     	if(!this.modalName)
@@ -171,8 +173,8 @@ export default class Action {
 	        )
         })
     }
-    fillPanelAction(response, parentTrigger){
-        this.vue.$kompo.events.$emit('vlFillPanel' + this.panelId, response.data, parentTrigger)
+    fillPanelAction(response, parentAction){
+        this.vue.$kompo.events.$emit('vlFillPanel' + this.aData('panelId'), response.data, parentAction.aData('included'))
     }
     addAlertAction(){
         this.vue.$modal.events.$emit('showAlert', this.message, this.alertClass)
@@ -204,7 +206,6 @@ export default class Action {
         return formData
     }
     handleAjaxError(e){
-    	console.log(e)
         if(e.response.status == 419 && confirm(this.sessionTimeoutMessage)){
             window.location.reload()
         }else{

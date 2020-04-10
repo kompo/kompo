@@ -15,6 +15,13 @@ trait KompoTestRequestsTrait
         ]);
     }
 
+    protected function getKomponents($komposer, $method)
+    {
+        return $this->kompoAction($komposer, 'include-komponents', [], [
+            'X-Kompo-Method' => $method
+        ]);
+    }
+
     protected function submit($komposer, $data = [])
     {
         return $this->kompoAction($komposer, $komposer->data('submitAction'), $data);

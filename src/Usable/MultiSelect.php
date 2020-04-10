@@ -16,8 +16,8 @@ class MultiSelect extends Select
 
     public $multiple = true;
 
-    protected function setValueForFront($value)
+    protected function setValueForFront()
     {
-        $this->value = !Util::count($value) ? null : (($key = $this->valueKeyName($value)) ? $value->pluck($key) : Util::decode($value));
+        $this->value = !Util::count($this->value) ? null : (($key = $this->valueKeyName($this->value)) ? $this->value->pluck($key) : Util::decode($this->value));
     }
 }

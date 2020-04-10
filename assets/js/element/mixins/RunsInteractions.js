@@ -28,6 +28,7 @@ export default {
         },
         $_runOwnInteractions(type){
             var interactions = this.vcomponent.interactions
+
             if(interactions && interactions.length)
                 interactions.forEach( interaction => {
                     if(interaction.interactionType == type)
@@ -53,13 +54,13 @@ export default {
                         this.$_runAction(interaction.action) 
                 })
         },
-        $_runAllActionsIn(interactions, response, parentInteraction){
+        $_runAllActionsIn(interactions, response, parentAction){
             if(interactions && interactions.length)
-                interactions.forEach( interaction => this.$_runAction(interaction.action, response, parentInteraction) )
+                interactions.forEach( interaction => this.$_runAction(interaction.action, response, parentAction) )
         },
-        $_runAction(actionSpecs, response, parentInteraction){
+        $_runAction(actionSpecs, response, parentAction){
             var action = new Action(actionSpecs, this)
-            action.run(response, parentInteraction)
+            action.run(response, parentAction)
         }
     }
 }

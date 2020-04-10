@@ -10,9 +10,9 @@ class Image extends File
     
     public $component = 'Image';
     
-    public function prepareValueForFront($name, $value, $model)
+    public function prepareForFront($komposer)
     {
-        $this->value = $value ? $this->transformFromDB($value) : null;
+        $this->value = $this->value ? $this->transformFromDB($this->value) : null;
     }
 
 }

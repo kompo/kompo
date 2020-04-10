@@ -3,7 +3,8 @@
 namespace Kompo;
 
 use Illuminate\Http\UploadedFile;
-use Kompo\Database\EloquentField;
+use Kompo\Core\RequestData;
+use Kompo\Database\Lineage;
 use Kompo\Database\ModelManager;
 
 class MultiFile extends File
@@ -15,11 +16,11 @@ class MultiFile extends File
      */
     public $multiple = true;
 
-    protected function setAttributeFromRequest($requestName, $name, $model)
+    public function setAttributeFromRequest($requestName, $name, $model)
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
-        $value = collect(request()->__get($requestName))->map(function($file) use($model, $name){
+        $value = collect(RequestData::get($requestName))->map(function($file) use($model, $name){
 
             return $file instanceOf UploadedFile ? 
                 
@@ -33,13 +34,13 @@ class MultiFile extends File
         return $value->count() ? $value : null;
     }
 
-    protected function setRelationFromRequest($requestName, $name, $model)
+    public function setRelationFromRequest($requestName, $name, $model)
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
         if($oldFiles && $oldFiles->count()){
 
-            $keepIds = collect(request()->__get($requestName))->map(function($file) use($model){ 
+            $keepIds = collect(RequestData::get($requestName))->map(function($file) use($model){ 
 
                 return json_decode($file)->{$model->getKeyName()} ?? null; 
 
@@ -61,7 +62,7 @@ class MultiFile extends File
         //Has Many these files will be attached
         if($uploadedFiles = request()->file($requestName)){
 
-            $relatedModel = EloquentField::findOrFailRelated($model, $name);
+            $relatedModel = Lineage::findOrFailRelated($model, $name);
 
             return collect($uploadedFiles)->map(function($file) use($relatedModel){
 

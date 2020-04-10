@@ -2,20 +2,24 @@
 
 namespace Kompo\Core;
 
+use Kompo\Database\NameParser;
+
 class RequestData
 {
-    public static function fieldShouldFilter($field)
+    protected static $delimiter = '_'; //PHP limitation dot notations are converted to underscore
+
+    public static function get($fieldName)
     {
-        return request(static::convertIn($field->data('filterKey')));
+        return request()->__get($fieldName) ?: request()->__get(static::convert($fieldName)); //->input() does tranformations for dot notations...
     }
 
-    protected static function convertIn($name)
+    public static function has($fieldName)
     {
-        return str_replace('`', '.', $name);
+        return request()->has($fieldName) || request()->has(static::convert($fieldName));
     }
 
-	protected static function convertOut($name)
+    public static function convert($name)
     {
-        return str_replace('.', '`', $name);
+        return str_replace(NameParser::$nester, static::$delimiter, $name);
     }
 }

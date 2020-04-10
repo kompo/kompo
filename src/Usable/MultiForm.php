@@ -4,6 +4,7 @@ namespace Kompo;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Kompo\Core\RequestData;
 use Kompo\Core\ValidationManager;
 use Kompo\Komponents\Field;
 use Kompo\Routing\RouteFinder;
@@ -24,11 +25,11 @@ class MultiForm extends Field
         $this->name = lcfirst(Str::camel($name));
     }
 
-    public function prepareValueForFront($name, $value, $komposer)
+    public function prepareForFront($komposer)
     {
-        if($value){
+        if($this->value){
             //Only works for Eloquent relation, MultiForm cannot be an attribute currently
-            $this->components = $value->map(function($item){
+            $this->components = $this->value->map(function($item){
                 $formClass = $this->formClass;
                 return $formClass::find($item->getKey());
             })->all();
@@ -47,9 +48,9 @@ class MultiForm extends Field
 
 
 
-    protected function setRelationFromRequest($requestName, $name, $model)
+    public function setRelationFromRequest($requestName, $name, $model)
     {
-        $this->value = collect(request()->__get($requestName))->map(function($subrequest){
+        $this->value = collect(RequestData::get($requestName))->map(function($subrequest){
             
             $request = new Request($subrequest);
             

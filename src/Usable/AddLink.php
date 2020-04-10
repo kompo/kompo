@@ -2,19 +2,27 @@
 
 namespace Kompo;
 
+use Kompo\Komponents\Traits\ModalLinks;
 use Kompo\Link;
 
 class AddLink extends Link
 {
+	use ModalLinks;
+
     public $component = 'EditLink';
     public $linkTag = 'vlLink';
 
-    public function mounted($form)
+	protected function vlInitialize($label)
     {
-        $this->onSuccess(function($e) {
-    		$e->emitDirect('insertForm');
-    	});
-    }
+    	parent::vlInitialize($label);
 
+        $this->setDefaultSuccessAction();
 
+        $this->setDefaultIcon();
+	}
+
+	protected function setDefaultIcon()
+	{
+		$this->icon('icon-plus');
+	}
 }

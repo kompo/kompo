@@ -8,6 +8,13 @@ class Liste extends Input
 {	
     public $component = 'Liste';
 
+    /**
+     * Adds a cast to array to the attribute if no cast is present.
+     *
+     * @var boolean
+     */
+    protected $castsToArray = true;
+
     const DEFAULT_KEY_LABEL = 'key';
 
     protected function vlInitialize($label)
@@ -28,7 +35,7 @@ class Liste extends Input
     	return [[$this->data('keyLabel') => '']];
     }
 
-    protected function setValue($value)
+    public function value($value)
     {
         $this->value = is_string($value) ? json_decode($value, true) :  $value;
     }

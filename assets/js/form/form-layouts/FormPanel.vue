@@ -32,17 +32,18 @@ export default {
     },
     methods:{
         destroyPanel(){
-            this.$delete(this.components,0)
+            //this.$delete(this.components, 0)
+            this.components = []
         },
-        loadPanel(component){
-            this.components.push(component)
+        loadPanel(components){
+            //this.components = this.components.concat(components) //TODO: append or replace components...
+            this.components = components
         },
         revertPanel(){
             this.$_togglesForm(this.hidesOnLoad)
             this.destroyPanel()
         },
         includeObject(object){
-            console.log(object)
             this.destroyPanel()
             this.$nextTick( () => {
                 this.loadPanel(object)

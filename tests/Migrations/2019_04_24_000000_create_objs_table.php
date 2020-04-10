@@ -33,6 +33,12 @@ class CreateObjsTable extends Migration
             $table->text('places_cast')->nullable();
             $table->text('multiform')->nullable();
 
+            //for DateRange
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
+            $table->datetime('start_datetime')->nullable();
+            $table->datetime('end_datetime')->nullable();
+
             //for filters
             $table->string('title')->nullable(); //empty fitler
             $table->string('equal')->nullable();

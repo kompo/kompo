@@ -2,7 +2,7 @@
     
     <label 
         v-if="!noLabel" 
-        :for="component.id" 
+        :for="labelFor" 
         :class="labelFullClass" 
         @click="$emit('click')">
 
@@ -20,23 +20,32 @@
 
 <script>
 
+import HasId from '../element/mixins/HasId'
+import HasData from '../element/mixins/HasData'
+
 export default {
-    props: ['component'],
+    mixins: [ HasId, HasData],
+    props: {
+        component: { type: Object, required: true }
+    },
     computed: {
         labelFullClass(){
             return 'vlFormLabel' + (this.labelClass ? ' '+this.labelClass : '')
         },
         required(){
-            return this.component.$_data('required')
+            return this.$_data('required')
         },
         labelClass(){
-            return this.component.$_data('labelClass')
+            return this.$_data('labelClass')
         },
         noLabel(){
-            return this.component.$_data('noLabel')
+            return this.$_data('noLabel')
         },
         loading(){
             return this.component.$_state('loading')
+        },
+        labelFor(){
+            return this.$_elementId() || this.$_elKompoId
         }
     }
 }

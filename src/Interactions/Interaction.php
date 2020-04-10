@@ -65,13 +65,13 @@ class Interaction
         $element->interactions[] = $interaction; 
     }
 
-    public static function addToLastNested($element, $action)
+    public static function addToLastNested($element, $action, $interactionType = null)
     {
         $lastInteraction = $element->interactions[count($element->interactions) - 1] ?? null;
 
         if(!$lastInteraction){
 
-            static::appendToWithAction($element, $action);
+            static::appendToWithAction($element, $action, $interactionType);
 
         }else{
 

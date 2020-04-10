@@ -2,21 +2,21 @@
 
 namespace Kompo\Komponents;
 
-use Illuminate\Support\Str;
+use Kompo\Form;
 use Kompo\Catalog;
 use Kompo\Core\Util;
-use Kompo\Core\ValidationManager;
-use Kompo\Database\EloquentField;
+use Illuminate\Support\Str;
+use Kompo\Komponents\FormField;
 use Kompo\Database\ModelManager;
-use Kompo\Form;
+use Kompo\Core\ValidationManager;
+use Kompo\Komposers\KomposerManager;
 use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Interactions\Traits\NestsInteractions;
-use Kompo\Komposers\KomposerManager;
 
 abstract class Field extends Komponent
 {
     use HasInteractions, NestsInteractions;
-    use Traits\FiltersCatalog,//for tests to work but should review the trait since new Interactions feature
+    use Traits\FiltersCatalog,
         Traits\AjaxConfigurations,
         Traits\FormSubmitConfigurations,
         Traits\LabelInfoComment; 
@@ -51,13 +51,6 @@ abstract class Field extends Komponent
      */
     protected $slug = false;
 
-    /**
-     * Additional attributes to fill when saving the model's attribute.
-     * 
-     * @var array
-     */
-    protected $extraAttributes;
-
 
     /**
      * The field's config for internal usage. Contains submit handling configs, field relation to model, etc...
@@ -66,8 +59,10 @@ abstract class Field extends Komponent
      */
     protected $_kompo = [
         'eloquent' => [
-            'ignoresModel' => false, //@var bool Doesn't interact with model on display or submit.
-            'doesNotFill' => false,  //@var bool Gets the model's value on display but does not on submit.
+            'ignoresModel' => false, //@var bool   Doesn't interact with model on display or submit.
+            'doesNotFill' => false,  //@var bool   Gets the model's value on display but does not on submit.
+            'extraAttributes' => [], //@var array  Additional attributes (key/value constants) to save in DB
+            'morphToModel' => null   //@var string When a morphTo relationship is referenced in the field, we need to specify a Model class.
         ]
     ];
 
@@ -110,7 +105,7 @@ abstract class Field extends Komponent
     }
 
     /**
-     * Sets the value of the field. 
+     * Sets the value of the field for the output (display) phase. 
      * <u>Note</u>: if the Form is connected to an Eloquent Model, the DB value takes precedence.
      *
      * @param  string|array $value The value to be set.
@@ -118,19 +113,8 @@ abstract class Field extends Komponent
      */
     public function value($value)
     {
-        $this->setValue($value);
-        return $this;
-    }
-
-    /**
-     * Sets the value directly.
-     *
-     * @param  string|array $value
-     * @return void
-     */
-    protected function setValue($value)
-    {
         $this->value = $value;
+        return $this;
     }
 
     /**
@@ -155,7 +139,7 @@ abstract class Field extends Komponent
     public function default($defaultValue)
     {
         if($this->pristine())
-            $this->setValue($defaultValue);
+            $this->value($defaultValue);
         return $this;
     }
 
@@ -207,16 +191,6 @@ abstract class Field extends Komponent
     }
 
     /**
-     * Checks if the field is readonly (not editable).
-     *
-     * @return Boolean
-     */
-    public function isReadOnly()
-    {
-        return $this->data('readOnly');
-    }
-
-    /**
      * Removes the browser's default autocomplete behavior from the field.
      *
      * @return self
@@ -235,7 +209,7 @@ abstract class Field extends Komponent
      */
     public function extraAttributes($attributes = [])
     {
-        $this->extraAttributes = $attributes;
+        FormField::setExtraAttributes($this, $attributes);
         return $this;
     }
     
@@ -246,7 +220,7 @@ abstract class Field extends Komponent
      */
     public function ignoresModel()
     {
-        return EloquentField::setConfig($this, 'ignoresModel', true);
+        return FormField::setConfig($this, 'ignoresModel', true);
     }
 
     /**
@@ -256,7 +230,7 @@ abstract class Field extends Komponent
      */
     public function doesNotFill()
     {
-        return EloquentField::setConfig($this, 'doesNotFill', true);
+        return FormField::setConfig($this, 'doesNotFill', true);
     }
 
 
@@ -274,6 +248,8 @@ abstract class Field extends Komponent
 
     /**
      * Passes Form attributes to the component and sets it's value if it is a Field.
+     * 
+     * @param Kompo\Komposers\Komposer  $komposer
      *
      * @return void
      */
@@ -281,16 +257,21 @@ abstract class Field extends Komponent
     {
         ValidationManager::pushFieldRulesToKomposer($this, $komposer);
 
-        $this->fetchFromDatabase($komposer);
-
         $this->checkSetReadonly($komposer);
+
+        if($komposer instanceOf Form)
+            FormField::retrieveValueFromModel($this, $komposer->model);
 
         if($komposer instanceOf Catalog)
             KomposerManager::pushField($komposer, $this); //when the filters have a value on display
+
+        $this->prepareForFront($komposer);
     }
 
     /**
      * Passes Form attributes to the component and sets it's value if it is a Field.
+     * 
+     * @param Kompo\Komposers\Komposer  $komposer
      *
      * @return void
      */
@@ -304,54 +285,13 @@ abstract class Field extends Komponent
     }
 
     /**
-     * Sets the field value from the Eloquent instance.
-     *
-     * @return void
-     */
-    protected function fetchFromDatabase($komposer)
-    {
-        if(!$komposer->model || EloquentField::getConfig($this, 'ignoresModel'))
-            return;
-
-        Util::collect($this->name)->each(function($name) use($komposer) {
-
-            list($model, $name) = EloquentField::parseName($komposer->model, $name);
-
-            $value = $komposer instanceOf Form ? $this->handleValueRetrieval($model, $name) : null;
-
-            method_exists($this, 'prepareValueForFront') ?
-
-                $this->prepareValueForFront($name, $value, $komposer):
-
-                $this->setValue($value ?: $this->value);
-        });
-    }
-
-    /**
-     * Gets a value from the DB to set to the field value.
-     * 
-     * @param Illuminate\Database\Eloquent\Model $model
-     * @param  string $name
-     *
-     * @return mixed
-     */
-    protected function handleValueRetrieval($model, $name)
-    {
-        $value = method_exists($this, 'getValueFromModel') ? 
-
-            $this->getValueFromModel($model, $name) : 
-
-            ModelManager::getValueFromDb($model, $name);
-
-        return $this->shouldCastToArray($model, $name) ? Util::decode($value) : $value;
-    }
-
-    /**
      * Checks authorization and sets a readonly field if necessary.
      *
+     * @param Kompo\Komposers\Komposer  $komposer
+     * 
      * @return void
      */
-    protected function checkSetReadonly($komposer)
+    public function checkSetReadonly($komposer)
     {
         if(config('kompo.smart_readonly_fields') && method_exists($komposer, 'authorize')){
 
@@ -367,73 +307,48 @@ abstract class Field extends Komponent
     }
 
     /**
-     * Gets the value from the request and fills the model's attributes.
+     * Sets the field value before persisting in DB.
      *
-     * @param string                             $requestName
-     * @param Illuminate\Database\Eloquent\Model $model
-     * 
+     * @param  string|array $value
      * @return void
      */
-    public function fillBeforeSave($requestName, $model, $name = null)
+    public function setInput($value, $key)
     {
-        $name = $name ?: $requestName;
-
-        if($this->shouldCastToArray($model, $name))
-            $model->mergeCasts([$name => 'array']);
-
-        $value = method_exists($this, 'setAttributeFromRequest') ?
-            $this->setAttributeFromRequest($requestName, $name, $model) :
-            request()->__get($requestName); //->input() has special operations for dot notations...
-
-        ModelManager::fillAttribute($model, $name, $value, $this->extraAttributes, $this->morphToModel ?? null);
-
-        return true;
+        return $this->value($value); //to be overriden
     }
 
     /**
-     * Gets the value from the request and parses it optionally (see methods overrides).
+     * Sets the field value before preparing for Front.
      *
-     * @param string                             $requestName
-     * @param Illuminate\Database\Eloquent\Model $model
+     * @param mixed $value
+     * @param integer $key
      * 
      * @return void
      */
-    public function fillAfterSave($requestName, $model)
+    public function setOutput($value, $key)
     {
-        $value = method_exists($this, 'setRelationFromRequest') ?
-            $this->setRelationFromRequest($requestName, $requestName, $model) :
-            request()->__get($requestName);
-
-        ModelManager::saveAndLoadRelation($model, $requestName, $value, $this->extraAttributes);
-        
-        return true;
+        return $this->value($value); //to be overriden
     }
 
     /**
-     * Gets the value from the request and parses it optionally (see methods overrides).
+     * { function_description }
      *
-     * @param string                             $requestName
-     * @param Illuminate\Database\Eloquent\Model $mainModel
-     * 
-     * @return void
+     * @param      <type>  $komposer  The komposer
      */
-    public function fillHasMorphOne($requestName, $mainModel)
+    public function prepareForFront($komposer)
     {
-        list($model, $name) = EloquentField::parseName($mainModel, $requestName);
-
-        $this->fillBeforeSave($requestName, $model, $name);
-        
-        return str_replace('.'.$name, '', $requestName); //returning the nested model for save
+        //do nothing... overriden in Fields when needed
     }
 
     /**
-     * Checks if the field does not fill or is readonly
+     * Gets the value from model.
      *
-     * @return     Boolean  
+     * @param      <type>  $model  The model
+     * @param      <type>  $name   The name
      */
-    public function doesNotFillCondition()
+    public function getValueFromModel($model, $name)
     {
-        return EloquentField::getConfig($this, 'doesNotFill') || $this->isReadOnly();
+        return ModelManager::getValueFromDb($model, $name);
     }
 
     /**
@@ -441,9 +356,9 @@ abstract class Field extends Komponent
      *
      * @return     Boolean  
      */
-    protected function shouldCastToArray($model, $name)
+    public function shouldCastToArray($model, $name)
     {
-        return !$model->hasCast($name) && ($this->castsToArray ?? false);
+        return !$model->hasCast($name) && ($this->castsToArray ?? false) && !($this->attributesToColumns ?? false);
     }
     
 }

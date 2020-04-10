@@ -4,9 +4,11 @@ namespace Kompo;
 
 use Illuminate\Http\UploadedFile;
 use Kompo\Core\FileHandler;
-use Kompo\Database\EloquentField;
+use Kompo\Core\RequestData;
+use Kompo\Database\Lineage;
 use Kompo\Database\ModelManager;
 use Kompo\Komponents\Field;
+use Kompo\Komponents\FormField;
 use LogicException;
 
 class File extends Field
@@ -75,16 +77,6 @@ class File extends Field
         return $this;
     }
 
-    /**
-     * Overriden because of attributesToColumns. Checks if the field deals with array value
-     *
-     * @return     Boolean  
-     */
-    protected function shouldCastToArray($model, $name)
-    {
-        return parent::shouldCastToArray($model, $name) && !$this->attributesToColumns;
-    }
-
 
     public function getValueFromModel($model, $name)
     {
@@ -95,11 +87,11 @@ class File extends Field
             $this->fileHandler->mapFromDB($model);
     }
 
-    protected function setAttributeFromRequest($requestName, $name, $model)
+    public function setAttributeFromRequest($requestName, $name, $model)
     {
         $oldFile = $this->attributesToColumns ? $model : ModelManager::getValueFromDb($model, $name);
 
-        if( ($uploadedFile = request()->__get($requestName)) && $uploadedFile instanceOf UploadedFile){
+        if( ($uploadedFile = RequestData::get($requestName)) && $uploadedFile instanceOf UploadedFile){
 
             $this->fileHandler->unlinkFileIfExists($oldFile);
 
@@ -110,12 +102,12 @@ class File extends Field
 
             collect($newFile)->each(function($attribute, $column) use($name){
                 if($column !== $name)
-                    $this->extraAttributes[$column] = $attribute;
+                    FormField::setExtraAttributes($this, [$column => $attribute]);
             });
 
             return $newFile[$name];
 
-        }elseif(!request()->__get($requestName)){
+        }elseif(!RequestData::get($requestName)){
 
             $this->fileHandler->unlinkFileIfExists($oldFile);
 
@@ -124,29 +116,29 @@ class File extends Field
 
             if($oldFile->exists)
                 $this->fileHandler->getKeysWithoutIdPath()->each(function($key){
-                    $this->extraAttributes[$key] = null;
+                    FormField::setExtraAttributes($this, [$key => null]);
                 });
 
             return null;
         }
     }
 
-    protected function setRelationFromRequest($requestName, $name, $model)
+    public function setRelationFromRequest($requestName, $name, $model)
     {
         $oldFile = ModelManager::getValueFromDb($model, $name);
         
-        if( ($uploadedFile = request()->__get($requestName)) && ($uploadedFile instanceOf UploadedFile)){
+        if( ($uploadedFile = RequestData::get($requestName)) && ($uploadedFile instanceOf UploadedFile)){
 
             $this->fileHandler->unlinkFileIfExists($oldFile);
 
             $oldFile && $oldFile->delete();
 
-            $relatedModel = EloquentField::findOrFailRelated($model, $name);
+            $relatedModel = Lineage::findOrFailRelated($model, $name);
 
             $value = $this->fileHandler->fileToDB($uploadedFile, $relatedModel);
 
         }else{
-            if(!request()->__get($requestName) && $oldFile){
+            if(!RequestData::get($requestName) && $oldFile){
 
                 $this->fileHandler->unlinkFileIfExists($oldFile);
 

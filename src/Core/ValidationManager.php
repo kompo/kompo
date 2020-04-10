@@ -2,6 +2,8 @@
 
 namespace Kompo\Core;
 
+use Kompo\Core\RequestData;
+
 class ValidationManager
 {
     /**
@@ -11,7 +13,10 @@ class ValidationManager
      */
     public static function validateRequest($komposer)
     {
-        request()->validate(static::getRules($komposer));
+
+        request()->validate(collect(static::getRules($komposer))->mapWithKeys(function($rules, $key){
+            return [RequestData::convert($key) => $rules];
+        })->all());
     }
 
     /**

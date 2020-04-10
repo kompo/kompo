@@ -37,12 +37,12 @@ export default {
         this.usedTransition = this.transition || 'fadeIn'
         this.usedMode = this.mode || (this.usedTransition == 'fadeIn' ? 'out-in' : '')
 
-        this.$kompo.events.$on('vlFillPanel' + this.id, (response, parentTrigger) => {
+        this.$kompo.events.$on('vlFillPanel' + this.id, (response, included) => {
             this.component = null
             this.html = null
             this.partial = null
 
-            if(parentTrigger && parentTrigger.included)
+            if(included)
                 return this.$emit('includeObj', response) //emit and stop
 
             if(!_.isString(response)){

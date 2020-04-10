@@ -10,7 +10,7 @@ class _IncludesOrComponentsForm extends Form
 	public function components()
 	{
 		return [
-			Input::form('Title')
+			Input::form('Title')->getKomponents('newKompos')
 		];
 	}
 

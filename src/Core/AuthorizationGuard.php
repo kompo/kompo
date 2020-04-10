@@ -38,7 +38,7 @@ class AuthorizationGuard
 
     protected static function checkPreventSubmit($komposer)
     {
-        if($komposer->_kompo('options')['preventSubmit'])
+        if($komposer->_kompo('options', 'preventSubmit'))
             throw new UnauthorizedException( get_class($komposer), 'submit' );
     }
 }

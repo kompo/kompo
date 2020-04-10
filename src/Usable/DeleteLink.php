@@ -2,10 +2,13 @@
 
 namespace Kompo;
 
+use Kompo\Komponents\Traits\ModalLinks;
 use Kompo\Link;
 
 class DeleteLink extends Link
-{    
+{   
+	use ModalLinks;
+
     public $component = 'DeleteLink';
 
     const DB_DELETE_ROUTE = 'vuravel-catalog.db.delete';
@@ -16,12 +19,13 @@ class DeleteLink extends Link
     	'cancelMessage' => 'Cancel'
     ];
 
-	public function __construct($item, $label = '')
+	public function __construct($item = null, $label = '')
 	{
-		$this->post(self::DB_DELETE_ROUTE, [
-				'id' => method_exists($item, 'getKey') ? $item->getKey() : $item->id,
-				'objectClass' => get_class($item)
-			]);
+		if($item)
+			$this->post(self::DB_DELETE_ROUTE, [
+					'id' => method_exists($item, 'getKey') ? $item->getKey() : $item->id,
+					'objectClass' => get_class($item)
+				]);
 			
 		parent::__construct($label);
 	}
@@ -36,14 +40,8 @@ class DeleteLink extends Link
 		$this->deleteTitle(__($this->data('deleteTitle')));
 		$this->confirmMessage(__($this->data('confirmMessage')));
 		$this->cancelMessage(__($this->data('cancelMessage')));
-    }
 
-
-    public function mounted($form)
-    {
-        $this->onSuccess(function($e) {
-    		$e->emitDirect('insertForm');
-    	});
+		$this->setDefaultSuccessAction();
     }
 
 	/**

@@ -51,7 +51,7 @@ class Time extends Field
     	return $this;
     }
 
-    protected function setValue($value)
+    public function value($value)
     {
         if(!$this->savedAsDateTime){
             $this->value = $value;

@@ -13,33 +13,47 @@ trait _EloquentFiltersTrait
 	{
 		return [
 			//Attributes
-			Input::form('Title')->filterBy(), //defaults to LIKE
-			Input::form('A')->filterBy('equal', '='), //overwrite Input LIKE default
-			Input::form('A')->filterBy('greater', '>='),
-			Input::form('A')->filterBy('lower', '<='),
-			Input::form('A')->filterBy('like', 'LIKE'),
-			Input::form('A')->filterBy('startswith', 'STARTSWITH'),
-			Input::form('A')->filterBy('endswith', 'ENDSWITH'),
-			DateRange::form('A')->filterBy('between', 'BETWEEN'),
-			MultiSelect::form('A')->filterBy('in', 'IN'),
+			Input::form('Title')->filter(), //defaults to LIKE
+			Input::form('A')->name('equal')->filter('='), //overwrite Input LIKE default
+			Input::form('A')->name('greater')->filter('>='),
+			Input::form('A')->name('lower')->filter('<='),
+			Input::form('A')->name('like')->filter('LIKE'),
+			Input::form('A')->name('startswith')->filter('STARTSWITH'),
+			Input::form('A')->name('endswith')->filter('ENDSWITH'),
+			DateRange::form('A')->name('between')->filter('BETWEEN'),
+			MultiSelect::form('A')->name('in')->filter('IN'),
 		];
 	}
 
 	public function bottom()
 	{
 		return [
-			//Relations
-			Select::form('A')->filterBy('belongsToPlain'),
-			Select::form('A')->filterBy('belongsToPlain.name', '>='),
-			Select::form('A')->filterBy('belongsToOrdered.name', 'ENDSWITH'),
-			Select::form('A')->filterBy('belongsToFiltered.name'),
-			Select::form('A')->filterBy('belongsToPlain.posts.title', 'LIKE'),
+			//Nested relations
+			Select::form('A')->name('belongsToPlain')->filter(),
+			Select::form('A')->name('belongsToPlain.name')->filter('>='),
+			Select::form('A')->name('belongsToOrdered.name')->filter('ENDSWITH'),
+			Select::form('A')->name('belongsToFiltered.name')->filter(),
+			Select::form('A')->name('belongsToPlain.posts.title')->filter('LIKE'),
+
+			//More Relations
+			MultiSelect::form()->name('belongsToManyFiltered')->filter(),
+
+			Select::form()->name('hasOneOrdered')->filter(),
+			MultiSelect::form()->name('hasManyFiltered')->filter(),
+
+			Select::form()->name('morphOneFiltered')->filter(),
+			MultiSelect::form()->name('morphManyOrdered')->filter(),
+
+			Select::form()->name('morphToPlain')->filter(),
+			MultiSelect::form()->name('morphToManyFiltered')->filter(),
+			MultiSelect::form()->name('morphedByManyOrdered')->filter(),
 		];
 	}
 
 	public function card($item)
 	{
 		return [
+			'id' => $item->id,
 			'user_id' => $item->user_id
 		];
 	}

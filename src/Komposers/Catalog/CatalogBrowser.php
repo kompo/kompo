@@ -70,12 +70,13 @@ class CatalogBrowser extends CatalogBooter
     {
         KomposerManager::collectFields($komposer)->each(function($field) use($komposer) {
 
-            if(RequestData::fieldShouldFilter($field) || $field->value){
+            if(RequestData::get($field->name) || $field->value) //$field->value if default value set
                 
                 $komposer->query->handleFilter($field);
 
-            }
         });
+
+        //dd($komposer->query->getQuery()->toSql(), $komposer->query->getQuery()->getBindings());
 
         if($sort = request()->header('X-Kompo-Sort'))
             $komposer->query->handleSort($sort);

@@ -17,14 +17,10 @@ class IncludesOrComponentsTest extends EnvironmentBoot
 	/** @test */
 	public function load_other_method_if_header_includes_is_present()
 	{
-		\Route::kompo('some-route', _IncludesOrComponentsForm::class);
-
-		$this->withHeaders([ 'X-Kompo-Includes' => 'newkompos' ])->get('some-route')
+		$this->getKomponents(new _IncludesOrComponentsForm(), 'newkompos')
 			->assertJson([
-				'components' => [
-					0 => [
-						'name' => 'content'
-					]
+				[
+					'name' => 'content'
 				]
 			]);
 	}

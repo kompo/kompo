@@ -1,13 +1,14 @@
 <?php 
 
-use Illuminate\Support\Str;
 use Faker\Generator as Faker;
-use Kompo\Tests\Models\File;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
+use Kompo\Tests\Models\File;
+use Kompo\Tests\Models\Obj;
 
 $factory->define(File::class, function (Faker $faker) {
     
-	static $order = 1;
+	static $iterator = 1;
 
 	$file = UploadedFile::fake()->create($faker->word.'.'.$faker->fileExtension);
 
@@ -16,7 +17,10 @@ $factory->define(File::class, function (Faker $faker) {
         'name' => $file->hashName(),
         'mime_type' => $faker->mimeType,
         'size' => $faker->randomNumber(6),
-        'order' => $order++,
-        'user_id' => 1
+        'user_id' => 1,
+        'obj_id' => $iterator % 2 == 1 ? 1 : 2,
+        'model_id' => $iterator % 2 == 1 ? 1 : 2,
+        'model_type' => Obj::class,
+        'order' => $iterator++
     ];
 });

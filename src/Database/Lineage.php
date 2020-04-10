@@ -45,6 +45,19 @@ class Lineage
     }
 
     /**
+     * Gets a related instance for a specific relation.
+     *
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param string $relationName
+     * 
+     * @return Eloquent\Relationship|null
+     */
+    public static function findOrFailRelated($model, $relationName)
+    {
+        return Lineage::findOrFailRelation($model, $relationName)->getRelated()->newInstance();
+    }
+
+    /**
      * Removes the model constraints from the relation to retrieve all the possible related instances.
      *
      * @param Illuminate\Database\Eloquent\Model $model
@@ -71,6 +84,13 @@ class Lineage
     {
         $relation = static::findRelation($model, $relationName);
         return $relation instanceof BelongsTo || $relation instanceof HasOne || $relation instanceof MorphOne;
+    }
+
+
+
+    public static function fillsAfterSave($mainModel, $requestName)
+    {
+        return ($relation = static::findRelation($mainModel, $requestName)) && !($relation instanceof BelongsTo); //morphTo is a belongsTo
     }
 }
 

@@ -40,7 +40,7 @@ class CatalogFiltersEloquentAttributesTest extends EnvironmentBoot
 
 	private function filters_work_for_attributes($catalog)
 	{
-		$objs = factory(Obj::class, 10)->create();
+		$objs = factory(Obj::class, 10)->create(); //Factory alternates values depending on iterator
 
 		$response = $this->browse($catalog, [
 			'title' => substr($this->ctxt1, 3, 8),

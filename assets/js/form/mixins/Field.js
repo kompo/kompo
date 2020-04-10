@@ -11,7 +11,7 @@ export default {
 
     computed: {
 
-        $_name() { return this.$_data('filterKey') || this.component.name },
+        $_name() { this.component.name },
         $_placeholder() { return this.component.placeholder },
 
         $_readOnly(){ return this.$_data('readOnly') },
@@ -36,6 +36,7 @@ export default {
         $_attributes() { return this.$_defaultFieldAttributes },
         $_defaultFieldAttributes() { return {
             ...this.$_defaultElementAttributes,
+            id: this.$_elementId() || this.$_elKompoId,
             name: this.$_name,
             placeholder: this.$_placeholder,
             style: this.$_data('inputStyle') || '',

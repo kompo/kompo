@@ -37,8 +37,7 @@ export default {
         $_defaultElementAttributes() {
 
             return Object.assign(
-                this.$_data('attrs') || {}, 
-                this.$_elementId(null) ? { id: this.$_elementId(null) } : {}
+                this.$_data('attrs') || {}
             )
         },
         $_component() { return this.component.component },
@@ -64,7 +63,7 @@ export default {
             }
         },
         $_toggle(toggleId){
-            if(this.$_elKompoId == toggleId)
+            if(this.$_elementId() == toggleId)
                 this.$_state({ vlHidden: this.$_state('vlHidden') ? false : true })
         },
         $_deliverJsonTo(componentId, json){

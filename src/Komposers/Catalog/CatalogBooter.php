@@ -15,6 +15,8 @@ class CatalogBooter
         $catalog->store($session['store']);
         $catalog->parameter($session['parameters']);
         
+        $catalog->currentPage(request()->header('X-Kompo-Page'));
+        
         AuthorizationGuard::checkBoot($catalog);
 
         return $catalog;

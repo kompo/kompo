@@ -3,13 +3,11 @@
 namespace Kompo;
 
 use Kompo\Komponents\Field;
+use Kompo\Komponents\Traits\HasBooleanValue;
 
 class Toggle extends Field
 {
-    public $component = 'Toggle';
+	use HasBooleanValue;
 
-    protected function setValue($value)
-    {
-        $this->value = $value ? 1 : 0;
-    }
+    public $component = 'Toggle';
 }

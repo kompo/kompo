@@ -3,11 +3,13 @@
 namespace Kompo\Database;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kompo\Core\RequestData;
 use Kompo\Database\DatabaseQuery;
 use Kompo\Database\Lineage;
+use Kompo\Database\NameParser;
 
 class EloquentQuery extends DatabaseQuery
 {
@@ -29,40 +31,33 @@ class EloquentQuery extends DatabaseQuery
 
     public function handleFilter($field)
     {
-        if(Lineage::findRelation($this->model, $field->name)){
-            $this->eloquentFilter($field);
-        }else{
-            parent::handleFilter($field);
-        }
-    }
-
-    public function eloquentFilter($field)
-    {
-        $relation = Lineage::findRelation($this->model, $field->name);
-        $value = RequestData::fieldShouldFilter($field);
+        $value = RequestData::get($field->name);
         $operator = $this->inferBestOperator($field);
 
-        //if($relation instanceOf BelongsTo){
-        //    $this->query = $this->applyWhere($this->query, $relation->getForeignKeyName(), $operator, $value);
-        //}else{
-            $filterKey = explode('.', $field->data('filterKey'), 2);
+        $this->query = $this->handleEloquentFilter($this->query, $this->model, $field->name, $operator, $value);
 
-            $name = count($filterKey) == 2 ? $filterKey[1] : $relation->getRelated()->getKeyName();
-            $table = $relation->getRelated()->getTable();
-
-            $this->query = $this->applyEloquentWhere($this->query, $field->name, $name, $operator, $value, $table);
-        //}
+        //dd($this->query->toSql(), $this->query->getBindings());
+        //parent::handleFilter($field);
     }
 
-    protected function applyEloquentWhere($q, $relation, $name, $operator, $value, $table = null)
+    protected function handleEloquentFilter($q, $model, $recursiveName, $operator, $value, $table = null)
     {
-        return $q->whereHas($relation, function($subquery) use($name, $operator, $value, $table){
-            $name = explode('.', $name);
-            if(count($name) == 1){
-                return $this->applyWhere($subquery, ($table? ($table.'.') : '').$name[0], $operator, $value);
-            }else{
-                return $this->applyEloquentWhere($subquery, $name[0], $name[1], $operator, $value);
-            }
+        $firstTerm = NameParser::firstTerm($recursiveName);
+        $relation = Lineage::findRelation($model, $firstTerm);
+
+        if(!$relation)
+            return $this->applyWhere($q, $firstTerm, $operator, $value, $table);
+
+        $table = $relation->getRelated()->getTable();
+        $model = $relation->getRelated();
+        $secondTerm = NameParser::secondTerm($recursiveName) ?: $model->getKeyName();
+
+        $whereHasMethod = $relation instanceof MorphTo ? 'whereHasMorph' : 'whereHas';
+
+        return $q->{$whereHasMethod}($firstTerm, function($subquery) use($model, $secondTerm, $operator, $value, $table){
+
+            $this->handleEloquentFilter($subquery, $model, $secondTerm, $operator, $value, $table);
+
         });
     }
 

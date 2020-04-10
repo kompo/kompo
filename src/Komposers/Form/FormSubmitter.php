@@ -4,9 +4,9 @@ namespace Kompo\Komposers\Form;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
-use Kompo\Database\EloquentField;
 use Kompo\Database\ModelManager;
 use Kompo\Exceptions\FormMethodNotFoundException;
+use Kompo\Komponents\FormField;
 use Kompo\Komposers\KomposerManager;
 
 class FormSubmitter extends FormBooter
@@ -114,31 +114,19 @@ class FormSubmitter extends FormBooter
     }
 
 
-
-    protected static function loopOverFieldsFor($action, $komposer)
+    protected static function loopOverFieldsFor($stage, $komposer)
     {
         $hasMorphOneModels = [];
 
         foreach (KomposerManager::collectFields($komposer) as $fieldKey => $field) {
 
-            if($field->doesNotFillCondition())
-                return;
-
-            $processed = Util::collect($field->name)->map(function($requestName) use($field, $komposer, $action) {
-
-                if(!request()->has($requestName))
-                    return;
-
-                if(EloquentField::getFillStage($komposer->model, $requestName) == $action)
-                    return $field->{$action}($requestName, $komposer->model);
-
-            })->filter();
+            $processed = FormField::fillDuringStage($stage, $field, $komposer);
 
             if($processed->count()){
                 
                 KomposerManager::removeField($komposer, $fieldKey);
                 
-                if($action == 'fillHasMorphOne')
+                if($stage == 'fillHasMorphOne')
                     $hasMorphOneModels = array_unique(array_merge($hasMorphOneModels, $processed->toArray()));
             }
         }

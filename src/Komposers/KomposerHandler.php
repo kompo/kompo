@@ -27,8 +27,11 @@ class KomposerHandler
             case 'post-to-form':
                 return FormManager::handlePost($komposer);
 
-            case 'include-fields':
-                return FormDisplayer::includeFields($komposer);
+            case 'include-komponents':
+                return KomposerManager::prepareComponentsForDisplay($komposer, request()->header('X-Kompo-Method'));
+
+            case 'self-method':
+                return null; //TODO
 
             case 'search-options':
                 return static::getMatchedSelectOptions($komposer);

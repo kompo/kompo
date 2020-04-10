@@ -14,11 +14,12 @@ trait AxiosRequestActions
     }
 
 
-    public function selfHttpRequest($requestType, $methodName, $ajaxPayload = null)
+    public function selfHttpRequest($requestType, $kompoAction, $methodName, $ajaxPayload = null)
     {
         return $this->prepareAxiosRequest([
             'route' => RouteFinder::getKompoRoute(),
             'routeMethod' => $requestType,
+            'kompoAction' => $kompoAction,
             'kompoMethod' => $methodName,
             'ajaxPayload' => $ajaxPayload
         ]);
@@ -56,13 +57,13 @@ trait AxiosRequestActions
      */
     public function getView($methodName, $ajaxPayload = null)
     {
-        return $this->selfHttpRequest('POST', $methodName, $ajaxPayload);
+        return $this->selfHttpRequest('POST', 'get-view', $methodName, $ajaxPayload);
     }
 
     /**
      * Includes additional components from the server, which will be included in the Form data.
      * To display it, you should chain it with the methods `inModal` or `inPanel`, the containers in which the view will be displayed. For example:
-     * <php>->includes('newComponentsMethod')->inPanel('panel-id')</php>
+     * <php>->getKomponents('newComponentsMethod')->inPanel('panel-id')</php>
      * 
      *
      * @param  string  $methodName    The class's method name that will return the new components.
@@ -76,9 +77,8 @@ trait AxiosRequestActions
             $element->data([ 'includes' => $methodName ]);
         });
 
-        return $this->selfHttpRequest('POST', $methodName, $ajaxPayload)->data([
-            'includes' => true
-        ]);
+        return $this->selfHttpRequest('POST', 'include-komponents', $methodName, $ajaxPayload)
+            ->data([ 'included' => true ]); //to tell Panel to include rather than separate form
     }
 
 
@@ -94,7 +94,7 @@ trait AxiosRequestActions
      */
     public function getSelf($methodName, $ajaxPayload = null)
     {
-        return $this->selfHttpRequest('GET', $methodName, $ajaxPayload);
+        return $this->selfHttpRequest('GET', 'self-method', $methodName, $ajaxPayload);
     }
 
     /**
@@ -109,7 +109,7 @@ trait AxiosRequestActions
      */
     public function postSelf($methodName, $ajaxPayload = null)
     {
-        return $this->routeHttpRequest('POST', $methodName, $ajaxPayload);
+        return $this->selfHttpRequest('POST', 'self-method', $methodName, $ajaxPayload);
     }
 
     /**
@@ -124,7 +124,7 @@ trait AxiosRequestActions
      */
     public function putSelf($methodName, $ajaxPayload = null)
     {
-        return $this->routeHttpRequest('PUT', $methodName, $ajaxPayload);
+        return $this->selfHttpRequest('PUT', 'self-method', $methodName, $ajaxPayload);
     }
 
     /**
@@ -139,7 +139,7 @@ trait AxiosRequestActions
      */
     public function deleteSelf($methodName, $ajaxPayload = null)
     {
-        return $this->routeHttpRequest('DELETE', $methodName, $ajaxPayload);
+        return $this->selfHttpRequest('DELETE', 'self-method', $methodName, $ajaxPayload);
     }
     
     

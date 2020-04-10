@@ -5,10 +5,11 @@ namespace Kompo;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Kompo\Card;
+use Kompo\Core\Util;
 use Kompo\Database\EloquentField;
 use Kompo\Komponents\Field;
+use Kompo\Komponents\FormField;
 use Kompo\Routing\RouteFinder;
-use Kompo\Core\Util;
 
 class Select extends Field
 {
@@ -34,36 +35,36 @@ class Select extends Field
         $this->data(['noOptionsFound' => __(self::NO_OPTIONS_FOUND)]);
     }
 
-    public function prepareValueForFront($name, $value, $komposer)
+    public function prepareForFront($komposer)
     {
         //Load options...
         if($this->optionsKey && $this->optionsLabel && !$this->data('ajaxOptions'))
             $this->options( 
-                EloquentField::getRelatedCandidates($komposer->model, $name, $this->morphToModel),
+                EloquentField::getRelatedCandidates($komposer->model, $this->name, FormField::getConfig($this, 'morphToModel')),
                 $this->optionsKey, 
                 $this->optionsLabel 
             );
 
-        if($this->data('ajaxOptions') && $value)
-            $this->retrieveOptionsFromValue($name, $value, $komposer);
+        if($this->data('ajaxOptions') && $this->value)
+            $this->retrieveOptionsFromValue($komposer);
 
-        $this->setValueForFront($value);
+        $this->setValueForFront();
     }
 
-    protected function retrieveOptionsFromValue($name, $value, $komposer)
+    protected function retrieveOptionsFromValue($komposer)
     {
         if($this->retrieveMethod && method_exists($komposer, $this->retrieveMethod)){
-            $this->options(Util::collect($value)->mapWithKeys(function($optionKey) use($komposer){
+            $this->options(Util::collect($this->value)->mapWithKeys(function($optionKey) use($komposer){
                 return $komposer->{$this->retrieveMethod}($optionKey)->all();
             }));
         }elseif($this->optionsKey && $this->optionsLabel){
-            $this->options(Util::collect($value), $this->optionsKey, $this->optionsLabel);
+            $this->options(Util::collect($this->value), $this->optionsKey, $this->optionsLabel);
         }else{
             //Not recommended last case scenario. This will load all options which may not be desired.
-            //User should fix by using the above scenarios. Should I throw error or not?? No for now, worst case, the query will be slow.
+            //User should fix by using the above scenarios. Should I throw error or not?? No for now: worst case, the query will be slow.
             $allOptions = $komposer->{$this->data('ajaxOptionsMethod')}('')->all();
 
-            $this->options(Util::collect($value)->mapWithKeys(function($optionKey) use($allOptions){
+            $this->options(Util::collect($this->value)->mapWithKeys(function($optionKey) use($allOptions){
 
                 if($optionKey instanceOf Model)
                     $optionKey = $optionKey->getKey();
@@ -73,9 +74,9 @@ class Select extends Field
         }
     }
 
-    protected function setValueForFront($value)
+    protected function setValueForFront()
     {
-        $this->value = !$value ? null : (($key = $this->valueKeyName($value)) ? $value->{$key} : $value);
+        $this->value = !$this->value ? null : (($key = $this->valueKeyName($this->value)) ? $this->value->{$key} : $this->value);
     }
 
     protected function valueKeyName($value)
@@ -191,7 +192,7 @@ class Select extends Field
      */
     public function morphToModel($morphToModel)
     {        
-        $this->morphToModel = $morphToModel;
+        FormField::setConfig($this, 'morphToModel', $morphToModel);
 
         return $this;
     }
@@ -272,7 +273,7 @@ class Select extends Field
      */
     public function optionsFromField($otherFieldName, $searchMethod = null, $retrieveMethod = null)
     {
-        $this->retrieveMethod = $searchMethod ?: $this->inferOptionsMethod('search', $searchMethod);
+        $this->retrieveMethod = $searchMethod ?: $this->inferOptionsMethod('retrieve', $searchMethod);
 
         return RouteFinder::activateRoute($this)->data([
             'ajaxOptions' => true,

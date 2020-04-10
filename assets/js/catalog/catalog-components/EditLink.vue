@@ -19,6 +19,9 @@ export default {
     props: {
         index: {type: Number}, //because addlink doesn't have an index
     },
+    created(){
+        this.component.interactions[0].action.interactions.push(this.component.defaultSuccessInteraction)
+    },
     computed:{
        	linkTag(){ return this.component.linkTag },
         keepModalOpen(){ return this.$_data('keepModalOpen') },

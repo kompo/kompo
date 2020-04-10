@@ -2,9 +2,11 @@
 
 namespace Kompo;
 
+use Kompo\Core\RequestData;
+use Kompo\Core\Util;
 use Kompo\Database\ModelManager;
 use Kompo\Komponents\Field;
-use Kompo\Core\Util;
+use Kompo\Komponents\FormField;
 
 class Place extends Field
 {
@@ -69,11 +71,11 @@ class Place extends Field
         })->all();      
     }
 
-    protected function setAttributeFromRequest($requestName, $name, $model)
+    public function setAttributeFromRequest($requestName, $name, $model)
     {
         $oldPlace = $this->attributesToColumns ? $model : ModelManager::getValueFromDb($model, $name);
 
-        if($newPlace = request()->__get($requestName)){
+        if($newPlace = RequestData::get($requestName)){
 
         	$newPlace = $this->placeToDB($newPlace[0]);
 
@@ -82,7 +84,7 @@ class Place extends Field
 
             collect($newPlace)->each(function($attribute, $column) use($name){
                 if($column !== $name)
-                    $this->extraAttributes[$column] = $attribute;
+                    FormField::setExtraAttributes($this, [$column => $attribute]);
             });
 
             return $newPlace[$name];
@@ -92,18 +94,18 @@ class Place extends Field
 
             if($oldPlace->exists)
                 collect($this->allKeys)->each(function($key){
-                    $this->extraAttributes[$key] = null;
+                    FormField::setExtraAttributes($this, [$key => null]);
                 });
 
             return null;
         }
     }
 
-    protected function setRelationFromRequest($requestName, $name, $model)
+    public function setRelationFromRequest($requestName, $name, $model)
     {
     	$oldPlace = ModelManager::getValueFromDb($model, $name);
 
-        if($place = request()->__get($requestName)){
+        if($place = RequestData::get($requestName)){
 
         	$place = $this->placeToDB($place[0]);
 
@@ -124,16 +126,6 @@ class Place extends Field
 
         	return null;
         }
-    }
-
-    /**
-     * Overriden because of attributesToColumns. Checks if the field deals with array value
-     *
-     * @return     Boolean  
-     */
-    protected function shouldCastToArray($model, $name)
-    {
-        return parent::shouldCastToArray($model, $name) && !$this->attributesToColumns;
     }
 
     protected function placeToDB($place)

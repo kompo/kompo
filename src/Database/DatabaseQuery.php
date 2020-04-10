@@ -2,6 +2,7 @@
 
 namespace Kompo\Database;
 
+use Kompo\Core\RequestData;
 use Kompo\Database\QueryOperations;
 use Kompo\Input;
 
@@ -11,7 +12,7 @@ class DatabaseQuery extends QueryOperations
     {
         $name = $field->name;
         $operator = $this->inferBestOperator($field);
-        $value = request($field->name);
+        $value = RequestData::get($name);
 
         $this->query = $this->applyWhere($this->query, $name, $operator, $value);
     }
@@ -28,20 +29,22 @@ class DatabaseQuery extends QueryOperations
         );
     }
 
-    public function applyWhere($q, $name, $operator, $value)
+    public function applyWhere($q, $name, $operator, $value, $table = null)
     {
+        $columnName = ($table? ($table.'.') : '').$name;
+        
         if($operator == 'IN'){
-            return $q->whereIn($name, $value);
+            return $q->whereIn($columnName, $value);
         }elseif($operator == 'LIKE'){
-            return $q->where($name, 'LIKE', '%'.$value.'%');
+            return $q->where($columnName, 'LIKE', '%'.$value.'%');
         }elseif($operator == 'STARTSWITH'){
-            return $q->where($name, 'LIKE', $value.'%');
+            return $q->where($columnName, 'LIKE', $value.'%');
         }elseif($operator == 'ENDSWITH'){
-            return $q->where($name, 'LIKE', '%'.$value);
+            return $q->where($columnName, 'LIKE', '%'.$value);
         }elseif($operator == 'BETWEEN'){
-            return $q->whereBetween($name, $value);
+            return $q->whereBetween($columnName, $value);
         }else{
-            return $q->where($name, $operator, $value);
+            return $q->where($columnName, $operator, $value);
         }
     }
 

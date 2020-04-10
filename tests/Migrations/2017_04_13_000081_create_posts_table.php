@@ -16,7 +16,7 @@ class CreatePostsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('user_id')->unsigned()->index()->nullable();
-			$table->string('title');
+			$table->string('title')->nullable();
 			$table->longText('content')->nullable();
 			$table->date('published_at')->nullable();
 			$table->tinyInteger('liked')->default(0);

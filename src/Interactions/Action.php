@@ -15,30 +15,23 @@ class Action
 {
     use HasInteractions;
     use HasData;
-    use Actions\AxiosRequestActions, 
+    use Actions\AddAlertActions,
+        Actions\AxiosRequestActions, 
         Actions\AxiosRequestHttpActions,
+        Actions\CatalogActions, 
         Actions\DebounceActions,
         Actions\EmitEventActions,
         Actions\FillPanelActions, 
         Actions\FillModalActions, 
         Actions\RedirectActions, 
-        Actions\RefreshCatalogActions, 
         Actions\SubmitFormActions;
-    
 
     /**
-     * { item_description }
+     * The type of action that will be run.
      * 
      * @var string
      */
     public $actionType;
-
-    /**
-     * { var_description }
-     *
-     * @var boolean
-     */
-    protected $ajaxAction = false;
 
     /**
      * Information to send back to the element.
@@ -48,7 +41,7 @@ class Action
     protected $elementClosure;
 
     /**
-     * { var_description }
+     * The list of allowed actions that can be chained and run for each element.
      *
      * @var array
      */
@@ -72,6 +65,10 @@ class Action
         'getView' => [Field::class, Trigger::class, Panel::class],
 
         'emitDirect' => [Field::class, Trigger::class, Panel::class],
+        'emit' => [Field::class, Trigger::class, Panel::class],
+
+        'filter' => [Field::class],
+        'filterOnInput' => [Field::class],
 
         'inPanel' => [Field::class, Trigger::class, Panel::class],
         'inPanel1' => [Field::class, Trigger::class, Panel::class],
@@ -82,12 +79,21 @@ class Action
 
         'inModal' => [Field::class, Trigger::class, Panel::class],
 
+        'alert' => [Field::class, Trigger::class, Panel::class],
+
         'sortCatalog' => [Field::class, Trigger::class, Panel::class],
         'refreshCatalog' => [Field::class, Trigger::class, Panel::class],
 
         'debounce' => [Field::class],
     ];
 
+    /**
+     * Constructs a new Action instance.
+     *
+     * @param      <type>  $element     The element
+     * @param      <type>  $methodName  The method name
+     * @param      array   $parameters  The parameters
+     */
     public function __construct($element = null, $methodName = null, $parameters = [])
     {
         if(!$element || !$methodName)
@@ -107,7 +113,7 @@ class Action
      * @param      <type>             $element     The element
      * @param      <type>             $actionType  The action type
      *     *
-     * @return     boolean            ( description_of_the_return_value )
+     * @return     boolean
      */
     public static function checkIfMethodIsAllowed($element, $actionType)
     {
@@ -124,21 +130,28 @@ class Action
             throw new NotAllowedActionException($actionType, $element);
     }
 
+    /**
+     * { function_description }
+     *
+     * @param      <type>  $actionType  The action type
+     * @param      <type>  $data        The data
+     *
+     * @return     self
+     */
     protected function prepareAction($actionType, $data)
     {
-        //if(!$this->actionType){
-            $this->actionType = $actionType;
-            $this->data($data);
-            return $this;
-        /*}else{
-            $action = new Action();
-            $action->actionType = $actionType;
-            $action->data($data);
-            $this->onSuccess($action);
-            return $action;
-        }*/
+        $this->actionType = $actionType;
+        $this->data($data);
+        return $this;
     }
 
+    /**
+     * { function_description }
+     *
+     * @param      <type>  $closure  The closure
+     *
+     * @return     self
+     */
     protected function applyToElement($closure)
     {
         $this->elementClosure = $closure;

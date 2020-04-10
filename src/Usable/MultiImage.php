@@ -11,11 +11,13 @@ class MultiImage extends MultiFile
     
     public $component = 'Image';
 
-    public function prepareValueForFront($name, $value, $model)
+    public function prepareForFront($komposer)
     {
-        $this->value = collect($value)->map(function($image){
-				        		return $this->transformFromDB($image);
-				        	});
+        $this->value = collect($this->value)->map(function($image){
+
+        	return $this->transformFromDB($image);
+
+        });
     }
 
 }

@@ -14,7 +14,7 @@ class FormDisplayer extends FormBooter
 
         ValidationManager::addRulesToKomposer($form->rules(), $form); //for Front-end validations TODO:
 
-        $form->components = KomposerManager::prepareComponentsForDisplay($form, request()->header('X-Kompo-Includes') ?: 'components');
+        $form->components = KomposerManager::prepareComponentsForDisplay($form, 'components');
 
         SessionStore::saveKomposer($form, ['modelKey' => $form->modelKey()]); 
 
