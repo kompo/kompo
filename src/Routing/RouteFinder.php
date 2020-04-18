@@ -3,19 +3,10 @@
 namespace Kompo\Routing;
 
 use Kompo\Exceptions\EmptyRouteException;
+use Kompo\Komposers\Komposer;
 
 class RouteFinder
 {
-    /**
-     * Gets the default route that handles all Kompo requests.
-     *
-     * @return string.
-     */
-    public static function getKompoRoute()
-    {
-        return route('_kompo');
-    }
-
     /**
      * Guesses the desired route and method from the parameters.
      *
@@ -47,25 +38,25 @@ class RouteFinder
         ]);
     }
 
-
     /**
-     * Returns thr current route's parameters
+     * { function_description }
      *
-     * @return     <type>  The route parameters.
+     * @param <type>  $komponent        The komponent
+     * @param string  $routeOrKomposer  The route or komposer class
      */
-    public static function getRouteParameters()
+    public static function setUpKomposerRoute($komponent, $routeOrKomposer, $routeMethod = 'GET')
     {
-        return request()->route() ? request()->route()->parameters() : [];
-        //Other options:
-        
-        //Option: 1
-        //$request->route()->parametersWithoutNulls()
-        
-        //Option: 2
-        //$names = $request->route()->parameterNames();
-        //return collect($request->route()->parameters())->filter(function($param, $key) use ($names){
-        //    return in_array($key, $names);
-        //})->all();
+        if(is_a($routeOrKomposer, Komposer::class, true))
+            return $komponent->data([
+                'route' => RouteFinder::getKompoRoute(),
+                'routeMethod' => $routeMethod,
+                'komposerClass' => $routeOrKomposer
+            ]);
+
+        return $komponent->data([
+            'route' => $routeOrKomposer,
+            'routeMethod' => $routeMethod
+        ]);
     }
 
     /**
@@ -85,11 +76,14 @@ class RouteFinder
         return is_null( $routeObject ) ? url($route, $parameters) : route($route, $parameters);
     }
 
-    public static function getRouteByName($route)
-    {
-        return \Route::getRoutes()->getByName($route);
-    }
-
+    /**
+     * Gets the route object.
+     *
+     * @param      <type>  $route       The route
+     * @param      <type>  $parameters  The parameters
+     *
+     * @return     <type>  The route object.
+     */
     public static function getRouteObject($route, $parameters = null)
     {
         $routeObject = static::getRouteByName($route);
@@ -97,5 +91,74 @@ class RouteFinder
         return is_null($routeObject) ? collect(\Route::getRoutes())->first(function($r) use($route, $parameters){
             return $r->matches(request()->create(url($route, $parameters)));
         }) : $routeObject;
+    }
+
+    /**
+     * The default route that handles Kompo GET requests.
+     *
+     * @return string.
+     */
+    public static function getKompoRoute()
+    {
+        return route('_kompo');
+    }
+
+    /**
+     * The default route that handles Kompo POST requests.
+     *
+     * @return string.
+     */
+    public static function postKompoRoute()
+    {
+        return route('_kompo.post');
+    }
+
+    /**
+     * The default route that handles Kompo PUT requests.
+     *
+     * @return string.
+     */
+    public static function putKompoRoute()
+    {
+        return route('_kompo.put');
+    }
+
+    /**
+     * The default route that handles Kompo DELETE requests.
+     *
+     * @return string.
+     */
+    public static function deleteKompoRoute()
+    {
+        return route('_kompo.delete');
+    }
+
+
+    /**
+     * Returns thr current route's parameters
+     *
+     * @return     <type>  The route parameters.
+     */
+    public static function getRouteParameters()
+    {
+        return request()->route() ? request()->route()->parameters() : [];
+        /* return array_replace(
+            request()->all(),
+            request()->route() ? request()->route()->parameters() : []
+        );*/
+    }
+
+    /***** PROTECTED ****/
+
+    /**
+     * Gets the route by name.
+     *
+     * @param      <type>  $route  The route
+     *
+     * @return     <type>  The route by name.
+     */
+    protected static function getRouteByName($route)
+    {
+        return \Route::getRoutes()->getByName($route);
     }
 }

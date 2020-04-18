@@ -3,12 +3,12 @@
 namespace Kompo;
 
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Interactions\Traits\NestsInteractions;
+use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Komponents\Layout;
 
 class Panel extends Layout
 {
-    use HasInteractions, NestsInteractions;
+    use HasInteractions, ForwardsInteraction;
     
     public $component = 'FormPanel';
 

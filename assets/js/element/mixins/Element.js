@@ -3,13 +3,12 @@ import HasId from './HasId'
 import HasClasses from './HasClasses'
 import HasStyles from './HasStyles'
 import HasData from './HasData'
-import PerformsAjax from './PerformsAjax'
 import RunsInteractions from './RunsInteractions'
 
 export default {
-    mixins: [ EmitsEvents, HasId, HasClasses, HasStyles, HasData, PerformsAjax, RunsInteractions ],
+    mixins: [ EmitsEvents, HasId, HasClasses, HasStyles, HasData, RunsInteractions ],
     props: {
-        vcomponent: { type: Object, required: true }
+        vkompo: { type: Object, required: true }
     },
     data(){
         return{
@@ -27,7 +26,6 @@ export default {
         $_displayNone(){ return this.$_data('displayNone') },
 
         $_kompoId() { return this.$_data('kompoId') },
-        $_kompoRoute() {return this.$_data('kompoRoute')},
 
         $_icon() { return this.$_data('icon') },
         $_label() { 
@@ -77,14 +75,14 @@ export default {
         $_resetSort(exceptId) {}
     },
     created(){
-        this.vcomponent.$_data = this.$_data
-        this.vcomponent.$_state = this.$_state
-        this.vcomponent.$_validate = this.$_validate
-        this.vcomponent.$_getErrors = this.$_getErrors
-        this.vcomponent.$_resetSort = this.$_resetSort
-        this.vcomponent.$_fillRecursive = this.$_fillRecursive
-        this.vcomponent.$_toggle = this.$_toggle
-        this.vcomponent.$_deliverJsonTo = this.$_deliverJsonTo
-        this.component = this.vcomponent
+        this.vkompo.$_data = this.$_data
+        this.vkompo.$_state = this.$_state
+        this.vkompo.$_validate = this.$_validate
+        this.vkompo.$_getErrors = this.$_getErrors
+        this.vkompo.$_resetSort = this.$_resetSort
+        this.vkompo.$_fillRecursive = this.$_fillRecursive
+        this.vkompo.$_toggle = this.$_toggle
+        this.vkompo.$_deliverJsonTo = this.$_deliverJsonTo
+        this.component = this.vkompo
     }
 }

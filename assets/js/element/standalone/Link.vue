@@ -1,8 +1,8 @@
 <template>
     <a  :class="linkClass"
-    	:href="vcomponent.href || 'javascript:void(0)'" 
-    	:target="vcomponent.target"
-        v-turbo-click="vcomponent.turbo"
+    	:href="vkompo.href || 'javascript:void(0)'" 
+    	:target="vkompo.target"
+        v-turbo-click="vkompo.turbo"
     	@click.stop="click" >
         <slot v-show="!$_loading" />
         <vl-spinner-icon :loading="$_loading" />

@@ -3,10 +3,18 @@
 namespace Kompo\Routing;
 
 use Kompo\Routing\Dispatcher;
-use Kompo\Komposers\KomposerManager;
 
 class Router
 {
+    /**
+     * Registers a Kompo route that loads a Komposer either in a view or as a JSON object.
+     *
+     * @param      <type>  $router         The router
+     * @param      <type>  $uri            The uri
+     * @param      <type>  $komposerClass  The komposer class
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
     public static function registerRoute($router, $uri, $komposerClass)
     {
         return ($layout = static::getMergedLayout($router)) ? 
@@ -16,6 +24,15 @@ class Router
 
     /*********************** PRIVATE ***********************/
 
+    /**
+     * Gets as json.
+     *
+     * @param      <type>  $router         The router
+     * @param      <type>  $uri            The uri
+     * @param      <type>  $komposerClass  The komposer class
+     *
+     * @return     <type>  As json.
+     */
     private static function getAsJson($router, $uri, $komposerClass)
     {
         return $router->get($uri, function() use($komposerClass) {
@@ -23,6 +40,16 @@ class Router
         });
     }
 
+    /**
+     * Gets the view in layout.
+     *
+     * @param      <type>  $router         The router
+     * @param      <type>  $uri            The uri
+     * @param      <type>  $komposerClass  The komposer class
+     * @param      <type>  $layout         The layout
+     *
+     * @return     <type>  The view in layout.
+     */
     private static function getViewInLayout($router, $uri, $komposerClass, $layout)
     {
         //still need to add this
@@ -43,6 +70,15 @@ class Router
         });
     }
 
+    /*********************** PRIVATE ^2 ***********************/
+
+    /**
+     * Gets the merged layout.
+     *
+     * @param      <type>  $router  The router
+     *
+     * @return     <type>  The merged layout.
+     */
     private static function getMergedLayout($router)
     {
         $groupStack = $router->getGroupStack();
@@ -52,6 +88,13 @@ class Router
 
     }
 
+    /**
+     * Gets the last section.
+     *
+     * @param      <type>  $router  The router
+     *
+     * @return     <type>  The last section.
+     */
     private static function getLastSection($router)
     {
         $sections = $router->current()->getAction('section') ?? 'content';

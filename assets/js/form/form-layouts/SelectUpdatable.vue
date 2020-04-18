@@ -8,7 +8,7 @@
                 <i class="icon-plus" /><span v-html="$_data('updateOptionsLabel')"/>
             </a>
             <vl-modal :name="'modal'+$_elKompoId">
-                <vl-form :vcomponent="updateForm" @success="updateOptionsAndValue"/>
+                <vl-form :vkompo="updateForm" @success="updateOptionsAndValue"/>
             </vl-modal>
         </div>
 
@@ -16,11 +16,12 @@
 </template>
 
 <script>
+
 import Layout from '../mixins/Layout'
-import Field from '../mixins/Field' //not used as a mixin, just for $_name
+import DoesAxiosRequests from '../mixins/DoesAxiosRequests'
 
 export default {
-    mixins: [Layout],
+    mixins: [Layout, DoesAxiosRequests],
     data(){
         return {
             updateForm: false,
@@ -29,41 +30,32 @@ export default {
     },
     methods: {
         loadUpdateForm(){
-            axios({
-                url: this.$_route, 
-                method: 'POST',
-                data: this.$_ajaxPayload,
-                headers: {
-                    'X-Kompo-Id': this.kompoid
-                }
-            }).then(r => {
+
+            this.$_kAxios.$_loadKomposer().then(r => {
+
                 this.updateForm = r.data
                 this.$modal.show('modal'+this.$_elKompoId)
-            }).catch(e => this.$_handleAjaxError(e) )
+
+            })
+
         },
-        updateOptionsAndValue(response){
-            var relatedValue = response.status == 202 ? 
-                                    response.data.form.record.record : 
-                                    response.data
+        updateOptionsAndValue(r){
+
+            var relatedValue = r.status == 202 ? r.data.form.model : r.data
 
             if(this.$_data('ajaxOptions')){
+                
                 var newLabel = relatedValue[this.$_data('optionsLabel')] //!! does not work if label is array
                 var newKey = relatedValue[this.$_data('optionsKey')]
                 this.updateComponentOptionsAndValue([{value: newKey, label: newLabel}], relatedValue)
+
             }else{
-                axios({
-                    url: this.$_kompoRoute, 
-                    method: 'POST',
-                    data: {
-                        selectName: Field.computed.$_name.call(this)
-                    },
-                    headers: {
-                        'X-Kompo-Id': this.kompoid,
-                        'X-Kompo-Action': 'updated-option'
-                    }
-                }).then(response => {
+
+                this.$_kAxios.$_updatedOption().then(response => {
+
                     this.updateComponentOptionsAndValue(response.data, relatedValue)
-                }).catch(e => this.$_handleAjaxError(e) )
+
+                })
             }
         },
         updateComponentOptionsAndValue(newOptions, relatedValue)
@@ -73,6 +65,7 @@ export default {
             newSelect.value = relatedValue[this.$_data('optionsKey')]
             this.components.splice(0, 1, newSelect)
             this.renderKey += 1
+
             if(!this.$_data('keepModalOpen'))
                 this.$modal.close('modal'+this.$_elKompoId)
         }

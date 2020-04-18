@@ -1,7 +1,7 @@
 export default {
     data(){
         return {
-            activeLocale: this.vcomponent.data.locales[0],
+            activeLocale: this.vkompo.data.locales[0],
             currentTranslation: ''
         }
     },

@@ -19,15 +19,15 @@ class BootAuthorizationTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function boot_is_authorized_for_catalogs()
+	public function boot_is_authorized_for_querys()
 	{
-		$this->assert_authorized_boot(_Catalog());
+		$this->assert_authorized_boot(_Query());
 	}
 
     /** @test */
-	public function unauthorized_boot_throws_an_error_for_catalogs()
+	public function unauthorized_boot_throws_an_error_for_querys()
 	{
-		$this->assert_unauthorized_boot(_BootUnauthorizedCatalog::class);
+		$this->assert_unauthorized_boot(_BootUnauthorizedQuery::class);
 	}
 
     /** @test */

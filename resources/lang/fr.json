@@ -1,0 +1,8 @@
+{
+    "Add new": "Ajouter un nouvel élément",
+    "Are you sure?": "Confirmer",
+    "Cancel": "Annuler",
+	"Delete this item": "Supprimer?", 
+    "No items found": "Pas d'items trouvés",
+    "warnBeforeClose": "Les changements non-sauvegardés seront perdus. Êtes-vous sûrs de vouloir fermer la fenêtre?"
+}

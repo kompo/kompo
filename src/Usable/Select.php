@@ -248,10 +248,10 @@ class Select extends Field
      * {
      *    return [
      *       Select::form('Category')
-     *          ->loadFrom('category_id', 'category_name'),
+     *          ->optionsFrom('category_id', 'category_name'),
      *       //Tags options will load by Ajax when a category changes
      *       Select::form('Tags')
-     *          ->loadFromField('category', 'getTags')  
+     *          ->optionsFromField('category', 'getTags')  
      *    ]
      * }
      * 
@@ -278,7 +278,7 @@ class Select extends Field
         return RouteFinder::activateRoute($this)->data([
             'ajaxOptions' => true,
             'ajaxOptionsFromField' => $otherFieldName,
-            'ajaxOptionsMethod' => $this->retrieveMethod
+            'ajaxOptionsMethod' => $searchMethod ?: $this->inferOptionsMethod('search', $searchMethod),
         ]);
     }
 

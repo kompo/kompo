@@ -3,11 +3,11 @@
 namespace Kompo\Komponents;
 
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Interactions\Traits\NestsInteractions;
+use Kompo\Interactions\Traits\ForwardsInteraction;
 
 abstract class Trigger extends Komponent
 {
-    use HasInteractions, NestsInteractions;
+    use HasInteractions, ForwardsInteraction;
 
     use Traits\FormSubmitConfigurations,
         Traits\AjaxConfigurations,

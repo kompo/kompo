@@ -9,14 +9,14 @@ use Illuminate\Pagination\LengthAwarePaginator;
 class CollectionQuery extends QueryOperations
 {
     /**
-     * Constructs a Vuravel\Catalog\CollectionQuery object
+     * Constructs a Kompo\Database\CollectionQuery object
      *
      * @param  array $components
      * @return void
      */
-    public function __construct($query, $catalog)
+    public function __construct($query, $komposer)
     {
-        parent::__construct(Util::collect($query), $catalog);
+        parent::__construct(Util::collect($query), $komposer);
     }
 
     public function handleFilter($field)
@@ -26,9 +26,9 @@ class CollectionQuery extends QueryOperations
 
     public function getPaginated()
     {
-        $slice = $this->query->slice(($this->catalog->currentPage() - 1)* $this->catalog->perPage, $this->catalog->perPage)->values();
+        $slice = $this->query->slice(($this->komposer->currentPage() - 1)* $this->komposer->perPage, $this->komposer->perPage)->values();
 
-        return new LengthAwarePaginator($slice, $this->query->count(), $this->catalog->perPage, $this->catalog->currentPage());
+        return new LengthAwarePaginator($slice, $this->query->count(), $this->komposer->perPage, $this->komposer->currentPage());
     }
     
 }

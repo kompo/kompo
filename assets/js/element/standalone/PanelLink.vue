@@ -1,5 +1,5 @@
 <template>
-    <vl-link :vcomponent="{
+    <vl-link :vkompo="{
         data: {
             loadsView: route ? true : false,
             panelId: panel || true

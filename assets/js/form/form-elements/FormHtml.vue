@@ -19,7 +19,7 @@ export default {
             if(!this.$_interactionsOfType('click'))
                 return
             
-            this.$emit('activate') //for catalog activation
+            this.$emit('activate') //for query activation
             this.$_clickAction()
     	}
     }

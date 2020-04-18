@@ -2,10 +2,13 @@
 
 namespace Kompo\Tests\Unit\Interaction;
 
+use Kompo\Button;
 use Kompo\Exceptions\NotAcceptableInteractionClosureException;
 use Kompo\Exceptions\NotAcceptableInteractionException;
 use Kompo\Exceptions\NotAllowedInteractionException;
 use Kompo\Exceptions\NotFoundInteractionException;
+use Kompo\Input;
+use Kompo\Panel;
 use Kompo\Tests\EnvironmentBoot;
 
 class InteractionsDeclarationTest extends EnvironmentBoot
@@ -13,14 +16,20 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 	/** @test */
 	public function interaction_is_acceptable_string_or_array()
 	{
-		$form = new _InteractionAllowedStringArrayForm();
+		$interactions = Input::form()->on('change', function($e) {
+			$e->submit();
+		})->interactions;
 
-		$this->assertCount(1, $form->components[0]->interactions);
-		$this->assertEquals('change', $form->components[0]->interactions[0]->interactionType);
+		$this->assertCount(1, $interactions);
+		$this->assertEquals('change', $interactions[0]->interactionType);
 
-		$this->assertCount(2, $form->components[1]->interactions);
-		$this->assertEquals('click', $form->components[1]->interactions[0]->interactionType);
-		$this->assertEquals('change', $form->components[1]->interactions[1]->interactionType);
+		$interactions = Input::form()->on(['input', 'change'], function($e) {
+			$e->submit();
+		})->interactions;
+
+		$this->assertCount(2, $interactions);
+		$this->assertEquals('input', $interactions[0]->interactionType);
+		$this->assertEquals('change', $interactions[1]->interactionType);
 	}
 
 	/** @test */
@@ -28,7 +37,9 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 	{
 		$this->expectException(NotAcceptableInteractionException::class);
 
-		$form = new _InteractionNotFoundTypeForm();
+		Input::form()->on(1, function($e) {
+			$e->get('bla');
+		});
 	}
 
 	/** @test */
@@ -36,7 +47,9 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 	{
 		$this->expectException(NotFoundInteractionException::class);
 
-		$form = new _InteractionNotFoundStringForm();
+		Input::form()->on('change', function($e){
+			$e->on('headbang', function($e) {});
+		});
 	}
 
 	/** @test */
@@ -44,7 +57,7 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 	{
 		$this->expectException(NotFoundInteractionException::class);
 
-		$form = new _InteractionNotFoundArrayForm();
+		Input::form()->on(['change', 'headbang'], function($e) {});
 	}
 
 	/** @test */
@@ -52,7 +65,9 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 	{
 		$this->expectException(NotAllowedInteractionException::class);
 
-		$form = new _InteractionNotAllowedArrayForm();
+		Panel::form()->on(['load'], function($e) {
+			$e->get('bla')->on('change', function($e){}); //nested not allowed
+		});
 	}
 
 	/** @test */
@@ -60,7 +75,7 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 	{
 		$this->expectException(NotAllowedInteractionException::class);
 
-		$form = new _InteractionNotAllowedStringForm();
+		Button::form('A')->on('change', function($e) {});
 	}
 
 	/** @test */
@@ -68,6 +83,6 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 	{
 		$this->expectException(NotAcceptableInteractionClosureException::class);
 
-		$form = new _InteractionClosureNotAcceptableForm();
+		Input::form()->on('change', 'not a closure');
 	}
 }

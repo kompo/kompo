@@ -8,7 +8,7 @@
         width: 100%;
         cursor: pointer;
 
-        &.vl-toggler-closed .icon-down{
+        &.vl-toggler-closed .icon-down-dir{
             display: block;
             transform: rotate(90deg);
             z-index: 0; // for somee reason, transform rotate adds z-index...

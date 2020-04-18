@@ -1,12 +1,12 @@
 <?php 
 
-use Kompo\Tests\Utilities\_Catalog;
+use Kompo\Tests\Utilities\_Query;
 use Kompo\Tests\Utilities\_Form;
 use Kompo\Tests\Utilities\_Menu;
 
-function _Catalog($store = [])
+function _Query($store = [])
 {
-    return new _Catalog($store);
+    return new _Query($store);
 }
 
 function _Form($modelKey = null, $store = [])

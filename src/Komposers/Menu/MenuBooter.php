@@ -43,7 +43,7 @@ class MenuBooter
      */
     public static function renderVueComponent($menu)
     {
-        return '<vl-menu :vcomponent="'.htmlspecialchars($menu).'"></vl-menu>';
+        return '<vl-menu :vkompo="'.htmlspecialchars($menu).'"></vl-menu>';
     }
 
 	/**

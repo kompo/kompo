@@ -26,11 +26,11 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function boot_catalog_from_route_as_view()
+	public function boot_query_from_route_as_view()
 	{
-		$this->prepareRoute(_RouteParametersCatalog::class);
+		$this->prepareRoute(_RouteParametersQuery::class);
 
-		$this->make_route_assertions('vl-catalog');
+		$this->make_route_assertions('vl-query');
 	}
 
     /** @test */
@@ -62,7 +62,7 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 			])
 			->assertViewHas('layout', 'kompo::app')
 			->assertViewHas('section', 'content')
-			->assertSee($vueComponent.' :vcomponent=')
+			->assertSee($vueComponent.' :vkompo=')
 			->assertSee('"id":"obj-id"')
 			->assertSee('"parameters":{"id":"1"}')
 			->assertSee('meta-title')

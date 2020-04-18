@@ -30,7 +30,7 @@ export default {
             return {
                 key: component.id,
                 is: 'Vl' + component.component,
-                vcomponent: component,
+                vkompo: component,
                 kompoid: this.kompoid || this.$_kompoId //this.$_kompoId is for FormInner or FormPanel outside a form,
             }
         },

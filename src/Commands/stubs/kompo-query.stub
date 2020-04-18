@@ -1,0 +1,30 @@
+<?php
+
+namespace DummyNamespace;
+
+use Kompo\Query;
+
+class {name} extends Query
+{
+    public $layout;
+    public $card;
+
+    public function query()
+    {
+        //return Post::orderBy('published_at');
+    }
+
+    public function card($item)
+    {
+        return [
+           // Card Komponents
+        ];
+    }
+
+    public function top()
+	{
+        return [
+            //Filters or Decorative Komponents
+        ];
+	}
+}

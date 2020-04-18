@@ -9,6 +9,13 @@ class SelectUpdatable extends Select
 {
     public $component = 'SelectUpdatable';
 
+    protected function vlInitialize($label)
+    {
+        parent::vlInitialize($label);
+
+        $this->addLabel('Add a new option');
+    }
+
     public function mounted($form)
     {
         $this->components = [ clone $this ];
@@ -21,27 +28,38 @@ class SelectUpdatable extends Select
     }
 
     /**
-     * Specifies which form class to open in the modal. After submit, the object will be added to the select options (and selected).
+     * Specifies which form to open in the modal. In the first parameter:
+     * - You may either call a Form class directly. Ex: App\Http\Komposers\MyForm::class
+     * - Or call a Route::kompo() that points to the Form Class. Ex: route('my-form').
+     * After submit, the object will be added to the select options (and selected).
      *
-     * @param string  $formClass  The fully qualified form class. Ex: App\Http\Komposers\MyForm::class
-     * @param array|null  $ajaxPayload  Additional custom data to add to the request (optional).
-     * @param string|null  $label      The label of the link that loads the new form. Default is 'Add a new option'.
+     * @param string       $formClassOrRoute  The fully qualified form class or kompo route url. 
+     * @param string|null  $routeMethod       The desired method for the request. Default is a GET request.
+     * @param array|null   $ajaxPayload       Additional custom data to add to the request (optional).
      *
      * @return self 
      */
     public function addsRelatedOption(
-        $formClass, 
-        $ajaxPayload = null, 
-        $label = 'Add a new option'
+        $formClassOrRoute, 
+        $routeMethod = 'GET',
+        $ajaxPayload = null
     )
     {
-        return $this->data([
-            'route' => RouteFinder::getKompoRoute(),
-            'routeMethod' => 'GET',
-            'formClass' => $formClass,
+        return RouteFinder::setUpKomposerRoute($this, $formClassOrRoute, $routeMethod)->data([
             'ajaxPayload' => $ajaxPayload,
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
-            'updateOptionsLabel' => $label
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage')
+        ]);
+    }
+
+    /**
+     * Specifies the label of the link that will load the form. Default is 'Add a new option'.
+     *
+     * @param string  $label  The label
+     */
+    public function addLabel($label)
+    {
+        return $this->data([
+            'updateOptionsLabel' => __($label)
         ]);
     }
     

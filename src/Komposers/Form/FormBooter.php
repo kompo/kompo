@@ -5,6 +5,7 @@ namespace Kompo\Komposers\Form;
 use Illuminate\Database\Eloquent\Model;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Form;
+use Kompo\Komposers\KomposerManager;
 use Kompo\Routing\RouteFinder;
 
 class FormBooter
@@ -19,6 +20,8 @@ class FormBooter
         $form->model($form->model);
 
         AuthorizationGuard::checkBoot($form);
+        
+        KomposerManager::prepareComponentsForAction($form, 'components'); //mainly to retrieve rules from fields
 
         return $form;
     }
@@ -62,7 +65,7 @@ class FormBooter
      */
     public static function renderVueComponent($form)
     {
-        return '<vl-form :vcomponent="'.htmlspecialchars($form).'"></vl-form>';
+        return '<vl-form :vkompo="'.htmlspecialchars($form).'"></vl-form>';
     }
 
 

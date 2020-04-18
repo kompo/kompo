@@ -2,10 +2,10 @@
 
 namespace Kompo;
 
-use Kompo\Catalog;
+use Kompo\Query;
 use Kompo\TableRow;
 
-class Table extends Catalog
+class Table extends Query
 {
     public $layout = 'Table';
     public $card = TableRow::class;

@@ -1,0 +1,8 @@
+{
+    "Add new": "Agregar un nuevo elemento",
+    "Are you sure?": "Confirmar",
+    "Cancel": "Anular",
+	"Delete this item": "Eliminar?", 
+    "No items found": "No se encontraron elementos.",
+    "warnBeforeClose": "Los cambios no guardados se perderán. ¿Seguro que quieres cerrar la ventana?"
+}

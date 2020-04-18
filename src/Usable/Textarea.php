@@ -3,9 +3,12 @@
 namespace Kompo;
 
 use Kompo\Komponents\Field;
+use Kompo\Komponents\Traits\HasRows;
 
 class Textarea extends Field
 {
+    use HasRows;
+    
     public $component = 'Textarea';
 
     protected function vlInitialize($label)
@@ -13,20 +16,6 @@ class Textarea extends Field
         parent::vlInitialize($label);
 
         $this->rows(3);
-    }
-
-    /**
-     * Sets the initial number of rows for the textarea. Default is 3.
-     *
-     * @param      integer  $rows   The number of rows
-     *
-     * @return self    
-     */
-    public function rows($rows =  3)
-    {
-    	return $this->data([
-            'rows' => $rows
-        ]);
     }
 
 }

@@ -48,7 +48,7 @@ class MultiForm extends Field
 
 
 
-    public function setRelationFromRequest($requestName, $name, $model)
+    public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
         $this->value = collect(RequestData::get($requestName))->map(function($subrequest){
             

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <vl-input v-if="withCardholder" :vcomponent="chComponent" />
+        <vl-input v-if="withCardholder" :vkompo="chComponent" />
 
         <vl-form-field v-bind="$_wrapperAttributes" class="vlMargins">
             <div class="vlFormControl vlFlex vlAlignCenter">
@@ -9,7 +9,7 @@
             </div>
         </vl-form-field>
 
-        <vl-button :vcomponent="btnComponent" :disabled="loading" @click="createSetupIntent">
+        <vl-button :vkompo="btnComponent" :disabled="loading" @click="createSetupIntent">
             <label v-html="$_label" />
             <vl-spinner-icon :loading="loading"/>
         </vl-button>
@@ -110,9 +110,9 @@ export default {
     },
     created(){
 
-        this.btnComponent = Object.assign({}, this.vcomponent)
+        this.btnComponent = Object.assign({}, this.vkompo)
 
-        this.chComponent = Object.assign({}, this.vcomponent, {
+        this.chComponent = Object.assign({}, this.vkompo, {
             placeholder: this.cardholderLabel,
             id: this.cardholderId,
             data: {

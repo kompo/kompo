@@ -50,7 +50,7 @@ abstract class Komposer extends Element
     /**
      * Gets the route's parameter or the one persisted in the session.
      *
-     * @param  mixed  $parameter
+     * @param  string|array|null  $parameter
      * @return mixed
      */
     public function parameter($data = null)
@@ -59,7 +59,7 @@ abstract class Komposer extends Element
     }
 
     /**
-     * Do nothing for Catalogs and Menus.
+     * Do nothing for Querys and Menus.
      *
      * @return void
      */
@@ -69,7 +69,7 @@ abstract class Komposer extends Element
     }
 
     /**
-     * Do nothing for Catalogs and Menus.
+     * Do nothing for Querys and Menus.
      *
      * @return void
      */

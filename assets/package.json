@@ -12,7 +12,7 @@
     "components",
     "form",
     "menu",
-    "catalog",
+    "query",
     "table",
     "filter",
     "sort",

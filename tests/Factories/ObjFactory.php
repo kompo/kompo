@@ -2,6 +2,7 @@
 
 use Faker\Generator as Faker;
 use Kompo\Tests\Models\Obj;
+use Kompo\Tests\Models\User;
 
 $factory->define(Obj::class, function (Faker $faker) {
 
@@ -13,6 +14,8 @@ $factory->define(Obj::class, function (Faker $faker) {
 
     return [
         'user_id' => $iterator % 2 == 1 ? 1 : 2,
+        'model_id' => $iterator % 2 == 1 ? 1 : 2,
+        'model_type' => User::class,
         'post_id' => 1,
         'title' => $faker->sentence.$controlText,
         'equal' => $controlText,

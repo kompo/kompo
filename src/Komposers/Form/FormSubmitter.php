@@ -7,14 +7,13 @@ use Kompo\Core\ValidationManager;
 use Kompo\Database\ModelManager;
 use Kompo\Exceptions\FormMethodNotFoundException;
 use Kompo\Komponents\FormField;
+use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\KomposerManager;
 
 class FormSubmitter extends FormBooter
 {
     protected static function prepareForSubmit($form)
     {
-        KomposerManager::prepareComponentsForAction($form, 'components'); //mainly to retrieve rules from fields
-
         ValidationManager::addRulesToKomposer($form->rules(), $form);
 
         AuthorizationGuard::mainGate($form);
@@ -41,76 +40,90 @@ class FormSubmitter extends FormBooter
 
     /**
      * Save an Eloquent model.
+     * 
+     * @param  Kompo\Form  $form
      *
      * @return void
      */
-    protected static function saveModel($komposer)
+    protected static function saveModel($form)
     {
-        static::loopOverFieldsFor('fillBeforeSave', $komposer);
+        static::loopOverFieldsFor('fillBeforeSave', $form);
 
-        static::beforeSaveHook($komposer);
+        static::beforeSaveHook($form);
 
-        ModelManager::saveAttributes($komposer->model);
+        ModelManager::saveAttributes($form->model);
 
-        $komposer->modelKey($komposer->model->getKey());
+        $form->modelKey($form->model->getKey());
 
-        static::afterSaveHook($komposer);
+        static::afterSaveHook($form);
 
-        static::loopOverFieldsFor('fillAfterSave', $komposer);
+        static::loopOverFieldsFor('fillAfterSave', $form);
 
-        static::loopOverFieldsFor('fillHasMorphOne', $komposer);
+        static::loopOverFieldsFor('fillHasMorphOne', $form);
 
-        static::completedHook($komposer);
+        static::completedHook($form);
 
-        return static::returnResponseHook($komposer);
+        return static::returnResponseHook($form);
     }
 
 
     /**
      * A method that gets executed before the model has been saved.
      * 
+     * @param  Kompo\Form  $form
+     * 
      * @return void
      */
-    protected static function beforeSaveHook($komposer)
+    protected static function beforeSaveHook($form)
     {
-        if(method_exists($komposer, 'beforeSave'))
-            $komposer->beforeSave();
+        if(method_exists($form, 'beforeSave'))
+            $form->beforeSave();
     }
 
     /**
      * A method that gets executed after the model has been saved (before relationships).
      * 
+     * @param  Kompo\Form  $form
+     * 
      * @return void
      */
-    protected static function afterSaveHook($komposer)
+    protected static function afterSaveHook($form)
     {
-        if(method_exists($komposer, 'afterSave'))
-            $komposer->afterSave();
+        if(method_exists($form, 'afterSave'))
+            $form->afterSave();
     }
 
     /**
      * A method that gets executed at the end of the lifecycle (after relationships have been saved).
      * 
+     * @param  Kompo\Form  $form
+     * 
      * @return void
      */
-    protected static function completedHook($komposer)
+    protected static function completedHook($form)
     {
-        if(method_exists($komposer, 'completed'))
-            $komposer->completed();
+        if(method_exists($form, 'completed'))
+            $form->completed();
     }
 
     /**
      * Sets a specific return response for the form.
      *
-     * @param  mixed  $model
+     * @param  Kompo\Form  $form
+     * 
      * @return Response
      */
-    protected static function returnResponseHook($komposer)
+    protected static function returnResponseHook($form)
     {
-        if(method_exists($komposer, 'response'))
-            return $komposer->response();
+        if(method_exists($form, 'response'))
+            return $form->response();
 
-        return $komposer->model;
+        if($form::$refresh)
+            return response()->json(['form' => 
+                FormDisplayer::displayComponents($form)
+            ], 202);
+
+        return $form->model;
     }
 
 
@@ -122,7 +135,7 @@ class FormSubmitter extends FormBooter
 
             $processed = FormField::fillDuringStage($stage, $field, $komposer);
 
-            if($processed->count()){
+            if($processed && $processed->count()){
                 
                 KomposerManager::removeField($komposer, $fieldKey);
                 

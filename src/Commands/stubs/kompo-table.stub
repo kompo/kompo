@@ -1,0 +1,36 @@
+<?php
+
+namespace DummyNamespace;
+
+use Kompo\Table;
+use Kompo\Th;
+
+class {name} extends Table
+{
+    public function query()
+    {
+        //return Post::orderBy('published_at');
+    }
+
+    public function headers()
+    {
+        return [
+            // Th::form('Column1'),
+            // Th::form('Column2'),
+        ];
+    }
+
+    public function card($item)
+    {
+    	return [
+    	   // Card Komponents
+    	];
+    }
+
+    public function top()
+	{
+		return [
+			//Filters or Decorative Komponents
+		];
+	}
+}

@@ -3,7 +3,7 @@
 	@include('kompo::partials.IdStyle', [ 'component' => $Footer ])>
 
     @include('kompo::menus.components', [ 
-    	'kompoid' => $Footer->id,
+    	'kompoid' => Kompo\Core\KompoId::get($Footer),
     	'components' => $Footer->components 
     ])
 

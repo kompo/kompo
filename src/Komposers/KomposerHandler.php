@@ -5,11 +5,12 @@ namespace Kompo\Komposers;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Exceptions\FormMethodNotFoundException;
 use Kompo\Exceptions\NotFoundKompoActionException;
-use Kompo\Komposers\Catalog\CatalogDisplayer;
+use Kompo\Komposers\Query\QueryDisplayer;
 use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\Form\FormManager;
 use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Komposers\KomposerManager;
+use Kompo\Routing\Dispatcher;
 use Kompo\Select;
 
 class KomposerHandler
@@ -33,6 +34,9 @@ class KomposerHandler
             case 'self-method':
                 return null; //TODO
 
+            case 'load-komposer':
+                return static::getKomposerFromKomponent($komposer);
+
             case 'search-options':
                 return static::getMatchedSelectOptions($komposer);
 
@@ -40,13 +44,13 @@ class KomposerHandler
                 return static::reloadUpdatedSelectOptions($komposer);
 
             case 'browse-items':
-                return CatalogDisplayer::browseCards($komposer);
+                return QueryDisplayer::browseCards($komposer);
 
             case 'order':
-                return CatalogManager::orderItems($komposer);
+                return QueryManager::orderItems($komposer);
 
-            case 'delete':
-                return CatalogManager::deleteModel($komposer);
+            case 'delete-item':
+                return static::deleteRecord($komposer);
         }
 
         throw new NotFoundKompoActionException(get_class($komposer));
@@ -54,9 +58,9 @@ class KomposerHandler
 
 
     /**
-     * Gets the matched select options for Catalogs or Forms.
+     * Gets the matched select options for Querys or Forms.
      *
-     * @param      <type>                       $komposer   The Komposer
+     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
      *
      * @throws     FormMethodNotFoundException  (description)
      *
@@ -76,17 +80,60 @@ class KomposerHandler
     /**
      * { function_description }
      *
-     * @param      <type>  $komposer   The Komposer
+     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
      *
      * @return     <type>
      */
     public static function reloadUpdatedSelectOptions($komposer)
     {
-        foreach ($komposer->getFieldComponents() as $field) {
-            if($field->name == request('selectName'))
+        foreach (KomposerManager::collectFields($komposer) as $field) {
+
+            if($field->name == request()->header('X-Komponent')){
+
                 return $field->options;
+
+            }
         }
     }
 
+    /**
+     * Gets the form or query class from komponent and returns it booted.
+     *
+     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
+     *
+     * @return Kompo\Komposers\Komposer
+     */
+    public static function getKomposerFromKomponent($komposer)
+    {
+        return with(new Dispatcher(request()->header('X-Kompo-Class')))->bootFromRoute();
+    }
+
+    /**
+     * Deletes a database record
+     * 
+     * @param  string|integer $id [Object's key]
+     * @return \Illuminate\Http\Response     [redirects back to current page]
+     */
+    public static function deleteRecord($komposer)
+    {
+        $deleteKey = request('store.deleteKey');
+
+        $record = $komposer->model->newInstance()->findOrFail($deleteKey);
+
+        if( 
+            (method_exists($record, 'deletable') && $record->deletable()) 
+            || 
+            (defined(get_class($record).'::DELETABLE_BY') && $record::DELETABLE_BY &&
+                optional(auth()->user())->hasRole($record::DELETABLE_BY))
+            
+            /* Controversial...
+            || optional(auth()->user())->hasRole('super-admin')*/
+        ){
+            $record->delete();
+            return 'deleted!';
+        }
+
+        return abort(403, __('Sorry, you are not authorized to delete this item.'));
+    }
 
 }

@@ -2,7 +2,7 @@
 
 namespace Kompo\Komponents;
 
-use Kompo\Core\KompoIdCreator;
+use Kompo\Core\KompoId;
 use Kompo\Elements\Element;
 use Kompo\Komposers\KomposerManager;
 
@@ -35,7 +35,7 @@ abstract class Komponent extends Element
      */
     protected function vlInitialize($label)
     {
-        KompoIdCreator::setForKomponent($this, $label);
+        KompoId::setForKomponent($this, $label);
         $this->label = $label ? __($label) : '';
     }
     

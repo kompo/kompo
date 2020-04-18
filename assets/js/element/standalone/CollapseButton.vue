@@ -5,7 +5,7 @@
     	:data-target="target" 
     	aria-expanded="false" 
     	:aria-controls="target"
-         :vcomponent="{}">
+         :vkompo="{}">
 
         <slot />
 

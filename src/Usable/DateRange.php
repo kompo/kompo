@@ -17,6 +17,7 @@ class DateRange extends Date
     public function setInput($value, $key)
     {
     	$this->value[$key] = $value; //on input, value can get overiden
+        return $value;
     }
 
     public function value($dates)

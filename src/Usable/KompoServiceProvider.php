@@ -21,12 +21,24 @@ class KompoServiceProvider extends ServiceProvider
 
         $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');
 
+        $this->loadJSONTranslationsFrom(__DIR__.'/../../resources/lang');
+
         $this->loadViewsFrom(__DIR__.'/../../resources/views', 'kompo');
 
         $this->extendRouting();
 
         if (file_exists($file = __DIR__.'/../Core/KompoHelpers.php'))
             require_once $file;
+
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Commands\MakeForm::class,
+                Commands\MakeQuery::class,
+                Commands\MakeTable::class,
+                Commands\MakeMenu::class
+            ]);
+        }
 
 
         /** @var Router $router */

@@ -26,9 +26,9 @@ class KomposerRouteAsJsonTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function boot_catalog_from_route_as_json()
+	public function boot_query_from_route_as_json()
 	{
-		$this->prepareRoute(_RouteParametersCatalog::class);
+		$this->prepareRoute(_RouteParametersQuery::class);
 
 		$this->make_route_assertions();
 	}

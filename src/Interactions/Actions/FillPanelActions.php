@@ -6,7 +6,7 @@ trait FillPanelActions
 {
     /**
      * Whatever is loaded by AJAX will be displayed in the panel with the specified id. 
-     * You need to add a `Panel` component to your Form or Catalog. For example:
+     * You need to add a `Panel` component to your Form or Query. For example:
      * <php>Button::form('Click')->loadsView('view-route')->inPanel('panel-id'),
      * Panel::form('panel-id')</php>
      *

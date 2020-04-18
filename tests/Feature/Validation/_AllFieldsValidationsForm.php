@@ -3,7 +3,6 @@
 namespace Kompo\Tests\Feature\Validation;
 
 use Illuminate\Support\Str;
-use Kompo\DeleteLink;
 use Kompo\Form;
 use Kompo\KompoServiceProvider;
 use Kompo\Komponents\Field;
@@ -45,7 +44,7 @@ class _AllFieldsValidationsForm extends Form
 
 	public function excludedFiles($dir, $komponent, $komponentClass)
 	{
-		return is_dir($dir.'/'.$komponent) || is_a($komponentClass, Komposer::class, true) || is_a($komponentClass, DeleteLink::class, true)
+		return is_dir($dir.'/'.$komponent) || is_a($komponentClass, Komposer::class, true) 
 			|| is_a($komponentClass, Model::class, true) || is_a($komponentClass, KompoServiceProvider::class, true);
 	}
 

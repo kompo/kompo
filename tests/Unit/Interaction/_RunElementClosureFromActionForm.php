@@ -17,7 +17,7 @@ class _RunElementClosureFromActionForm extends Form
                 $e->get('someView')->getKomponents('includeMethod');
             }),
 
-            Button::form()->post('somethign')->onSuccess(function($e){
+            Button::form()->post('something')->onSuccess(function($e){
                 $e->getKomponents('includeMethod');
             }),
 

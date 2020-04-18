@@ -20,7 +20,7 @@ class AuthLogoutForm extends Form
 	public function components()
 	{
 		return [
-			Link::form('Logout')->submitsForm()
+			Link::form('Logout')->submit()
 		];
 	}
 

@@ -1,0 +1,15 @@
+<?php
+
+namespace App\Menus;
+
+use Kompo\Menu;
+
+class {name}  extends Menu
+{
+	public function components()
+	{
+		return [
+			
+		];
+	}
+}

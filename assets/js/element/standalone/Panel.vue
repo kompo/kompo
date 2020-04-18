@@ -7,7 +7,7 @@
             <div v-if="html" :is="{template: html}" />
             <component 
                 v-if="partial" :is="partial" 
-                :vcomponent="component" 
+                :vkompo="component" 
                 :key="panelKey" />
         </transition>
         
@@ -46,7 +46,7 @@ export default {
                 return this.$emit('includeObj', response) //emit and stop
 
             if(!_.isString(response)){
-                this.partial = response.partial
+                this.partial = response.component == 'FormQuery' ? 'vl-query' : 'vl-form'
                 this.component = response
                 this.panelKey += 1
             }else{

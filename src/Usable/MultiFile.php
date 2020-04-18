@@ -16,7 +16,7 @@ class MultiFile extends File
      */
     public $multiple = true;
 
-    public function setAttributeFromRequest($requestName, $name, $model)
+    public function setAttributeFromRequest($requestName, $name, $model, $key = null)
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
@@ -34,7 +34,7 @@ class MultiFile extends File
         return $value->count() ? $value : null;
     }
 
-    public function setRelationFromRequest($requestName, $name, $model)
+    public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 

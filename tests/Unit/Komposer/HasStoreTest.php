@@ -12,10 +12,10 @@ class HasStoreTest extends EnvironmentBoot
 		$this->make_empty_store_assertions(_Form());		
 	}
     /** @test */
-	public function store_works_for_catalogs()
+	public function store_works_for_queries()
 	{
-		$this->make_store_assertions(_Catalog($this->initialStore));
-		$this->make_empty_store_assertions(_Catalog());		
+		$this->make_store_assertions(_Query($this->initialStore));
+		$this->make_empty_store_assertions(_Query());		
 	}
     /** @test */
 	public function store_works_for_menus()

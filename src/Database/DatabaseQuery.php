@@ -19,7 +19,7 @@ class DatabaseQuery extends QueryOperations
 
     public function getPaginated()
     {
-        return $this->query->paginate($this->catalog->perPage, ['*'], 'page', $this->catalog->currentPage());
+        return $this->query->paginate($this->komposer->perPage, ['*'], 'page', $this->komposer->currentPage());
     }
 
     protected function inferBestOperator($field)
@@ -73,7 +73,7 @@ class DatabaseQuery extends QueryOperations
 
     public function executePagination()
     {
-        $this->pagination = $this->query->paginate($this->catalog->perPage, ['*'], 'page', $this->catalog->currentPage());
+        $this->pagination = $this->query->paginate($this->komposer->perPage, ['*'], 'page', $this->komposer->currentPage());
     }
 
     public function reorderItems($order)
@@ -81,7 +81,7 @@ class DatabaseQuery extends QueryOperations
         foreach($order as $v)
         {
             with(clone $this->query)->where($this->getKeyName(), $v['id'])->update([
-                $this->catalog->orderable => $v['order']
+                $this->query->orderable => $v['order']
             ]);
         }
     }

@@ -1,0 +1,28 @@
+<?php
+
+namespace DummyNamespace;
+
+use Kompo\Form;
+//use Kompo\{Input, SubmitButton};
+
+class DummyClass extends Form
+{
+	//public $model = 'User::class';
+
+	public function components()
+	{
+		return [
+			//The Komponents...
+			//Input::form('First Name'),
+			//SubmitButton::form('Submit')
+		];
+	}
+
+	public function rules()
+	{
+		return [
+			//Validation rules go here (see Laravel validation rules), ex:
+			//'first_name' => 'required'
+    	];
+	}
+}

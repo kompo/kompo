@@ -7,7 +7,7 @@
 	@endif
 
     @include('kompo::menus.components', [ 
-    	'kompoid' => $Navbar->id,
+    	'kompoid' => Kompo\Core\KompoId::get($Navbar),
     	'components' => $Navbar->components 
     ])
 

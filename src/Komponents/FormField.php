@@ -103,11 +103,7 @@ class FormField
         if($field->shouldCastToArray($model, $name))
             $model->mergeCasts([$name => 'array']);
 
-        $value = method_exists($field, 'setAttributeFromRequest') ?
-                $field->setAttributeFromRequest($requestName, $name, $model) :
-                RequestData::get($requestName);
-
-        $field->setInput($value, $key);
+        $value = $field->setAttributeFromRequest($requestName, $name, $model, $key);
 
         ModelManager::fillAttribute($model, $name, $value, static::getConfig($field, 'extraAttributes'), static::getConfig($field, 'morphToModel'));
 
@@ -125,13 +121,9 @@ class FormField
      */
     public static function fillAfterSave($field, $requestName, $key, $model)
     {
-        $value = method_exists($field, 'setRelationFromRequest') ?
-                $field->setRelationFromRequest($requestName, $requestName, $model) :
-                RequestData::get($requestName);
+        $value = $field->setRelationFromRequest($requestName, $requestName, $model, $key);
 
-        $field->setInput($value, $key);
-
-        ModelManager::saveAndLoadRelation($model, $requestName, $field->value, static::getConfig($field, 'extraAttributes'));
+        ModelManager::saveAndLoadRelation($model, $requestName, $value, static::getConfig($field, 'extraAttributes'));
         
         return true;
     }
@@ -170,19 +162,23 @@ class FormField
         $relationName = null;
 
         if(!NameParser::isNested($requestName))
-            return [$model, $requestName, $relationName];
+            return [
+                $model, 
+                $requestName, 
+                $relationName
+            ];
 
-        $relationName = NameParser::firstTerm($requestName);
-
-        if(!Lineage::isOneToOne($model, $relationName))
+        if(!Lineage::isOneToOne($model, $relationName = NameParser::firstTerm($requestName)))
             throw new NotOneToOneRelationException($requestName, $relationName);
 
         if(!$model->{$relationName})
-            $model->{$relationName} = $model->{$relationName}()->getRelated()->newInstance();
+            $model->setRelation($relationName, $model->{$relationName}()->getRelated()->newInstance());
 
-        $model = $model->{$relationName};
-
-        return [$model, NameParser::secondTerm($requestName), $relationName];
+        return [
+            $model->{$relationName}, 
+            NameParser::secondTerm($requestName), 
+            $relationName
+        ];
     }
 
     /**

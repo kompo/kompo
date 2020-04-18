@@ -2,6 +2,7 @@
 
 namespace Kompo\Interactions;
 
+use Kompo\Interactions\Action;
 use Kompo\Interactions\Traits\HasInteractions;
 
 class ChainedAction
@@ -12,9 +13,18 @@ class ChainedAction
 
     public $action;
     
-    public function __construct($element)
+    public function __construct($element, $methodName, $parameters)
     {
         $this->element = $element;
+
+        $this->action = new Action($this->element, $methodName, $parameters);
+    }
+
+    public function handleInteraction($interactionType, $activeElement)
+    {
+        Interaction::placeInElement($activeElement, $this->action, $interactionType);
+
+        return $this;
     }
 
     /**

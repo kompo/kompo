@@ -87,7 +87,7 @@ class File extends Field
             $this->fileHandler->mapFromDB($model);
     }
 
-    public function setAttributeFromRequest($requestName, $name, $model)
+    public function setAttributeFromRequest($requestName, $name, $model, $key = null)
     {
         $oldFile = $this->attributesToColumns ? $model : ModelManager::getValueFromDb($model, $name);
 
@@ -123,7 +123,7 @@ class File extends Field
         }
     }
 
-    public function setRelationFromRequest($requestName, $name, $model)
+    public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
         $oldFile = ModelManager::getValueFromDb($model, $name);
         

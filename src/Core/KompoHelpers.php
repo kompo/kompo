@@ -22,625 +22,625 @@ if (! function_exists('menu')) {
 
 /* Kompo helpers */
 
-if(! function_exists('VlCatalog'))
+if(! function_exists('_Query'))
 {
-    function VlCatalog()
+    function _Query()
     {
-        return Kompo\Catalog::form(...func_get_args());
+        return Kompo\Query::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlCard'))
+if(! function_exists('_Card'))
 {
-    function VlCard()
+    function _Card()
     {
         return Kompo\Card::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlIconText'))
+if(! function_exists('_IconText'))
 {
-    function VlIconText()
+    function _IconText()
     {
         return Kompo\IconText::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlImageTitleDesc'))
+if(! function_exists('_ImageTitleDesc'))
 {
-    function VlImageTitleDesc()
+    function _ImageTitleDesc()
     {
         return Kompo\ImageTitleDesc::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlImageTitleOverlay'))
+if(! function_exists('_ImageTitleOverlay'))
 {
-    function VlImageTitleOverlay()
+    function _ImageTitleOverlay()
     {
         return Kompo\ImageTitleOverlay::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlImageTitleRow'))
+if(! function_exists('_ImageTitleRow'))
 {
-    function VlImageTitleRow()
+    function _ImageTitleRow()
     {
         return Kompo\ImageTitleRow::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTableRow'))
+if(! function_exists('_TableRow'))
 {
-    function VlTableRow()
+    function _TableRow()
     {
         return Kompo\TableRow::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlAddButton'))
+if(! function_exists('_AddButton'))
 {
-    function VlAddButton()
+    function _AddButton()
     {
         return Kompo\AddButton::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlAddLink'))
+if(! function_exists('_AddLink'))
 {
-    function VlAddLink()
+    function _AddLink()
     {
         return Kompo\AddLink::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlDeleteLink'))
+if(! function_exists('_DeleteLink'))
 {
-    function VlDeleteLink()
+    function _DeleteLink()
     {
         return Kompo\DeleteLink::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlEditButton'))
+if(! function_exists('_EditButton'))
 {
-    function VlEditButton()
+    function _EditButton()
     {
         return Kompo\EditButton::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlEditLink'))
+if(! function_exists('_EditLink'))
 {
-    function VlEditLink()
+    function _EditLink()
     {
         return Kompo\EditLink::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlForm'))
+if(! function_exists('_Form'))
 {
-    function VlForm()
+    function _Form()
     {
         return Kompo\Form::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlBadge'))
+if(! function_exists('_Badge'))
 {
-    function VlBadge()
+    function _Badge()
     {
         return Kompo\Badge::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlButton'))
+if(! function_exists('_Button'))
 {
-    function VlButton()
+    function _Button()
     {
         return Kompo\Button::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlCheckbox'))
+if(! function_exists('_Checkbox'))
 {
-    function VlCheckbox()
+    function _Checkbox()
     {
         return Kompo\Checkbox::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlCKEditor'))
+if(! function_exists('_CKEditor'))
 {
-    function VlCKEditor()
+    function _CKEditor()
     {
         return Kompo\CKEditor::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlCode'))
+if(! function_exists('_Code'))
 {
-    function VlCode()
+    function _Code()
     {
         return Kompo\Code::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlColumns'))
+if(! function_exists('_Columns'))
 {
-    function VlColumns()
+    function _Columns()
     {
         return Kompo\Columns::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlCountry'))
+if(! function_exists('_Country'))
 {
-    function VlCountry()
+    function _Country()
     {
         return Kompo\Country::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlDate'))
+if(! function_exists('_Date'))
 {
-    function VlDate()
+    function _Date()
     {
         return Kompo\Date::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlDateTime'))
+if(! function_exists('_DateTime'))
 {
-    function VlDateTime()
+    function _DateTime()
     {
         return Kompo\DateTime::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlEditableCKEditor'))
+if(! function_exists('_EditableCKEditor'))
 {
-    function VlEditableCKEditor()
+    function _EditableCKEditor()
     {
         return Kompo\EditableCKEditor::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlEditableTextarea'))
+if(! function_exists('_EditableTextarea'))
 {
-    function VlEditableTextarea()
+    function _EditableTextarea()
     {
         return Kompo\EditableTextarea::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlFile'))
+if(! function_exists('_File'))
 {
-    function VlFile()
+    function _File()
     {
         return Kompo\File::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlFlex'))
+if(! function_exists('_Flex'))
 {
-    function VlFlex()
+    function _Flex()
     {
         return Kompo\Flex::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlFlexAround'))
+if(! function_exists('_FlexAround'))
 {
-    function VlFlexAround()
+    function _FlexAround()
     {
         return Kompo\FlexAround::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlFlexBetween'))
+if(! function_exists('_FlexBetween'))
 {
-    function VlFlexBetween()
+    function _FlexBetween()
     {
         return Kompo\FlexBetween::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlFlexCenter'))
+if(! function_exists('_FlexCenter'))
 {
-    function VlFlexCenter()
+    function _FlexCenter()
     {
         return Kompo\FlexCenter::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlFlexEnd'))
+if(! function_exists('_FlexEnd'))
 {
-    function VlFlexEnd()
+    function _FlexEnd()
     {
         return Kompo\FlexEnd::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlHidden'))
+if(! function_exists('_Hidden'))
 {
-    function VlHidden()
+    function _Hidden()
     {
         return Kompo\Hidden::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlHtml'))
+if(! function_exists('_Html'))
 {
-    function VlHtml()
+    function _Html()
     {
         return Kompo\Html::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlImage'))
+if(! function_exists('_Image'))
 {
-    function VlImage()
+    function _Image()
     {
         return Kompo\Image::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlInput'))
+if(! function_exists('_Input'))
 {
-    function VlInput()
+    function _Input()
     {
         return Kompo\Input::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlJson'))
+if(! function_exists('_Json'))
 {
-    function VlJson()
+    function _Json()
     {
         return Kompo\Json::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlLink'))
+if(! function_exists('_Link'))
 {
-    function VlLink()
+    function _Link()
     {
         return Kompo\Link::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlListe'))
+if(! function_exists('_Liste'))
 {
-    function VlListe()
+    function _Liste()
     {
         return Kompo\Liste::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlMultiFile'))
+if(! function_exists('_MultiFile'))
 {
-    function VlMultiFile()
+    function _MultiFile()
     {
         return Kompo\MultiFile::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlMultiForm'))
+if(! function_exists('_MultiForm'))
 {
-    function VlMultiForm()
+    function _MultiForm()
     {
         return Kompo\MultiForm::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlMultiImage'))
+if(! function_exists('_MultiImage'))
 {
-    function VlMultiImage()
+    function _MultiImage()
     {
         return Kompo\MultiImage::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlMultiPlace'))
+if(! function_exists('_MultiPlace'))
 {
-    function VlMultiPlace()
+    function _MultiPlace()
     {
         return Kompo\MultiPlace::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlMultiSelect'))
+if(! function_exists('_MultiSelect'))
 {
-    function VlMultiSelect()
+    function _MultiSelect()
     {
         return Kompo\MultiSelect::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlPanel'))
+if(! function_exists('_Panel'))
 {
-    function VlPanel()
+    function _Panel()
     {
         return Kompo\Panel::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlPanel1'))
+if(! function_exists('_Panel1'))
 {
-    function VlPanel1()
+    function _Panel1()
     {
         return Kompo\Panel1::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlPanel2'))
+if(! function_exists('_Panel2'))
 {
-    function VlPanel2()
+    function _Panel2()
     {
         return Kompo\Panel2::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlPanel3'))
+if(! function_exists('_Panel3'))
 {
-    function VlPanel3()
+    function _Panel3()
     {
         return Kompo\Panel3::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlPanel4'))
+if(! function_exists('_Panel4'))
 {
-    function VlPanel4()
+    function _Panel4()
     {
         return Kompo\Panel4::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlPanel5'))
+if(! function_exists('_Panel5'))
 {
-    function VlPanel5()
+    function _Panel5()
     {
         return Kompo\Panel5::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlPassword'))
+if(! function_exists('_Password'))
 {
-    function VlPassword()
+    function _Password()
     {
         return Kompo\Password::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlPlace'))
+if(! function_exists('_Place'))
 {
-    function VlPlace()
+    function _Place()
     {
         return Kompo\Place::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlRows'))
+if(! function_exists('_Rows'))
 {
-    function VlRows()
+    function _Rows()
     {
         return Kompo\Rows::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlSearch'))
+if(! function_exists('_Search'))
 {
-    function VlSearch()
+    function _Search()
     {
         return Kompo\Search::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlSelect'))
+if(! function_exists('_Select'))
 {
-    function VlSelect()
+    function _Select()
     {
         return Kompo\Select::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlSelectButtons'))
+if(! function_exists('_SelectButtons'))
 {
-    function VlSelectButtons()
+    function _SelectButtons()
     {
         return Kompo\SelectButtons::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlSelectLinks'))
+if(! function_exists('_SelectLinks'))
 {
-    function VlSelectLinks()
+    function _SelectLinks()
     {
         return Kompo\SelectLinks::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlSelectUpdatable'))
+if(! function_exists('_SelectUpdatable'))
 {
-    function VlSelectUpdatable()
+    function _SelectUpdatable()
     {
         return Kompo\SelectUpdatable::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlStripe'))
+if(! function_exists('_Stripe'))
 {
-    function VlStripe()
+    function _Stripe()
     {
         return Kompo\Stripe::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTable'))
+if(! function_exists('_Table'))
 {
-    function VlTable()
+    function _Table()
     {
         return Kompo\Table::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTab'))
+if(! function_exists('_Tab'))
 {
-    function VlTab()
+    function _Tab()
     {
         return Kompo\Tab::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTabs'))
+if(! function_exists('_Tabs'))
 {
-    function VlTabs()
+    function _Tabs()
     {
         return Kompo\Tabs::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTextarea'))
+if(! function_exists('_Textarea'))
 {
-    function VlTextarea()
+    function _Textarea()
     {
         return Kompo\Textarea::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTh'))
+if(! function_exists('_Th'))
 {
-    function VlTh()
+    function _Th()
     {
         return Kompo\Th::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTime'))
+if(! function_exists('_Time'))
 {
-    function VlTime()
+    function _Time()
     {
         return Kompo\Time::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTitle'))
+if(! function_exists('_Title'))
 {
-    function VlTitle()
+    function _Title()
     {
         return Kompo\Title::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlToggle'))
+if(! function_exists('_Toggle'))
 {
-    function VlToggle()
+    function _Toggle()
     {
         return Kompo\Toggle::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlToggleInput'))
+if(! function_exists('_ToggleInput'))
 {
-    function VlToggleInput()
+    function _ToggleInput()
     {
         return Kompo\ToggleInput::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlToolbar'))
+if(! function_exists('_Toolbar'))
 {
-    function VlToolbar()
+    function _Toolbar()
     {
         return Kompo\Toolbar::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTranslatable'))
+if(! function_exists('_Translatable'))
 {
-    function VlTranslatable()
+    function _Translatable()
     {
         return Kompo\Translatable::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTranslatableEditor'))
+if(! function_exists('_TranslatableEditor'))
 {
-    function VlTranslatableEditor()
+    function _TranslatableEditor()
     {
         return Kompo\TranslatableEditor::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlTrix'))
+if(! function_exists('_Trix'))
 {
-    function VlTrix()
+    function _Trix()
     {
         return Kompo\Trix::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlMenu'))
+if(! function_exists('_Menu'))
 {
-    function VlMenu()
+    function _Menu()
     {
         return Kompo\Menu::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlAuthMenu'))
+if(! function_exists('_AuthMenu'))
 {
-    function VlAuthMenu()
+    function _AuthMenu()
     {
         return Kompo\AuthMenu::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlCollapse'))
+if(! function_exists('_Collapse'))
 {
-    function VlCollapse()
+    function _Collapse()
     {
         return Kompo\Collapse::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlCollapseOnMobile'))
+if(! function_exists('_CollapseOnMobile'))
 {
-    function VlCollapseOnMobile()
+    function _CollapseOnMobile()
     {
         return Kompo\CollapseOnMobile::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlDropdown'))
+if(! function_exists('_Dropdown'))
 {
-    function VlDropdown()
+    function _Dropdown()
     {
         return Kompo\Dropdown::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlLocales'))
+if(! function_exists('_Locales'))
 {
-    function VlLocales()
+    function _Locales()
     {
         return Kompo\Locales::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlLogo'))
+if(! function_exists('_Logo'))
 {
-    function VlLogo()
+    function _Logo()
     {
         return Kompo\Logo::form(...func_get_args());
     }
 }
 
-if(! function_exists('VlNavSearch'))
+if(! function_exists('_NavSearch'))
 {
-    function VlNavSearch()
+    function _NavSearch()
     {
         return Kompo\NavSearch::form(...func_get_args());
     }

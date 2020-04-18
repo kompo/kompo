@@ -82,6 +82,13 @@ abstract class Form extends Komposer
      * @var array
      */
     public $components = [];  //--> TODO: move to data
+    
+    /**
+     * If you wish to reload the form after submit/saving the model, set to true.
+     *
+     * @var boolean
+     */
+    public static $refresh = false;
 
 	/**
      * Constructs a Form

@@ -9,7 +9,7 @@
                 <vlCustomLabel 
                     tabindex="0"
                      v-on="$_events"
-                    :vcomponent="option.label" 
+                    :vkompo="option.label" 
                     :kompoid="kompoid" 
                     :class="optionInnerClass(option, key)" />
 

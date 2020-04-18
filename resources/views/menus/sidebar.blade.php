@@ -6,7 +6,7 @@
 		class="{{ $Sidebar->data('menuType') }} {{ $Sidebar->class }}">
 
 	    @include('kompo::menus.components', [ 
-	    	'kompoid' => $Sidebar->id,
+	    	'kompoid' => Kompo\Core\KompoId::get($Sidebar),
 	    	'components' => $Sidebar->components 
 	    ])
 

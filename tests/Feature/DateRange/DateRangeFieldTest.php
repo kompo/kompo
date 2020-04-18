@@ -3,6 +3,7 @@
 namespace Kompo\Tests\Feature\DateRange;
 
 use Kompo\Tests\EnvironmentBoot;
+use Kompo\Tests\Models\Post;
 
 class DateRangeFieldTest extends EnvironmentBoot
 {
@@ -15,6 +16,18 @@ class DateRangeFieldTest extends EnvironmentBoot
 		$this->assertCount(2, $form->components[1]->value);
 		$this->assertEquals(date('Y-m-d'), $form->components[1]->value[0]);
 		$this->assertEquals(date('Y-m-d', strtotime('+1 days')), $form->components[1]->value[1]);
+	}
+
+	/** @test */
+	public function date_range_is_loaded_a_value_in_eloquent_form()
+	{
+		$post = factory(Post::class, 1)->create()->first();
+
+		$form = new _DateRangeValueFromModelForm(1);
+
+		$this->assertIsArray($form->components[0]->value);
+		$this->assertEquals($post->created_at, $form->components[0]->value[0]);
+		$this->assertEquals($post->updated_at, $form->components[0]->value[1]);
 	}
 
 	/** @test */

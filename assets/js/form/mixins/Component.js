@@ -5,18 +5,16 @@ export default {
     props: {
         kompoid: { type: String, required: false }
     },
-    data(){
-        return {
-        }
-    },
 	computed: {
-        
-        $_submitsForm(){ return this.$_data('submitsForm') },
+
         $_submitsOnInput(){ return this.$_data('submitsOnInput') },
         $_hideIndicators(){ return this.$_data('hideIndicators') },
-        $_sortsCatalog(){ return this.$_data('sortsCatalog') },
-        $_sortValue(){ return this.$_sortsCatalog }, //overriden in Field and Th
+        $_sortsQuery(){ return this.$_data('sortsQuery') },
+        $_sortValue(){ return this.$_sortsQuery }, //overriden in Field and Th
 
+        $_revertsPanel(){ return this.$_data('revertsPanel') },
+        $_revertsFormRow(){ return this.$_data('revertsFormRow') },
+        
         $_debouncedSubmit(){ return _.debounce(this.$_submit, this.$_submitsOnInput)}
 
     },
@@ -34,7 +32,7 @@ export default {
             this.$kompo.vlSubmit(this.kompoid, this)
         },
         $_resetSort(exceptId) {
-            if(this.$_sortsCatalog && this.$_elKompoId != exceptId){
+            if(this.$_sortsQuery && this.$_elKompoId != exceptId){
                 this.$_state({ activeSort: false })
                 this.$_resetSortValue()
             }

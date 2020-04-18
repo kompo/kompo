@@ -7,7 +7,7 @@
             :style="$_elementStyles">
             <vl-rows
                 v-for="(comp,index) in components"
-                :vcomponent="comp"
+                :vkompo="comp"
                 :key="index"
                 v-bind="$_attributes(comp)" />
         </draggable>
@@ -20,45 +20,31 @@
 <script>
 import draggable from 'vuedraggable'
 import Layout from '../mixins/Layout'
-import Field from '../mixins/Field' //not used as a mixin, just for $_name
+import HasName from '../mixins/HasName'
+import DoesAxiosRequests from '../mixins/DoesAxiosRequests'
 
 export default {
-    mixins: [Layout],
+    mixins: [Layout, HasName, DoesAxiosRequests],
     components: { draggable },
-    data: () => ({
-        name: ''
-    }),
-    created(){
-        this.name = Field.computed.$_name.call(this)
-    },
     methods:{
         addRow(){
-            axios({
-                url: this.$_data('route'), 
-                method: this.$_data('routeMethod'),
-                data: this.$_data('ajaxPayload'),
-                headers: {
-                    'X-Kompo-Id': this.kompoid
-                }
-            })
-            .then(r => {
+            this.$_kAxios.$_loadKomposer().then(r => {
+
                 this.components.push(r.data)
-            })
-            .catch(e => {
-                this.$_handleAjaxError(e) 
+
             })
         },
         $_validate(errors) {
 
             var ownErrors = _.pickBy(errors, (value, key) => {
-                return _.startsWith(key, this.name+'.')
+                return _.startsWith(key, this.$_name+'.')
             })
 
             this.components.forEach( (form,k) => {
                 var formErrors = _.mapKeys(_.pickBy(ownErrors, (value, key) => {
-                    return _.startsWith(key, this.name+'.'+k+'.')
+                    return _.startsWith(key, this.$_name+'.'+k+'.')
                 }), (value, key) => {
-                    return key.replace(this.name+'.'+k+'.', '')
+                    return key.replace(this.$_name+'.'+k+'.', '')
                 })
                 form.$_validate(formErrors)
             })            
@@ -67,7 +53,7 @@ export default {
             if(this.$_hidden)
                 return 
 
-            var name = this.name, results = [] 
+            var name = this.$_name, results = [] 
             this.components.forEach( (item,k) => {
                 var json = {}
                 item.$_fillRecursive(json)

@@ -17,7 +17,7 @@
                         class="icon-times" 
                         @click.stop="$emit('remove', index)" />
                     <vlCustomLabel 
-                        :vcomponent="selection[labelKey]" 
+                        :vkompo="selection[labelKey]" 
                         :kompoid="kompoid"
                         @click.stop="$emit('click', selection)"/>
                 </div>

@@ -2,21 +2,22 @@
 
 namespace Kompo\Komponents;
 
-use Kompo\Form;
-use Kompo\Catalog;
-use Kompo\Core\Util;
 use Illuminate\Support\Str;
-use Kompo\Komponents\FormField;
-use Kompo\Database\ModelManager;
+use Kompo\Query;
+use Kompo\Core\RequestData;
+use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
-use Kompo\Komposers\KomposerManager;
+use Kompo\Database\ModelManager;
+use Kompo\Form;
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Interactions\Traits\NestsInteractions;
+use Kompo\Interactions\Traits\ForwardsInteraction;
+use Kompo\Komponents\FormField;
+use Kompo\Komposers\KomposerManager;
 
 abstract class Field extends Komponent
 {
-    use HasInteractions, NestsInteractions;
-    use Traits\FiltersCatalog,
+    use HasInteractions, ForwardsInteraction;
+    use Traits\FiltersQuery,
         Traits\AjaxConfigurations,
         Traits\FormSubmitConfigurations,
         Traits\LabelInfoComment; 
@@ -262,7 +263,7 @@ abstract class Field extends Komponent
         if($komposer instanceOf Form)
             FormField::retrieveValueFromModel($this, $komposer->model);
 
-        if($komposer instanceOf Catalog)
+        if($komposer instanceOf Query)
             KomposerManager::pushField($komposer, $this); //when the filters have a value on display
 
         $this->prepareForFront($komposer);
@@ -314,7 +315,8 @@ abstract class Field extends Komponent
      */
     public function setInput($value, $key)
     {
-        return $this->value($value); //to be overriden
+        $this->value($value);
+        return $this->value; 
     }
 
     /**
@@ -327,13 +329,14 @@ abstract class Field extends Komponent
      */
     public function setOutput($value, $key)
     {
-        return $this->value($value); //to be overriden
+        if($value)
+            $this->value($value); //to be overriden
     }
 
     /**
-     * { function_description }
+     * Performing operations necessary for Field display on the Front-End
      *
-     * @param      <type>  $komposer  The komposer
+     * @param Kompo\Komposers\Komposer  $komposer
      */
     public function prepareForFront($komposer)
     {
@@ -352,8 +355,37 @@ abstract class Field extends Komponent
     }
 
     /**
+     * Processes and returns the request value when the field is an attribute.
+     *
+     * @param string                             $requestName
+     * @param string                             $name
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param integer|null                       $key
+     */
+    public function setAttributeFromRequest($requestName, $name, $model, $key = null)
+    {
+        return $this->setInput(RequestData::get($requestName), $key);
+    }
+
+    /**
+     * Processes and returns the request value when the field is a relation.
+     *
+     * @param string                             $requestName
+     * @param string                             $name
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param integer|null                       $key
+     */
+    public function setRelationFromRequest($requestName, $name, $model, $key = null)
+    {
+        return $this->setInput(RequestData::get($requestName), $key);
+    }
+
+    /**
      * Checks if the field deals with array value
      *
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param string                             $name
+     * 
      * @return     Boolean  
      */
     public function shouldCastToArray($model, $name)

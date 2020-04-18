@@ -1,5 +1,5 @@
 <template>
-    <vl-button :vcomponent="{
+    <vl-button :vkompo="{
         data: {
             btnOutlined: outlined || false
         },

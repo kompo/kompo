@@ -18,14 +18,14 @@
 </template>
 
 <script>
-import Other from '../mixins/Other'
+import Trigger from '../mixins/Trigger'
 export default {
-    mixins: [Other],
+    mixins: [Trigger],
     computed:{
         $_attributes(){
             return {
-                ...this.$_defaultOtherAttributes,
-                vcomponent: Object.assign({}, this.vcomponent), //otherwise $_state wasn't rendering...
+                ...this.$_defaultTriggerAttributes,
+                vkompo: Object.assign({}, this.vkompo), //otherwise $_state wasn't rendering...
                 disabled: this.showSpinner,
                 kompoid: this.kompoid
             }

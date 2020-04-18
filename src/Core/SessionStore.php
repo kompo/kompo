@@ -8,7 +8,7 @@ class SessionStore
 {
     public static function saveKomposer($komposer, $customAttributes = [])
     {
-        KompoIdCreator::setForKomposer($komposer);
+        KompoId::setForKomposer($komposer);
 
         session()->put(static::sessionKey($komposer), array_merge(
             $customAttributes, 
@@ -32,6 +32,6 @@ class SessionStore
 
     private static function sessionKey($komposer)
     {
-        return 'bootedElements.'.$komposer->data('kompoId');
+        return 'bootedElements.'.KompoId::get($komposer);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Kompo\Routing;
 
-use Kompo\Catalog;
+use Kompo\Query;
 use Kompo\Core\SessionStore;
 use Kompo\Exceptions\NotBootableFromRouteException;
 use Kompo\Form;
@@ -40,19 +40,26 @@ class Dispatcher
         return KomposerHandler::performAction($booter::bootForAction($dispatcher->sessionKomposer));
     }
 
-    public function bootFromRoute() //no store when booted from route. Use parameters instead.
+    public function bootFromRoute() 
     {
         $booter = $this->booter;
 
-        return $this->type == 'Form' ? $booter::bootForDisplay($this->komposerClass, request('id')) : $booter::bootForDisplay($this->komposerClass);
+        $modelKey = request('id');
+        $store = request()->except('id'); //no store when booted from route. Use parameters instead.
+
+        return $this->type == 'Form' ? 
+
+            $booter::bootForDisplay($this->komposerClass, $modelKey, $store) : 
+
+            $booter::bootForDisplay($this->komposerClass, $store);
     }
 
     protected static function getKomposerType($komposerClass)
     {
         if(is_a($komposerClass, Form::class, true)){
             return 'Form';
-        }elseif (is_a($komposerClass, Catalog::class, true)) {
-            return 'Catalog';
+        }elseif (is_a($komposerClass, Query::class, true)) {
+            return 'Query';
         }elseif (is_a($komposerClass, Menu::class, true)) {
             return 'Menu';
         }

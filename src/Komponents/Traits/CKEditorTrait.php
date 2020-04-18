@@ -1,4 +1,5 @@
 <?php 
+
 namespace Kompo\Komponents\Traits;
 
 trait CKEditorTrait

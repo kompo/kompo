@@ -10,6 +10,6 @@ class SubmitButton extends Button
     {
         parent::vlInitialize($label);
 
-        $this->submitsForm();
+        $this->submit();
     }
 }

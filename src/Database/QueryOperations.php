@@ -6,23 +6,23 @@ abstract class QueryOperations
 {    
     protected $query;
 
-    protected $catalog;
+    protected $komposer;
 
 	abstract public function handleFilter($field);
 
     abstract public function getPaginated();
 
     /**
-     * Constructs a Vuravel\Catalog\EloquentQuery object
+     * Constructs a Kompo\Database\QueryOperations object
      *
      * @param  array $components
      * @return void
      */
-    public function __construct($query, $catalog)
+    public function __construct($query, $komposer)
     {
     	$this->query = $query;
 
-    	$this->catalog = $catalog;
+    	$this->komposer = $komposer;
     }
 
     public function getQuery()

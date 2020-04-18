@@ -2,7 +2,7 @@
 
 	<vl-link class="vl-nav-item {{ $component->class() }} {{ $component->data('active') }}"
 		@include('kompo::partials.IdStyle')
-		:vcomponent="{{ $component }}" >
+		:vkompo="{{ $component }}" >
 
 		@include('kompo::partials.ItemContent', [
 			'component' => $component

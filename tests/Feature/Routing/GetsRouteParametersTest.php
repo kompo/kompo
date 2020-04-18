@@ -15,7 +15,9 @@ class GetsRouteParametersTest extends EnvironmentBoot
 		$kompoId = $r->decodeResponseJson()['data']['kompoId'];
 
 		$r->assertJson([
-			'parameters' => ['param' => 1]
+			'parameters' => ['param' => 1],
+			'param1' => 1,
+			'param2' => null
 		])
 		->assertSessionHas('bootedElements.'.$kompoId.'.parameters.param', 1)
 		->assertSessionMissing('bootedElements.'.$kompoId.'.parameters.opt')
@@ -24,16 +26,18 @@ class GetsRouteParametersTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function route_info_is_correctly_set_in_catalogs()
+	public function route_info_is_correctly_set_in_querys()
 	{
-		\Route::post('test/{param}/{opt?}', function() {	return new _RouteParametersCatalog(); });
+		\Route::post('test/{param}/{opt?}', function() {	return new _RouteParametersQuery(); });
 
 		$r = $this->post('test/1/2');
 
 		$kompoId = $r->decodeResponseJson()['data']['kompoId'];
 
 		$r->assertJson([
-			'parameters' => ['param' => 1, 'opt' => 2]
+			'parameters' => ['param' => 1, 'opt' => 2],
+			'param1' => 1,
+			'param2' => 2
 		])
 		->assertSessionHas('bootedElements.'.$kompoId.'.parameters.param', 1)
 		->assertSessionHas('bootedElements.'.$kompoId.'.parameters.opt', 2)
@@ -51,7 +55,9 @@ class GetsRouteParametersTest extends EnvironmentBoot
 		$kompoId = $r->decodeResponseJson()['data']['kompoId'];
 
 		$r->assertJson([
-			'parameters' => ['param' => 'hello world']
+			'parameters' => ['param' => 'hello world'],
+			'param1' => 'hello world',
+			'param2' => null
 		])
 		->assertSessionHas('bootedElements.'.$kompoId.'.parameters.param', 'hello world')
 		->assertSessionMissing('bootedElements.'.$kompoId.'.parameters.opt')

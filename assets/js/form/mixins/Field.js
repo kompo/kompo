@@ -1,7 +1,8 @@
 import Component from './Component'
+import HasName from './HasName'
 
 export default {
-    mixins: [ Component ],
+    mixins: [ Component, HasName ],
 
     data(){
         return {
@@ -11,7 +12,6 @@ export default {
 
     computed: {
 
-        $_name() { this.component.name },
         $_placeholder() { return this.component.placeholder },
 
         $_readOnly(){ return this.$_data('readOnly') },
@@ -67,11 +67,12 @@ export default {
             jsonFormData[this.$_name] = this.$_value || ''
         },
         $_validate(errors) {
-            this.$_setError(errors[this.$_name])
+            var errorName = this.$_name.replace('.', '_')
+            this.$_setError(errors[errorName])
             if(this.$_multiple)
                 this.$_value.forEach( (v,k) => {
-                    if(errors[this.$_name+'.'+k])
-                        this.$_setError(errors[this.$_name+'.'+k]) //showing the last error only
+                    if(errors[errorName+'.'+k])
+                        this.$_setError(errors[errorName+'.'+k]) //showing the last error only
                 })
         },
         $_keyUp(key){}, //to be overriden in components when needed
@@ -97,8 +98,8 @@ export default {
                 this.$_runOwnInteractionsWithAction('change', 'axiosRequest')
             
             this.$_runOwnInteractionsWithAction('change', 'submitForm')
-            this.$_runOwnInteractionsWithAction('change', 'refreshCatalog')
-            this.$_runOwnInteractionsWithAction('change', 'sortCatalog')
+            this.$_runOwnInteractionsWithAction('change', 'refreshQuery')
+            this.$_runOwnInteractionsWithAction('change', 'sortQuery')
 
             this.$_clearErrors()
         },
@@ -159,6 +160,6 @@ export default {
     },
     created() {
         this.$_setInitialValue()
-        this.vcomponent.$_setError = this.$_setError
+        this.vkompo.$_setError = this.$_setError
     }
 }

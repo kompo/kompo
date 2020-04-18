@@ -71,7 +71,7 @@ class Place extends Field
         })->all();      
     }
 
-    public function setAttributeFromRequest($requestName, $name, $model)
+    public function setAttributeFromRequest($requestName, $name, $model, $key = null)
     {
         $oldPlace = $this->attributesToColumns ? $model : ModelManager::getValueFromDb($model, $name);
 
@@ -101,7 +101,7 @@ class Place extends Field
         }
     }
 
-    public function setRelationFromRequest($requestName, $name, $model)
+    public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
     	$oldPlace = ModelManager::getValueFromDb($model, $name);
 

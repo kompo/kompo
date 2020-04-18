@@ -1,22 +1,22 @@
 <template>
     <component 
     	:is="customLabel" 
-    	:vcomponent="component"
+    	:vkompo="component"
     	:kompoid="kompoid" />
 </template>
 
 <script>
 export default {
     props: {
-        vcomponent: {type: String|Object, default: 'label'},
+        vkompo: {type: String|Object, default: 'label'},
     	kompoid: { type: String, required: true }
     },
     computed: {
     	customLabel(){
-    		return (_.isString(this.vcomponent) || !this.vcomponent) ? 'VlPlainSpan' : 'Vl'+this.vcomponent.component
+    		return (_.isString(this.vkompo) || !this.vkompo) ? 'VlPlainSpan' : 'Vl'+this.vkompo.component
     	},
     	component(){
-    		return (_.isString(this.vcomponent)  || !this.vcomponent) ? {label: this.vcomponent} : this.vcomponent
+    		return (_.isString(this.vkompo)  || !this.vkompo) ? {label: this.vkompo} : this.vkompo
     	}
     }
 }

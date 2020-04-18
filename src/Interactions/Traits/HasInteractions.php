@@ -3,13 +3,35 @@
 namespace Kompo\Interactions\Traits;
 
 use Closure;
+use Exception;
 use Kompo\Exceptions\NotAcceptableInteractionClosureException;
 use Kompo\Exceptions\NotAcceptableInteractionException;
 use Kompo\Interactions\ActionGroup;
+use Kompo\Interactions\HigherOrderInteraction;
+use Kompo\Interactions\Interaction;
 
 trait HasInteractions
 {
     public $interactions = [];
+
+    protected static $proxies = [
+        'onClick', 'onChange', 'onBlur', 'onInput', 'onEnter', 
+        'onSuccess', 'onError', 
+    ];
+
+    /**
+    * Dynamically access collection proxies.
+    *
+    * @param  string  $key
+    * @return mixed
+    *
+    * @throws \Exception
+    */
+    public function __get($key)
+    {
+        if(in_array($key, static::$proxies))
+            return new HigherOrderInteraction($this, $key);
+    }
 
     /**
      * Adds an interaction (trigger) to the element.
@@ -25,6 +47,8 @@ trait HasInteractions
             throw new NotAcceptableInteractionException($interactions);
 
         collect( (array) $interactions )->each(function($interaction) use($closure) {
+
+            Interaction::checkIfAcceptable($this, $interaction);
             
             if($closure instanceof Closure && is_callable($closure))
                 return ActionGroup::appendFromClosure($this, $interaction, $closure, $this->element ?? $this);

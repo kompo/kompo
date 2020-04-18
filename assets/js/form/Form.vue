@@ -1,6 +1,6 @@
 <template>
     <VlFormInner 
-        :vcomponent="component"
+        :vkompo="component"
         :key="formKey"
         @refreshForm="refreshForm"
         @submit="submit"
@@ -36,7 +36,7 @@ export default {
             this.$emit('submit', jsonFormData)
         },
         reloadFreshForm(){
-            this.component = Object.assign({}, this.vcomponent)
+            this.component = Object.assign({}, this.vkompo)
             this.formKey += 1
         },
         successEvent(response, submitComponent){

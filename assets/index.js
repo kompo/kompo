@@ -31,8 +31,8 @@ const Kompo = {
 			vlSubmitError(kompoid, error){
 	    		Kompo.events.$emit('vlSubmitError'+kompoid, error)
 	    	},
-			vlRefreshCatalog(kompoid, page){
-	    		Kompo.events.$emit('vlRefreshCatalog'+kompoid, page)
+			vlRefreshQuery(kompoid, page){
+	    		Kompo.events.$emit('vlRefreshQuery'+kompoid, page)
 	    	},
 	    	vlToggle(kompoid, toggleId){
 	    		Kompo.events.$emit('vlToggle'+kompoid, toggleId)

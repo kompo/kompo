@@ -9,10 +9,10 @@ export default {
         click(){
             this.$emit('click')
 
-            if(!this.vcomponent)
+            if(!this.vkompo)
                 return
 
-            this.$_runOwnInteractionsWithoutActions('click', ['submitForm', 'sortCatalog', 'emitFrom'])
+            this.$_runOwnInteractionsWithoutActions('click', ['submitForm', 'sortQuery', 'emitFrom'])
 
         }
     }

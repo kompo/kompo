@@ -6,7 +6,7 @@ use Kompo\Input;
 use Kompo\Tests\EnvironmentBoot;
 use Kompo\Tests\Unit\Element\Forms\SetElementIdForm;
 
-class KompoIdCreatorTest extends EnvironmentBoot
+class KompoIdTest extends EnvironmentBoot
 {
 	/** @test */
 	public function kompo_id_is_correctly_created_on_komponents()

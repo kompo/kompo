@@ -29,7 +29,7 @@
                 }"
                 @click.stop="select(option)"
                 @mouseover="setHoveredOption(key)">
-                <vlCustomLabel :vcomponent="option.label" :kompoid="kompoid" />
+                <vlCustomLabel :vkompo="option.label" :kompoid="kompoid" />
             </div>
         </div>
         <div v-else class="vlOptions">
@@ -42,9 +42,10 @@
 <script>
 import Field from '../mixins/Field'
 import HasTaggableInput from '../mixins/HasTaggableInput'
+import DoesAxiosRequests from '../mixins/DoesAxiosRequests'
 
 export default {
-    mixins: [Field, HasTaggableInput],
+    mixins: [Field, HasTaggableInput, DoesAxiosRequests],
     data(){
         return {
             optionsMessage: '',
@@ -81,7 +82,6 @@ export default {
         $_pristine() { return this.$_value.length === 0 },
         $_emptyValue() { return [] },
         ajaxOptions(){ return this.$_data('ajaxOptions') },
-        ajaxOptionsMethod(){ return this.$_data('ajaxOptionsMethod') },
         ajaxMinSearchLength(){ return this.$_data('ajaxMinSearchLength') },
         ajaxOptionsFromField(){ return this.$_data('ajaxOptionsFromField') },
         debouncedAjaxFunction(){ return _.debounce(this.loadOptionsByAjax, 300)}
@@ -223,25 +223,17 @@ export default {
         {
             this.optionsMessage = '<i class="icon-spinner"/>'
             var initialSearch = search || this.inputValue
-            axios({
-                url: this.$_kompoRoute, 
-                method: 'POST',
-                data: {
-                    method: this.ajaxOptionsMethod,
-                    search: initialSearch
-                },
-                headers: {
-                    'X-Kompo-Id': this.kompoid,
-                    'X-Kompo-Action': 'search-options'
-                }
-            }).then(response => {
+
+            this.$_kAxios.$_searchOptions(initialSearch).then(response => {
+
                 if(!search && (initialSearch !== this.inputValue))
                     return
+                
                 this.component.options = response.data
                 this.filteredOptions = response.data
                 this.optionsMessage = this.noOptionsFound
+                
             })
-            .catch(e => this.$_handleAjaxError(e) )
         }
     }
 }

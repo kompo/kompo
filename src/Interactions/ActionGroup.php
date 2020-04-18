@@ -2,7 +2,6 @@
 
 namespace Kompo\Interactions;
 
-use Kompo\Interactions\Action;
 use Kompo\Interactions\Interaction;
 use Kompo\Interactions\Traits\HasInteractions;
 
@@ -13,29 +12,23 @@ class ActionGroup
     public $chainedActions = [];
 
     public $element;
+
+    protected $interactionType;
+
+    protected $activeElement;
     
-    public function __construct($element)
+    public function __construct($element, $interactionType, $activeElement)
     {
         $this->element = $element;
+        $this->interactionType = $interactionType;
+        $this->activeElement = $activeElement instanceOf ChainedAction ? $activeElement->action : $activeElement;
     }
 
     public static function appendFromClosure($activeElement, $interactionType, $closure, $initialElement)
     {
-        $actionGroup = new static($initialElement);
+        $actionGroup = new static($initialElement, $interactionType, $activeElement);
+
         call_user_func($closure, $actionGroup);
-
-        if($activeElement instanceOf ChainedAction)
-            $activeElement = $activeElement->action;
-
-        foreach ($actionGroup->chainedActions as $chainedAction) {
-
-            in_array($interactionType, ['success', 'error']) ? 
-
-                Interaction::addToLastNested($activeElement, $chainedAction->action, $interactionType) :
-
-                Interaction::appendToWithAction($activeElement, $chainedAction->action, $interactionType);
-
-        }
     }
 
     /**
@@ -47,10 +40,8 @@ class ActionGroup
      */
     public function __call($methodName, $parameters)
     {
-        $chainedAction = new ChainedAction($this->element);
-        $chainedAction->action = new Action($this->element, $methodName, $parameters);
-        $this->chainedActions[] = $chainedAction;
-        return $chainedAction;
+        return (new ChainedAction($this->element, $methodName, $parameters))
+            ->handleInteraction($this->interactionType, $this->activeElement);
     }
     
 }

@@ -3,63 +3,121 @@
 namespace Kompo\Database;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Kompo\Core\RequestData;
 use Kompo\Database\DatabaseQuery;
 use Kompo\Database\Lineage;
 use Kompo\Database\NameParser;
+use Kompo\Exceptions\NotFoundMorphToModelException;
+use Kompo\Komponents\FormField;
 
 class EloquentQuery extends DatabaseQuery
 {
-
+    /**
+     * { item_description }
+     */
     protected $model;
 
     /**
-     * Constructs a Vuravel\Catalog\EloquentQuery object
+     * Constructs a Kompo\Database\EloquentQuery object
      *
      * @param  array $components
      * @return void
      */
-    public function __construct($query, $catalog)
+    public function __construct($query, $komposer)
     {
-        parent::__construct($query, $catalog);
+        parent::__construct($query, $komposer);
 
-        $this->model = $this->catalog->model;
+        $this->model = $this->komposer->model;
     }
 
+    /**
+     * { function_description }
+     *
+     * @param      <type>  $field  The field
+     */
     public function handleFilter($field)
-    {
+    {        
         $value = RequestData::get($field->name);
         $operator = $this->inferBestOperator($field);
 
-        $this->query = $this->handleEloquentFilter($this->query, $this->model, $field->name, $operator, $value);
+        $morphToModel = FormField::getConfig($field, 'morphToModel');
+
+        $this->query = $this->handleEloquentFilter($this->query, $this->model, $field->name, $operator, $value, $morphToModel);
 
         //dd($this->query->toSql(), $this->query->getBindings());
         //parent::handleFilter($field);
     }
 
-    protected function handleEloquentFilter($q, $model, $recursiveName, $operator, $value, $table = null)
+    /**
+     * Handles filtering for all relationships except MorphTo.
+     *
+     * @param  Illuminate\Database\Eloquent\Builder $q              
+     * @param  Illuminate\Database\Eloquent\Model   $morphToModel  
+     * @param  string                               $recursiveName
+     * @param  string                               $operator
+     * @param  mixed                                $value 
+     * @param  Illuminate\Database\Eloquent\Model   $morphToModel
+     *
+     * @return Illuminate\Database\Eloquent|Builder
+     */
+    protected function handleEloquentFilter($q, $model, $recursiveName, $operator, $value, $morphToModel = null)
     {
         $firstTerm = NameParser::firstTerm($recursiveName);
         $relation = Lineage::findRelation($model, $firstTerm);
 
         if(!$relation)
-            return $this->applyWhere($q, $firstTerm, $operator, $value, $table);
+            return $this->applyWhere($q, $firstTerm, $operator, $value, $model->getTable());
 
-        $table = $relation->getRelated()->getTable();
+        if($relation instanceof MorphTo)
+            return $this->handleMorphToFilter($q, $morphToModel, $recursiveName, $operator, $value);
+
         $model = $relation->getRelated();
+
         $secondTerm = NameParser::secondTerm($recursiveName) ?: $model->getKeyName();
 
-        $whereHasMethod = $relation instanceof MorphTo ? 'whereHasMorph' : 'whereHas';
+        return $q->whereHas($firstTerm, function($subquery) use($model, $secondTerm, $operator, $value){
 
-        return $q->{$whereHasMethod}($firstTerm, function($subquery) use($model, $secondTerm, $operator, $value, $table){
-
-            $this->handleEloquentFilter($subquery, $model, $secondTerm, $operator, $value, $table);
+            $this->handleEloquentFilter($subquery, $model, $secondTerm, $operator, $value);
 
         });
     }
+
+    /**
+     * Handles filtering by a MorphTo relationship. This one is different from others 
+     * because you need to specify the MorphTo Model since it cannot be infered from the relationship.
+     *
+     * @param  Illuminate\Database\Eloquent|Builder $q              
+     * @param  Illuminate\Database\Eloquent\Model   $morphToModel  
+     * @param  string                               $recursiveName
+     * @param  string                               $operator
+     * @param  mixed                                $value 
+     *
+     * @throws \Kompo\Exceptions\NotFoundMorphToModelException
+     *
+     * @return Illuminate\Database\Eloquent|Builder
+     */
+    protected function handleMorphToFilter($q, $morphToModel, $recursiveName, $operator, $value)
+    {
+        $firstTerm = NameParser::firstTerm($recursiveName);
+
+        if(!$morphToModel)
+            throw new NotFoundMorphToModelException($firstTerm);
+
+        $model = new $morphToModel();       
+
+        $secondTerm = NameParser::secondTerm($recursiveName) ?: $model->getKeyName();
+
+        return $q->whereHasMorph($firstTerm, [$morphToModel], function($subquery) use($model, $secondTerm, $operator, $value){
+            $this->handleEloquentFilter($subquery, $model, $secondTerm, $operator, $value);
+        });
+    }
+
+
+
+
 
     public function sortBy($sort)
     {

@@ -2,46 +2,40 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\ModalLinks;
 use Kompo\Link;
 
 class DeleteLink extends Link
 {   
-	use ModalLinks;
-
     public $component = 'DeleteLink';
-
-    const DB_DELETE_ROUTE = 'vuravel-catalog.db.delete';
-
-    public $data = [
-    	'deleteTitle' => 'Delete this item',
-    	'confirmMessage' => 'Are you sure?',
-    	'cancelMessage' => 'Cancel'
-    ];
-
-	public function __construct($item = null, $label = '')
-	{
-		if($item)
-			$this->post(self::DB_DELETE_ROUTE, [
-					'id' => method_exists($item, 'getKey') ? $item->getKey() : $item->id,
-					'objectClass' => get_class($item)
-				]);
-			
-		parent::__construct($label);
-	}
 
     protected function vlInitialize($label)
     {
     	parent::vlInitialize($label);
 
-		if(!$label) //just an icon
-			$this->icon('icon-trash');
+		$this->deleteTitle('Delete this item');
+		$this->confirmMessage('Are you sure?');
+		$this->cancelMessage('Cancel');
+    }
 
-		$this->deleteTitle(__($this->data('deleteTitle')));
-		$this->confirmMessage(__($this->data('confirmMessage')));
-		$this->cancelMessage(__($this->data('cancelMessage')));
+	/**
+	 * Activates the delete functionality by specifying the key of the item to be deleted.
+	 *
+	 * @param Eloquent\Model  $deleteItem  The model that will be deleted. 
+	 *
+	 * @return self  
+	 */
+	public function byKeyNonStatic($deleteItem)
+	{
+		return $this->selfHttpRequest('DELETE', 'delete-item', null, [
 
-		$this->setDefaultSuccessAction();
+			'deleteKey' => $deleteItem->getKey()
+			
+		])->emitDirect('deleted');
+	}
+
+	public static function byKeyStatic($deleteItem)
+    {
+        return with(new static())->byKey($deleteItem);
     }
 
 	/**
@@ -55,7 +49,7 @@ class DeleteLink extends Link
 	public function deleteTitle($deleteTitle)
 	{
 		$this->data([
-			'deleteTitle' => $deleteTitle
+			'deleteTitle' => __($deleteTitle)
 		]);
 		return $this;
 	}
@@ -71,7 +65,7 @@ class DeleteLink extends Link
 	public function confirmMessage($confirmMessage)
 	{
 		$this->data([
-			'confirmMessage' => $confirmMessage
+			'confirmMessage' => __($confirmMessage)
 		]);
 		return $this;
 	}
@@ -87,9 +81,14 @@ class DeleteLink extends Link
 	public function cancelMessage($cancelMessage)
 	{
 		$this->data([
-			'cancelMessage' => $cancelMessage
+			'cancelMessage' => __($cancelMessage)
 		]);
 		return $this;
 	}
+
+	public static function duplicateStaticMethods()
+    {
+        return array_merge(parent::duplicateStaticMethods(), ['byKey']);
+    }
 
 }

@@ -15,7 +15,7 @@
         
         </a>
         <div>
-            <i class="icon-down"></i>
+            <i class="icon-down-dir"></i>
         </div>
     </div>
     
