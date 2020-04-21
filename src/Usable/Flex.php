@@ -9,8 +9,8 @@ class Flex extends Layout
 {
     use VerticalAlignmentTrait;
 
-    public $component = 'Flex';
-    public $menuComponent = 'Flex';
+    public $vueComponent = 'Flex';
+    public $bladeComponent = 'Flex';
 
     protected function vlInitialize($label)
     {

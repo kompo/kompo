@@ -61,12 +61,12 @@ trait AxiosRequestActions
     }
 
     /**
-     * Includes additional components from the server, which will be included in the Form data.
+     * Includes additional komponents from the server, which will be included in the Form data.
      * To display it, you should chain it with the methods `inModal` or `inPanel`, the containers in which the view will be displayed. For example:
-     * <php>->getKomponents('newComponentsMethod')->inPanel('panel-id')</php>
+     * <php>->getKomponents('newKomponentsMethod')->inPanel('panel-id')</php>
      * 
      *
-     * @param  string  $methodName    The class's method name that will return the new components.
+     * @param  string  $methodName    The class's method name that will return the new komponents.
      * @param  array|null  $ajaxPayload  Additional custom data to add to the request (optional).
      * 
      * @return self
@@ -87,7 +87,7 @@ trait AxiosRequestActions
      * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
      * <php>->getView('get-route-of-view')->inModal()</php>
      *
-     * @param  string  $methodName    The class's method name that will return the new components.
+     * @param  string  $methodName    The class's method name that will return the new komponents.
      * @param  array|null  $ajaxPayload  Additional custom data to add to the request (optional).
      *
      * @return     self   
@@ -102,7 +102,7 @@ trait AxiosRequestActions
      * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
      * <php>->postView('get-route-of-view')->inModal()</php>
      *
-     * @param  string  $methodName    The class's method name that will return the new components.
+     * @param  string  $methodName    The class's method name that will return the new komponents.
      * @param  array|null  $ajaxPayload  Additional custom data to add to the request (optional).
      *
      * @return     self   
@@ -117,7 +117,7 @@ trait AxiosRequestActions
      * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
      * <php>->postView('get-route-of-view')->inModal()</php>
      *
-     * @param  string  $methodName    The class's method name that will return the new components.
+     * @param  string  $methodName    The class's method name that will return the new komponents.
      * @param  array|null  $ajaxPayload  Additional custom data to add to the request (optional).
      *
      * @return     self   
@@ -132,7 +132,7 @@ trait AxiosRequestActions
      * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
      * <php>->postView('get-route-of-view')->inModal()</php>
      *
-     * @param  string  $methodName    The class's method name that will return the new components.
+     * @param  string  $methodName    The class's method name that will return the new komponents.
      * @param  array|null  $ajaxPayload  Additional custom data to add to the request (optional).
      *
      * @return     self   

@@ -6,7 +6,7 @@ use Kompo\Komponents\Field;
 
 class Stripe extends Field
 {
-    public $component = 'Stripe';
+    public $vueComponent = 'Stripe';
 
     protected function vlInitialize($label)
     {

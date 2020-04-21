@@ -7,7 +7,7 @@ use Kompo\DateRange;
 
 class _DateRangeHandledForm extends Form
 {
-	public function components()
+	public function komponents()
 	{
 		return [
 			DateRange::form('A')->name([

@@ -6,7 +6,10 @@
             :style="{'z-index': zIndex - 2 }">
 
             <vl-alert v-for="(alert, key) in alerts"
-                :alert="alert" :key="key" />
+                :message="alert.message"
+                :iconclass="alert.iconClass"
+                :alertclass="alert.alertClass"
+                :key="key" />
 
         </div>
         
@@ -30,19 +33,18 @@
                 var indexWithId = _.findIndex(this.alerts, (alert) => alert.id == id)
                 this.alerts.splice(indexWithId)
             },
-            addAlert(message, alertClass){
+            addAlert(alert){
                 this.initialId += 1
-                this.alerts.push({
-                    message: message,
-                    class: 'vlAlert '+ alertClass,
+                
+                this.alerts.push(Object.assign(alert, {
                     id: this.initialId
-                })
+                }))
                 setTimeout(()=> this.closeById(this.initialId), 3000)
             }
         },
         mounted(){
-            this.$modal.events.$on('showAlert', (message, alertClass) => {
-                this.addAlert(message, alertClass)
+            this.$modal.events.$on('showAlert', (alert) => {
+                this.addAlert(alert)
             })
         }
     }

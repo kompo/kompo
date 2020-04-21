@@ -9,7 +9,7 @@ class AddLink extends Link
 {
 	use ModalLinks;
 
-    public $component = 'EditLink';
+    public $vueComponent = 'EditLink';
     public $linkTag = 'vlLink';
 
 	protected function vlInitialize($label)

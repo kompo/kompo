@@ -1,12 +1,12 @@
 <?php
 
-namespace Kompo\Tests\Unit\Element\Forms;
+namespace Kompo\Tests\Unit\Element;
 
 use Kompo\{Input, Form};
 
-class SetElementClassForm extends Form
+class _SetElementClassForm extends Form
 {
-	public function components()
+	public function komponents()
 	{
 		return [
 			Input::form('Title')->class('class-0'),

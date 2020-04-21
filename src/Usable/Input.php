@@ -9,13 +9,15 @@ class Input extends Field
 {
 	use HasInputAttributes;
 	
-	public $component = 'Input';
+	public $vueComponent = 'Input';
 
     protected function vlInitialize($label)
     {
         parent::vlInitialize($label);
 
         $this->inputType('text');
+
+        $this->debounce();
 
         //$this->submitsOnEnter(); TODO: uncomment
     }

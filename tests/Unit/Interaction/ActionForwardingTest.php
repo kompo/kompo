@@ -39,7 +39,7 @@ class ActionForwardingTest extends EnvironmentBoot
 		$interactions = Input::form()->submit()->interactions;
 
 		$this->assertCount(1, $interactions);
-		$this->assertEquals('change', $interactions[0]->interactionType);
+		$this->assertEquals('input', $interactions[0]->interactionType);
 		$this->assertEquals('submitForm', $interactions[0]->action->actionType);
 
 		$interactions = Panel::form()->submit()->interactions;

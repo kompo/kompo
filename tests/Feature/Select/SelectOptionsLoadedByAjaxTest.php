@@ -64,7 +64,7 @@ class SelectOptionsLoadedByAjaxTest extends EnvironmentBoot
 
         $form = new _SelectAjaxOptionsEloquentForm(1);
 
-        $opts = function($index) use($form) { return $form->components[$index]->options; };
+        $opts = function($index) use($form) { return $form->komponents[$index]->options; };
 
 		$this->assertCount(1, $opts(0));
 		$this->assert_option_matches_model($tags[2], $opts(0)[0]);

@@ -9,5 +9,5 @@ class Checkbox extends Field
 {
 	use HasBooleanValue;
 
-    public $component = 'Checkbox';
+    public $vueComponent = 'Checkbox';
 }

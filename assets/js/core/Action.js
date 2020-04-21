@@ -1,4 +1,5 @@
 import KompoAxios from './KompoAxios'
+import Alert from './Alert'
 
 export default class Action {
 	constructor(action, vue){
@@ -73,7 +74,7 @@ export default class Action {
             this.vue.$_state({ loading: false })
             this.vue.$_state({ isSuccess: true })
 
-            this.vue.$kompo.vlSubmitSuccess(this.vue.kompoid, response)
+            this.vue.$kompo.vlSubmitSuccess(this.vue.kompoid, response, this.vue)
             this.vue.$_runInteractionsOfType(this, 'success', response)
 
         })
@@ -127,7 +128,7 @@ export default class Action {
         this.vue.$kompo.vlFillPanel(this.$_data('panelId'), response.data, parentAction.$_data('included'))
     }
     addAlertAction(){
-        this.vue.$modal.events.$emit('showAlert', this.$_data('message'), this.$_data('alertClass'))
+        new Alert().asObject(this.$_data('alert')).emitFrom(this.vue)
     }
     redirectAction(response){
     	if(this.$_data('redirectUrl') === true){

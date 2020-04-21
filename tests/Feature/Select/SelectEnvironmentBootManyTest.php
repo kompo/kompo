@@ -30,16 +30,16 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
 
         //Reload
         $form = new $formClass(1);
-        $this->assertCount(2, $form->components[$index]->value);
+        $this->assertCount(2, $form->komponents[$index]->value);
         if($type == 'ordered'){
-        	$this->assertSubset($file2, $form->components[$index]->value[0]);
-        	$this->assertSubset($file1, $form->components[$index]->value[1]);
+        	$this->assertSubset($file2, $form->komponents[$index]->value[0]);
+        	$this->assertSubset($file1, $form->komponents[$index]->value[1]);
         }else{
-        	$this->assertSubset($file1, $form->components[$index]->value[0]);
-        	$this->assertSubset($file2, $form->components[$index]->value[1]);
+        	$this->assertSubset($file1, $form->komponents[$index]->value[0]);
+        	$this->assertSubset($file2, $form->komponents[$index]->value[1]);
         }
         if($type == 'filtered')
-            $this->assertEquals(1, $form->components[$index]->value[0]->order);
+            $this->assertEquals(1, $form->komponents[$index]->value[0]->order);
 
 
 		//Update
@@ -65,22 +65,22 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
         //Reload
         $form = new $formClass(1);
         if($type == 'ordered'){
-            $this->assertCount(3, $form->components[$index]->value);
-            $this->assertSubset($file4, $form->components[$index]->value[0]);
-            $this->assertSubset($file1, $form->components[$index]->value[1]);
-            $this->assertSubset($file3, $form->components[$index]->value[2]);
+            $this->assertCount(3, $form->komponents[$index]->value);
+            $this->assertSubset($file4, $form->komponents[$index]->value[0]);
+            $this->assertSubset($file1, $form->komponents[$index]->value[1]);
+            $this->assertSubset($file3, $form->komponents[$index]->value[2]);
 
 	    }elseif($type == 'filtered'){
-            $this->assertCount(2, $form->components[$index]->value);
-            $this->assertEquals(1, $form->components[$index]->value[0]->order);
-            $this->assertSubset($file1, $form->components[$index]->value[0]);
-            $this->assertSubset($file4, $form->components[$index]->value[1]);
+            $this->assertCount(2, $form->komponents[$index]->value);
+            $this->assertEquals(1, $form->komponents[$index]->value[0]->order);
+            $this->assertSubset($file1, $form->komponents[$index]->value[0]);
+            $this->assertSubset($file4, $form->komponents[$index]->value[1]);
 
         }else{
-            $this->assertCount(3, $form->components[$index]->value);
-            $this->assertSubset($file1, $form->components[$index]->value[0]);
-            $this->assertSubset($file3, $form->components[$index]->value[1]);
-            $this->assertSubset($file4, $form->components[$index]->value[2]);
+            $this->assertCount(3, $form->komponents[$index]->value);
+            $this->assertSubset($file1, $form->komponents[$index]->value[0]);
+            $this->assertSubset($file3, $form->komponents[$index]->value[1]);
+            $this->assertSubset($file4, $form->komponents[$index]->value[2]);
 	    }
 
 		//Remove
@@ -97,7 +97,7 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
 
         //Reload
         $form = new $formClass(1);
-        $this->assertNull($form->components[$index]->value);
+        $this->assertNull($form->komponents[$index]->value);
     }
 
 }

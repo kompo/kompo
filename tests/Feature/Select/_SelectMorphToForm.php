@@ -11,7 +11,7 @@ class _SelectMorphToForm extends Form
 {
 	public $model = Obj::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			Select::form('A')->name('morphToPlain')

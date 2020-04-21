@@ -9,7 +9,7 @@ use Kompo\Tests\Models\Tag;
 
 class _SelectAjaxOptionsForm extends Form
 {
-	public function components()
+	public function komponents()
 	{
 		return [
 			Select::form('tag')->searchOptions(1, 'anotherMethod'),

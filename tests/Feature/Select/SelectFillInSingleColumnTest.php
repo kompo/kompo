@@ -30,11 +30,11 @@ class SelectFillInSingleColumnTest extends EnvironmentBoot
 
         //Reload
         $form = new _SelectAttributeFillsForm(1);
-        $this->assertEquals(1, $form->components[0]->value);
-        $this->assertCount(2, $form->components[1]->value);
-        $this->assertSubset([3,4], $form->components[1]->value);
-        $this->assertCount(2, $form->components[2]->value);
-        $this->assertSubset([2,5], $form->components[2]->value);
+        $this->assertEquals(1, $form->komponents[0]->value);
+        $this->assertCount(2, $form->komponents[1]->value);
+        $this->assertSubset([3,4], $form->komponents[1]->value);
+        $this->assertCount(2, $form->komponents[2]->value);
+        $this->assertSubset([2,5], $form->komponents[2]->value);
 
 		//Update files
         $this->submit(
@@ -57,11 +57,11 @@ class SelectFillInSingleColumnTest extends EnvironmentBoot
 
         //Reload
         $form = new _SelectAttributeFillsForm(1);
-        $this->assertEquals(6, $form->components[0]->value);
-        $this->assertCount(2, $form->components[1]->value);
-        $this->assertSubset([13,'string'], $form->components[1]->value);
-        $this->assertCount(1, $form->components[2]->value);
-        $this->assertSubset([22], $form->components[2]->value);
+        $this->assertEquals(6, $form->komponents[0]->value);
+        $this->assertCount(2, $form->komponents[1]->value);
+        $this->assertSubset([13,'string'], $form->komponents[1]->value);
+        $this->assertCount(1, $form->komponents[2]->value);
+        $this->assertSubset([22], $form->komponents[2]->value);
 
 		//Remove some files
         $this->submit(
@@ -84,9 +84,9 @@ class SelectFillInSingleColumnTest extends EnvironmentBoot
 
         //Reload
         $form = new _SelectAttributeFillsForm(1);
-        $this->assertNull($form->components[0]->value);
-        $this->assertNull($form->components[1]->value);
-        $this->assertNull($form->components[2]->value);
+        $this->assertNull($form->komponents[0]->value);
+        $this->assertNull($form->komponents[1]->value);
+        $this->assertNull($form->komponents[2]->value);
     }
 
 }

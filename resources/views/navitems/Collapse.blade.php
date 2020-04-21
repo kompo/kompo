@@ -21,7 +21,7 @@
     
     <div class="vl-collapse-menu {{ $vlCollapseOpen ? '' : 'vl-menu-closed' }}">
         
-        @include('kompo::menus.components', [ 'components' => $component->components ])
+        @include('kompo::menus.komponents', [ 'komponents' => $component->komponents ])
     
     </div>
 

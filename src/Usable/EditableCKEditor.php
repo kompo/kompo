@@ -6,7 +6,7 @@ use Kompo\CKEditor;
 
 class EditableCKEditor extends CKEditor
 {
-    public $component = 'EditableCKEditor';
+    public $vueComponent = 'EditableCKEditor';
 
     protected function vlInitialize($label)
     {

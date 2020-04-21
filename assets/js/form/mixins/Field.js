@@ -75,11 +75,11 @@ export default {
                         this.$_setError(errors[errorName+'.'+k]) //showing the last error only
                 })
         },
-        $_keyUp(key){}, //to be overriden in components when needed
+        $_keyUp(key){}, //to be overriden in komponents when needed
         $_keyupAction(key){
             this.$_keyUp(key)
             this.$_clearErrors()
-
+            
             this.$_runOwnInteractions('keyup')
             if(key.code === 'Enter'){
                 if(this.$_data('noSubmitOnEnter')){

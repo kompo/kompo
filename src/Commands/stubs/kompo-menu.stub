@@ -6,7 +6,7 @@ use Kompo\Menu;
 
 class {name}  extends Menu
 {
-	public function components()
+	public function komponents()
 	{
 		return [
 			

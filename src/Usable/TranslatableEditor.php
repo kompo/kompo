@@ -9,7 +9,7 @@ class TranslatableEditor extends Translatable
 {
     use CKEditorTrait;
     
-    public $component = 'TranslatableEditor';
+    public $vueComponent = 'TranslatableEditor';
 
     protected function vlInitialize($label)
     {

@@ -15,7 +15,7 @@ abstract class QueryOperations
     /**
      * Constructs a Kompo\Database\QueryOperations object
      *
-     * @param  array $components
+     * @param  array $komponents
      * @return void
      */
     public function __construct($query, $komposer)

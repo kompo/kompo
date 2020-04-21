@@ -25,8 +25,8 @@ const Kompo = {
 			vlPreSubmit(kompoid){
 	    		Kompo.events.$emit('vlPreSubmit'+kompoid)
 	    	},
-			vlSubmitSuccess(kompoid, response){
-	    		Kompo.events.$emit('vlSubmitSuccess'+kompoid, response)
+			vlSubmitSuccess(kompoid, response, submitKomponent){
+	    		Kompo.events.$emit('vlSubmitSuccess'+kompoid, response, submitKomponent)
 	    	},
 			vlSubmitError(kompoid, error){
 	    		Kompo.events.$emit('vlSubmitError'+kompoid, error)

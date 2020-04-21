@@ -5,19 +5,21 @@ namespace Kompo\Interactions;
 use Kompo\Exceptions\NotAllowedInteractionException;
 use Kompo\Exceptions\NotApplicableInteractionException;
 use Kompo\Exceptions\NotFoundInteractionException;
-use Kompo\Form;
+use Kompo\Input;
 use Kompo\Komponents\Field;
 use Kompo\Komponents\Trigger;
+use Kompo\Komposers\Komposer;
 use Kompo\Panel;
 use RuntimeException;
 
 class Interaction
 {
     protected static $defaultInteractions = [
+        Input::class => 'input',
         Field::class => 'change',
         Trigger::class => 'click',
         Panel::class => 'load',
-        Form::class => 'success', //not used but interesting idea. Right now, ->submit()->onSuccess(...)
+        Komposer::class => 'success',
         Action::class => 'success',
         ChainedAction::class => 'success'
     ];

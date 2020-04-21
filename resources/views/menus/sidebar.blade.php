@@ -5,9 +5,9 @@
 	<aside @include('kompo::partials.IdStyle', ['component' => $Sidebar ])
 		class="{{ $Sidebar->data('menuType') }} {{ $Sidebar->class }}">
 
-	    @include('kompo::menus.components', [ 
+	    @include('kompo::menus.komponents', [ 
 	    	'kompoid' => Kompo\Core\KompoId::get($Sidebar),
-	    	'components' => $Sidebar->components 
+	    	'komponents' => $Sidebar->komponents 
 	    ])
 
 	</aside>

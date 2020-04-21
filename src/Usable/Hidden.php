@@ -6,7 +6,7 @@ use Kompo\Komponents\Field;
 
 class Hidden extends Field
 {	
-    public $component = 'Hidden';
+    public $vueComponent = 'Hidden';
 
     public $showHidden = false;
 

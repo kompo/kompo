@@ -10,7 +10,7 @@ class _FieldNameOneToOneParsingForm extends Form
 {
 	public $model = Post::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			Input::form('Post Title')->name('title'),

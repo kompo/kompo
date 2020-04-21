@@ -6,7 +6,7 @@ use Kompo\Card;
 
 class ImageTitleDesc extends Card
 {
-    public $component = 'ImageTitleDesc';
+    public $vueComponent = 'ImageTitleDesc';
 
     public $class = 'col-4';
 

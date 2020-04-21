@@ -1,7 +1,7 @@
 <template>
     <div v-bind="$_layoutWrapperAttributes" v-show="!$_hidden">
         
-        <component v-bind="$_attributes(components[0])" :key="renderKey" />
+        <component v-bind="$_attributes(komponents[0])" :key="renderKey" />
         
         <div>
             <a class="vlFormComment" href="javascript:void(0)" @click.stop="loadUpdateForm">
@@ -60,10 +60,10 @@ export default {
         },
         updateComponentOptionsAndValue(newOptions, relatedValue)
         {
-            var newSelect = this.components[0]
+            var newSelect = this.komponents[0]
             newSelect.options = newOptions
             newSelect.value = relatedValue[this.$_data('optionsKey')]
-            this.components.splice(0, 1, newSelect)
+            this.komponents.splice(0, 1, newSelect)
             this.renderKey += 1
 
             if(!this.$_data('keepModalOpen'))

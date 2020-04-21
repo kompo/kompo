@@ -6,7 +6,7 @@ use Kompo\Komponents\Field;
 
 class Date extends Field
 {
-    public $component = 'Date';
+    public $vueComponent = 'Date';
 
     protected function vlInitialize($label)
     {

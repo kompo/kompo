@@ -6,7 +6,7 @@ use Kompo\Textarea;
 
 class EditableTextarea extends Textarea
 {
-    public $component = 'EditableTextarea';
+    public $vueComponent = 'EditableTextarea';
 
     protected function vlInitialize($label)
     {

@@ -6,13 +6,13 @@ use Kompo\Komponents\LayoutManager;
 
 class Card extends Layout
 {
-    public $component = 'Card';
+    public $vueComponent = 'Card';
 
     public function __construct(...$args)
     {
         $this->vlInitialize( LayoutManager::getNormalizedLabel($args, $this) );
 
-        $this->components = LayoutManager::collectFilteredComponents($args, $this)->all(); //no ->values() chained to preserve 'keys' (but Layout has it)
+        $this->komponents = LayoutManager::collectFilteredKomponents($args, $this)->all(); //no ->values() chained to preserve 'keys' (but Layout has it)
     }
 
     /**
@@ -25,7 +25,7 @@ class Card extends Layout
      */
     public function component($component)
     {
-        $this->component = $component;
+        $this->vueComponent = $component;
         return $this;
     }
 
@@ -38,7 +38,7 @@ class Card extends Layout
      */
     public function prop($key)
     {
-        return $this->components[$key];
+        return $this->komponents[$key];
     }
 
 }

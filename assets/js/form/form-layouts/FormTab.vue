@@ -4,7 +4,7 @@
         :active="isActive"
         :style="$_elementStyles">
         <component v-bind="$_attributes(tab)"
-            v-for="(tab,index) in components"
+            v-for="(tab,index) in komponents"
             :key="index" />
     </vl-tab>
 </template>

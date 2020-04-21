@@ -8,7 +8,7 @@ use Kompo\Menu;
 
 class _SubMenuInstantiationMenu extends Menu
 {
-	public function components()
+	public function komponents()
 	{
 		return Collapse::form()->submenu(
 			Input::form()->id('A'),

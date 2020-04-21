@@ -6,6 +6,6 @@ use Kompo\Komponents\Block;
 
 class Code extends Block
 {
-    public $component = 'FormCode';
+    public $vueComponent = 'FormCode';
     
 }

@@ -11,7 +11,7 @@ class _PlacesStoredAsHasOneHasManyForm extends Form
 {
 	public $model = Obj::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			Place::form('A')->name('hasOnePlain2'),

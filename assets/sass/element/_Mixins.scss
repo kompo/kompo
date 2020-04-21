@@ -31,12 +31,3 @@ $scroll-color: #a3aabb !default;
 	border-radius: 0.2rem;
     padding: 0.15rem 0.2rem;
 }
-
-@mixin badge(){
-	display: inline-block;
-    padding: .25em .4em;
-    border-radius: .25rem;
-}
-.vlBadge{
-	@include badge;
-}

@@ -9,7 +9,7 @@ class CKEditor extends Field
 {
     use CKEditorTrait;
     
-    public $component = 'CKEditor';
+    public $vueComponent = 'CKEditor';
 
     protected function vlInitialize($label)
     {

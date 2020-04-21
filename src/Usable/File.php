@@ -13,7 +13,7 @@ use LogicException;
 
 class File extends Field
 {
-    public $component = 'File';
+    public $vueComponent = 'File';
 
     /**
      * Adds a cast to array to the attribute if no cast is present.

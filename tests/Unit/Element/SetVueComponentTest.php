@@ -10,10 +10,10 @@ class SetVueComponentTest extends EnvironmentBoot
 	public function element_is_assigned_a_vue_component()
 	{
 		$element = new Card();
-		$this->assertEquals('Card', $element->component);
+		$this->assertEquals('Card', $element->vueComponent);
 
 		$element->component('SomethingElse');
-		$this->assertEquals('SomethingElse', $element->component);
+		$this->assertEquals('SomethingElse', $element->vueComponent);
 	}
 
 }

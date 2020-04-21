@@ -6,10 +6,6 @@ use BadMethodCallException;
 
 abstract class Element
 {
-    /**
-     * TODO: Refactor component to vueComponent
-     */
-
     use Traits\HasId, 
         Traits\HasClasses, 
         Traits\HasConfig, 
@@ -24,7 +20,7 @@ abstract class Element
      *
      * @var string
      */
-    public $component;
+    public $vueComponent;
 
     /**
      * Prepares an element and passes important information for display.

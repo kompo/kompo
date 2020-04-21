@@ -9,6 +9,10 @@ export default {
 
         $_submitsOnInput(){ return this.$_data('submitsOnInput') },
         $_hideIndicators(){ return this.$_data('hideIndicators') },
+
+        $_keepModalOpen(){ return this.$_data('keepModalOpen') },
+        $_getFreshForm(){ return this.$_data('getFreshForm') },
+
         $_sortsQuery(){ return this.$_data('sortsQuery') },
         $_sortValue(){ return this.$_sortsQuery }, //overriden in Field and Th
 

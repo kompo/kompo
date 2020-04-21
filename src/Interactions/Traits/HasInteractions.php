@@ -94,4 +94,18 @@ trait HasInteractions
         return $this->on('enter', $function);
     }
 
+    /**
+     * Sets the debounce interval for an action. Otherwise, it is defaulted to 500ms
+     *
+     * @param integer|null $debounce The number of milliseconds between requests.
+     *
+     * @return     self 
+     */
+    public function debounce($debounce = 500)
+    {
+        return $this->data([
+            'debounce' => $debounce
+        ]);
+    }
+
 }

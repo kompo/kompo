@@ -65,9 +65,9 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 
 		$form = new _FieldNameOneToOneParsingForm(1);
 
-		$this->assertEquals($objTitle, $form->components[1]->value);
-		$this->assertEquals($objTag, $form->components[2]->value);
-		$this->assertEquals($postTagTitle, $form->components[3]->value);
+		$this->assertEquals($objTitle, $form->komponents[1]->value);
+		$this->assertEquals($objTag, $form->komponents[2]->value);
+		$this->assertEquals($postTagTitle, $form->komponents[3]->value);
 	}
 	
 }

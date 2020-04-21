@@ -23,7 +23,7 @@ class EloquentQuery extends DatabaseQuery
     /**
      * Constructs a Kompo\Database\EloquentQuery object
      *
-     * @param  array $components
+     * @param  array $komponents
      * @return void
      */
     public function __construct($query, $komposer)

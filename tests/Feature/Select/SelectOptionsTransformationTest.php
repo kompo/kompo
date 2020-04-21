@@ -16,7 +16,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
 	{	
 		$form = new _SelectAttributeFillsForm();
 
-		$this->assert_array_options_are_transformed_into_label_value_array($form->options(), $form->components);
+		$this->assert_array_options_are_transformed_into_label_value_array($form->options(), $form->komponents);
 	}
 
 	/** @test */
@@ -25,7 +25,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
 		factory(Tag::class, 6)->create();	
 		$form = new _SelectAttributeFillsForm(null, ['optionsMethod' => 'Tags']);
 
-		$this->assert_array_options_are_transformed_into_label_value_array(Tag::pluck('name', 'id'), $form->components);
+		$this->assert_array_options_are_transformed_into_label_value_array(Tag::pluck('name', 'id'), $form->komponents);
 	}
 
 	/** @test */
@@ -33,16 +33,16 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
 	{
 		$form = new _SelectAttributeFillsForm(null, ['optionsMethod' => 'Cards']);
 
-		foreach ($form->components as $key => $komponent) {
+		foreach ($form->komponents as $key => $komponent) {
 
 			$options = $komponent->options;
 
 			$this->assertCount(5, $options);
 			$this->assertTrue($options[0]['label'] instanceOf IconText);
 	    	$this->assertEquals(1, $options[0]['value']);
-	    	$this->assertEquals('Option 1', $options[0]['label']->components['text']);
+	    	$this->assertEquals('Option 1', $options[0]['label']->komponents['text']);
 	    	$this->assertEquals(4, $options[3]['value']);
-	    	$this->assertEquals('Option 4', $options[3]['label']->components['text']);
+	    	$this->assertEquals('Option 4', $options[3]['label']->komponents['text']);
 	    }
 	}
 
@@ -58,7 +58,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
 		$filesFiltered = File::where('name', '<', 'm')->get();
 
 		$form = new _SelectOptionsFromForm();
-		$opts = function($index) use($form) { return $form->components[$index]->options; };
+		$opts = function($index) use($form) { return $form->komponents[$index]->options; };
 
 		//belongsTo
     	$this->assert_relationships_options_are_loaded_ordered_or_filtered($users, $opts(0));
@@ -92,16 +92,16 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
 		$form = new _SelectOptionsFromForm();
 
 		//Card
-		$this->assertEquals(count($users), count($opts = $form->components[15]->options));
+		$this->assertEquals(count($users), count($opts = $form->komponents[15]->options));
 		foreach($opts as $key => $opt){
 			$this->assertEquals($users[$key]->id, $opt['value']);
 			$this->assertTrue($opt['label'] instanceOf IconText);
-			$this->assertEquals(strtoupper($users[$key]->name), $opt['label']->components['text']);
-			$this->assertEquals('icon-location', $opt['label']->components['icon']);
+			$this->assertEquals(strtoupper($users[$key]->name), $opt['label']->komponents['text']);
+			$this->assertEquals('icon-location', $opt['label']->komponents['icon']);
 		}
 
 		//Array
-		$this->assertEquals(count($users), count($opts = $form->components[16]->options));
+		$this->assertEquals(count($users), count($opts = $form->komponents[16]->options));
 		foreach($opts as $key => $opt){
 			$this->assertEquals($users[$key]->id, $opt['value']);
 			$this->assertCount(2, $opt['label']);
@@ -110,7 +110,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
 		}
 
 		//Closure
-		$this->assertEquals(count($users), count($opts = $form->components[17]->options));
+		$this->assertEquals(count($users), count($opts = $form->komponents[17]->options));
 		foreach($opts as $key => $opt){
 			$this->assertEquals($users[$key]->id, $opt['value']);
 			$this->assertEquals(strtoupper($users[$key]->name), $opt['label']);
@@ -122,9 +122,9 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
 
 	/** ------------------ PRIVATE --------------------------- */   
 
-	private function assert_array_options_are_transformed_into_label_value_array($opts0, $formComponents)
+	private function assert_array_options_are_transformed_into_label_value_array($opts0, $formKomponents)
 	{
-		foreach ($formComponents as $komponent) {
+		foreach ($formKomponents as $komponent) {
 
 			$this->assertEquals(count($opts0), count($komponent->options));
 

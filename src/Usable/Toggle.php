@@ -9,5 +9,5 @@ class Toggle extends Field
 {
 	use HasBooleanValue;
 
-    public $component = 'Toggle';
+    public $vueComponent = 'Toggle';
 }

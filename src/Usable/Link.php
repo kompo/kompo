@@ -11,7 +11,7 @@ class Link extends Trigger
 	use HasHref;
 	use TriggerStyles;
 
-    public $component = 'FormLink';
-    public $menuComponent = 'Link';
+    public $vueComponent = 'FormLink';
+    public $bladeComponent = 'Link';
     
 }

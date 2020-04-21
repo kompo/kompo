@@ -10,7 +10,7 @@ class Panel extends Layout
 {
     use HasInteractions, ForwardsInteraction;
     
-    public $component = 'FormPanel';
+    public $vueComponent = 'FormPanel';
 
     protected function vlInitialize($labelAsId)
     {

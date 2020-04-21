@@ -6,7 +6,7 @@ use Kompo\Select;
 
 class SelectLinks extends Select
 {
-    public $component = 'SelectButtons';
+    public $vueComponent = 'SelectButtons';
 
     protected function vlInitialize($label)
     {

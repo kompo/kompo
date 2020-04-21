@@ -7,7 +7,7 @@ use Kompo\Link;
 
 class Locales extends Dropdown
 {
-    public $menuComponent = 'Dropdown';
+    public $bladeComponent = 'Dropdown';
 
     protected function vlInitialize($label)
     {

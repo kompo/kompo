@@ -6,7 +6,7 @@ use Kompo\Date;
 
 class DateRange extends Date
 {
-    public $component = 'DateRange';
+    public $vueComponent = 'DateRange';
 
     public function setOutput($value, $key)
     {

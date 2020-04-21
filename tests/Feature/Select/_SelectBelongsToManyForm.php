@@ -10,7 +10,7 @@ class _SelectBelongsToManyForm extends Form
 {
 	public $model = Obj::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			MultiSelect::form('A')->name('belongsToManyPlain'),

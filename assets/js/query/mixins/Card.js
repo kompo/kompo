@@ -11,7 +11,7 @@ export default {
 	},
 	computed:{
 		$_activeClass(){ return this.active ? 'vlActive' : '' },
-		$_props(){ return this.vkompo.components }
+		$_props(){ return this.vkompo.komponents }
 	},
 	methods:{
 		$_prop(propKey){ 
@@ -23,7 +23,7 @@ export default {
         componentAttributes(component){
         	return {
         		kompoid: this.kompoid,
-            	is: 'Vl' + component.component,
+            	is: this.$_vueTag(component),
             	vkompo: component,
                 index: this.index
         	}

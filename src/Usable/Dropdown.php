@@ -10,5 +10,5 @@ class Dropdown extends Trigger
 {
 	use HasHref, HasSubmenu;
 
-    public $menuComponent = 'Dropdown';
+    public $bladeComponent = 'Dropdown';
 }

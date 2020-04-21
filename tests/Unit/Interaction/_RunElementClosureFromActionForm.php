@@ -8,7 +8,7 @@ use Kompo\Input;
 
 class _RunElementClosureFromActionForm extends Form
 {
-    public function components()
+    public function komponents()
     {
     	return [
     		Button::form()->getKomponents('includeMethod'),

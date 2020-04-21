@@ -9,10 +9,55 @@ use Kompo\Exceptions\NotAllowedInteractionException;
 use Kompo\Exceptions\NotFoundInteractionException;
 use Kompo\Input;
 use Kompo\Panel;
+use Kompo\Select;
 use Kompo\Tests\EnvironmentBoot;
 
 class InteractionsDeclarationTest extends EnvironmentBoot
 {
+	/** @test */
+	public function default_interaction_is_correctly_set_on_komponents()
+	{
+		//Input
+		$el = Input::form()->submit();
+		$interactions = $el->interactions;
+
+		$this->assertCount(1, $interactions);
+		$this->assertEquals('input', $interactions[0]->interactionType);
+		$this->assertEquals(500, $el->data('debounce')); //check that debounce is set
+
+		//Fields
+		$el = Select::form()->submit();
+		$interactions = $el->interactions;
+
+		$this->assertCount(1, $interactions);
+		$this->assertEquals('change', $interactions[0]->interactionType);
+		$this->assertNull($el->data('debounce')); //no debounce
+
+		//Triggers
+		$el = Button::form()->submit();
+		$interactions = $el->interactions;
+
+		$this->assertCount(1, $interactions);
+		$this->assertEquals('click', $interactions[0]->interactionType);
+		$this->assertNull($el->data('debounce')); //no debounce
+
+		//Panel
+		$el = Panel::form()->submit();
+		$interactions = $el->interactions;
+
+		$this->assertCount(1, $interactions);
+		$this->assertEquals('load', $interactions[0]->interactionType);
+		$this->assertNull($el->data('debounce')); //no debounce
+
+		//Form
+		$el = _Form()->submit();
+		$interactions = $el->interactions;
+
+		$this->assertCount(1, $interactions);
+		$this->assertEquals('success', $interactions[0]->interactionType);
+		$this->assertNull($el->data('debounce')); //no debounce
+	}
+
 	/** @test */
 	public function interaction_is_acceptable_string_or_array()
 	{

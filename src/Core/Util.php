@@ -79,7 +79,7 @@ class Util
 
 	public static function vueComponent($component)
 	{
-		return 'vl-'.Str::kebab($component->component);
+		return 'vl-'.Str::kebab($component->vueComponent);
 	}
 
 }

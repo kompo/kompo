@@ -9,20 +9,20 @@ class CollapseOnMobile extends Trigger
 {
     use HasSubmenu;
 
-    public $menuComponent = 'CollapseOnMobile';
+    public $bladeComponent = 'CollapseOnMobile';
 
     public $leftMenu = [];
 
     public $rightMenu = [];
 
     /**
-     * Allows us to include a list of components in the left side of the navbar part that collapses on mobile. For example:
+     * Allows us to include a list of komponents in the left side of the navbar part that collapses on mobile. For example:
      * <php>CollapseOnMobile::leftMenu(
    Link::form('Link 1'),
    Link::form('Link 2')
 )</php>
      *
-     * @param array|args $args The components list. Can be written as an array or a list of method arguments.
+     * @param array|args $args The komponents list. Can be written as an array or a list of method arguments.
      * @return     self  ( description_of_the_return_value )
      */
     public function leftMenuNonStatic()
@@ -32,13 +32,13 @@ class CollapseOnMobile extends Trigger
     }
 
     /**
-     * Allows us to include a list of components in the right side of the navbar part that collapses on mobile. For example:
+     * Allows us to include a list of komponents in the right side of the navbar part that collapses on mobile. For example:
      * <php>CollapseOnMobile::rightMenu(
    Link::form('Link 1'),
    Link::form('Link 2')
 )</php>
      *
-     * @param array|args $args The components list. Can be written as an array or a list of method arguments.
+     * @param array|args $args The komponents list. Can be written as an array or a list of method arguments.
      * @return     self  ( description_of_the_return_value )
      */
     public function rightMenuNonStatic()

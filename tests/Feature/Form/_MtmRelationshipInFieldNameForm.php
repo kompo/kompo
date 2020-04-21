@@ -10,7 +10,7 @@ class _MtmRelationshipInFieldNameForm extends Form
 {
 	public $model = Post::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			Select::form('Tags')->name('tags.name'), //not OneToOne

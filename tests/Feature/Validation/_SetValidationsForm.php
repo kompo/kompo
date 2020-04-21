@@ -7,7 +7,7 @@ use Kompo\Input;
 
 class _SetValidationsForm extends Form
 {
-	public function components()
+	public function komponents()
 	{
 		return [
 			Input::form('A')->name('name1'),

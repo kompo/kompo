@@ -4,10 +4,10 @@
   </a>
 </p>
 <h6 align="center">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vuravel/components.svg">
-    <img src="https://img.shields.io/npm/dt/vuravel-components.svg?style=flat-square" alt="Downloads" />
-    <img src="https://img.shields.io/npm/v/vuravel-components.svg?style=flat-square" alt="Version" />
-    <img src="https://img.shields.io/npm/l/vuravel-components.svg?style=flat-square" alt="License" />
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vuravel/komponents.svg">
+    <img src="https://img.shields.io/npm/dt/vuravel-komponents.svg?style=flat-square" alt="Downloads" />
+    <img src="https://img.shields.io/npm/v/vuravel-komponents.svg?style=flat-square" alt="Version" />
+    <img src="https://img.shields.io/npm/l/vuravel-komponents.svg?style=flat-square" alt="License" />
 </h6>
 <h3 align="center">
     <a href="https://kompo.io" target="_blank">kompo.io</a>
@@ -21,7 +21,7 @@
 
 # kompophp/kompo
 
-`kompo\kompo` is a library of components to help you write forms in a matter of seconds. No matter how complex the user input you need, you can find a component that handles that. You can also pick from different styles to suit your needs.
+`kompophp/kompo` is a library of components to help you write forms in a matter of seconds. No matter how complex the user input you need, you can find a component that handles that. You can also pick from different styles to suit your needs.
 
 > Refer to the the website for the most up-to-date information, demos and the complete detailed documentation on how to use this package: <a href="https://kompophp.com">kompophp.com</a>
 

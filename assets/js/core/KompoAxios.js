@@ -1,4 +1,5 @@
 import Action from './Action'
+import Alert from './Alert'
 
 export default class KompoAxios{
 
@@ -6,8 +7,8 @@ export default class KompoAxios{
 
         this.element = element
 
-        this.$_component = element instanceof Action ? element.vue : element
-        this.$_parentKompoId = this.$_component.kompoid
+        this.$_komponent = element instanceof Action ? element.vue : element
+        this.$_parentKompoId = this.$_komponent.kompoid
 
         this.$_route = element.$_data('route')
         this.$_routeMethod = element.$_data('routeMethod')
@@ -42,15 +43,15 @@ export default class KompoAxios{
     }
     $_submitFormAction(){
         return this.$_axios({
-            url: this.$_component.formInfo.url, 
-            method: this.$_component.formInfo.method,
+            url: this.$_komponent.formInfo.url, 
+            method: this.$_komponent.formInfo.method,
             data: this.element.getFormData(),
             headers: Object.assign(
                 {
                     'X-Kompo-Id': this.$_parentKompoId
                 }, 
-                this.$_component.formInfo.action ? {
-                    'X-Kompo-Action': this.$_component.formInfo.action
+                this.$_komponent.formInfo.action ? {
+                    'X-Kompo-Action': this.$_komponent.formInfo.action
                 } : {},
                 this.$_kompoMethod ? {
                     'X-Kompo-Handle': this.$_kompoMethod,
@@ -63,11 +64,11 @@ export default class KompoAxios{
     /******* Komponents *********/
     $_browseQuery(page, sort){
         return this.$_axios({
-            url: this.$_component.queryUrl, 
+            url: this.$_komponent.queryUrl, 
             method: 'POST',
-            data: this.$_component.preparedFormData(),
+            data: this.$_komponent.preparedFormData(),
             headers: {
-                'X-Kompo-Id': this.$_component.$_elKompoId,
+                'X-Kompo-Id': this.$_komponent.$_elKompoId,
                 'X-Kompo-Page': page,
                 'X-Kompo-Sort': sort,
                 'X-Kompo-Action': 'browse-items'
@@ -145,7 +146,7 @@ export default class KompoAxios{
         if(e.response.status == 419 && confirm(this.$_sessionTimeoutMessage)){
             window.location.reload()
         }else{
-            this.$_component.$modal.events.$emit('showAlert', 'Error '+e.response.status+' | '+e.response.data.message, 'vlAlertError')
+            new Alert('Error '+e.response.status+' | '+e.response.data.message).asError().emitFrom(this.$_komponent)
         }
     }
 }

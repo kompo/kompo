@@ -29,7 +29,7 @@ class MenuBooter
 
         AuthorizationGuard::checkBoot($menu);
 
-		$menu->components = collect($menu->components())->filter()->all();
+		$menu->komponents = collect($menu->komponents())->filter()->all();
 
 		SessionStore::saveKomposer($menu);
 

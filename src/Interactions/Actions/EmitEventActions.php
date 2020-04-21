@@ -20,6 +20,7 @@ trait EmitEventActions
 	    ]);
     }
 
+    /********** INTERNAL USE *********************/
     //Internal use only for now. To emit from vl-button, vl-link
     public function emitDirect($event)
     {

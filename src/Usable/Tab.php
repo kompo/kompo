@@ -6,6 +6,6 @@ use Kompo\Komponents\Layout;
 
 class Tab extends Layout
 {
-    public $component = 'FormTab';
+    public $vueComponent = 'FormTab';
 
 }

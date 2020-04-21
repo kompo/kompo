@@ -4,7 +4,6 @@ namespace Kompo\Tests\Unit\Element;
 
 use Kompo\Input;
 use Kompo\Tests\EnvironmentBoot;
-use Kompo\Tests\Unit\Element\Forms\SetElementIdForm;
 
 class KompoIdTest extends EnvironmentBoot
 {
@@ -28,16 +27,16 @@ class KompoIdTest extends EnvironmentBoot
 	/** @test */
 	public function kompo_id_is_correctly_created_on_komposers()
 	{
-		$form = new SetElementIdForm();
+		$form = new _SetElementIdForm();
 
 		$kompoId = $form->data('kompoId');
 		$this->assertNotNull($kompoId);
-		$this->assertEquals('SetElementIdForm', substr($kompoId, 0, 16) );
+		$this->assertEquals('_SetElementIdForm', substr($kompoId, 0, 17) );
 
-		$form = new SetElementIdForm();
+		$form = new _SetElementIdForm();
 		$kompoId2 = $form->data('kompoId');
 		$this->assertNotNull($kompoId2);
-		$this->assertEquals('SetElementIdForm', substr($kompoId2, 0, 16) );
+		$this->assertEquals('_SetElementIdForm', substr($kompoId2, 0, 17) );
 		$this->assertFalse($kompoId == $kompoId2); //testing uniqid() generation		
 	}
 

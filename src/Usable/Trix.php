@@ -6,6 +6,6 @@ use Kompo\Komponents\Field;
 
 class Trix extends Field
 {
-    public $component = 'Trix';
+    public $vueComponent = 'Trix';
 
 }

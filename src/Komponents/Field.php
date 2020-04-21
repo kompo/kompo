@@ -17,12 +17,11 @@ use Kompo\Komposers\KomposerManager;
 abstract class Field extends Komponent
 {
     use HasInteractions, ForwardsInteraction;
-    use Traits\FiltersQuery,
-        Traits\AjaxConfigurations,
+    use Traits\AjaxConfigurations,
         Traits\FormSubmitConfigurations,
         Traits\LabelInfoComment; 
 
-    public $menuComponent = 'Field';
+    public $bladeComponent = 'Field';
 
     /**
      * The field's HTML attribute in the form (also the formData key).

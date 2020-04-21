@@ -11,10 +11,10 @@ class RunElementClosureFromActionTest extends EnvironmentBoot
 	{
 		$form = new _RunElementClosureFromActionForm();
 
-		$this->assertEquals('includeMethod', $form->components[0]->data('includes'));
-		$this->assertEquals('includeMethod', $form->components[1]->data('includes'));
-		$this->assertEquals('includeMethod', $form->components[2]->data('includes'));
-		$this->assertEquals('includeMethod', $form->components[3]->data('includes'));
+		$this->assertEquals('includeMethod', $form->komponents[0]->data('includes'));
+		$this->assertEquals('includeMethod', $form->komponents[1]->data('includes'));
+		$this->assertEquals('includeMethod', $form->komponents[2]->data('includes'));
+		$this->assertEquals('includeMethod', $form->komponents[3]->data('includes'));
 	}
 	
 	/** ------------------ PRIVATE --------------------------- */  

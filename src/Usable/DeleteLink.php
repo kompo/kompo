@@ -6,7 +6,7 @@ use Kompo\Link;
 
 class DeleteLink extends Link
 {   
-    public $component = 'DeleteLink';
+    public $vueComponent = 'DeleteLink';
 
     protected function vlInitialize($label)
     {

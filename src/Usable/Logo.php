@@ -9,7 +9,7 @@ class Logo extends Trigger
 {
     use HasHref;
 
-    public $menuComponent = 'Logo';
+    public $bladeComponent = 'Logo';
 
     public $imageUrl = false;
 

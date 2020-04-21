@@ -71,13 +71,13 @@ class SelectPrepareValueForFrontTest extends EnvironmentBoot
 
 	private function assert_attributes_are_correctly_transformed($form)
 	{
-		$this->assertEquals(1, $form->components[0]->value);
-		$this->assertCount(2, $form->components[1]->value);
-		$this->assertEquals(3, $form->components[1]->value[0]);
-		$this->assertEquals(4, $form->components[1]->value[1]);
-		$this->assertCount(2, $form->components[2]->value);
-		$this->assertEquals(2, $form->components[2]->value[0]);
-		$this->assertEquals(5, $form->components[2]->value[1]);
+		$this->assertEquals(1, $form->komponents[0]->value);
+		$this->assertCount(2, $form->komponents[1]->value);
+		$this->assertEquals(3, $form->komponents[1]->value[0]);
+		$this->assertEquals(4, $form->komponents[1]->value[1]);
+		$this->assertCount(2, $form->komponents[2]->value);
+		$this->assertEquals(2, $form->komponents[2]->value[0]);
+		$this->assertEquals(5, $form->komponents[2]->value[1]);
 	}
 
 	private function assert_single_parent_id_is_loaded_in_component_value($objSpecs, $formPositions)
@@ -88,7 +88,7 @@ class SelectPrepareValueForFrontTest extends EnvironmentBoot
 		$form = new _SelectOptionsFromForm(1);
 
 		foreach ($formPositions as $index) {
-			$this->assertEquals(1, $form->components[$index]->value);
+			$this->assertEquals(1, $form->komponents[$index]->value);
 		}
 	}
 
@@ -107,22 +107,22 @@ class SelectPrepareValueForFrontTest extends EnvironmentBoot
 
 		//$relationPlain
 		$plainIndex = $formPositions[0];
-		$this->assertCount(3, $form->components[$plainIndex]->value);
-		$this->assertEquals($file1->id, $form->components[$plainIndex]->value[0]);
-		$this->assertEquals($file2->id, $form->components[$plainIndex]->value[1]);
-		$this->assertEquals($file3->id, $form->components[$plainIndex]->value[2]);
+		$this->assertCount(3, $form->komponents[$plainIndex]->value);
+		$this->assertEquals($file1->id, $form->komponents[$plainIndex]->value[0]);
+		$this->assertEquals($file2->id, $form->komponents[$plainIndex]->value[1]);
+		$this->assertEquals($file3->id, $form->komponents[$plainIndex]->value[2]);
 
 		//$relationOrdered
 		$orderedIndex = $formPositions[1];
-		$this->assertCount(3, $form->components[$orderedIndex]->value);
-		$this->assertEquals($file2->id, $form->components[$orderedIndex]->value[0]);
-		$this->assertEquals($file3->id, $form->components[$orderedIndex]->value[1]);
-		$this->assertEquals($file1->id, $form->components[$orderedIndex]->value[2]);
+		$this->assertCount(3, $form->komponents[$orderedIndex]->value);
+		$this->assertEquals($file2->id, $form->komponents[$orderedIndex]->value[0]);
+		$this->assertEquals($file3->id, $form->komponents[$orderedIndex]->value[1]);
+		$this->assertEquals($file1->id, $form->komponents[$orderedIndex]->value[2]);
 
 		//$relationFiltered
 		$filteredIndex = $formPositions[2];
-		$this->assertCount(2, $form->components[$filteredIndex]->value);
-		$this->assertEquals($file2->id, $form->components[$filteredIndex]->value[0]);
-		$this->assertEquals($file3->id, $form->components[$filteredIndex]->value[1]);
+		$this->assertCount(2, $form->komponents[$filteredIndex]->value);
+		$this->assertEquals($file2->id, $form->komponents[$filteredIndex]->value[0]);
+		$this->assertEquals($file3->id, $form->komponents[$filteredIndex]->value[1]);
 	}
 }

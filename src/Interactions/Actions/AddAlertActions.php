@@ -17,12 +17,12 @@ trait AddAlertActions
      */
     public function alert($message, $iconClass = true, $alertClass = 'vlAlertSuccess')
     {
-        $message = !$iconClass ? $message : 
-            ('<i class="'.($iconClass == true ? 'icon-check' : $iconClass).'"> '.$message);
-
         return $this->prepareAction('addAlert', [
-            'message' => $message,
-            'alertClass' => $alertClass
+            'alert' => [
+                'message' => $message,                
+                'iconClass' => $iconClass === true ? 'icon-check' : $iconClass,
+                'alertClass' => $alertClass
+            ]
         ]);
     }
 }

@@ -10,7 +10,7 @@ class _NonExistingAttributeInFieldNameForm extends Form
 {
 	public $model = Post::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			Input::form('Label')->name('fneyaibyveiy'),

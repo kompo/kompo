@@ -2,11 +2,11 @@
     <div v-bind="$_layoutWrapperAttributes" v-show="!$_hidden">
         <vl-form-label :component="component" />
         <draggable 
-            v-model="components" 
+            v-model="komponents" 
             handle=".js-row-move"
             :style="$_elementStyles">
             <vl-rows
-                v-for="(comp,index) in components"
+                v-for="(comp,index) in komponents"
                 :vkompo="comp"
                 :key="index"
                 v-bind="$_attributes(comp)" />
@@ -30,7 +30,7 @@ export default {
         addRow(){
             this.$_kAxios.$_loadKomposer().then(r => {
 
-                this.components.push(r.data)
+                this.komponents.push(r.data)
 
             })
         },
@@ -40,7 +40,7 @@ export default {
                 return _.startsWith(key, this.$_name+'.')
             })
 
-            this.components.forEach( (form,k) => {
+            this.komponents.forEach( (form,k) => {
                 var formErrors = _.mapKeys(_.pickBy(ownErrors, (value, key) => {
                     return _.startsWith(key, this.$_name+'.'+k+'.')
                 }), (value, key) => {
@@ -54,7 +54,7 @@ export default {
                 return 
 
             var name = this.$_name, results = [] 
-            this.components.forEach( (item,k) => {
+            this.komponents.forEach( (item,k) => {
                 var json = {}
                 item.$_fillRecursive(json)
                 if(item.recordKey)
@@ -69,12 +69,12 @@ export default {
         },
         revertFormRow(childId){
             var rowToDelete
-            this.components.forEach( (item, k) => {
+            this.komponents.forEach( (item, k) => {
                 if(item.$_getPathById(childId))
                     rowToDelete = k
             })
             if(rowToDelete || rowToDelete === 0)
-                this.$delete(this.components, rowToDelete)
+                this.$delete(this.komponents, rowToDelete)
         }
     }
 }

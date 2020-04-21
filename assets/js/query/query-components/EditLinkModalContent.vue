@@ -22,14 +22,11 @@ export default {
         this.editForm = this.vkompo
     },
     methods:{
-        reloadFreshForm(){
-            this.$emit('openModal')
-        },
-        success(response){
+        success(response, submitKomponent){
             this.$emit('refresh', this.index)
-            if(!this.keepModalOpen){
+
+            if(!this.keepModalOpen && !submitKomponent.$_keepModalOpen)
                 this.$emit('closeModal')
-            }
         }
     }
 }

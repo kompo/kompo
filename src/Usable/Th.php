@@ -6,6 +6,6 @@ use Kompo\Komponents\Trigger;
 
 class Th extends Trigger
 {
-    public $component = 'Th';
+    public $vueComponent = 'Th';
     
 }

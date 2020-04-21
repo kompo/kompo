@@ -41,11 +41,11 @@ class FilesFillInSingleColumnTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsSingleColumnForm(1);
-        $this->assertSubset($this->file_to_array($file1, 'file'), $form->components[0]->value);
-        $this->assertSubset($this->file_to_array($file2, 'file_cast'), $form->components[1]->value);
-        $this->assertSubset($this->file_to_array($file3, 'files'), $form->components[2]->value[0]);
-        $this->assertSubset($this->file_to_array($file4, 'files'), $form->components[2]->value[1]);
-        $this->assertSubset($this->file_to_array($file5, 'files_cast'), $form->components[3]->value[0]);
+        $this->assertSubset($this->file_to_array($file1, 'file'), $form->komponents[0]->value);
+        $this->assertSubset($this->file_to_array($file2, 'file_cast'), $form->komponents[1]->value);
+        $this->assertSubset($this->file_to_array($file3, 'files'), $form->komponents[2]->value[0]);
+        $this->assertSubset($this->file_to_array($file4, 'files'), $form->komponents[2]->value[1]);
+        $this->assertSubset($this->file_to_array($file5, 'files_cast'), $form->komponents[3]->value[0]);
 
 		//Update files
         $this->submit(
@@ -83,11 +83,11 @@ class FilesFillInSingleColumnTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsSingleColumnForm(1);
-        $this->assertSubset($this->file_to_array($file6, 'file'), $form->components[0]->value);
-        $this->assertSubset($this->file_to_array($file7, 'file_cast'), $form->components[1]->value);
-        $this->assertSubset($this->file_to_array($file8, 'files'), $form->components[2]->value[0]);
-        $this->assertSubset($this->file_to_array($file5, 'files_cast'), $form->components[3]->value[0]);
-        $this->assertSubset($this->file_to_array($file9, 'files_cast'), $form->components[3]->value[1]);
+        $this->assertSubset($this->file_to_array($file6, 'file'), $form->komponents[0]->value);
+        $this->assertSubset($this->file_to_array($file7, 'file_cast'), $form->komponents[1]->value);
+        $this->assertSubset($this->file_to_array($file8, 'files'), $form->komponents[2]->value[0]);
+        $this->assertSubset($this->file_to_array($file5, 'files_cast'), $form->komponents[3]->value[0]);
+        $this->assertSubset($this->file_to_array($file9, 'files_cast'), $form->komponents[3]->value[1]);
 
 		//Remove some files
         $this->submit(
@@ -121,10 +121,10 @@ class FilesFillInSingleColumnTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsSingleColumnForm(1);
-        $this->assertNull($form->components[0]->value);
-        $this->assertNull($form->components[1]->value);
-        $this->assertNull($form->components[2]->value);
-        $this->assertSubset($this->file_to_array($file9, 'files_cast'), $form->components[3]->value[0]);
+        $this->assertNull($form->komponents[0]->value);
+        $this->assertNull($form->komponents[1]->value);
+        $this->assertNull($form->komponents[2]->value);
+        $this->assertSubset($this->file_to_array($file9, 'files_cast'), $form->komponents[3]->value[0]);
     }
 
 }

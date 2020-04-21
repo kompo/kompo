@@ -8,13 +8,13 @@ use Kompo\Routing\RouteFinder;
 
 class FormDisplayer extends FormBooter
 {
-    public static function displayComponents($form)
+    public static function displayKomponents($form)
     {
         static::prepareSubmitRedirectRoutes($form);
 
         ValidationManager::addRulesToKomposer($form->rules(), $form); //for Front-end validations TODO:
 
-        $form->components = KomposerManager::prepareComponentsForDisplay($form, 'components');
+        $form->komponents = KomposerManager::prepareKomponentsForDisplay($form, 'komponents');
 
         SessionStore::saveKomposer($form, ['modelKey' => $form->modelKey()]); 
 

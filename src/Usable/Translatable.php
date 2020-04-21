@@ -6,7 +6,7 @@ use Kompo\Textarea;
 
 class Translatable extends Textarea
 {
-    public $component = 'Translatable';
+    public $vueComponent = 'Translatable';
 
     protected $locales;
 

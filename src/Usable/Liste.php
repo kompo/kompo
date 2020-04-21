@@ -6,7 +6,7 @@ use Kompo\Input;
 
 class Liste extends Input
 {	
-    public $component = 'Liste';
+    public $vueComponent = 'Liste';
 
     /**
      * Adds a cast to array to the attribute if no cast is present.

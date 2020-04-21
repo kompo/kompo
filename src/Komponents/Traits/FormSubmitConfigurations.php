@@ -5,7 +5,7 @@ namespace Kompo\Komponents\Traits;
 trait FormSubmitConfigurations
 {
     /**
-     * Cancel default behavior of certain components submitting on Enter key release.
+     * Cancel default behavior of certain komponents submitting on Enter key release.
      *
      * @return self
      */
@@ -22,6 +22,18 @@ trait FormSubmitConfigurations
     public function hideIndicators()
     {
         return $this->data(['hideIndicators' => true]);
+    }
+
+    /**
+     * Reloads a new empty Form. Useful when chained after a submit() to add another item.
+     *
+     * @return     self   
+     */
+    public function getFreshForm()
+    {
+        return $this->keepModalOpen()->data([
+            'getFreshForm' => true
+        ]);
     }
 
 }

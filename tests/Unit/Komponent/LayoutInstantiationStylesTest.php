@@ -14,7 +14,7 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
 	{
 		$el = Columns::form();
 
-		$this->assertEquals([], $el->components);
+		$this->assertEquals([], $el->komponents);
 	}
 
 	/** @test */
@@ -22,7 +22,7 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
 	{
 		$el = Columns::form('String is not taken into account'); //TODO: document when that is needed
 
-		$this->assertEquals([], $el->components);
+		$this->assertEquals([], $el->komponents);
 	}
 
 	/** @test */
@@ -32,9 +32,9 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
 			Input::form()->id('A')
 		);
 
-		$this->assertIsArray($el->components);
-		$this->assertCount(1, $el->components);
-		$this->assertEquals('A', $el->components[0]->id);
+		$this->assertIsArray($el->komponents);
+		$this->assertCount(1, $el->komponents);
+		$this->assertEquals('A', $el->komponents[0]->id);
 	}
 
 	/** @test */
@@ -44,9 +44,9 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
 			return Input::form()->id('A');
 		});
 
-		$this->assertIsArray($el->components);
-		$this->assertCount(1, $el->components);
-		$this->assertEquals('A', $el->components[0]->id);
+		$this->assertIsArray($el->komponents);
+		$this->assertCount(1, $el->komponents);
+		$this->assertEquals('A', $el->komponents[0]->id);
 	}
 
 	/** @test */
@@ -59,7 +59,7 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
 			];
 		});
 
-		$this->assert_layout_has_2_components_with_ids($el, 'A', 'B');
+		$this->assert_layout_has_2_komponents_with_ids($el, 'A', 'B');
 	}
 
 	/** @test */
@@ -70,7 +70,7 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
 			Input::form()->id('B')
 		);
 
-		$this->assert_layout_has_2_components_with_ids($el, 'A', 'B');
+		$this->assert_layout_has_2_komponents_with_ids($el, 'A', 'B');
 	}
 
 	/** @test */
@@ -84,11 +84,11 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
 			)
 		);
 
-		$this->assertIsArray($el->components);
-		$this->assertCount(2, $el->components);
-		$this->assertEquals('A', $el->components[0]->id);
+		$this->assertIsArray($el->komponents);
+		$this->assertCount(2, $el->komponents);
+		$this->assertEquals('A', $el->komponents[0]->id);
 
-		$this->assert_layout_has_2_components_with_ids($el->components[1], 'B', 'C');
+		$this->assert_layout_has_2_komponents_with_ids($el->komponents[1], 'B', 'C');
 	}
 
 	/** @test */
@@ -96,25 +96,25 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
 	{
 		$el = new _LayoutInstantiationForm();
 
-		$this->assertIsArray($el->components);
-		$this->assertCount(1, $el->components);
-		$this->assertIsArray($el->components[0]->components);
-		$this->assertCount(2, $el->components[0]->components); //test filtering out
-		$this->assertEquals('A', $el->components[0]->components[0]->id);
-		$this->assertIsArray($el->components[0]->components[1]->components);
-		$this->assertCount(1, $el->components[0]->components[1]->components);
+		$this->assertIsArray($el->komponents);
+		$this->assertCount(1, $el->komponents);
+		$this->assertIsArray($el->komponents[0]->komponents);
+		$this->assertCount(2, $el->komponents[0]->komponents); //test filtering out
+		$this->assertEquals('A', $el->komponents[0]->komponents[0]->id);
+		$this->assertIsArray($el->komponents[0]->komponents[1]->komponents);
+		$this->assertCount(1, $el->komponents[0]->komponents[1]->komponents);
 
-		$this->assert_layout_has_2_components_with_ids($el->components[0]->components[1]->components[0], 'B', 'C');
+		$this->assert_layout_has_2_komponents_with_ids($el->komponents[0]->komponents[1]->komponents[0], 'B', 'C');
 	}
 
 	/** ------------------ PRIVATE --------------------------- */ 
 
-	private function assert_layout_has_2_components_with_ids($layout, $id1, $id2)
+	private function assert_layout_has_2_komponents_with_ids($layout, $id1, $id2)
 	{
-		$this->assertIsArray($layout->components);
-		$this->assertCount(2, $layout->components);
-		$this->assertEquals($id1, $layout->components[0]->id);
-		$this->assertEquals($id2, $layout->components[1]->id);
+		$this->assertIsArray($layout->komponents);
+		$this->assertCount(2, $layout->komponents);
+		$this->assertEquals($id1, $layout->komponents[0]->id);
+		$this->assertEquals($id2, $layout->komponents[1]->id);
 	}
 
 

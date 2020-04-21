@@ -29,7 +29,7 @@ class KomposerHandler
                 return FormManager::handlePost($komposer);
 
             case 'include-komponents':
-                return KomposerManager::prepareComponentsForDisplay($komposer, request()->header('X-Kompo-Method'));
+                return KomposerManager::prepareKomponentsForDisplay($komposer, request()->header('X-Kompo-Method'));
 
             case 'self-method':
                 return null; //TODO

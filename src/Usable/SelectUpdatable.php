@@ -7,7 +7,7 @@ use Kompo\Select;
 
 class SelectUpdatable extends Select
 {
-    public $component = 'SelectUpdatable';
+    public $vueComponent = 'SelectUpdatable';
 
     protected function vlInitialize($label)
     {
@@ -18,8 +18,8 @@ class SelectUpdatable extends Select
 
     public function mounted($form)
     {
-        $this->components = [ clone $this ];
-        $this->components[0]->component = 'Select';
+        $this->komponents = [ clone $this ];
+        $this->komponents[0]->vueComponent = 'Select';
 
         $this->data([
             'optionsKey' => $this->optionsKey,

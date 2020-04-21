@@ -3,23 +3,16 @@ import Action from '../../core/Action'
 export default {
 
     computed: {
+        $_debounce(){ return this.$_data('debounce') || 0 },
         //hack to make debounce work... need to write my own debounce function in $_runTrigger
-        submitOnInputDebounce(){
-            var trig = _.find(this.vkompo.interactions['input'], (t) => t.action == 'submit')
-            return trig ? trig.debounce : 0
-        },
-        filterOnInputDebounce(){
-            var trig = _.find(this.vkompo.interactions['input'], (t) => t.action == 'refresh')
-            return trig ? trig.debounce : 0
-        },
-        debouncedSubmitOnInput(){ return _.debounce(this.submitOnInput, this.submitOnInputDebounce) },
-        debouncedFilterOnInput(){ return _.debounce(this.filterOnInput, this.filterOnInputDebounce) }
+        debouncedSubmitOnInput(){ return _.debounce(this.submitOnInput, this.$_debounce) },
+        debouncedFilterOnInput(){ return _.debounce(this.filterOnInput, this.$_debounce) }
     },
 
     methods: {
         //hack continued... this had to be a method...
-        submitOnInput(){ this.$_runOwnInteractionsWithAction('input', 'submit') },
-        filterOnInput(){ this.$_runOwnInteractionsWithAction('input', 'refresh') },
+        submitOnInput(){ this.$_runOwnInteractionsWithAction('input', 'submitForm') },
+        filterOnInput(){ this.$_runOwnInteractionsWithAction('input', 'refreshQuery') },
 
         $_interactionsOfType(type){
             return _.filter(this.vkompo.interactions, (i) => {

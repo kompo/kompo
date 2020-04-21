@@ -10,7 +10,10 @@
 </template>
 
 <script>
+import HasVueComponent from '../element/mixins/HasVueComponent'
+
 export default {
+    mixins: [HasVueComponent],
     props: {
         headers: {type: Array, required: true},
         kompoid: {type: String, required: true}
@@ -20,7 +23,7 @@ export default {
             return {
                 key: th.id || index,
                 index: parseInt(index),
-                is: 'Vl' + th.component,
+                is: this.$_vueTag(th),
                 vkompo: th,
                 kompoid: this.kompoid
             }

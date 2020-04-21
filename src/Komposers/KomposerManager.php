@@ -2,7 +2,7 @@
 
 namespace Kompo\Komposers;
 
-use Kompo\Exceptions\ComponentsMethodNotFoundException;
+use Kompo\Exceptions\KomponentsMethodNotFoundException;
 use Kompo\Core\Util;
 
 class KomposerManager
@@ -26,14 +26,14 @@ class KomposerManager
     }
 
     /**
-     * Prepare the Komposer's components for being displayed.
+     * Prepare the Komposer's komponents for display.
      * 
      * @param Kompo\Komposers\Komposer $komposer
      * @param string $method
      *
      * @return Collection
      */
-    public static function prepareComponentsForDisplay($komposer, $method)
+    public static function prepareKomponentsForDisplay($komposer, $method)
     {
         return static::collectFrom($komposer, $method)->filter()->each( function($component) use ($komposer) {
 
@@ -45,14 +45,14 @@ class KomposerManager
     }
 
     /**
-     * Prepare the Komposer's components for a backend action.
+     * Prepare the Komposer's komponents for a backend action.
      * 
      * @param Kompo\Komposers\Komposer $komposer
      * @param string $method
      *
      * @return void
      */
-    public static function prepareComponentsForAction($komposer, $method)
+    public static function prepareKomponentsForAction($komposer, $method)
     {
         static::collectFrom($komposer, $method)->filter()->each( function($component) use ($komposer) {
 
@@ -60,11 +60,11 @@ class KomposerManager
 
             $component->mountedHook($komposer);
 
-        }); //components are pushed in fields
+        }); //field komponents are pushed to komposer
     }
 
     /**
-     * Returns a collection of FIELD components
+     * Returns a collection of FIELD komponents
      *
      * @param Kompo\Komposers\Komposer $komposer
      *
@@ -76,7 +76,7 @@ class KomposerManager
     }
 
     /**
-     * Stores field components in the Komposer for later use
+     * Stores field komponents in the Komposer for later use
      *
      * @param Kompo\Komposers\Komposer $komposer
      * @param Kompo\Komponents\Field   $field
@@ -102,19 +102,19 @@ class KomposerManager
     }
 
     /**
-     * Returns a collection of components from a method in the Komposer.
+     * Returns a collection of komponents from a method in the Komposer.
      *
      * @param Kompo\Komposers\Komposer $komposer
      * @param string $method
      *
-     * @throws \Kompo\Exceptions\ComponentsMethodNotFoundException
+     * @throws \Kompo\Exceptions\KomponentsMethodNotFoundException
      *
      * @return Collection
      */
     protected static function collectFrom($komposer, $method)
     {
         if($method && !method_exists($komposer, $method))
-            throw new ComponentsMethodNotFoundException($method, class_basename($komposer));
+            throw new KomponentsMethodNotFoundException($method, class_basename($komposer));
 
         return Util::collect($komposer->{$method}());
     }

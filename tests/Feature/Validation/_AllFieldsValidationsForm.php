@@ -37,7 +37,7 @@ class _AllFieldsValidationsForm extends Form
 
 	}
 
-	public function components()
+	public function komponents()
 	{
 		return $this->fields;
 	}

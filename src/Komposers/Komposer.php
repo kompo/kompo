@@ -3,9 +3,13 @@
 namespace Kompo\Komposers;
 
 use Kompo\Elements\Element;
+use Kompo\Interactions\Traits\ForwardsInteraction;
+use Kompo\Interactions\Traits\HasInteractions;
 
 abstract class Komposer extends Element
 {
+    use HasInteractions, ForwardsInteraction;
+    
     /**
      * The meta komponent's data for internal usage. Contains the store, route parameters, etc...
      *

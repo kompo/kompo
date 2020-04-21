@@ -13,7 +13,7 @@ use Kompo\Routing\RouteFinder;
 
 class Select extends Field
 {
-    public $component = 'Select';
+    public $vueComponent = 'Select';
 
     const NO_OPTIONS_FOUND = 'No results found';
 
@@ -131,7 +131,7 @@ class Select extends Field
     {
         if($optionsLabel instanceof Card){
             $computedLabel = clone $optionsLabel;
-            $computedLabel->components = static::transformLabelKey($computedLabel->components, $value);
+            $computedLabel->komponents = static::transformLabelKey($computedLabel->komponents, $value);
             return $computedLabel;
 
         }elseif(is_array($optionsLabel)){
@@ -202,7 +202,7 @@ class Select extends Field
      * For that, a new public method in your class is needed to return the matched options. 
      * Note that the requests are debounced.
      * For example:
-     * <php>public function components()
+     * <php>public function komponents()
      * {
      *    return [
      *       //User can search and matched options will be loaded from the backend
@@ -244,7 +244,7 @@ class Select extends Field
      * You may load the select options from the backend using another field's value. 
      * For that, a new public method in your class is needed to return the new options. 
      * For example:
-     * <php>public function components()
+     * <php>public function komponents()
      * {
      *    return [
      *       Select::form('Category')

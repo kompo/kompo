@@ -10,7 +10,7 @@ class _SelectMorphToManyForm extends Form
 {
 	public $model = Obj::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			MultiSelect::form('A')->name('morphToManyPlain'),

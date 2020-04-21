@@ -6,7 +6,7 @@ use Kompo\Liste;
 
 class Json extends Liste
 {
-    public $component = 'Json';
+    public $vueComponent = 'Json';
 
     const DEFAULT_VALUE_LABEL = 'value';
 

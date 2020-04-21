@@ -10,7 +10,7 @@ use Kompo\Komponents\FormField;
 
 class Place extends Field
 {
-    public $component = 'Place';
+    public $vueComponent = 'Place';
 
     /**
      * Adds a cast to array to the attribute if no cast is present.

@@ -6,9 +6,9 @@
 		<div class="{{ $Navbar->containerClass }} vl-nav">
 	@endif
 
-    @include('kompo::menus.components', [ 
+    @include('kompo::menus.komponents', [ 
     	'kompoid' => Kompo\Core\KompoId::get($Navbar),
-    	'components' => $Navbar->components 
+    	'komponents' => $Navbar->komponents 
     ])
 
 	@if($Navbar->containerClass ?? false)

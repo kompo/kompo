@@ -19,7 +19,7 @@ class PlaceAttributesToColumnsTest extends PlaceEnvironmentBoot
 	    //Display previously saved
 	    $form = new _PlaceAttributesToColumnsForm(1);
 
-	    $this->assertIsArray($newValue = $form->components[0]->value);
+	    $this->assertIsArray($newValue = $form->komponents[0]->value);
 	    $this->assertSubset($newValue, $this->place_to_array($place1));
 
 	    //Update file

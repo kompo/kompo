@@ -118,12 +118,15 @@ class FormSubmitter extends FormBooter
         if(method_exists($form, 'response'))
             return $form->response();
 
-        if($form::$refresh)
+        if($form->_kompo('options', 'refresh'))
             return response()->json(['form' => 
-                FormDisplayer::displayComponents($form)
+                FormDisplayer::displayKomponents($form)
             ], 202);
 
-        return $form->model;
+        if(config('kompo.eloquent_form.return_model_as_response'))
+            return $form->model;
+
+        return $form;
     }
 
 

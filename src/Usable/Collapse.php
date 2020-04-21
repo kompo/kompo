@@ -10,5 +10,5 @@ class Collapse extends Trigger
 {
 	use HasHref, HasSubmenu;
 
-    public $menuComponent = 'Collapse';
+    public $bladeComponent = 'Collapse';
 }

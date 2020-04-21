@@ -4,7 +4,6 @@
         :key="formKey"
         @refreshForm="refreshForm"
         @submit="submit"
-        @addanother="reloadFreshForm"
         @success="successEvent"
         @error="errorEvent"
         />
@@ -39,13 +38,17 @@ export default {
             this.component = Object.assign({}, this.vkompo)
             this.formKey += 1
         },
-        successEvent(response, submitComponent){
-            this.$emit('success',response, submitComponent)
+        successEvent(response, submitKomponent){
+            this.$emit('success',response, submitKomponent)
+
+            if(submitKomponent.$_getFreshForm)
+                this.reloadFreshForm()
+
             if(this.success) //Injected javascript function to be executed on success
                 this.success(response)
         },
-        errorEvent(response, submitComponent){
-            this.$emit('error',response, submitComponent)
+        errorEvent(response, submitKomponent){
+            this.$emit('error',response, submitKomponent)
             if(this.error) //Injected javascript function to be executed on error
                 this.error(response)
         },

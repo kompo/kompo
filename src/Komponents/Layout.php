@@ -7,26 +7,26 @@ use Kompo\Komponents\LayoutManager;
 abstract class Layout extends Komponent
 {
     /**
-     * Stores the child components of the layout.
+     * Stores the child komponents of the layout.
      *
      * @var array
      */
-    public $components = [];
+    public $komponents = [];
 
     /**
      * Constructs a new Layout instance.
      *
-     * @param mixed  ...$args  The layouts components
+     * @param mixed  ...$args  The layouts komponents
      */
     public function __construct(...$args)
     {        
         $this->vlInitialize( class_basename($this) );
 
-        $this->components = LayoutManager::collectFilteredComponents($args, $this)->values()->all();
+        $this->komponents = LayoutManager::collectFilteredKomponents($args, $this)->values()->all();
     }
 
     /**
-     * Prepares the child components of the layout.
+     * Prepares the child komponents of the layout.
      *
      * @param Komposer
      */
@@ -36,7 +36,7 @@ abstract class Layout extends Komponent
     }
 
     /**
-     * Prepares the child components of the layout.
+     * Prepares the child komponents of the layout.
      *
      * @param Komposer
      */
@@ -46,7 +46,7 @@ abstract class Layout extends Komponent
     }
 
     /**
-     * Prepares the child components of the layout.
+     * Prepares the child komponents of the layout.
      *
      * @var Komposer
      */
@@ -55,7 +55,7 @@ abstract class Layout extends Komponent
         if($komposer->noMargins ?? false)
             $this->noMargins();
 
-        collect($this->components)->each(function($component) use($methodName, $komposer) {
+        collect($this->komponents)->each(function($component) use($methodName, $komposer) {
 
             $component->{$methodName}($komposer);
 

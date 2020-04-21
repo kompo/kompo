@@ -18,8 +18,9 @@ return [
         //'fr' => 'Français'
     ],
 
-    'files' => [
-    	'isMonogamous' => true //to review
+    'eloquent_form' => [
+    	'return_model_as_response' => false, //if false, will return the whole Form.
+    	'hide_model_in_forms' => true //is the public $model property hidden on display or in responses?
     ],
 
 	/**

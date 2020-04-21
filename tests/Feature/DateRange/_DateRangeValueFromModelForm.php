@@ -10,7 +10,7 @@ class _DateRangeValueFromModelForm extends Form
 {
 	public $model = Post::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			DateRange::form('DateRange')->name([

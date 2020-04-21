@@ -6,7 +6,7 @@ use Kompo\Search;
 
 class NavSearch extends Search
 {
-    public $menuComponent = 'NavSearch';
+    public $bladeComponent = 'NavSearch';
 
     protected function vlInitialize($label)
     {

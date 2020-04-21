@@ -11,9 +11,9 @@ use Kompo\Routing\RouteFinder;
 
 class MultiForm extends Field
 {
-    public $component = 'MultiForm';
+    public $vueComponent = 'MultiForm';
 
-    public $components;
+    public $komponents;
 
     public $multiple = true;
 
@@ -29,7 +29,7 @@ class MultiForm extends Field
     {
         if($this->value){
             //Only works for Eloquent relation, MultiForm cannot be an attribute currently
-            $this->components = $this->value->map(function($item){
+            $this->komponents = $this->value->map(function($item){
                 $formClass = $this->formClass;
                 return $formClass::find($item->getKey());
             })->all();
@@ -38,7 +38,7 @@ class MultiForm extends Field
 
     public function mounted($form)
     {
-        $rules = $this->components ? collect(ValidationManager::getRules($this->components[0]))->flatMap(function($v, $k){
+        $rules = $this->komponents ? collect(ValidationManager::getRules($this->komponents[0]))->flatMap(function($v, $k){
             $k = $this->name.'.*.'.$k;
             return [$k => $v];
         })->all() : [];
@@ -75,7 +75,7 @@ class MultiForm extends Field
     public function formClass($formClass, $ajaxPayload = null)
     {
         $this->formClass = $formClass;
-        $this->components = [ new $formClass() ];
+        $this->komponents = [ new $formClass() ];
 
         return $this->data([
             'route' => RouteFinder::getKompoRoute(),

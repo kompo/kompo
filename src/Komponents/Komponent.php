@@ -57,7 +57,7 @@ abstract class Komponent extends Element
     public function prepareForAction($komposer)
     {
         if($this->data('includes')) //need to check authorize here!
-            KomposerManager::prepareComponentsForAction($komposer, $this->data('includes'));
+            KomposerManager::prepareKomponentsForAction($komposer, $this->data('includes'));
     }
 
     /**

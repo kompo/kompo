@@ -8,7 +8,7 @@ use Kompo\Input;
 
 class _LayoutInstantiationChildForm extends Form
 {
-	public function components()
+	public function komponents()
 	{
 		return [
 			Columns::form(

@@ -2,9 +2,9 @@
 <footer class="vl-footer {{ $Footer->class() }}" 
 	@include('kompo::partials.IdStyle', [ 'component' => $Footer ])>
 
-    @include('kompo::menus.components', [ 
+    @include('kompo::menus.komponents', [ 
     	'kompoid' => Kompo\Core\KompoId::get($Footer),
-    	'components' => $Footer->components 
+    	'komponents' => $Footer->komponents 
     ])
 
 </footer>

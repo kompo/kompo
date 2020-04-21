@@ -5,9 +5,9 @@ namespace Kompo\Tests\Unit\Form;
 use Kompo\Form;
 use Kompo\Input;
 
-class _IncludesOrComponentsForm extends Form
+class _IncludesOrKomponentsForm extends Form
 {
-	public function components()
+	public function komponents()
 	{
 		return [
 			Input::form('Title')->getKomponents('newKompos')

@@ -6,6 +6,6 @@ use Kompo\Card;
 
 class TableRow extends Card
 {
-    public $component = 'TableRow';
+    public $vueComponent = 'TableRow';
 
 }

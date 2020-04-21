@@ -8,30 +8,30 @@ use Kompo\Komposers\Komposer;
 abstract class Menu extends Komposer
 {
     /**
-     * Stores the form components.
+     * Stores the menu komponents.
      *
      * @var array
      */
-    public $components = [];
+    public $komponents = [];
 
     /**
      * The CSS position of the menu.
      *
-     * @var array
+     * @var boolean
      */
     public $fixed;
 
     /**
      * Does the sidebar touch the top of the page or is it below the navbar?
      *
-     * @var array
+     * @var boolean
      */
     public $top = false;
 
     /**
-     * Stores the form components.
+     * Is the footer an outer or inner?
      *
-     * @var array
+     * @var boolean
      */
     public $out = false;
 
@@ -49,11 +49,11 @@ abstract class Menu extends Komposer
 	}
 
     /**
-     * Get the Components displayed in the form.
+     * Get the Komponents displayed in the form.
      *
      * @return array
      */
-    public function components()
+    public function komponents()
     {
         return [];
     }

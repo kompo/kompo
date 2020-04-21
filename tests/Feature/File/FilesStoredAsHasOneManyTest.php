@@ -63,8 +63,8 @@ class FilesStoredAsHasOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsHasOneHasManyForm(1);
-        $this->assertEquals(1, $form->components[$index]->value->id);
-        $this->assertSubset($this->file_to_array($file1, 'path'), $form->components[$index]->value);
+        $this->assertEquals(1, $form->komponents[$index]->value->id);
+        $this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[$index]->value);
 
 		//Update
 		$this->submit(
@@ -81,8 +81,8 @@ class FilesStoredAsHasOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsHasOneHasManyForm(1);
-        $this->assertEquals(2, $form->components[$index]->value->id);
-        $this->assertSubset($this->file_to_array($file2, 'path'), $form->components[$index]->value);
+        $this->assertEquals(2, $form->komponents[$index]->value->id);
+        $this->assertSubset($this->file_to_array($file2, 'path'), $form->komponents[$index]->value);
 
 		//Remove
 		$this->submit(
@@ -100,7 +100,7 @@ class FilesStoredAsHasOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsHasOneHasManyForm(1);
-        $this->assertNull($form->components[$index]->value);
+        $this->assertNull($form->komponents[$index]->value);
     }
 
     private function assert_has_many_files($relation, $snaked, $index)
@@ -124,16 +124,16 @@ class FilesStoredAsHasOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsHasOneHasManyForm(1);
-        $this->assertCount(2, $form->components[$index]->value);
+        $this->assertCount(2, $form->komponents[$index]->value);
         if($relation == 'hasManyOrdered'){
-        	$this->assertSubset($this->file_to_array($file2, 'path'), $form->components[$index]->value[0]);
-        	$this->assertSubset($this->file_to_array($file1, 'path'), $form->components[$index]->value[1]);
+        	$this->assertSubset($this->file_to_array($file2, 'path'), $form->komponents[$index]->value[0]);
+        	$this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[$index]->value[1]);
         }else{
-        	$this->assertSubset($this->file_to_array($file1, 'path'), $form->components[$index]->value[0]);
-        	$this->assertSubset($this->file_to_array($file2, 'path'), $form->components[$index]->value[1]);
+        	$this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[$index]->value[0]);
+        	$this->assertSubset($this->file_to_array($file2, 'path'), $form->komponents[$index]->value[1]);
         }
         if($relation == 'hasManyFiltered')
-            $this->assertEquals(1, $form->components[$index]->value[0]->order);
+            $this->assertEquals(1, $form->komponents[$index]->value[0]->order);
 
 
 		//Update
@@ -159,18 +159,18 @@ class FilesStoredAsHasOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsHasOneHasManyForm(1);
-        $this->assertCount(3, $form->components[$index]->value);
+        $this->assertCount(3, $form->komponents[$index]->value);
         if($relation == 'hasManyOrdered'){
-	        $this->assertSubset($this->file_to_array($file4, 'path'), $form->components[$index]->value[0]);
-	        $this->assertSubset($this->file_to_array($file1, 'path'), $form->components[$index]->value[1]);
-	        $this->assertSubset($this->file_to_array($file3, 'path'), $form->components[$index]->value[2]);
+	        $this->assertSubset($this->file_to_array($file4, 'path'), $form->komponents[$index]->value[0]);
+	        $this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[$index]->value[1]);
+	        $this->assertSubset($this->file_to_array($file3, 'path'), $form->komponents[$index]->value[2]);
 	    }else{
-	        $this->assertSubset($this->file_to_array($file1, 'path'), $form->components[$index]->value[0]);
-	        $this->assertSubset($this->file_to_array($file3, 'path'), $form->components[$index]->value[1]);
-	        $this->assertSubset($this->file_to_array($file4, 'path'), $form->components[$index]->value[2]);
+	        $this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[$index]->value[0]);
+	        $this->assertSubset($this->file_to_array($file3, 'path'), $form->komponents[$index]->value[1]);
+	        $this->assertSubset($this->file_to_array($file4, 'path'), $form->komponents[$index]->value[2]);
 	    }
         if($relation == 'hasManyFiltered')
-            $this->assertEquals(1, $form->components[$index]->value[0]->order);
+            $this->assertEquals(1, $form->komponents[$index]->value[0]->order);
 
 		//Remove
 		$this->submit(
@@ -192,6 +192,6 @@ class FilesStoredAsHasOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = new _FilesStoredAsHasOneHasManyForm(1);
-        $this->assertNull($form->components[$index]->value);
+        $this->assertNull($form->komponents[$index]->value);
     }
 }

@@ -39,7 +39,7 @@ export default {
                 key: item.id || index,
                 index: parseInt(index),
                 active: this.activeIndex == index,
-                is: 'Vl' + item.component,
+                is: this.$_vueTag(item),
                 vkompo: item,
                 kompoid: this.kompoid,
                 layout: this.component.layout

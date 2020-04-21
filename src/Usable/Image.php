@@ -8,7 +8,7 @@ class Image extends File
 {    
     use UploadsImages;
     
-    public $component = 'Image';
+    public $vueComponent = 'Image';
     
     public function prepareForFront($komposer)
     {

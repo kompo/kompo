@@ -1,14 +1,14 @@
 <?php
 
-namespace Kompo\Tests\Unit\Element\Forms;
+namespace Kompo\Tests\Unit\Element;
 
 use Kompo\{Input, Form};
 
-class SetElementIdForm extends Form
+class _SetElementIdForm extends Form
 {
 	public $id = 'form-id';
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			Input::form('Title'),

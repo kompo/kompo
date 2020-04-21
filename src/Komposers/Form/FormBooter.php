@@ -21,7 +21,7 @@ class FormBooter
 
         AuthorizationGuard::checkBoot($form);
         
-        KomposerManager::prepareComponentsForAction($form, 'components'); //mainly to retrieve rules from fields
+        KomposerManager::prepareKomponentsForAction($form, 'komponents'); //mainly to retrieve rules from fields
 
         return $form;
     }
@@ -30,6 +30,13 @@ class FormBooter
 	{
         $form = static::instantiateUnbooted($form);
 
+        if(is_array($modelKey)) //Allow permutation of arguments
+        {
+            $newStore = $modelKey;
+            $modelKey = is_array($store) ? null : $store;
+            $store = $newStore;
+        }
+
         $form->store($store);
         $form->parameter(RouteFinder::getRouteParameters());
         $form->modelKey($modelKey);
@@ -37,7 +44,7 @@ class FormBooter
         
         AuthorizationGuard::checkBoot($form);
 
-		return FormDisplayer::displayComponents($form);
+		return FormDisplayer::displayKomponents($form);
 	}
 
     /**

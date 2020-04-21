@@ -6,6 +6,6 @@ use Kompo\Card;
 
 class IconText extends Card
 {
-    public $component = 'IconText';
+    public $vueComponent = 'IconText';
 
 }

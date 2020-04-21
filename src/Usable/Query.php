@@ -22,17 +22,35 @@ abstract class Query extends Komposer
     public $layout = 'Horizontal';
 
     /**
-     * The vue component to render the Query as a child.
+     * The vue component to render the Query (inside a Form).
+     *
+     * @var array
+     */
+    public $vueComponent = 'FormQuery';
+
+
+    /**
+     * The Query results.
+     */
+    public $query; //--> TODO: move to data
+    
+    /**
+     * The Query filter Komponents
+     */
+    public $filters; //--> TODO: move to data
+
+    /**
+     * Make the query orderable with back-end support
+     *
+     * @var boolean
+     */
+    public $orderable = false;
+
+    /**
+     * When dealing with non-eloquent Queries, this specifies the primary key.
      *
      * @var        string
      */
-    public $component = 'FormQuery'; //--> TODO: move to data
-
-    public $query; //--> TODO: move to data
-    
-    public $filters; //--> TODO: move to data
-
-    public $orderable = false;
     public $keyName = 'id';
     
     /**

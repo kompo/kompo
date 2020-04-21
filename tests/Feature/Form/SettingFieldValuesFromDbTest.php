@@ -23,19 +23,19 @@ class SettingFieldValuesFromDbTest extends EnvironmentBoot
 		$form = new _SettingFieldValuesFromDbForm($post->id);
 
 		$this->assertEquals($post->title, $form->model()->title);
-		$this->assertEquals($post->title, $form->components[0]->components[0]->value);
+		$this->assertEquals($post->title, $form->komponents[0]->komponents[0]->value);
 
 		$this->assertEquals($post->published_at, $form->model()->published_at);
-		$this->assertEquals($post->published_at, $form->components[0]->components[1]->value);
+		$this->assertEquals($post->published_at, $form->komponents[0]->komponents[1]->value);
 
 		$this->assertEquals($tags[0]->name, $form->model()->tags[0]->name);
-		$this->assertEquals($tags[0]->name, $form->components[1]->value[0]->name);
+		$this->assertEquals($tags[0]->name, $form->komponents[1]->value[0]->name);
 
 		$this->assertEquals($tags[1]->name, $form->model()->tags[1]->name);
-		$this->assertEquals($tags[1]->name, $form->components[1]->value[1]->name);
+		$this->assertEquals($tags[1]->name, $form->komponents[1]->value[1]->name);
 
 		$this->assertEquals($post->author->id, $form->model()->author->id);
-		$this->assertEquals($post->author->name, $form->components[2]->value);
+		$this->assertEquals($post->author->name, $form->komponents[2]->value);
 
 	}
 
@@ -46,8 +46,8 @@ class SettingFieldValuesFromDbTest extends EnvironmentBoot
 
 		$form = new _NonExistingAttributeInFieldNameForm($post->id);
 
-		$this->assertEquals('fneyaibyveiy', $form->components[0]->name);
-		$this->assertNull($form->components[0]->value);
+		$this->assertEquals('fneyaibyveiy', $form->komponents[0]->name);
+		$this->assertNull($form->komponents[0]->value);
 	}
 
 	/** @test */

@@ -24,6 +24,6 @@ h4 {
 }
 @import "tailwindcss/components";
 
-/*@import 'components';*/
+
 
 @import "tailwindcss/utilities";

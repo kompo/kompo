@@ -34,7 +34,7 @@ export default {
             this.$nextTick(() => {
                 if (this.component.trix) {
                     this.$refs.content.update()
-                //} else if (this.component.component == 'TranslatableEditor'){
+                //} else if (this.$_vueComponent() == 'TranslatableEditor'){
                     //this.$refs.content.instance.editing.view.focus()
                 } else {
                     this.$refs.content.focus ? 

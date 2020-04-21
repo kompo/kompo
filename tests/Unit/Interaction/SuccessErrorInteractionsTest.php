@@ -2,6 +2,7 @@
 
 namespace Kompo\Tests\Unit\Interaction;
 
+use Kompo\Button;
 use Kompo\Exceptions\NotApplicableInteractionException;
 use Kompo\Input;
 use Kompo\Tests\EnvironmentBoot;
@@ -39,7 +40,7 @@ class SuccessErrorInteractionsTest extends EnvironmentBoot
 		})->interactions;
 
 		$this->assertCount(1, $interactions);
-		$this->assertEquals('change', $interactions[0]->interactionType);
+		$this->assertEquals('input', $interactions[0]->interactionType);
 		$this->assertEquals('submitForm', $interactions[0]->action->actionType);
 
 		$nested = $interactions[0]->action->interactions;
@@ -56,7 +57,7 @@ class SuccessErrorInteractionsTest extends EnvironmentBoot
 	/** @test */
 	public function nested_on_success_error_interactions_are_applied()
 	{
-		$interactions = Input::form()->onInput(function($e){
+		$interactions = Input::form()->onChange(function($e){
 			$e->post('route')->onSuccess(function($e){
 				$e->sort();
 				$e->submit()->onSuccess(function($e){
@@ -68,7 +69,7 @@ class SuccessErrorInteractionsTest extends EnvironmentBoot
 		})->interactions;
 
 		$this->assertCount(1, $interactions);
-		$this->assertEquals('input', $interactions[0]->interactionType);
+		$this->assertEquals('change', $interactions[0]->interactionType);
 		$this->assertEquals('axiosRequest', $interactions[0]->action->actionType);
 
 		$nested = $interactions[0]->action->interactions;

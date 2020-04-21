@@ -5,8 +5,8 @@
         @includeObj="includeObject"
         @loaded="destroyPanel">
 
-        <div v-if="components.length"><!-- had to wrap in a div for transition -->
-            <template v-for="(row,index) in components">
+        <div v-if="komponents.length"><!-- had to wrap in a div for transition -->
+            <template v-for="(row,index) in komponents">
                 <component v-bind="$_attributes(row)" />
             </template>
         </div>
@@ -32,12 +32,12 @@ export default {
     },
     methods:{
         destroyPanel(){
-            //this.$delete(this.components, 0)
-            this.components = []
+            //this.$delete(this.komponents, 0)
+            this.komponents = []
         },
-        loadPanel(components){
-            //this.components = this.components.concat(components) //TODO: append or replace components...
-            this.components = components
+        loadPanel(komponents){
+            //this.komponents = this.komponents.concat(komponents) //TODO: append or replace komponents...
+            this.komponents = komponents
         },
         revertPanel(){
             this.$_togglesForm(this.hidesOnLoad)
@@ -53,9 +53,9 @@ export default {
     },
 
     created() {
-        this.components = this.components || [] //when called in Vue directly (not through a PHP Form)
+        this.komponents = this.komponents || [] //when called in Vue directly (not through a PHP Form)
         
-        this.loaded = this.component.components && this.component.components.length
+        this.loaded = this.komponents && this.komponents.length
     }
 }
 </script>

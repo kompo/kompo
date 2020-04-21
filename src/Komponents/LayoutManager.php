@@ -7,7 +7,7 @@ use Kompo\Core\Util;
 
 class LayoutManager extends Layout
 {
-	public static function collectFilteredComponents($args, $layout)
+	public static function collectFilteredKomponents($args, $layout)
 	{
 		if(static::argsIsString($args))
             return collect([]);

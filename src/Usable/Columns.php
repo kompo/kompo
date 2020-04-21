@@ -9,7 +9,7 @@ class Columns extends Layout
 {
     use VerticalAlignmentTrait;
 
-    public $component = 'Columns';
+    public $vueComponent = 'Columns';
 
     protected function vlInitialize($label)
     {

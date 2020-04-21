@@ -1,7 +1,7 @@
 <template>
     <div>
         <form v-bind="formAttributes" class="vlForm">
-            <template v-for="component in components">
+            <template v-for="component in komponents">
                 <component 
                     v-bind="$_attributes(component)"
                     :class="$_vlMargins(component)" />
@@ -13,6 +13,8 @@
 
 <script>
 import Layout from './mixins/Layout'
+import Alert from '../core/Alert'
+
 export default {
     mixins: [Layout],
 
@@ -46,9 +48,9 @@ export default {
             if(this.emitFormData)
                 this.$emit('submit', this.getJsonFormData())
         },
-        submitSuccess(r){
+        submitSuccess(r, submitKomponent){
 
-            this.$emit('success', r)
+            this.$emit('success', r, submitKomponent)
             
             //redirect route predefined in form
             if(this.redirectUrl){
@@ -75,9 +77,9 @@ export default {
 
             if (e.response.status == 422){
                 this.$_validate(e.response.data.errors)
-                this.$modal.events.$emit('showAlert', 'Please correct the errors', 'vlAlertError')
+                new Alert('Please correct the errors').asError().emitFrom(this)
             }else{
-                this.$modal.events.$emit('showAlert', 'Error '+e.response.status+' | '+e.response.data.message, 'vlAlertError')
+                new Alert('Error '+e.response.status+' | '+e.response.data.message).asError().emitFrom(this)
             }
         },
         getJsonFormData(){
@@ -96,8 +98,8 @@ export default {
             this.$_vlOn('vlPreSubmit'+this.$_elKompoId, () => {
                 this.preSubmit()
             })
-            this.$_vlOn('vlSubmitSuccess'+this.$_elKompoId, (response) => {
-                this.submitSuccess(response)
+            this.$_vlOn('vlSubmitSuccess'+this.$_elKompoId, (response, submitKomponent) => {
+                this.submitSuccess(response, submitKomponent)
             })
             this.$_vlOn('vlSubmitError'+this.$_elKompoId, (error) => {
                 this.submitError(error)

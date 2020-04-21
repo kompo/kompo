@@ -20,7 +20,7 @@ class _RouteParametersForm extends Form
 		$this->commonCreated();
 	}
 
-	public function components()
+	public function komponents()
 	{
 		return Input::form('Form-is-rendered');
 	}

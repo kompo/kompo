@@ -26,7 +26,7 @@ class QueryFilters
     {
         foreach (static::$filtersPlacement as $placement) {
 
-            $query->filters[$placement] = KomposerManager::prepareComponentsForDisplay($query, $placement); //fields are also pushed to query
+            $query->filters[$placement] = KomposerManager::prepareKomponentsForDisplay($query, $placement); //fields are also pushed to query
 
         }
     }
@@ -40,7 +40,7 @@ class QueryFilters
     {
         foreach (static::$filtersPlacement as $placement) {
 
-            KomposerManager::prepareComponentsForAction($query, $placement);
+            KomposerManager::prepareKomponentsForAction($query, $placement);
 
         }
 

@@ -1,7 +1,7 @@
 <template>
     <tr :class="$_activeClass">
         <template v-for="(component,k) in $_props">
-            <td :key="k" v-if="component.component" >
+            <td :key="k" v-if="$_vueTag(component)" >
                 <component 
                 	v-bind="componentAttributes(component)"
                     @activate="activate" />

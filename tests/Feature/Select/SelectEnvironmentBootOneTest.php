@@ -32,7 +32,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
 
         //Reload
         $form = new $form(1);
-        $this->assertEquals($user1->id, $form->components[$index]->value);
+        $this->assertEquals($user1->id, $form->komponents[$index]->value);
 
         //Update
         $user2 = factory(User::class)->create();
@@ -51,7 +51,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
 
         //Reload
         $form = new $form(1);
-        $this->assertEquals($user2->id, $form->components[$index]->value);
+        $this->assertEquals($user2->id, $form->komponents[$index]->value);
 
         //Remove
         $this->submit(
@@ -68,7 +68,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
 
         //Reload
         $form = new $form(1);
-        $this->assertNull($form->components[$index]->value);
+        $this->assertNull($form->komponents[$index]->value);
     }
 
 }

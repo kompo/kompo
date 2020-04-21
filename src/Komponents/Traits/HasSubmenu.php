@@ -7,15 +7,15 @@ use Kompo\Komponents\LayoutManager;
 trait HasSubmenu
 {
     /**
-     * Stores the child components from the submenu.
+     * Stores the child komponents from the submenu.
      *
      * @var array
      */
-    public $components = [];
+    public $komponents = [];
 
     protected function prepareMenu($args)
     {
-        return LayoutManager::collectFilteredComponents($args, $this)->each(function($component) { 
+        return LayoutManager::collectFilteredKomponents($args, $this)->each(function($component) { 
 
             $this->prepareHashAndActiveState($component);
 
@@ -36,14 +36,14 @@ trait HasSubmenu
 
     public function submenu(...$args)
     {
-        $this->components = $this->prepareMenu(func_get_args());
+        $this->komponents = $this->prepareMenu(func_get_args());
 
         return $this;
     }
 
     public function prependMenu($args)
     {
-        $this->components = $this->prepareMenu(array_merge(func_get_args(), $this->components));
+        $this->komponents = $this->prepareMenu(array_merge(func_get_args(), $this->komponents));
         
         return $this;
     }

@@ -5,7 +5,7 @@
         v-show="!$_hidden">
 
         <component v-bind="$_attributes(tab)"
-            v-for="(tab,index) in components"
+            v-for="(tab,index) in komponents"
             :key="index" />
             
     </vl-tabs>
@@ -24,7 +24,7 @@ export default {
     methods:{
         $_validate(errors) {
             Layout.methods.$_validate.call(this, errors)
-            this.components.forEach( (tab, index) => {
+            this.komponents.forEach( (tab, index) => {
 	            var errors = []
 	            tab.$_getErrors(errors)
 	            if(errors.length)

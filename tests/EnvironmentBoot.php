@@ -79,6 +79,9 @@ class EnvironmentBoot extends TestCase
         //Kompo Config
         $app['config']->set('kompo', require(__DIR__.'/../config/kompo.php'));
 
+        //in Tests, we want to compare response json with the model and have 201 responses.
+        $app['config']->set('kompo.eloquent_form.return_model_as_response', true);
+
         //Spatie Config
         $app['config']->set('permission.table_names', [
             'roles' => 'roles',

@@ -6,6 +6,7 @@
 .vlAlert{
     padding: 1rem;
     border-radius: 0.25rem;
+    position: relative;
     display: flex;
     align-items: center;
     color: $primary;
@@ -13,16 +14,25 @@
     border: 1px solid;
     border-color: mix($primary, white, 60%);
     margin-top: 0.5rem;
-    &.vlAlertSuccess{
-        color: #155724;
-        background-color: #d4edda;
-        border-color: #c3e6cb;
+    >i{
+        padding-right: 0.5rem;
     }
-    &.vlAlertError{
-        color: #721c24;
-        background-color: #f8d7da;
-        border-color: #f5c6cb;
-    }
+}
+.vlAlertClose{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 80%;
+}
+.vlAlertSuccess{
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+}
+.vlAlertError{
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
 
 .alert-enter,.alert-leave-active {

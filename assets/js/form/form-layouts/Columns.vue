@@ -1,6 +1,6 @@
 <template>
     <div v-bind="$_layoutWrapperAttributes" v-show="!$_hidden">
-        <div v-for="(col,index) in components"
+        <div v-for="(col,index) in komponents"
             :key="index"
             :class="colClasses(col)">
             <component 
@@ -23,7 +23,7 @@ export default {
             ]
         },
         numOfColumns(){
-            return this.component.components.length
+            return this.komponents.length
         },
         equalColumnClass(){
             return 12 % this.numOfColumns == 0 ? 

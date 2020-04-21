@@ -1,12 +1,12 @@
 <?php
 
-namespace Kompo\Tests\Unit\Element\Forms;
+namespace Kompo\Tests\Unit\Element;
 
 use Kompo\{Input, Form};
 
-class SetElementStylesForm extends Form
+class _SetElementStylesForm extends Form
 {
-	public function components()
+	public function komponents()
 	{
 		return [
 			Input::form('Title')->style('margin:0'),

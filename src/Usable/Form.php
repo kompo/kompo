@@ -13,15 +13,21 @@ abstract class Form extends Komposer
 	use HasModel;
 
     /**
-     * The vue component to render the Form.
+     * The Vue component to render the Form.
      *
-     * @var        string
+     * @var string
      */
-    public $component = 'Rows'; //--> TODO: move to data
-    public $menuComponent = 'Form'; //--> TODO: move to data
+    public $vueComponent = 'Rows';
+
+    /**
+     * The Blade component to render the Form.
+     *
+     * @var string
+     */
+    public $bladeComponent = 'Form';
     
     /**
-     * Disable adding default margins for Form components.
+     * Disable adding default margins for Form komponents.
      *
      * @var boolean
      */
@@ -77,18 +83,18 @@ abstract class Form extends Komposer
     public $model;
 
     /**
-     * Stores the form components.
+     * Stores the form komponents.
      *
      * @var array
      */
-    public $components = [];  //--> TODO: move to data
+    public $komponents = [];  //--> TODO: move to data
     
     /**
      * If you wish to reload the form after submit/saving the model, set to true.
      *
      * @var boolean
      */
-    public static $refresh = false;
+    protected $refresh = false;
 
 	/**
      * Constructs a Form
@@ -105,7 +111,8 @@ abstract class Form extends Komposer
             'submitTo' => $this->submitTo,
             'submitMethod' => $this->submitMethod,
             'redirectTo' => $this->redirectTo,
-            'redirectMessage' => $this->redirectMessage
+            'redirectMessage' => $this->redirectMessage,
+            'refresh' => $this->refresh
         ]);
 
 		if(!$dontBoot)
@@ -113,11 +120,11 @@ abstract class Form extends Komposer
 	}
 
     /**
-     * Get the Components displayed in the form.
+     * Get the Komponents displayed in the form.
      *
      * @return array
      */
-    public function components()
+    public function komponents()
     {
         return [];
     }
@@ -143,7 +150,7 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Prepares the components of the Form when included in another Komposer.
+     * Prepares the komponents of the Form when included in another Komposer.
      *
      * @var array
      */
@@ -156,7 +163,7 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Prepares the components of the Form when included in another Komposer.
+     * Prepares the komponents of the Form when included in another Komposer.
      *
      * @var array
      */
@@ -174,6 +181,21 @@ abstract class Form extends Komposer
     public static function render($modelKey = null, $store = [])
     {
         return FormBooter::renderVueComponent(new static($modelKey, $store));
+    }
+
+    /**
+     * Displays an encoded version of the Form.
+     * Hides (or not) the public $model property before displaying or returning response.
+     * Mostly, useful when echoing in blade for example.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        if(($this->hideModel ?? false) || (!isset($this->hideModel) && config('kompo.eloquent_form.hide_model_in_forms')))
+            unset($this->model);
+
+        return json_encode($this);
     }
 
 }

@@ -29,7 +29,7 @@ class CardGenerator
         );
 
         $card = static::getCardDefaultFallback($item, $komposer);
-        $card->components = array_merge($defaultItems, $card->components);
+        $card->komponents = array_merge($defaultItems, $card->komponents);
         return $card;
     }
 

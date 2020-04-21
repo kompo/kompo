@@ -9,7 +9,7 @@ class DummyClass extends Form
 {
 	//public $model = 'User::class';
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			//The Komponents...

@@ -10,7 +10,7 @@ class _FieldOutputValueForm extends Form
 {
 	public $model = Post::class;
 
-	public function components()
+	public function komponents()
 	{
 		return [
 			Input::form()->name('title')->value('post-title'),

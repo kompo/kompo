@@ -1,3 +1,4 @@
+import HasVueComponent from './HasVueComponent'
 import EmitsEvents from './EmitsEvents'
 import HasId from './HasId'
 import HasClasses from './HasClasses'
@@ -6,7 +7,7 @@ import HasData from './HasData'
 import RunsInteractions from './RunsInteractions'
 
 export default {
-    mixins: [ EmitsEvents, HasId, HasClasses, HasStyles, HasData, RunsInteractions ],
+    mixins: [ HasVueComponent, EmitsEvents, HasId, HasClasses, HasStyles, HasData, RunsInteractions ],
     props: {
         vkompo: { type: Object, required: true }
     },
@@ -28,8 +29,9 @@ export default {
         $_kompoId() { return this.$_data('kompoId') },
 
         $_icon() { return this.$_data('icon') },
+        $_pureLabel() { return this.component.label },
         $_label() { 
-            return (this.$_icon ? '<i class="'+this.$_icon+'"></i> ' : '') + this.component.label 
+            return (this.$_icon ? '<i class="'+this.$_icon+'"></i> ' : '') + this.$_pureLabel 
         },
 
         $_defaultElementAttributes() {
@@ -38,17 +40,12 @@ export default {
                 this.$_data('attrs') || {}
             )
         },
-        $_component() { return this.component.component },
         
         $_togglesId(){ return this.$_data('togglesId') }
 
     },
     methods: {
 
-        $_defaultCssClass(component) {
-            return 'vl'+(component || this.$_component)
-            //return 'vl' + _.upperFirst(_.camelCase(component || this.$_component)) //?? to delete
-        },
         $_getFromStore(key){
             return key ? this.elementStore[key] : this.elementStore
         },

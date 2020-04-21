@@ -9,7 +9,7 @@ class MultiImage extends MultiFile
 {
     use UploadsImages;
     
-    public $component = 'Image';
+    public $vueComponent = 'Image';
 
     public function prepareForFront($komposer)
     {

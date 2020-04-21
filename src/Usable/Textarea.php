@@ -9,7 +9,7 @@ class Textarea extends Field
 {
     use HasRows;
     
-    public $component = 'Textarea';
+    public $vueComponent = 'Textarea';
 
     protected function vlInitialize($label)
     {

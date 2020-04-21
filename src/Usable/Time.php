@@ -6,7 +6,7 @@ use Kompo\Komponents\Field;
 
 class Time extends Field
 {
-    public $component = 'Date';
+    public $vueComponent = 'Date';
 
     protected $savedAsDateTime = false;
 
