@@ -2,7 +2,7 @@
 
 namespace Kompo\Komposers;
 
-use Kompo\Exceptions\KomponentsMethodNotFoundException;
+use Kompo\Core\DependencyResolver;
 use Kompo\Core\Util;
 
 class KomposerManager
@@ -29,11 +29,11 @@ class KomposerManager
      * Prepare the Komposer's komponents for display.
      * 
      * @param Kompo\Komposers\Komposer $komposer
-     * @param string $method
+     * @param string|null $method
      *
      * @return Collection
      */
-    public static function prepareKomponentsForDisplay($komposer, $method)
+    public static function prepareKomponentsForDisplay($komposer, $method = null)
     {
         return static::collectFrom($komposer, $method)->filter()->each( function($component) use ($komposer) {
 
@@ -48,11 +48,11 @@ class KomposerManager
      * Prepare the Komposer's komponents for a backend action.
      * 
      * @param Kompo\Komposers\Komposer $komposer
-     * @param string $method
+     * @param string|null $method
      *
      * @return void
      */
-    public static function prepareKomponentsForAction($komposer, $method)
+    public static function prepareKomponentsForAction($komposer, $method = null)
     {
         static::collectFrom($komposer, $method)->filter()->each( function($component) use ($komposer) {
 
@@ -105,17 +105,18 @@ class KomposerManager
      * Returns a collection of komponents from a method in the Komposer.
      *
      * @param Kompo\Komposers\Komposer $komposer
-     * @param string $method
-     *
-     * @throws \Kompo\Exceptions\KomponentsMethodNotFoundException
+     * @param string|null              $method
      *
      * @return Collection
      */
-    protected static function collectFrom($komposer, $method)
+    protected static function collectFrom($komposer, $method = null)
     {
-        if($method && !method_exists($komposer, $method))
-            throw new KomponentsMethodNotFoundException($method, class_basename($komposer));
-
-        return Util::collect($komposer->{$method}());
+        return Util::collect(
+            $method ? 
+                
+                $komposer->{$method}() : //for 'komponents', 'top', 'right', 'left', 'bottom'.
+                
+                DependencyResolver::callKomposerMethod($komposer, null, request()->all()) //mainly for getKomponents
+        );
     }
 }

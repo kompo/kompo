@@ -2,6 +2,7 @@
 
 namespace Kompo\Routing;
 
+use Kompo\Core\KompoTarget;
 use Kompo\Exceptions\EmptyRouteException;
 use Kompo\Komposers\Komposer;
 
@@ -50,7 +51,7 @@ class RouteFinder
             return $komponent->data([
                 'route' => RouteFinder::getKompoRoute(),
                 'routeMethod' => $routeMethod,
-                'komposerClass' => $routeOrKomposer
+                'komposerClass' => KompoTarget::getEncrypted($routeOrKomposer)
             ]);
 
         return $komponent->data([

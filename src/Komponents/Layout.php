@@ -55,14 +55,14 @@ abstract class Layout extends Komponent
         if($komposer->noMargins ?? false)
             $this->noMargins();
 
-        collect($this->komponents)->each(function($component) use($methodName, $komposer) {
+        collect($this->komponents)->each(function($komponent) use($methodName, $komposer) {
 
-            $component->{$methodName}($komposer);
+            $komponent->{$methodName}($komposer);
 
-            $component->mountedHook($komposer);
+            $komponent->mountedHook($komposer);
 
             //To UNCOMMENT
-            //$this->prepareHashAndActiveState($component); //added this to extend Flex becoming a Menuitem
+            //$this->prepareHashAndActiveState($komponent); //added this to extend Flex becoming a Menuitem
 
         });
     }

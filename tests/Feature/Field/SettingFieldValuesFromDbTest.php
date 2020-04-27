@@ -1,8 +1,7 @@
 <?php
 
-namespace Kompo\Tests\Feature\Form;
+namespace Kompo\Tests\Feature\Field;
 
-use Kompo\Exceptions\NotOneToOneRelationException;
 use Kompo\Tests\EnvironmentBoot;
 use Kompo\Tests\Models\Post;
 use Kompo\Tests\Models\Tag;
@@ -49,19 +48,6 @@ class SettingFieldValuesFromDbTest extends EnvironmentBoot
 		$this->assertEquals('fneyaibyveiy', $form->komponents[0]->name);
 		$this->assertNull($form->komponents[0]->value);
 	}
-
-	/** @test */
-	public function mtm_relationship_is_used_in_field_name()
-	{
-		$tags = factory(Tag::class, 2)->create();
-		$post = factory(Post::class, 1)->create()->first();
-
-		$this->expectException(NotOneToOneRelationException::class);
-
-		$form = new _MtmRelationshipInFieldNameForm($post->id);
-	}
-
-
 
 
 }

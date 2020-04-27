@@ -1,12 +1,12 @@
 <?php
 
-namespace Kompo\Tests\Feature\Form;
+namespace Kompo\Tests\Feature\Field;
 
 use Kompo\Form;
 use Kompo\Select;
 use Kompo\Tests\Models\Post;
 
-class _MtmRelationshipInFieldNameForm extends Form
+class _NotOneToOneRelationInFieldNameForm extends Form
 {
 	public $model = Post::class;
 

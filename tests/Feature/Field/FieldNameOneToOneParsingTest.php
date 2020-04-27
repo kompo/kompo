@@ -2,9 +2,11 @@
 
 namespace Kompo\Tests\Feature\Field;
 
+use Kompo\Exceptions\NotOneToOneRelationException;
 use Kompo\Tests\EnvironmentBoot;
 use Kompo\Tests\Models\Obj;
 use Kompo\Tests\Models\Post;
+use Kompo\Tests\Models\Tag;
 
 class FieldNameOneToOneParsingTest extends EnvironmentBoot
 {
@@ -28,6 +30,26 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 		$this->submit_status_and_json_assertions(new _FieldNameOneToOneParsingForm(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
 
 		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
+
+		$postTitle = null;
+		$objTitle = null;
+		$objTag = 'obj-tag2';
+		$postTagTitle = null;
+
+		$this->submit_status_and_json_assertions(new _FieldNameOneToOneParsingForm(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
+
+		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
+	}
+	
+	/** @test */
+	public function not_one_to_one_relation_in_field_name_throws_exception()
+	{
+		$tags = factory(Tag::class, 2)->create();
+		$post = factory(Post::class, 1)->create()->first();
+
+		$this->expectException(NotOneToOneRelationException::class);
+
+		$form = new _NotOneToOneRelationInFieldNameForm($post->id);
 	}
 
 
@@ -37,9 +59,9 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 	{
 		$this->submit($form, [
 			'title' => $postTitle,
-			'obj.title' => $objTitle,
-			'obj.tag' => $objTag,
-			'postTag.title' => $postTagTitle
+			'obj`title' => $objTitle,
+			'obj`tag' => $objTag,
+			'postTag`title' => $postTagTitle
 		])->assertStatus($status)
 		->assertJson([
 			'id' => 1,

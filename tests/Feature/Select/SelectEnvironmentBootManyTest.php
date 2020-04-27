@@ -32,14 +32,12 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
         $form = new $formClass(1);
         $this->assertCount(2, $form->komponents[$index]->value);
         if($type == 'ordered'){
-        	$this->assertSubset($file2, $form->komponents[$index]->value[0]);
-        	$this->assertSubset($file1, $form->komponents[$index]->value[1]);
+        	$this->assertEquals($file2->id, $form->komponents[$index]->value[0]);
+        	$this->assertEquals($file1->id, $form->komponents[$index]->value[1]);
         }else{
-        	$this->assertSubset($file1, $form->komponents[$index]->value[0]);
-        	$this->assertSubset($file2, $form->komponents[$index]->value[1]);
+        	$this->assertEquals($file1->id, $form->komponents[$index]->value[0]);
+        	$this->assertEquals($file2->id, $form->komponents[$index]->value[1]);
         }
-        if($type == 'filtered')
-            $this->assertEquals(1, $form->komponents[$index]->value[0]->order);
 
 
 		//Update
@@ -66,21 +64,20 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
         $form = new $formClass(1);
         if($type == 'ordered'){
             $this->assertCount(3, $form->komponents[$index]->value);
-            $this->assertSubset($file4, $form->komponents[$index]->value[0]);
-            $this->assertSubset($file1, $form->komponents[$index]->value[1]);
-            $this->assertSubset($file3, $form->komponents[$index]->value[2]);
+            $this->assertEquals($file4->id, $form->komponents[$index]->value[0]);
+            $this->assertEquals($file1->id, $form->komponents[$index]->value[1]);
+            $this->assertEquals($file3->id, $form->komponents[$index]->value[2]);
 
 	    }elseif($type == 'filtered'){
             $this->assertCount(2, $form->komponents[$index]->value);
-            $this->assertEquals(1, $form->komponents[$index]->value[0]->order);
-            $this->assertSubset($file1, $form->komponents[$index]->value[0]);
-            $this->assertSubset($file4, $form->komponents[$index]->value[1]);
+            $this->assertEquals($file1->id, $form->komponents[$index]->value[0]);
+            $this->assertEquals($file4->id, $form->komponents[$index]->value[1]);
 
         }else{
             $this->assertCount(3, $form->komponents[$index]->value);
-            $this->assertSubset($file1, $form->komponents[$index]->value[0]);
-            $this->assertSubset($file3, $form->komponents[$index]->value[1]);
-            $this->assertSubset($file4, $form->komponents[$index]->value[2]);
+            $this->assertEquals($file1->id, $form->komponents[$index]->value[0]);
+            $this->assertEquals($file3->id, $form->komponents[$index]->value[1]);
+            $this->assertEquals($file4->id, $form->komponents[$index]->value[2]);
 	    }
 
 		//Remove

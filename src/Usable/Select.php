@@ -5,6 +5,8 @@ namespace Kompo;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Kompo\Card;
+use Kompo\Core\DependencyResolver;
+use Kompo\Core\KompoTarget;
 use Kompo\Core\Util;
 use Kompo\Database\EloquentField;
 use Kompo\Komponents\Field;
@@ -62,7 +64,9 @@ class Select extends Field
         }else{
             //Not recommended last case scenario. This will load all options which may not be desired.
             //User should fix by using the above scenarios. Should I throw error or not?? No for now: worst case, the query will be slow.
-            $allOptions = $komposer->{$this->data('ajaxOptionsMethod')}('')->all();
+            $allOptions = DependencyResolver::callKomposerMethod($komposer, $this->data('ajaxOptionsMethod'), [
+                'search' => ''
+            ])->all();
 
             $this->options(Util::collect($this->value)->mapWithKeys(function($optionKey) use($allOptions){
 
@@ -236,7 +240,7 @@ class Select extends Field
             'ajaxOptions' => true,
             'ajaxMinSearchLength' => $minSearchLength,
             'enterMoreCharacters' => __(self::ENTER_MORE_CHARACTERS, ['min' => $minSearchLength]),
-            'ajaxOptionsMethod' => $searchMethod ?: $this->inferOptionsMethod('search', $searchMethod),
+            'ajaxOptionsMethod' => KompoTarget::getEncrypted($searchMethod ?: $this->inferOptionsMethod('search', $searchMethod)),
         ]);
     }
 
@@ -278,7 +282,7 @@ class Select extends Field
         return RouteFinder::activateRoute($this)->data([
             'ajaxOptions' => true,
             'ajaxOptionsFromField' => $otherFieldName,
-            'ajaxOptionsMethod' => $searchMethod ?: $this->inferOptionsMethod('search', $searchMethod),
+            'ajaxOptionsMethod' => KompoTarget::getEncrypted($searchMethod ?: $this->inferOptionsMethod('search', $searchMethod)),
         ]);
     }
 

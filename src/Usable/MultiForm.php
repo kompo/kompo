@@ -3,10 +3,14 @@
 namespace Kompo;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as RequestFacade;
 use Illuminate\Support\Str;
+use Kompo\Core\KompoTarget;
 use Kompo\Core\RequestData;
 use Kompo\Core\ValidationManager;
 use Kompo\Komponents\Field;
+use Kompo\Komposers\Form\FormBooter;
+use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Routing\RouteFinder;
 
 class MultiForm extends Field
@@ -17,7 +21,11 @@ class MultiForm extends Field
 
     public $multiple = true;
 
-    public $formClass;
+    protected $formClass;
+
+    protected $childStore;
+
+    protected static $multiFormKey = 'multiFormKey';
 
     protected function vlInitialize($name)
     {
@@ -27,21 +35,37 @@ class MultiForm extends Field
 
     public function prepareForFront($komposer)
     {
-        if($this->value){
-            //Only works for Eloquent relation, MultiForm cannot be an attribute currently
-            $this->komponents = $this->value->map(function($item){
-                $formClass = $this->formClass;
-                return $formClass::find($item->getKey());
+        $this->komponents = !$this->value ? 
+
+            [ $this->prepareChildForm(null) ] : 
+
+            $this->value->map(function($item){
+
+                return $this->prepareChildForm($item->getKey());
+
             })->all();
-        }
+    }
+
+    protected function prepareChildForm($modelKey)
+    {
+        if(!($formClass  = $this->formClass))
+            return;
+
+        $form = new $formClass($modelKey, $this->childStore);
+        $form->{static::$multiFormKey} = $modelKey;
+        return $form;
     }
 
     public function mounted($form)
     {
-        $rules = $this->komponents ? collect(ValidationManager::getRules($this->komponents[0]))->flatMap(function($v, $k){
-            $k = $this->name.'.*.'.$k;
-            return [$k => $v];
-        })->all() : [];
+        if(!($childForm = $this->prepareChildForm(null))) 
+            return;
+
+        $rules = collect(ValidationManager::getRules($childForm))->flatMap(function($v, $k){
+
+            return [($this->name.'.*.'.$k) => $v];
+
+        })->all();
 
         ValidationManager::addRulesToKomposer($rules, $form);
     }
@@ -50,20 +74,28 @@ class MultiForm extends Field
 
     public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
-        $this->value = collect(RequestData::get($requestName))->map(function($subrequest){
-            
-            $request = new Request($subrequest);
-            
-            $formClass = $this->formClass;
-            $form = with(new $formClass(true))->bootFromRequest($request);
+        collect(RequestData::get($requestName))->map(function($subrequest){
 
-            if($form->modelKey){
-                $form->updateRecordFromRequest($request);
-                return null; //the work has been done
-            }else{
-                return $form->newModelInstanceFromRequest($request)->toArray(); //saved in next step BUT IT'S MISSING RELATIONSHIP SAVING STEP :(
-            }
-        })->filter();
+            $form = FormBooter::bootForAction([
+                'kompoClass' => $this->formClass,
+                'store' => $this->childStore,
+                'parameters' => [], // is this feature needed?
+                'modelKey' => $subrequest[static::$multiFormKey] ?? null
+            ]);
+
+            //No Validation or Authorization step - it has already been done on the parent Form
+
+            //Then we swap the requests for save
+            $mainRequest = request();            
+            $subrequest = new Request($subrequest);
+
+            RequestFacade::swap($subrequest);
+
+            FormSubmitter::saveModel($form);
+
+            RequestFacade::swap($mainRequest); //then swap back the original
+
+        });
     }
 
     /**
@@ -75,12 +107,12 @@ class MultiForm extends Field
     public function formClass($formClass, $ajaxPayload = null)
     {
         $this->formClass = $formClass;
-        $this->komponents = [ new $formClass() ];
+        $this->childStore = $ajaxPayload ?: [];
 
         return $this->data([
-            'route' => RouteFinder::getKompoRoute(),
-            'routeMethod' => 'GET',
-            'formClass' => $formClass,
+            'route' => RouteFinder::postKompoRoute(),
+            'routeMethod' => 'POST', //had to be POST to send ajaxPayload
+            'komposerClass' => KompoTarget::getEncrypted($formClass),
             'ajaxPayload' => $ajaxPayload,
             'sessionTimeoutMessage' => __('sessionTimeoutMessage')
         ]);

@@ -13,9 +13,15 @@ class BootAuthorizationTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function unauthorized_boot_throws_an_error_for_forms()
+	public function unauthorized_boot_throws_an_error_for_forms_display()
 	{
-		$this->assert_unauthorized_boot(_BootUnauthorizedForm::class);
+		$this->assert_unauthorized_boot_display(_BootUnauthorizedForm::class);
+	}
+
+    /** @test */
+	public function unauthorized_boot_throws_an_error_for_forms_action()
+	{
+		$this->assert_unauthorized_boot_action(_BootUnauthorizedForm::class);
 	}
 
     /** @test */
@@ -25,9 +31,15 @@ class BootAuthorizationTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function unauthorized_boot_throws_an_error_for_querys()
+	public function unauthorized_boot_throws_an_error_for_querys_display()
 	{
-		$this->assert_unauthorized_boot(_BootUnauthorizedQuery::class);
+		$this->assert_unauthorized_boot_display(_BootUnauthorizedQuery::class);
+	}
+
+    /** @test */
+	public function unauthorized_boot_throws_an_error_for_querys_action()
+	{
+		$this->assert_unauthorized_boot_action(_BootUnauthorizedQuery::class);
 	}
 
     /** @test */
@@ -37,9 +49,15 @@ class BootAuthorizationTest extends EnvironmentBoot
 	}
 
     /** @test */
-	public function unauthorized_boot_throws_an_error_for_menus()
+	public function unauthorized_boot_throws_an_error_for_menus_display()
 	{
-		$this->assert_unauthorized_boot(_BootUnauthorizedMenu::class);
+		$this->assert_unauthorized_boot_display(_BootUnauthorizedMenu::class);
+	}
+
+    /** @test */
+	public function unauthorized_boot_throws_an_error_for_menus_action()
+	{
+		$this->assert_unauthorized_boot_action(_BootUnauthorizedMenu::class);
 	}
 
 	/** ------------------ PRIVATE --------------------------- */    
@@ -49,10 +67,19 @@ class BootAuthorizationTest extends EnvironmentBoot
 		$this->assertTrue(true);
 	}
 
-	private function assert_unauthorized_boot($objClass)
+	private function assert_unauthorized_boot_display($objClass)
 	{
 		$this->expectException(UnauthorizedException::class);
 		
 		$obj = new $objClass();
+	}
+
+	private function assert_unauthorized_boot_action($objClass)
+	{
+		\Route::kompo('test-route', $objClass);
+
+		$this->expectException(UnauthorizedException::class);
+		
+		$this->withoutExceptionHandling()->get('test-route');
 	}
 }

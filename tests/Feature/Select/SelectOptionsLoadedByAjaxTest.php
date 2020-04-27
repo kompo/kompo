@@ -2,7 +2,7 @@
 
 namespace Kompo\Tests\Feature\Select;
 
-use Kompo\Exceptions\FormMethodNotFoundException;
+use Kompo\Exceptions\KomposerMethodNotFoundException;
 use Kompo\Tests\EnvironmentBoot;
 use Kompo\Tests\Models\File;
 use Kompo\Tests\Models\Obj;
@@ -14,11 +14,9 @@ class SelectOptionsLoadedByAjaxTest extends EnvironmentBoot
 	/** @test */
 	public function no_search_method_found_for_retrieving_options()
 	{
-		$this->expectException(FormMethodNotFoundException::class);
+		$this->expectException(KomposerMethodNotFoundException::class);
 
-		$this->withoutExceptionHandling()->searchOptions(new _SelectAjaxOptionsForm(), [
-			'method' => 'Non existing Method'
-		]);
+		$this->withoutExceptionHandling()->searchOptions(new _SelectAjaxOptionsForm(), null, 'Non existing Method');
 	}
 
 	/** @test */
@@ -35,11 +33,9 @@ class SelectOptionsLoadedByAjaxTest extends EnvironmentBoot
 		$this->assert_correct_options_searched_through_ajax('searchTags_cast', $tags[3], $tag);
 
 		//None found
-		$this->searchOptions(new _SelectAjaxOptionsForm(), [
-			'method' => 'searchTags',
-	        'search' => 'Impossible to find name'
-		])->assertStatus(200)
-        ->assertJsonCount(0);
+		$this->searchOptions(new _SelectAjaxOptionsForm(), 'Impossible to find name', 'searchTags')
+			->assertStatus(200)
+        	->assertJsonCount(0);
 	}
 
 
@@ -118,11 +114,9 @@ class SelectOptionsLoadedByAjaxTest extends EnvironmentBoot
 		$this->assert_correct_options_loaded_from_field('searchFiles', 'jpg', $filesM);
 
 		//None found
-		$this->searchOptions(new _SelectAjaxOptionsFromFieldForm(), [
-			'method' => 'searchTags',
-	        'search' => 'not a category id'
-		])->assertStatus(200)
-        ->assertJsonCount(0);
+		$this->searchOptions(new _SelectAjaxOptionsFromFieldForm(), 'not a category id', 'searchTags')
+			->assertStatus(200)
+	        ->assertJsonCount(0);
 	}
 
 
@@ -130,21 +124,19 @@ class SelectOptionsLoadedByAjaxTest extends EnvironmentBoot
 
 	private function assert_correct_options_searched_through_ajax($method, $tag1, $tag2)
 	{
-		$this->searchOptions(new _SelectAjaxOptionsForm(), [
-			'method' => $method,
-	        'search' => substr($tag1->name, 0, 20) //part of the name
-		])->assertStatus(200)
-        ->assertJsonCount(2)
-		->assertJson([ 
-			[
-				'value' => $tag1->id,
-				'label' => $tag1->name
-			], 
-			[
-				'value' => $tag2->id,
-				'label' => $tag2->name
-			]
-		]);
+		$this->searchOptions(new _SelectAjaxOptionsForm(), substr($tag1->name, 0, 20), $method)
+			->assertStatus(200)
+	        ->assertJsonCount(2)
+			->assertJson([ 
+				[
+					'value' => $tag1->id,
+					'label' => $tag1->name
+				], 
+				[
+					'value' => $tag2->id,
+					'label' => $tag2->name
+				]
+			]);
 	}
 
 	private function assert_option_matches_model($model, $opt)
@@ -155,17 +147,15 @@ class SelectOptionsLoadedByAjaxTest extends EnvironmentBoot
 
 	private function assert_correct_options_loaded_from_field($method, $search, $matches)
 	{
-		$this->searchOptions(new _SelectAjaxOptionsFromFieldForm(), [
-			'method' => $method,
-	        'search' => $search
-		])->assertStatus(200)
-        ->assertJsonCount(count($matches))
-		->assertJson(collect($matches)->map(function($match){
-			return [
-				'value' => $match->id,
-				'label' => $match->name,
-			];
-		})->all());
+		$this->searchOptions(new _SelectAjaxOptionsFromFieldForm(), $search, $method)
+			->assertStatus(200)
+	        ->assertJsonCount(count($matches))
+			->assertJson(collect($matches)->map(function($match){
+				return [
+					'value' => $match->id,
+					'label' => $match->name,
+				];
+			})->all());
 	}
 
 }

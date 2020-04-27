@@ -2,6 +2,7 @@
 
 namespace Kompo;
 
+use Kompo\Core\ImageHandler;
 use Kompo\Komponents\Traits\UploadsImages;
 use Kompo\MultiFile;
 
@@ -10,6 +11,11 @@ class MultiImage extends MultiFile
     use UploadsImages;
     
     public $vueComponent = 'Image';
+
+    /**
+     * The file's handler class
+     */
+    protected $fileHandler = ImageHandler::class;
 
     public function prepareForFront($komposer)
     {

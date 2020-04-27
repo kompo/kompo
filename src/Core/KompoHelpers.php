@@ -1,22 +1,48 @@
 <?php 
 
 if (! function_exists('form')) {
-    function form($form, $dontBoot = false)
+    function form($formClass, $dontBoot = false)
     {
-        if(class_exists($formClass = 'App\\Http\\Komposers\\'.$formClass)){
+        if(class_exists($formClass = 'App\\Http\\Komposers\\'.$formClass))
             return new $formClass();
-        }
-        throw new \RuntimeException("Form [{$formClass}] does not exist when called with menu().");
+        
+        throw new \RuntimeException("Form [{$formClass}] does not exist when called with form().");
+    }
+}
+
+if (! function_exists('query')) {
+    function query($queryClass, $dontBoot = false)
+    {
+        if(class_exists($queryClass = 'App\\Http\\Komposers\\'.$queryClass))
+            return new $queryClass();
+        
+        throw new \RuntimeException("Query [{$queryClass}] does not exist when called with query().");
     }
 }
 
 if (! function_exists('menu')) {
     function menu($menuClass)
     {
-        if(class_exists($menuClass = 'App\\Menus\\'.$menuClass)){
+        if(class_exists($menuClass = 'App\\Menus\\'.$menuClass))
             return new $menuClass();
-        }
+        
         throw new \RuntimeException("Menu [{$menuClass}] does not exist when called with menu().");
+    }
+}
+
+if (! function_exists('thumb')) {
+    function thumb($path)
+    {
+        return substr($path, 0, strrpos( $path, '.')).
+               '_thumb.'.
+               substr($path, strrpos($path,'.') + 1);
+    }
+}
+
+if (! function_exists('assetThumb')) {
+    function assetThumb($path)
+    {
+        return thumb(asset($path));
     }
 }
 

@@ -57,8 +57,8 @@ export default {
             this.komponents.forEach( (item,k) => {
                 var json = {}
                 item.$_fillRecursive(json)
-                if(item.recordKey)
-                    json.id = item.recordKey
+                if(item.multiFormKey)
+                    json.multiFormKey = item.multiFormKey
                 results.push(json)
             })
             results.forEach( (form, k) => {

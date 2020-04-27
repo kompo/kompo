@@ -63,17 +63,17 @@ class _SelectAjaxOptionsEloquentForm extends Form
 
 	/********* RETRIEVE METHODS **************/
 
-	public function retrieveTags($value) //Parameter mandatory always
+	public function retrieveTags($value) //Parameter mandatory always in retrieves
 	{
 		return Tag::where('id', $value)->pluck('name', 'id');		
 	}
 
-	public function retrieveTags_cast($value) //Parameter mandatory always
+	public function retrieveTags_cast($value) //Parameter mandatory always in retrieves
 	{
 		return Tag::where('id', $value)->pluck('name', 'id');		
 	}
 
-	public function retrieveFiles($value) //Case 3: optional parameter
+	public function retrieveFiles($value) //Parameter mandatory always in retrieves
 	{
 		return File::where('id', $value)->pluck('name', 'id');		
 	}

@@ -1,4 +1,11 @@
+
+/*** variables ****/
+
 $btn-depth: 1px !default;
+$table-color: $primary !default;
+
+
+/***** CSS ********/
 
 body, html {
     height: 100%;
@@ -34,6 +41,24 @@ a{
 }
 .vlPaginationB{
 	margin-top: 0.5rem;
+}
+
+.vlTableWrapper {
+    border: 1px solid gainsboro;
+    border-radius: 0.5rem;
+	thead th {
+		background-color: $table-color;
+		color: white;
+		&:first-child{
+			border-top-left-radius: 0.5rem;
+		}
+		&:last-child{
+			border-top-right-radius: 0.5rem;
+		}
+	}
+}
+.page-item.active .page-link{
+	background-color: $table-color;
 }
 
 .vlTags{

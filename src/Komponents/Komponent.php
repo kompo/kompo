@@ -56,7 +56,7 @@ abstract class Komponent extends Element
      */
     public function prepareForAction($komposer)
     {
-        if($this->data('includes')) //need to check authorize here!
+        if($this->data('includes')) //TODO: check authorize here!
             KomposerManager::prepareKomponentsForAction($komposer, $this->data('includes'));
     }
 
@@ -119,7 +119,11 @@ abstract class Komponent extends Element
         return $this;
     }
 
-
+    /**
+     * Methods that can be called both statically or non-statically
+     *
+     * @return array
+     */
     public static function duplicateStaticMethods()
     {
         return ['label', 'icon'];

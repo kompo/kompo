@@ -16,7 +16,10 @@
 </template>
 
 <script>
+import HasVueComponent from '../mixins/HasVueComponent'
+
 export default {
+    mixins: [HasVueComponent],
     props: {
         id: { type: String, required: true },
         transition: { type: String },

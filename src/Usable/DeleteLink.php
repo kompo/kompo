@@ -2,6 +2,7 @@
 
 namespace Kompo;
 
+use Illuminate\Database\Eloquent\Model;
 use Kompo\Link;
 
 class DeleteLink extends Link
@@ -28,7 +29,11 @@ class DeleteLink extends Link
 	{
 		return $this->selfHttpRequest('DELETE', 'delete-item', null, [
 
-			'deleteKey' => $deleteItem->getKey()
+			'deleteKey' => $deleteItem instanceOf Model ? 
+
+								$deleteItem->getKey() : 
+
+								($deleteItem->id ?? null)
 			
 		])->emitDirect('deleted');
 	}

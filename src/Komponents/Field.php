@@ -266,6 +266,8 @@ abstract class Field extends Komponent
             KomposerManager::pushField($komposer, $this); //when the filters have a value on display
 
         $this->prepareForFront($komposer);
+
+        $this->name = RequestData::convert($this->name);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Kompo\Interactions\Actions;
 
+use Kompo\Core\KompoTarget;
+
 trait SubmitFormActions
 {
     /**
@@ -16,7 +18,7 @@ trait SubmitFormActions
     public function submit($methodName = null)
     {
         return $this->prepareAction('submitForm', [
-            'kompoMethod' => $methodName
+            'kompoMethod' => KompoTarget::getEncrypted($methodName)
         ]);
     }
     

@@ -141,11 +141,10 @@ export default class Action {
         window.location.href = url
     }
     getPayloadForStore() {
-        var store = Object.assign(
+        return Object.assign(
             this.$_data('ajaxPayload') || {}, 
             this.vue.$_getJsonValue || {} 
         )
-        return store ? {store: store} : null
     }
     getFormData() {
         var formData = new FormData(), jsonFormData = this.vue.formInfo.jsonFormData

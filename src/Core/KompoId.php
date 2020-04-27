@@ -2,18 +2,25 @@
 
 namespace Kompo\Core;
 
+use Illuminate\Support\Facades\Crypt;
+
 class KompoId
 {
     protected static $kompoIdKey = 'kompoId';
 
     public static function setForKomponent($el, $label = null)
     {
-        return static::addUniqId( $el, $label ? preg_replace("/[^a-zA-Z]+/", "", strip_tags($label)) : class_basename($el) );
+        return static::setOnElement( $el, 
+            ($label ? preg_replace("/[^a-zA-Z]+/", "", strip_tags($label)) : class_basename($el)).uniqid() 
+        );
     }
 
     public static function setForKomposer($el)
     {
-        return static::addUniqId( $el, class_basename($el) );
+        $bestKompoId = Crypt::encryptString(get_class($el).uniqid());
+        //old session way
+        //$bestKompoId = class_basename($el).uniqid();
+        return static::setOnElement( $el, $bestKompoId);
     }
 
     public static function get($el)
@@ -21,8 +28,8 @@ class KompoId
         return $el->data( static::$kompoIdKey );
     }
 
-    private static function addUniqId($el, $bestKompoId)
+    public static function setOnElement($el, $bestKompoId)
     {
-        return $el->data([ static::$kompoIdKey => $bestKompoId.uniqid() ]);
+        return $el->data([ static::$kompoIdKey => $bestKompoId ]);
     }
 }

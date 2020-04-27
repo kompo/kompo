@@ -37,7 +37,7 @@ export default class KompoAxios{
             headers: Object.assign(
                 {'X-Kompo-Id': this.$_parentKompoId}, 
                 this.$_kompoAction ? { 'X-Kompo-Action': this.$_kompoAction } : {},
-                this.$_kompoMethod ? { 'X-Kompo-Method': this.$_kompoMethod } : {}
+                this.$_kompoMethod ? { 'X-Kompo-Target': this.$_kompoMethod } : {}
             )
         })
     }
@@ -54,7 +54,7 @@ export default class KompoAxios{
                     'X-Kompo-Action': this.$_komponent.formInfo.action
                 } : {},
                 this.$_kompoMethod ? {
-                    'X-Kompo-Handle': this.$_kompoMethod,
+                    'X-Kompo-Target': this.$_kompoMethod,
                     'X-Kompo-Action': 'handle-submit' //X-Kompo-Action above will be overwritten if this.handle
                 } : {}
             )
@@ -96,7 +96,7 @@ export default class KompoAxios{
             headers: {
                 'X-Kompo-Id': this.$_parentKompoId,
                 'X-Kompo-Action': 'load-komposer',
-                'X-Kompo-Class': this.$_komposerClass
+                'X-Kompo-Target': this.$_komposerClass //using method slot for simplicity
             }
         })
     }
@@ -108,7 +108,7 @@ export default class KompoAxios{
             headers: {
                 'X-Kompo-Id': this.$_parentKompoId,
                 'X-Kompo-Action': 'updated-option',
-                'X-Kompo-Class': this.$_komposerClass
+                'X-Kompo-Target': this.$_komposerClass //using method slot for simplicity
             }
         })
     }
@@ -118,12 +118,12 @@ export default class KompoAxios{
             url: this.$_kompoRoute, 
             method: 'POST',
             data: {
-                method: this.$_ajaxOptionsMethod,
                 search: search
             },
             headers: {
                 'X-Kompo-Id': this.$_parentKompoId,
-                'X-Kompo-Action': 'search-options'
+                'X-Kompo-Action': 'search-options',
+                'X-Kompo-Target': this.$_ajaxOptionsMethod
             }
         })
     }

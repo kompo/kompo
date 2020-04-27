@@ -4,6 +4,7 @@ namespace Kompo\Tests\Unit\Element;
 
 use Kompo\Input;
 use Kompo\Tests\EnvironmentBoot;
+use Illuminate\Support\Facades\Crypt;
 
 class KompoIdTest extends EnvironmentBoot
 {
@@ -29,15 +30,19 @@ class KompoIdTest extends EnvironmentBoot
 	{
 		$form = new _SetElementIdForm();
 
-		$kompoId = $form->data('kompoId');
-		$this->assertNotNull($kompoId);
-		$this->assertEquals('_SetElementIdForm', substr($kompoId, 0, 17) );
+		$bootInfo = Crypt::decrypt($form->data('kompoId'));
+		$this->assertNotNull($bootInfo);
+		$this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass'] );
 
 		$form = new _SetElementIdForm();
-		$kompoId2 = $form->data('kompoId');
-		$this->assertNotNull($kompoId2);
-		$this->assertEquals('_SetElementIdForm', substr($kompoId2, 0, 17) );
-		$this->assertFalse($kompoId == $kompoId2); //testing uniqid() generation		
+		$bootInfo2 = Crypt::decrypt($form->data('kompoId'));
+		$this->assertNotNull($bootInfo2);
+		$this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass'] );
+
+		foreach($bootInfo as $key => $value)
+        {
+            $this->assertEquals($value, $bootInfo2[$key]);
+        }		
 	}
 
 }

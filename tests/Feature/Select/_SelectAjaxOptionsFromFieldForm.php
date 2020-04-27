@@ -48,21 +48,21 @@ class _SelectAjaxOptionsFromFieldForm extends Form
 
 	public function anotherMethod()
 	{
-		return $this->searchTags(request('search'));		
+		return $this->searchTags();		
 	}
 
-	public function searchTags($value)
+	public function searchTags()
 	{
-		return Tag::where('category_id', $value)->pluck('name', 'id');		
+		return Tag::where('category_id', request('search'))->pluck('name', 'id');		
 	}
 
-	public function getUsers($value)
+	public function getUsers()
 	{
-		return User::where('order', $value)->pluck('name', 'id');		
+		return User::where('order', request('search'))->pluck('name', 'id');		
 	}
 
-	public function searchFiles($value)
+	public function searchFiles()
 	{
-		return File::where('mime_type', $value)->pluck('name', 'id');		
+		return File::where('mime_type', request('search'))->pluck('name', 'id');		
 	}
 }

@@ -2,9 +2,8 @@
     <div class="vlFlex vlAlignCenter">
         <div>
             <span v-html="pagination.total + ' results'" />
-            <span v-html="'(showing '+from+' to '+to+')'" />
+            <span v-html="'(showing '+from+' to '+to+') &nbsp;'" />
         </div>
-        &nbsp;
         <ul v-if="needsPaginationLinks" class="pagination" role="navigation">
             <li v-if="isFirstPage" class="page-item disabled" aria-disabled="true" aria-label="previous">
                 <span class="page-link" aria-hidden="true">&lsaquo;</span>

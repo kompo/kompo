@@ -41,6 +41,16 @@ abstract class Komposer extends Element
 	}
 
     /**
+     * Gets the failed authorization message, if defined.
+     *
+     * @return string
+     */
+    public function getFailedAuthorizationMessage()
+    {
+        return $this->failedAuthorizationMessage ?? null;
+    }
+
+    /**
      * Assign additional session data to the komposer. Or retrieve it if parameter is a string key.
      *
      * @param  mixed  $data

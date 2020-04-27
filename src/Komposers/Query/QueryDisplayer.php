@@ -54,9 +54,11 @@ class QueryDisplayer
      */
     public static function browseCards($query)
     {
-        QueryDisplayer::prepareQuery($query);
+        ValidationManager::addRulesToKomposer($query->rules(), $query);
+        
+        AuthorizationGuard::mainGate($query);
 
-        QueryFilters::prepareFiltersForAction($query);
+        ValidationManager::validateRequest($query);
 
         QueryFilters::filterAndSort($query);
 

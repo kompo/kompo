@@ -30,9 +30,9 @@ class File extends Field
     protected $attributesToColumns = false;
 
     /**
-     * The file's handler
+     * The file's handler class
      */
-    protected $fileHandler;
+    protected $fileHandler = FileHandler::class;
 
     /**
      * Assign the config columns
@@ -43,12 +43,14 @@ class File extends Field
     {
         parent::vlInitialize($label);
 
-        $this->fileHandler = new FileHandler();
+        $fileHandler = $this->fileHandler;
+
+        $this->fileHandler = new $fileHandler();
     }
 
     /**
      * Saves the uploaded file or image to the specified disk. 
-     * By default, it is stored in the 'local' disk.
+     * By default, it is stored in the 'public' disk.
      *
      * @param string $disk   The disk instance key.
      *
@@ -56,7 +58,24 @@ class File extends Field
      */
     public function disk($disk)
     {
-        return $this->fileHandler->setDisk($disk);
+        $this->fileHandler->setDisk($disk);
+
+        return $this;
+    }
+
+    /**
+     * Sets the storage visibility setting. 
+     * By default, it is 'public'.
+     *
+     * @param string $visibility   The visibility setting (public|private).
+     *
+     * @return self
+     */
+    public function visibility($visibility)
+    {
+        $this->fileHandler->visibility = $visibility;
+
+        return $this;
     }
 
     /**
@@ -68,7 +87,7 @@ class File extends Field
     public function attributesToColumns()
     {
         if(!($this instanceOf File))
-            throw new LogicException("Only Kompo\File accepts the attributesToColumns() method.");
+            throw new LogicException("Only Kompo\File and Kompo\Image accept the attributesToColumns() method.");
         
         $this->attributesToColumns = true;
         

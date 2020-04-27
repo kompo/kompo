@@ -13,10 +13,12 @@ export default {
         },
         $_layoutWrapperAttributes(){
             return Object.assign({
-                class: this.$_classes,
-                style: this.$_elementStyles
-            }, this.component.id ? { id: this.component.id } : {},
-            this.$_customLayoutAttributes)
+                    ...this.$_defaultElementAttributes,
+                    class: this.$_classes,
+                    style: this.$_elementStyles
+                }, 
+                this.$_customLayoutAttributes
+            )
         },
         $_noMargins(){ return this.$_data('noMargins') || this.component.noMargins }, //Form takes a property (more user-friendly)
     },

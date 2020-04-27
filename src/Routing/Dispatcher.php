@@ -34,24 +34,33 @@ class Dispatcher
     
     public static function dispatchConnection()
     {
+        return KomposerHandler::performAction(static::bootForAction());
+    }
+
+    public static function bootForAction()
+    {
         $dispatcher = new static();
         $booter = $dispatcher->booter;
 
-        return KomposerHandler::performAction($booter::bootForAction($dispatcher->sessionKomposer));
+        return $booter::bootForAction($dispatcher->sessionKomposer);
     }
 
     public function bootFromRoute() 
     {
         $booter = $this->booter;
 
-        $modelKey = request('id');
-        $store = request()->except('id'); //no store when booted from route. Use parameters instead.
-
-        return $this->type == 'Form' ? 
-
-            $booter::bootForDisplay($this->komposerClass, $modelKey, $store) : 
-
-            $booter::bootForDisplay($this->komposerClass, $store);
+        if($this->type == 'Form'){
+            return $booter::bootForDisplay(
+                $this->komposerClass, 
+                request('id'), 
+                request()->except('id')
+            );
+        }else{
+            return $booter::bootForDisplay(
+                $this->komposerClass, 
+                request()->all()
+            );
+        }
     }
 
     protected static function getKomposerType($komposerClass)

@@ -3,12 +3,42 @@
 namespace Kompo\Core;
 
 use Illuminate\Support\Arr;
+use Kompo\Exceptions\KomposerMethodNotFoundException;
 use ReflectionFunctionAbstract;
+use ReflectionMethod;
 use ReflectionParameter;
 
 class DependencyResolver
 {
-    /* FROM LARAVEL: RouteDependencyResolverTrait */
+    /**
+     * Resolve the given method's type-hinted dependencies.
+     *
+     * @param  array  $parameters
+     * @param  \ReflectionFunctionAbstract  $reflector
+     * @return array
+     */
+    public static function callKomposerMethod($komposer, $method = null, $specialParams = [], $defaultMethod = null)
+    {
+        //check if allowed
+
+        $method = KompoTarget::getDecrypted($method) ?: $defaultMethod;
+
+        static::checkMethodExists($method, $komposer);
+
+        $reflectionMethod = new ReflectionMethod($komposer, $method);
+
+        return $komposer->{$method}(...static::resolveMethodDependencies($specialParams, $reflectionMethod));
+    }
+
+    public static function checkMethodExists($method, $komposer)
+    {
+        if(!method_exists($komposer, $method))
+            throw new KomposerMethodNotFoundException($method);
+    }
+
+    /* 
+     * FROM LARAVEL: RouteDependencyResolverTrait 
+     */
 
     /**
      * Resolve the given method's type-hinted dependencies.

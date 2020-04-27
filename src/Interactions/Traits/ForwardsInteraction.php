@@ -2,6 +2,7 @@
 
 namespace Kompo\Interactions\Traits;
 
+use BadMethodCallException;
 use Kompo\Interactions\Action;
 use Kompo\Interactions\Interaction;
 
@@ -20,7 +21,11 @@ trait ForwardsInteraction
             Interaction::addToLastNested($this, new Action($this, $methodName, $parameters));
             return $this;
         }else{
-            return parent::__call($methodName, $parameters);
+            
+            if(is_callable('parent::__call'))
+                return parent::__call($methodName, $parameters);
+
+            throw new BadMethodCallException('Method '.static::class.'::'.$methodName.' does not exist.');
         }
     }
 

@@ -22,6 +22,8 @@ class AuthorizationGuard
     {
     	if(method_exists($komposer, 'authorize') && !$komposer->authorize())
     		throw new UnauthorizedException( get_class($komposer), 'main' );
+
+        return true;
     }
 
     public static function checkIfAllowedToSeachOptions($komposer)

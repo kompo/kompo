@@ -2,6 +2,8 @@
 
 namespace Kompo\Tests;
 
+use Kompo\Core\KompoTarget;
+
 trait KompoTestRequestsTrait
 {
     protected $kompoUri = '_kompo';
@@ -10,16 +12,12 @@ trait KompoTestRequestsTrait
 
     protected function kompoPost($komposer, $method, $data = [])
     {
-        return $this->kompoAction($komposer, 'post-to-form', $data, [
-            'X-Kompo-Method' => $method
-        ]);
+        return $this->kompoAction($komposer, 'post-to-form', $data, KompoTarget::getEncryptedArray($method));
     }
 
     protected function getKomponents($komposer, $method)
     {
-        return $this->kompoAction($komposer, 'include-komponents', [], [
-            'X-Kompo-Method' => $method
-        ]);
+        return $this->kompoAction($komposer, 'include-komponents', [], KompoTarget::getEncryptedArray($method));
     }
 
     protected function submit($komposer, $data = [])
@@ -27,7 +25,7 @@ trait KompoTestRequestsTrait
         return $this->kompoAction($komposer, $komposer->data('submitAction'), $data);
     }
 
-    protected function browse($komposer, $data, $sort = null, $page = null)
+    protected function browse($komposer, $data = [], $sort = null, $page = null)
     {
         return $this->kompoAction($komposer, 'browse-items', $data, [ 
             'X-Kompo-Page' => $page,
@@ -35,9 +33,9 @@ trait KompoTestRequestsTrait
         ]);
     }
 
-    protected function searchOptions($komposer, $data)
+    protected function searchOptions($komposer, $search, $method)
     {
-        return $this->kompoAction($komposer, 'search-options', $data);
+        return $this->kompoAction($komposer, 'search-options', ['search' => $search], KompoTarget::getEncryptedArray($method));
     }
 
     protected function kompoAction($komposer, $action, $data, $headers = [])
@@ -71,9 +69,9 @@ trait KompoTestRequestsTrait
         dd($this->withoutExceptionHandling()->browse($komposer, $data)->dump());
     }
 
-    protected function searchOptionsdd($komposer, $data)
+    protected function searchOptionsdd($komposer, $search, $method)
     {
-        dd($this->withoutExceptionHandling()->searchOptions($komposer, $data)->dump());
+        dd($this->withoutExceptionHandling()->searchOptions($komposer, $search, $method)->dump());
     }
 
 }

@@ -20,8 +20,6 @@ class FormBooter
         $form->model($form->model);
 
         AuthorizationGuard::checkBoot($form);
-        
-        KomposerManager::prepareKomponentsForAction($form, 'komponents'); //mainly to retrieve rules from fields
 
         return $form;
     }

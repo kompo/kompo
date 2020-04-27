@@ -3,20 +3,21 @@
 namespace Kompo\Komposers;
 
 use Kompo\Core\AuthorizationGuard;
-use Kompo\Exceptions\FormMethodNotFoundException;
+use Kompo\Core\DependencyResolver;
+use Kompo\Core\KompoTarget;
 use Kompo\Exceptions\NotFoundKompoActionException;
-use Kompo\Komposers\Query\QueryDisplayer;
 use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\Form\FormManager;
 use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Komposers\KomposerManager;
+use Kompo\Komposers\Query\QueryDisplayer;
 use Kompo\Routing\Dispatcher;
 use Kompo\Select;
 
 class KomposerHandler
 {
     public static function performAction($komposer)
-    {
+    {        
         switch(request()->header('X-Kompo-Action'))
         {
             case 'eloquent-submit':
@@ -26,10 +27,10 @@ class KomposerHandler
                 return FormSubmitter::callCustomHandle($komposer);
 
             case 'post-to-form':
-                return FormManager::handlePost($komposer);
+                return FormManager::handlePost($komposer); //?? WHERE IS THIS USED? TODO: remove
 
             case 'include-komponents':
-                return KomposerManager::prepareKomponentsForDisplay($komposer, request()->header('X-Kompo-Method'));
+                return static::getIncludedKomponents($komposer);
 
             case 'self-method':
                 return null; //TODO
@@ -62,7 +63,7 @@ class KomposerHandler
      *
      * @param Kompo\Komposers\Komposer $komposer  The parent komposer
      *
-     * @throws     FormMethodNotFoundException  (description)
+     * @throws     KomposerMethodNotFoundException  (description)
      *
      * @return     <type>                       The matched select options.
      */
@@ -70,11 +71,11 @@ class KomposerHandler
     {
         AuthorizationGuard::checkIfAllowedToSeachOptions($komposer);
 
-        if(method_exists($komposer, $method = request('method'))){
-            return Select::transformOptions($komposer->{$method}(request('search')));
-        }else{
-            throw new FormMethodNotFoundException($method);
-        }
+        return Select::transformOptions(
+            DependencyResolver::callKomposerMethod($komposer, null, [
+                'search' => request('search')
+            ])
+        );
     }
 
     /**
@@ -97,15 +98,26 @@ class KomposerHandler
     }
 
     /**
+     * Gets the komponents from the back-end to be included in the parent Komposer.
+     *
+     * @param      <type>  $komposer  The komposer
+     */
+    protected static function getIncludedKomponents($komposer)
+    {
+        return KomposerManager::prepareKomponentsForDisplay($komposer);
+    }
+
+    /**
      * Gets the form or query class from komponent and returns it booted.
      *
      * @param Kompo\Komposers\Komposer $komposer  The parent komposer
      *
      * @return Kompo\Komposers\Komposer
      */
-    public static function getKomposerFromKomponent($komposer)
+    protected static function getKomposerFromKomponent($komposer)
     {
-        return with(new Dispatcher(request()->header('X-Kompo-Class')))->bootFromRoute();
+        $komposerClass = KompoTarget::getDecrypted();
+        return with(new Dispatcher($komposerClass))->bootFromRoute();
     }
 
     /**

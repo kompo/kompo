@@ -2,6 +2,7 @@
 
 namespace Kompo\Interactions\Actions;
 
+use Kompo\Core\KompoTarget;
 use Kompo\Routing\RouteFinder;
 
 trait AxiosRequestActions
@@ -20,44 +21,9 @@ trait AxiosRequestActions
             'route' => RouteFinder::getKompoRoute(),
             'routeMethod' => $requestType,
             'kompoAction' => $kompoAction,
-            'kompoMethod' => $methodName,
+            'kompoMethod' => KompoTarget::getEncrypted($methodName),
             'ajaxPayload' => $ajaxPayload
         ]);
-    }
-
-    /**
-     * Loads a view through AJAX. 
-     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
-     * <php>->loadView('route-of-view')->inModal()</php>
-     *
-     * @param      string  $methodName    The method name that will return a view or HTML response.
-     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
-     *
-     * @return     self   
-     */
-    public function getKomposer($komposerClass, $ajaxPayload = null)
-    {
-        return $this->prepareAxiosRequest([
-            'route' => RouteFinder::getKompoRoute(),
-            'routeMethod' => 'GET',
-            'komposerClass' => $komposerClass,
-            'ajaxPayload' => $ajaxPayload
-        ]);
-    }
-
-    /**
-     * Loads a view through AJAX. 
-     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
-     * <php>->loadView('route-of-view')->inModal()</php>
-     *
-     * @param      string  $methodName    The method name that will return a view or HTML response.
-     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
-     *
-     * @return     self   
-     */
-    public function getView($methodName, $ajaxPayload = null)
-    {
-        return $this->selfHttpRequest('POST', 'get-view', $methodName, $ajaxPayload);
     }
 
     /**
@@ -79,6 +45,37 @@ trait AxiosRequestActions
 
         return $this->selfHttpRequest('POST', 'include-komponents', $methodName, $ajaxPayload)
             ->data([ 'included' => true ]); //to tell Panel to include rather than separate form
+    }
+
+    /**
+     * Loads a view through AJAX. 
+     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
+     * <php>->loadView('route-of-view')->inModal()</php>
+     *
+     * @param      string  $methodName    The method name that will return a view or HTML response.
+     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
+     *
+     * @return     self   
+     */
+    public function getKomposer($komposerClass, $ajaxPayload = null)
+    {
+        //currently using same slot as method for kompoClass... why not?
+        return $this->selfHttpRequest('POST', 'load-komposer', $komposerClass, $ajaxPayload); 
+    }
+
+    /**
+     * Loads a view through AJAX. 
+     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
+     * <php>->loadView('route-of-view')->inModal()</php>
+     *
+     * @param      string  $methodName    The method name that will return a view or HTML response.
+     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
+     *
+     * @return     self   
+     */
+    public function getView($methodName, $ajaxPayload = null)
+    {
+        return $this->selfHttpRequest('POST', 'get-view', $methodName, $ajaxPayload);
     }
 
 

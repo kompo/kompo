@@ -9,13 +9,12 @@ class ValidationManager
     /**
      * Validates the incoming request with the komposer's rules.
      *
-     * @param      <type>  $komposer  The komposer
+     * @param Kompo\Komposers\Komposer  $komposer  The komposer
      */
     public static function validateRequest($komposer)
     {
-
         request()->validate(collect(static::getRules($komposer))->mapWithKeys(function($rules, $key){
-            return [RequestData::convert($key) => $rules];
+            return [RequestData::convertBack($key) => $rules]; //in case the dev makes the mistake of using ` in validation rules
         })->all());
     }
 
@@ -50,7 +49,7 @@ class ValidationManager
      * Pushes field rules to the Komposer if they were set on the field directly.
      *
      * @param      <type>  $field  The field
-     * @param      <type>  $komposer   The form
+     * @param Kompo\Komposers\Komposer  $komposer   The form
      */
     public static function pushFieldRulesToKomposer($field, $komposer)
     {

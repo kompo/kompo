@@ -178,9 +178,29 @@ abstract class Form extends Komposer
      *
      * @return string
      */
-    public static function render($modelKey = null, $store = [])
+    public static function renderStatic($modelKey = null, $store = [])
     {
-        return FormBooter::renderVueComponent(new static($modelKey, $store));
+        return with(new static($modelKey, $store))->render();
+    }
+
+    /**
+     * Shortcut method to render a Form into it's Vue component.
+     *
+     * @return string
+     */
+    public function renderNonStatic()
+    {
+        return FormBooter::renderVueComponent($this);
+    }
+
+    /**
+     * Methods that can be called both statically or non-statically
+     *
+     * @return array
+     */
+    public static function duplicateStaticMethods()
+    {
+        return ['render'];
     }
 
     /**

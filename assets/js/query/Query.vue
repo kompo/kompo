@@ -10,10 +10,12 @@
                     <component v-if="topPagination" @browse="browseQuery" 
                         v-bind="paginationAttributes" />
 
-                    <table v-if="isTableLayout" class="w-full table vlTable">
-                        <vl-table-headers :headers="headers" :kompoid="$_kompoId" />
-                        <component v-bind="layoutAttributes" />
-                    </table>
+                    <div v-if="isTableLayout" class="vlTableWrapper"><!-- TableWrapper useful for various CSS tricks, ex: border-radius -->
+                        <table class="w-full table vlTable">
+                            <vl-table-headers :headers="headers" :kompoid="$_kompoId" />
+                            <component v-bind="layoutAttributes" />
+                        </table>
+                    </div>
 
                     <component v-else v-bind="layoutAttributes" />
 

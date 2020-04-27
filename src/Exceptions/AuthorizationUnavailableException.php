@@ -8,6 +8,6 @@ class AuthorizationUnavailableException extends AuthorizationException
 {
 	public function __construct($kompoId)
 	{
-		parent::__construct("The component Id [{$kompoId}] was not found in the session.");
+		parent::__construct("The kompo Id [{$kompoId}] was not found in the session.");
 	}
 }

@@ -153,10 +153,10 @@ abstract class Query extends Komposer
      *
      * @return array|Kompo\Card
      */
-    public function card($item)
+    /*public function card($item) //commented out to override with any parameter desired
     {
         return [];
-    }
+    }*/
 
     //Query filters
     public function top(){ return []; }
@@ -186,16 +186,33 @@ abstract class Query extends Komposer
         return $this->_kompo('currentPage', $currentPage) ?: 1; //If null, we are on the first page.
     }
 
-
+    /**
+     * Shortcut method to render a Query into it's Vue component.
+     *
+     * @return string
+     */
+    public static function renderStatic($store = [])
+    {
+        return with(new static($store))->render();
+    }
 
     /**
      * Shortcut method to render a Query into it's Vue component.
      *
      * @return string
      */
-    public static function render($store = [])
+    public function renderNonStatic()
     {
-        return QueryBooter::renderVueComponent(new static($store));
+        return QueryBooter::renderVueComponent($this);
     }
 
+    /**
+     * Methods that can be called both statically or non-statically
+     *
+     * @return array
+     */
+    public static function duplicateStaticMethods()
+    {
+        return ['render'];
+    }
 }

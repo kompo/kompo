@@ -27,6 +27,8 @@ class CreateObjsTable extends Migration
             $table->text('files')->nullable();
             $table->text('files_cast')->nullable();
             $table->text('image')->nullable();
+            $table->text('image_cast')->nullable();
+            $table->text('images')->nullable();
             $table->text('place')->nullable();
             $table->text('place_cast')->nullable();
             $table->text('places')->nullable();

@@ -2,10 +2,10 @@
 namespace Kompo\Komposers\Form;
 
 use Kompo\Core\AuthorizationGuard;
+use Kompo\Core\DependencyResolver;
 use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\ModelManager;
-use Kompo\Exceptions\FormMethodNotFoundException;
 use Kompo\Komponents\FormField;
 use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\KomposerManager;
@@ -23,16 +23,15 @@ class FormSubmitter extends FormBooter
 
     public static function callCustomHandle($form)
     {
-        if(($method = request()->header('X-Kompo-Handle') ?: 'handle') && !method_exists($form, $method))
-            throw new FormMethodNotFoundException($method);
-
         static::prepareForSubmit($form);
 
-        return $form->{$method}(request());
+        return DependencyResolver::callKomposerMethod($form, null, [], 'handle');
     }
 
     public static function eloquentSave($form)
     {
+        KomposerManager::prepareKomponentsForAction($form, 'komponents'); //mainly to retrieve rules from fields
+
         static::prepareForSubmit($form);
 
         return static::saveModel($form);
@@ -45,7 +44,7 @@ class FormSubmitter extends FormBooter
      *
      * @return void
      */
-    protected static function saveModel($form)
+    public static function saveModel($form)
     {
         static::loopOverFieldsFor('fillBeforeSave', $form);
 

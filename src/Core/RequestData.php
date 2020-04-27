@@ -6,7 +6,7 @@ use Kompo\Database\NameParser;
 
 class RequestData
 {
-    protected static $delimiter = '_'; //PHP limitation dot notations are converted to underscore
+    protected static $delimiter = '`'; //PHP limitation dot notations are converted to underscore
 
     public static function get($fieldName)
     {
@@ -21,5 +21,10 @@ class RequestData
     public static function convert($name)
     {
         return str_replace(NameParser::$nester, static::$delimiter, $name);
+    }
+
+    public static function convertBack($name)
+    {
+        return str_replace(static::$delimiter, NameParser::$nester, $name);
     }
 }

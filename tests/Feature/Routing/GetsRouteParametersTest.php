@@ -2,6 +2,7 @@
 namespace Kompo\Tests\Feature\Routing;
 
 use Kompo\Tests\EnvironmentBoot;
+use Illuminate\Support\Facades\Crypt;
 
 class GetsRouteParametersTest extends EnvironmentBoot
 {
@@ -12,17 +13,18 @@ class GetsRouteParametersTest extends EnvironmentBoot
 
 		$r = $this->get('test/1'); //different routes below, different assertions
 
-		$kompoId = $r->decodeResponseJson()['data']['kompoId'];
+		$bootInfo = Crypt::decrypt($r->decodeResponseJson()['data']['kompoId']);
 
 		$r->assertJson([
 			'parameters' => ['param' => 1],
 			'param1' => 1,
 			'param2' => null
-		])
-		->assertSessionHas('bootedElements.'.$kompoId.'.parameters.param', 1)
-		->assertSessionMissing('bootedElements.'.$kompoId.'.parameters.opt')
-		->assertSessionHas('bootedElements.'.$kompoId.'.uri', 'test/{param}/{opt?}')
-		->assertSessionHas('bootedElements.'.$kompoId.'.method', 'GET');
+		]);
+
+		$this->assertEquals(1, $bootInfo['parameters']['param']);
+		$this->assertArrayNotHasKey('opt', $bootInfo['parameters']);
+		$this->assertEquals('test/{param}/{opt?}', $bootInfo['uri']);
+		$this->assertEquals('GET', $bootInfo['method']);
 	}
 
     /** @test */
@@ -32,17 +34,18 @@ class GetsRouteParametersTest extends EnvironmentBoot
 
 		$r = $this->post('test/1/2');
 
-		$kompoId = $r->decodeResponseJson()['data']['kompoId'];
+		$bootInfo = Crypt::decrypt($r->decodeResponseJson()['data']['kompoId']);
 
 		$r->assertJson([
 			'parameters' => ['param' => 1, 'opt' => 2],
 			'param1' => 1,
 			'param2' => 2
-		])
-		->assertSessionHas('bootedElements.'.$kompoId.'.parameters.param', 1)
-		->assertSessionHas('bootedElements.'.$kompoId.'.parameters.opt', 2)
-		->assertSessionHas('bootedElements.'.$kompoId.'.uri', 'test/{param}/{opt?}')
-		->assertSessionHas('bootedElements.'.$kompoId.'.method', 'POST');
+		]);
+
+		$this->assertEquals(1, $bootInfo['parameters']['param']);
+		$this->assertEquals(2, $bootInfo['parameters']['opt']);
+		$this->assertEquals('test/{param}/{opt?}', $bootInfo['uri']);
+		$this->assertEquals('POST', $bootInfo['method']);
 	}
 
     /** @test */
@@ -52,16 +55,17 @@ class GetsRouteParametersTest extends EnvironmentBoot
 
 		$r = $this->put('test/hello%20world/');
 
-		$kompoId = $r->decodeResponseJson()['data']['kompoId'];
+		$bootInfo = Crypt::decrypt($r->decodeResponseJson()['data']['kompoId']);
 
 		$r->assertJson([
 			'parameters' => ['param' => 'hello world'],
 			'param1' => 'hello world',
 			'param2' => null
-		])
-		->assertSessionHas('bootedElements.'.$kompoId.'.parameters.param', 'hello world')
-		->assertSessionMissing('bootedElements.'.$kompoId.'.parameters.opt')
-		->assertSessionHas('bootedElements.'.$kompoId.'.uri', 'test/{param}/{opt?}')
-		->assertSessionHas('bootedElements.'.$kompoId.'.method', 'PUT');
+		]);
+
+		$this->assertEquals('hello world', $bootInfo['parameters']['param']);
+		$this->assertArrayNotHasKey('opt', $bootInfo['parameters']);
+		$this->assertEquals('test/{param}/{opt?}', $bootInfo['uri']);
+		$this->assertEquals('PUT', $bootInfo['method']);
 	}
 }

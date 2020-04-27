@@ -37,7 +37,8 @@ export default {
         $_defaultElementAttributes() {
 
             return Object.assign(
-                this.$_data('attrs') || {}
+                this.$_data('attrs') || {},
+                this.$_elementId() ? { id: this.$_elementId() } : {}
             )
         },
         

@@ -18,17 +18,17 @@ class _SelectAjaxOptionsForm extends Form
 		];
 	}
 
-	public function searchTags($search)
+	public function searchTags($search = '') //example with optional parameter
 	{
 		return Tag::where('name', 'LIKE', $search.'%')->pluck('name', 'id');		
 	}
 
-	public function anotherMethod($search)
+	public function anotherMethod() //example with no parameter
 	{
-		return $this->searchTags($search);		
+		return $this->searchTags(request('search'));		
 	}
 
-	public function searchTags_cast($search)
+	public function searchTags_cast($search) //example with mandatory parameter
 	{
 		return $this->searchTags($search);		
 	}

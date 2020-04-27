@@ -25,6 +25,9 @@ class EnvironmentBoot extends TestCase
         if (file_exists($file = __DIR__.'/Utilities/TestHelpers.php'))
             require_once $file;
 
+        if (file_exists($file = __DIR__.'/../src/Core/KompoHelpers.php'))
+            require_once $file;
+
         $this->extendRouting();        
         $this->loadRoutes();
 

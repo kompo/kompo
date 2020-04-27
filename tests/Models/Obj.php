@@ -10,6 +10,7 @@ class Obj extends Model
 {
 	protected $casts = [
 		'tags_cast' => 'array',
+		'image_cast' => 'array',
 		'file_cast' => 'array',
 		'files_cast' => 'array',
 		'place_cast' => 'array',

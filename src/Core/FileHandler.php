@@ -3,6 +3,7 @@
 namespace Kompo\Core;
 
 use Kompo\Database\ModelManager;
+use Illuminate\Support\Facades\Storage;
 
 class FileHandler
 {
@@ -15,9 +16,16 @@ class FileHandler
 
     /**
      * The specified disk for uploaded files. 
-     * By default, it is stored in the 'local' disk.
+     * By default, it is stored in the 'public' disk.
      */
-    protected $disk = 'local';
+    protected $disk = 'public';
+
+    /**
+     * The storage visibility
+     *
+     * @var        string
+     */
+    public $visibility = 'public';
 
 	//File column names from config
     protected $allKeys;
@@ -45,7 +53,7 @@ class FileHandler
      */
     public function setDisk($disk)
     {
-        return $this->disk = $disk;
+        $this->disk = $disk;
     }
 
     /**
@@ -75,10 +83,36 @@ class FileHandler
     	$name = ($this->attributesToColumns || !$name) ? $this->pathKey  : $name;
 
         $modelPath = ModelManager::getStoragePath($model, $name);
-        
-        $file->store('public/'.$modelPath, $this->disk);
+
+        $this->storeOnDisk($file, $modelPath);
 
         return $this->mapToDB($file, $modelPath, $withId);
+    }
+
+    /**
+     * Stores on disk.
+     *
+     * @param Illuminate\Http\UploadedFile $file
+     * @param string                       $modelPath 
+     * 
+     * @return void
+     */
+    protected function storeOnDisk($file, $modelPath)
+    {
+        Storage::disk($this->disk)->put($modelPath, $file, $this->visibility);
+    }
+
+    /**
+     * Gets the default storage path for Kompo files.
+     *
+     * @param Illuminate\Http\UploadedFile $file
+     * @param string                       $modelPath  
+     *
+     * @return string
+     */
+    protected function getStoragePath($file, $modelPath)
+    {
+        return $modelPath.'/'.$file->hashName();
     }
 
     /**
@@ -94,7 +128,7 @@ class FileHandler
     {
     	return array_merge([
             $this->nameKey => $file->getClientOriginalName(),
-            $this->pathKey => 'storage/'.$modelPath.'/'.$file->hashName(),
+            $this->pathKey => 'storage/'.$this->getStoragePath($file, $modelPath),
             $this->mime_typeKey => $file->getClientMimeType(),
             $this->sizeKey => $file->getSize()
         ], $withId ? [
@@ -127,14 +161,16 @@ class FileHandler
      */
     public function unlinkFileIfExists($file)
     {
-        if($file){
-            $filePath = $file[$this->pathKey] ?? $file->{$this->pathKey};
-            if($filePath && file_exists($path = storage_path('app/public'.substr($filePath, 7)) )){
-                unlink($path);
-                if(($this->withThumbnail ?? false) && file_exists(thumb($path)))
-                    unlink(thumb($path));
-            }
-        }
+        if(!$file)
+            return;
+
+        if($filePath = $file[$this->pathKey] ?? $file->{$this->pathKey})
+            $this->storageDelete(substr($filePath, 8)); //to remove storage/
+    }
+
+    protected function storageDelete($filePath)
+    {
+        Storage::disk($this->disk)->delete($filePath);
     }
 
     /**

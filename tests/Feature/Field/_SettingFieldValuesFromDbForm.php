@@ -1,6 +1,6 @@
 <?php
 
-namespace Kompo\Tests\Feature\Form;
+namespace Kompo\Tests\Feature\Field;
 
 use Kompo\Columns;
 use Kompo\Date;

@@ -35,9 +35,11 @@ class CardGenerator
 
     protected static function getCardDefaultFallback($item, $komposer)
     {
-        if(is_array($card = $komposer->card($item))){
+        $card = method_exists($komposer, 'card') ? $komposer->card($item) : [];
+
+        if(is_array($card)){
             $defaultCard = $komposer->card ?: Card::class;
-            return $defaultCard::form($komposer->card($item));
+            return $defaultCard::form($card);
         }else{
             return $card;
         }

@@ -43,6 +43,7 @@ abstract class Element
     {
         return new static(...$arguments);
     }
+    
 
     /**
      * Handle dynamic method calls into the method.
@@ -55,7 +56,7 @@ abstract class Element
     {
         if(in_array($method, static::duplicateStaticMethods())){
             $method .= 'Static';
-            return (new static())->$method(...$parameters);
+            return static::$method(...$parameters);
         }
         throw new BadMethodCallException('Method '.static::class.'::'.$method.' does not exist.');
     }
@@ -74,6 +75,16 @@ abstract class Element
             return $this->$method(...$parameters);
         }
         throw new BadMethodCallException('Method '.static::class.'::'.$method.' does not exist.');
+    }
+
+    /**
+     * Methods that can be called both statically or non-statically
+     *
+     * @return array
+     */
+    public static function duplicateStaticMethods()
+    {
+        return [];
     }
 
     /**
