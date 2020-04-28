@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\Relation as LaravelRelation;
 use Illuminate\Database\Query\Builder as LaravelQueryBuilder;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\CardGenerator;
-use Kompo\Core\SessionStore;
 use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\CollectionQuery;
@@ -38,10 +37,6 @@ class QueryDisplayer
 
         CardGenerator::getTransformedCards($query);
 
-        ValidationManager::addRulesToKomposer($query->rules(), $query); //for Front-end validations TODO:
-
-        SessionStore::saveKomposer($query); 
-
         return $query;
     }
 
@@ -54,7 +49,7 @@ class QueryDisplayer
      */
     public static function browseCards($query)
     {
-        ValidationManager::addRulesToKomposer($query->rules(), $query);
+        QueryFilters::prepareFiltersForAction($query);
         
         AuthorizationGuard::mainGate($query);
 

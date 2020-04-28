@@ -2,4 +2,4 @@
 	$vueComponent = Kompo\Core\Util::vueComponent($component);
 ?>
 
-<{{$vueComponent}} :vkompo="{{$component}}"	kompoid="{{$kompoid}}"></{{$vueComponent}}>
+<{{$vueComponent}} :vkompo="{{$component}}"	kompoinfo="{{$kompoinfo}}"></{{$vueComponent}}>

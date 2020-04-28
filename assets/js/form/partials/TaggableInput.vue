@@ -37,7 +37,7 @@
 export default {
     props: {
         selections: {type: Array, required: true},
-        kompoid: { type: String, required: true },
+        kompoid: { type: String, required: false },
         multiple: {type: Boolean, default: false },
         labelKey: {type: String, default: 'label'},
         readonly: {type: Boolean, default: false } 

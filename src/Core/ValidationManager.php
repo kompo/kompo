@@ -3,6 +3,7 @@
 namespace Kompo\Core;
 
 use Kompo\Core\RequestData;
+use Kompo\Database\NameParser;
 
 class ValidationManager
 {
@@ -13,9 +14,7 @@ class ValidationManager
      */
     public static function validateRequest($komposer)
     {
-        request()->validate(collect(static::getRules($komposer))->mapWithKeys(function($rules, $key){
-            return [RequestData::convertBack($key) => $rules]; //in case the dev makes the mistake of using ` in validation rules
-        })->all());
+        request()->validate(static::getRules($komposer));
     }
 
     /**
@@ -55,6 +54,18 @@ class ValidationManager
     {
         if($field->data('rules'))
             static::addRulesToKomposer($field->data('rules'), $komposer);
+
+        Util::collect($field->name)->each(function($name) use ($komposer) {
+            
+            $komposerRules = static::getRules($komposer);
+
+            if(NameParser::isNested($name) && ($komposerRules[$name] ?? null) ){
+                $komposerRules[RequestData::convert($name)] = $komposerRules[$name];
+                unset($komposerRules[$name]);
+                static::overwriteRules($komposerRules, $komposer);
+            }
+            
+        });
     }
 
     /**
@@ -92,5 +103,12 @@ class ValidationManager
     private static function mergeAttribute($validations, $oldValidations = [])
     {
         return array_merge($oldValidations, is_string($validations) ? explode('|', $validations) : $validations);
+    }
+
+    private static function overwriteRules($rules, $el)
+    {
+        return $el->data([
+            'rules' => $rules
+        ]);
     }
 }

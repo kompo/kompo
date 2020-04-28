@@ -2,26 +2,31 @@
 
 namespace Kompo\Komposers\Query;
 
-use Kompo\Query;
 use Kompo\Core\AuthorizationGuard;
+use Kompo\Core\KompoId;
+use Kompo\Core\KompoInfo;
+use Kompo\Core\ValidationManager;
+use Kompo\Query;
 use Kompo\Routing\RouteFinder;
 
 class QueryBooter
 {
-    public static function bootForAction($session)
+    public static function bootForAction($bootInfo)
     {
-        $query = static::instantiateUnbooted($session['kompoClass']);
+        $query = static::instantiateUnbooted($bootInfo['kompoClass']);
 
-        $query->store($session['store']);
-        $query->parameter($session['parameters']);
+        KompoId::setForKomposer($query, $bootInfo['kompoId']);
+
+        $query->store($bootInfo['store']);
+        $query->parameter($bootInfo['parameters']);
         
         $query->currentPage(request()->header('X-Kompo-Page'));
         
         AuthorizationGuard::checkBoot($query);
 
-        QueryDisplayer::prepareQuery($query); //for setting-up model to be able to delete
+        QueryDisplayer::prepareQuery($query); //setting-up model (like in forms) mainly for 'delete-item' action. 
 
-        QueryFilters::prepareFiltersForAction($query);
+        ValidationManager::addRulesToKomposer($query->rules(), $query); 
 
         return $query;
     }
@@ -34,7 +39,13 @@ class QueryBooter
 
         AuthorizationGuard::checkBoot($query);
 
-		return QueryDisplayer::displayFiltersAndCards($query);
+        ValidationManager::addRulesToKomposer($query->rules(), $query); //for Front-end validations TODO:
+
+		QueryDisplayer::displayFiltersAndCards($query);
+
+        KompoInfo::saveKomposer($query); 
+
+        return $query;
 	}
 
     /**

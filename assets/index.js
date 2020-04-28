@@ -55,6 +55,12 @@ const Kompo = {
 	    	vlDeliverFormInfo(askerId, formInfo){
 	    		Kompo.events.$emit('vlDeliverFormInfo'+askerId, formInfo)
 	    	},
+	    	vlGetKomposerInfo(komposerId, askerId){
+	    		Kompo.events.$emit('vlGetKomposerInfo'+komposerId, askerId)
+	    	},
+	    	vlDeliverKompoInfo(askerId, kompoInfo){
+	    		Kompo.events.$emit('vlDeliverKompoInfo'+askerId, kompoInfo)
+	    	},
 	    	events : this.events
 		}
 

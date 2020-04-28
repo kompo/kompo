@@ -3,18 +3,21 @@
 namespace Kompo\Komposers\Menu;
 
 use Kompo\Core\AuthorizationGuard;
-use Kompo\Core\SessionStore;
+use Kompo\Core\KompoId;
+use Kompo\Core\KompoInfo;
 use Kompo\Menu;
 use Kompo\Routing\RouteFinder;
 
 class MenuBooter
 {
-    public static function bootForAction($session)
+    public static function bootForAction($bootInfo)
     {
-        $menu = static::instantiateUnbooted($session['kompoClass']);
+        $menu = static::instantiateUnbooted($bootInfo['kompoClass']);
 
-        $menu->store($session['store']);
-        $menu->parameter($session['parameters']); //Parameters necessary for menus??
+        KompoId::setForKomposer($menu, $bootInfo['kompoId']);
+
+        $menu->store($bootInfo['store']);
+        $menu->parameter($bootInfo['parameters']); //Parameters necessary for menus??
 
         AuthorizationGuard::checkBoot($menu);
 
@@ -31,7 +34,7 @@ class MenuBooter
 
 		$menu->komponents = collect($menu->komponents())->filter()->all();
 
-		SessionStore::saveKomposer($menu);
+		KompoInfo::saveKomposer($menu);
 
 		return $menu;
 	}

@@ -4,7 +4,6 @@ namespace Kompo\Tests\Unit\Element;
 
 use Kompo\Input;
 use Kompo\Tests\EnvironmentBoot;
-use Illuminate\Support\Facades\Crypt;
 
 class KompoIdTest extends EnvironmentBoot
 {
@@ -30,19 +29,16 @@ class KompoIdTest extends EnvironmentBoot
 	{
 		$form = new _SetElementIdForm();
 
-		$bootInfo = Crypt::decrypt($form->data('kompoId'));
-		$this->assertNotNull($bootInfo);
-		$this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass'] );
+		$kompoId = $form->data('kompoId');
+		$this->assertNotNull($kompoId);
+		$this->assertEquals('_SetElementIdForm', substr($kompoId, 0, strlen($kompoId) - 13));
 
 		$form = new _SetElementIdForm();
-		$bootInfo2 = Crypt::decrypt($form->data('kompoId'));
-		$this->assertNotNull($bootInfo2);
-		$this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass'] );
+		$kompoId2 = $form->data('kompoId');
+		$this->assertNotNull($kompoId2);
+		$this->assertEquals('_SetElementIdForm', substr($kompoId2, 0, strlen($kompoId2) - 13));
 
-		foreach($bootInfo as $key => $value)
-        {
-            $this->assertEquals($value, $bootInfo2[$key]);
-        }		
+		$this->assertNotEquals($kompoId, $kompoId2);
 	}
 
 }

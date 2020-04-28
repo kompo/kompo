@@ -55,14 +55,14 @@ trait QueryActions
      */
     public function sort($sortOrders = '')
     {
-        $this->applyToElement(function($element) {
+        $this->applyToElement(function($element) use($sortOrders) {
             if($element instanceOf Field)
                 $element->ignoresModel()->doesNotFill();
+
+            $element->data([ 'sortsQuery' => $sortOrders ?: true ]);
         });
 
-        return $this->prepareAction('sortQuery', [
-            'sortsQuery' => $sortOrders ?: true
-        ]);
+        return $this->prepareAction('sortQuery');
     }
 
     public function refresh($queryId = null, $page = null)

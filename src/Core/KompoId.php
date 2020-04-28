@@ -2,11 +2,9 @@
 
 namespace Kompo\Core;
 
-use Illuminate\Support\Facades\Crypt;
-
-class KompoId
+class KompoId extends KompoData
 {
-    protected static $kompoIdKey = 'kompoId';
+    protected static $kompoDataKey = 'kompoId';
 
     public static function setForKomponent($el, $label = null)
     {
@@ -15,21 +13,16 @@ class KompoId
         );
     }
 
-    public static function setForKomposer($el)
+    public static function setForKomposer($el, $kompoId = null)
     {
-        $bestKompoId = Crypt::encryptString(get_class($el).uniqid());
-        //old session way
-        //$bestKompoId = class_basename($el).uniqid();
+        $bestKompoId = $kompoId ?: class_basename($el).uniqid();
+        
         return static::setOnElement( $el, $bestKompoId);
     }
 
-    public static function get($el)
+    public static function appendToElement($el, $append)
     {
-        return $el->data( static::$kompoIdKey );
+        return static::setOnElement( $el, static::getFromElement($el).$append );
     }
 
-    public static function setOnElement($el, $bestKompoId)
-    {
-        return $el->data([ static::$kompoIdKey => $bestKompoId ]);
-    }
 }

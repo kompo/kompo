@@ -7,16 +7,17 @@
                     :class="$_vlMargins(component)" />
             </template>
         </form>
-        <vl-support-modal :kompoid="$_kompoId" />
+        <vl-support-modal :kompoid="$_elKompoId" />
     </div>
 </template>
 
 <script>
 import Layout from './mixins/Layout'
 import Alert from '../core/Alert'
+import IsKomposer from '../mixins/IsKomposer'
 
 export default {
-    mixins: [Layout],
+    mixins: [Layout, IsKomposer],
 
     data(){
         return {
@@ -67,8 +68,8 @@ export default {
                 this.$modal.showFill('modal'+this.$_elKompoId, r.data.message || r.data)
 
             if(r.status === 202){
-                this.destroyEvents()
-                this.$emit('refreshForm', r.data.form)
+                this.$_destroyEvents()
+                this.$emit('refreshForm', r.data)
             }
         },
         submitError(e){
@@ -94,7 +95,7 @@ export default {
             window.location.href = url
         },
 
-        attachEvents(){
+        $_attachEvents(){
             this.$_vlOn('vlPreSubmit'+this.$_elKompoId, () => {
                 this.preSubmit()
             })
@@ -126,8 +127,10 @@ export default {
                     action: this.submitAction
                 })
             })
+
+            this.$_deliverKompoInfoOn()
         },
-        destroyEvents(){
+        $_destroyEvents(){
             this.$_vlOff([
                 'vlPreSubmit'+this.$_elKompoId,
                 'vlSubmitSuccess'+this.$_elKompoId,
@@ -136,19 +139,11 @@ export default {
                 'vlUpdateErrorState'+this.$_elKompoId,
                 'vlDeliverJsonFormData'+this.$_elKompoId,
                 'vlToggleSubmit'+this.$_elKompoId,
-                'vlRequestFormInfo'+this.$_elKompoId
+                'vlRequestFormInfo'+this.$_elKompoId,
+                this.$_deliverKompoInfoOff
             ])
         }
 
-    },
-
-    created() {
-        this.destroyEvents()
-        this.attachEvents()
-    },
-    updated() {
-        this.destroyEvents()
-        this.attachEvents()
     }
 }
 

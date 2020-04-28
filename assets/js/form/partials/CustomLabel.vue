@@ -12,7 +12,7 @@ export default {
     mixins: [HasVueComponent],
     props: {
         vkompo: {type: String|Object},
-    	kompoid: { type: String, required: true }
+    	kompoid: { type: String, required: false }
     },
     computed: {
     	customLabel(){

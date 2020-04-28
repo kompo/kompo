@@ -22,7 +22,7 @@ class KompoFormRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->komposer = Dispatcher::bootForAction();
+        $this->komposer = Dispatcher::bootKomposerForAction();
 
         return AuthorizationGuard::mainGate($this->komposer);
     }

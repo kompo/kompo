@@ -6,7 +6,7 @@ use Kompo\Query;
 
 class _BrowseFilterUnauthorizedQuery extends Query
 {
-	public function authorize()
+	public function authorization()
 	{
 		return false;
 	}

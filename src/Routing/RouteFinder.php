@@ -5,6 +5,7 @@ namespace Kompo\Routing;
 use Kompo\Core\KompoTarget;
 use Kompo\Exceptions\EmptyRouteException;
 use Kompo\Komposers\Komposer;
+use Illuminate\Support\Arr;
 
 class RouteFinder
 {
@@ -94,44 +95,19 @@ class RouteFinder
         }) : $routeObject;
     }
 
-    /**
-     * The default route that handles Kompo GET requests.
-     *
-     * @return string.
-     */
-    public static function getKompoRoute()
-    {
-        return route('_kompo');
-    }
+
+
 
     /**
-     * The default route that handles Kompo POST requests.
+     * The default route that handles Kompo requests.
      *
      * @return string.
      */
-    public static function postKompoRoute()
+    public static function getKompoRoute($requestType = 'POST', $ajaxPayload = [])
     {
-        return route('_kompo.post');
-    }
+        return url('_kompo').
 
-    /**
-     * The default route that handles Kompo PUT requests.
-     *
-     * @return string.
-     */
-    public static function putKompoRoute()
-    {
-        return route('_kompo.put');
-    }
-
-    /**
-     * The default route that handles Kompo DELETE requests.
-     *
-     * @return string.
-     */
-    public static function deleteKompoRoute()
-    {
-        return route('_kompo.delete');
+            (($requestType == 'GET' && count($ajaxPayload) ) ? ('?'.Arr::query($ajaxPayload)) : '');
     }
 
 

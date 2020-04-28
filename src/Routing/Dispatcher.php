@@ -3,7 +3,7 @@
 namespace Kompo\Routing;
 
 use Kompo\Query;
-use Kompo\Core\SessionStore;
+use Kompo\Core\KompoInfo;
 use Kompo\Exceptions\NotBootableFromRouteException;
 use Kompo\Form;
 use Kompo\Komposers\KomposerHandler;
@@ -17,15 +17,14 @@ class Dispatcher
 
     public $booter;
 
-    protected $sessionKomposer;
+    protected $bootInfo;
 
     public function __construct($komposerClass = null)
     {
         if(!$komposerClass)
-            $this->sessionKomposer = SessionStore::getKompo();
+            $this->bootInfo = KompoInfo::getKompo();
 
-
-        $this->komposerClass = $komposerClass ?: $this->sessionKomposer['kompoClass'];
+        $this->komposerClass = $komposerClass ?: $this->bootInfo['kompoClass'];
 
         $this->type = static::getKomposerType($this->komposerClass);
 
@@ -34,15 +33,15 @@ class Dispatcher
     
     public static function dispatchConnection()
     {
-        return KomposerHandler::performAction(static::bootForAction());
+        return KomposerHandler::performAction(static::bootKomposerForAction());
     }
 
-    public static function bootForAction()
+    public static function bootKomposerForAction()
     {
         $dispatcher = new static();
         $booter = $dispatcher->booter;
 
-        return $booter::bootForAction($dispatcher->sessionKomposer);
+        return $booter::bootForAction($dispatcher->bootInfo);
     }
 
     public function bootFromRoute() 

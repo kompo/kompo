@@ -2,6 +2,7 @@
 
 namespace Kompo;
 
+use Kompo\Core\KompoId;
 use Kompo\Routing\RouteFinder;
 use Kompo\Select;
 
@@ -20,6 +21,7 @@ class SelectUpdatable extends Select
     {
         $this->komponents = [ clone $this ];
         $this->komponents[0]->vueComponent = 'Select';
+        KompoId::appendToElement($this->komponents[0], '-select');
 
         $this->data([
             'optionsKey' => $this->optionsKey,

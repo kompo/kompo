@@ -35,7 +35,7 @@ export default class KompoAxios{
             method: this.$_routeMethod || 'POST', //POST when used outside PHP
             data: this.element.getPayloadForStore(),
             headers: Object.assign(
-                {'X-Kompo-Id': this.$_parentKompoId}, 
+                {'X-Kompo-Info': this.$_getKompoInfo()}, 
                 this.$_kompoAction ? { 'X-Kompo-Action': this.$_kompoAction } : {},
                 this.$_kompoMethod ? { 'X-Kompo-Target': this.$_kompoMethod } : {}
             )
@@ -48,7 +48,7 @@ export default class KompoAxios{
             data: this.element.getFormData(),
             headers: Object.assign(
                 {
-                    'X-Kompo-Id': this.$_parentKompoId
+                    'X-Kompo-Info': this.$_getKompoInfo()
                 }, 
                 this.$_komponent.formInfo.action ? {
                     'X-Kompo-Action': this.$_komponent.formInfo.action
@@ -68,7 +68,7 @@ export default class KompoAxios{
             method: 'POST',
             data: this.$_komponent.preparedFormData(),
             headers: {
-                'X-Kompo-Id': this.$_komponent.$_elKompoId,
+                'X-Kompo-Info': this.$_getKompoInfo(),
                 'X-Kompo-Page': page,
                 'X-Kompo-Sort': sort,
                 'X-Kompo-Action': 'browse-items'
@@ -83,7 +83,7 @@ export default class KompoAxios{
                 order: newOrder
             },
             headers: {
-                'X-Kompo-Id': this.$_parentKompoId
+                'X-Kompo-Info': this.$_getKompoInfo()
             }
         })
     }
@@ -94,7 +94,7 @@ export default class KompoAxios{
             method: this.$_routeMethod,
             data: this.$_ajaxPayload,
             headers: {
-                'X-Kompo-Id': this.$_parentKompoId,
+                'X-Kompo-Info': this.$_getKompoInfo(),
                 'X-Kompo-Action': 'load-komposer',
                 'X-Kompo-Target': this.$_komposerClass //using method slot for simplicity
             }
@@ -106,7 +106,7 @@ export default class KompoAxios{
             url: this.$_kompoRoute, 
             method: 'POST',
             headers: {
-                'X-Kompo-Id': this.$_parentKompoId,
+                'X-Kompo-Info': this.$_getKompoInfo(),
                 'X-Kompo-Action': 'updated-option',
                 'X-Kompo-Target': this.$_komposerClass //using method slot for simplicity
             }
@@ -121,7 +121,7 @@ export default class KompoAxios{
                 search: search
             },
             headers: {
-                'X-Kompo-Id': this.$_parentKompoId,
+                'X-Kompo-Info': this.$_getKompoInfo(),
                 'X-Kompo-Action': 'search-options',
                 'X-Kompo-Target': this.$_ajaxOptionsMethod
             }
@@ -129,6 +129,21 @@ export default class KompoAxios{
     }
 
     /*** Internal *******/
+    $_getKompoInfo(){
+
+        var kompoInfo = this.$_komponent.$_kompoInfo //if a Komposer use own kompoInfo else fetch it
+
+        if(!kompoInfo){
+            this.$_komponent.$kompo.vlGetKomposerInfo(this.$_komponent.kompoid, this.$_komponent.$_elKompoId)
+            kompoInfo = this.$_komponent.kompoInfo
+        }
+
+        if(!kompoInfo)
+            console.error(this.$_komponent)
+
+        return kompoInfo
+
+    }
     $_axiosWithErrorHandling(axiosRequest){
 
         return this.$_axios(axiosRequest)

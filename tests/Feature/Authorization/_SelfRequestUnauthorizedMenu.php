@@ -2,17 +2,12 @@
 
 namespace Kompo\Tests\Feature\Authorization;
 
-use Kompo\Form;
+use Kompo\Menu;
 
-class _SubmitUnauthorizedHandleForm extends Form
+class _SelfRequestUnauthorizedMenu extends Menu
 {
 	public function authorization()
 	{
 		return false;
-	}
-
-	public function handle($request)
-	{
-		
 	}
 }

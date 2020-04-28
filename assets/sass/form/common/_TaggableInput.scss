@@ -7,6 +7,8 @@
 		flex: 1;
 		min-width: 0; //important for a Firefox flex bug where children were overflowing the parent		
 		flex-wrap: wrap;
+		min-height: $form-control-min-height;
+		align-items: center;
 	}
 	.vlSingle{
 		padding: $form-control-padding;

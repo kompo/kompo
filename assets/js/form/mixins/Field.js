@@ -1,8 +1,8 @@
-import Component from './Component'
+import Komponent from './Komponent'
 import HasName from './HasName'
 
 export default {
-    mixins: [ Component, HasName ],
+    mixins: [ Komponent, HasName ],
 
     data(){
         return {

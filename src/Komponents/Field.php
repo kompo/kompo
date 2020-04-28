@@ -267,7 +267,9 @@ abstract class Field extends Komponent
 
         $this->prepareForFront($komposer);
 
-        $this->name = RequestData::convert($this->name);
+        /*$this->name = is_array($this->name) ? 
+            collect($this->name)->map(function($name){ return RequestData::convert($name); })->all() : 
+            RequestData::convert($this->name);*/
     }
 
     /**

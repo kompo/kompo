@@ -4,19 +4,23 @@ namespace Kompo\Komposers\Form;
 
 use Illuminate\Database\Eloquent\Model;
 use Kompo\Core\AuthorizationGuard;
+use Kompo\Core\KompoId;
+use Kompo\Core\KompoInfo;
 use Kompo\Form;
 use Kompo\Komposers\KomposerManager;
 use Kompo\Routing\RouteFinder;
 
 class FormBooter
 {
-    public static function bootForAction($session)
+    public static function bootForAction($bootInfo)
     {
-        $form = static::instantiateUnbooted($session['kompoClass']);
+        $form = static::instantiateUnbooted($bootInfo['kompoClass']);
 
-        $form->store($session['store']);
-        $form->parameter($session['parameters']);
-        $form->modelKey($session['modelKey']);
+        KompoId::setForKomposer($form, $bootInfo['kompoId']);
+
+        $form->store($bootInfo['store']);
+        $form->parameter($bootInfo['parameters']);
+        $form->modelKey($bootInfo['modelKey']);
         $form->model($form->model);
 
         AuthorizationGuard::checkBoot($form);
@@ -42,7 +46,9 @@ class FormBooter
         
         AuthorizationGuard::checkBoot($form);
 
-		return FormDisplayer::displayKomponents($form);
+        FormDisplayer::displayKomponents($form);
+
+		return $form;
 	}
 
     /**

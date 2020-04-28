@@ -27,14 +27,6 @@ export default {
         modalComponentProps: null,
         modalProps: {}
     }),
-    created() {
-        this.destroyEvents()
-        this.attachEvents()
-    },
-    updated() {
-        this.destroyEvents()
-        this.attachEvents()
-    },
     computed: {
         modalName(){ return 'modal'+this.kompoid}
     },
@@ -42,18 +34,26 @@ export default {
         openModal(){ this.$modal.show(this.modalName) },
         closeModal(){ this.$modal.close(this.modalName) },
         refresh(index){this.$emit('refresh', index)},
-        attachEvents(){
+        
+        $_attachEvents(){
             this.$modal.events.$on('insertModal'+this.kompoid, (componentProps, modalProps) => {
                 this.modalComponentProps = componentProps
                 this.modalProps = modalProps
                 this.$modal.show(this.modalName)
             })
         },
-        destroyEvents(){
+        $_destroyEvents(){
             this.$modal.events.$off(['insertModal'+this.kompoid])
         }
-
-    }
+    },
+    created() {
+        this.$_destroyEvents()
+        this.$_attachEvents()
+    },
+    updated() {
+        this.$_destroyEvents()
+        this.$_attachEvents()
+    },
 }
 
 </script>

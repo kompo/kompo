@@ -2,17 +2,12 @@
 
 namespace Kompo\Tests\Feature\Authorization;
 
-use Kompo\Form;
+use Kompo\Query;
 
-class _SubmitUnauthorizedHandleForm extends Form
+class _SelfRequestUnauthorizedQuery extends Query
 {
 	public function authorization()
 	{
 		return false;
-	}
-
-	public function handle($request)
-	{
-		
 	}
 }

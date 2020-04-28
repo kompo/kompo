@@ -3,12 +3,9 @@
 namespace Kompo\Tests\Feature\Authorization;
 
 use Kompo\Form;
-use Kompo\Tests\Models\Obj;
 
-class _SubmitUnauthorizedEloquentForm extends Form
+class _SelfRequestUnauthorizedForm extends Form
 {
-	public $model = Obj::class;
-	
 	public function authorization()
 	{
 		return false;

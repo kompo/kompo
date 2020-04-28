@@ -10,11 +10,6 @@ trait KompoTestRequestsTrait
 
     /**** Kompo Requests & Actions *****/
 
-    protected function kompoPost($komposer, $method, $data = [])
-    {
-        return $this->kompoAction($komposer, 'post-to-form', $data, KompoTarget::getEncryptedArray($method));
-    }
-
     protected function getKomponents($komposer, $method)
     {
         return $this->kompoAction($komposer, 'include-komponents', [], KompoTarget::getEncryptedArray($method));
@@ -38,13 +33,33 @@ trait KompoTestRequestsTrait
         return $this->kompoAction($komposer, 'search-options', ['search' => $search], KompoTarget::getEncryptedArray($method));
     }
 
-    protected function kompoAction($komposer, $action, $data, $headers = [])
+    protected function selfGet($komposer, $method, $data = [])
+    {
+        return $this->kompoAction($komposer, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'GET');
+    }
+
+    protected function selfPost($komposer, $method, $data = [])
+    {
+        return $this->kompoAction($komposer, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'POST');
+    }
+
+    protected function selfPut($komposer, $method, $data = [])
+    {
+        return $this->kompoAction($komposer, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'PUT');
+    }
+
+    protected function selfDelete($komposer, $method, $data = [])
+    {
+        return $this->kompoAction($komposer, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'DELETE');
+    }
+
+    protected function kompoAction($komposer, $action, $data, $headers = [], $method = 'POST')
     {
         return $this->withHeaders(array_merge($headers, [ 
-            'X-Kompo-Id' => $komposer->data('kompoId'),
+            'X-Kompo-Info' => $komposer->data('kompoInfo'),
             'X-Kompo-Action' => $action
         ]))
-        ->json('POST', $this->kompoUri, $data);
+        ->json($method, $this->kompoUri, $data);
     }
 
     /***** Dumper helpers ******/
@@ -52,11 +67,6 @@ trait KompoTestRequestsTrait
     protected function getdd($uri)
     {
         dd($this->withoutExceptionHandling()->get($uri)->dump());
-    }
-
-    protected function kompoPostdd($komposer, $data = [])
-    {
-        dd($this->withoutExceptionHandling()->kompoPost($komposer, $data)->dump());
     }
 
     protected function submitdd($komposer, $data = [])
@@ -72,6 +82,26 @@ trait KompoTestRequestsTrait
     protected function searchOptionsdd($komposer, $search, $method)
     {
         dd($this->withoutExceptionHandling()->searchOptions($komposer, $search, $method)->dump());
+    }
+
+    protected function selfGetdd($komposer, $method, $data = [])
+    {
+        dd($this->withoutExceptionHandling()->selfGet($komposer, $method, $data)->dump());
+    }
+
+    protected function selfPostdd($komposer, $method, $data = [])
+    {
+        dd($this->withoutExceptionHandling()->selfPost($komposer, $method, $data)->dump());
+    }
+
+    protected function selfPutdd($komposer, $method, $data = [])
+    {
+        dd($this->withoutExceptionHandling()->selfPut($komposer, $method, $data)->dump());
+    }
+
+    protected function selfDeletedd($komposer, $method, $data = [])
+    {
+        dd($this->withoutExceptionHandling()->selfDelete($komposer, $method, $data)->dump());
     }
 
 }

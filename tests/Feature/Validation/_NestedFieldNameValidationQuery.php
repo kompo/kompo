@@ -26,7 +26,7 @@ class _NestedFieldNameValidationQuery extends Query
 	{
 		return [
 			'obj.title' => 'required',
-			'obj`tag' => 'required', //simulating developer mistake
+			'obj_tag' => 'required', //simulating developer mistake
 			'postTag.title' => 'required',
 		];
 	}

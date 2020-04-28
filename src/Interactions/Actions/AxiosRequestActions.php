@@ -17,13 +17,14 @@ trait AxiosRequestActions
 
     public function selfHttpRequest($requestType, $kompoAction, $methodName, $ajaxPayload = null)
     {
-        return $this->prepareAxiosRequest([
-            'route' => RouteFinder::getKompoRoute(),
+        return $this->prepareAxiosRequest(array_merge([
+            'route' => RouteFinder::getKompoRoute($requestType, $ajaxPayload),
             'routeMethod' => $requestType,
             'kompoAction' => $kompoAction,
-            'kompoMethod' => KompoTarget::getEncrypted($methodName),
             'ajaxPayload' => $ajaxPayload
-        ]);
+        ],
+            KompoTarget::getEncryptedArray($methodName)
+        ));
     }
 
     /**
@@ -89,7 +90,7 @@ trait AxiosRequestActions
      *
      * @return     self   
      */
-    public function getSelf($methodName, $ajaxPayload = null)
+    public function selfGet($methodName, $ajaxPayload = null)
     {
         return $this->selfHttpRequest('GET', 'self-method', $methodName, $ajaxPayload);
     }
@@ -104,7 +105,7 @@ trait AxiosRequestActions
      *
      * @return     self   
      */
-    public function postSelf($methodName, $ajaxPayload = null)
+    public function selfPost($methodName, $ajaxPayload = null)
     {
         return $this->selfHttpRequest('POST', 'self-method', $methodName, $ajaxPayload);
     }
@@ -119,7 +120,7 @@ trait AxiosRequestActions
      *
      * @return     self   
      */
-    public function putSelf($methodName, $ajaxPayload = null)
+    public function selfPut($methodName, $ajaxPayload = null)
     {
         return $this->selfHttpRequest('PUT', 'self-method', $methodName, $ajaxPayload);
     }
@@ -134,7 +135,7 @@ trait AxiosRequestActions
      *
      * @return     self   
      */
-    public function deleteSelf($methodName, $ajaxPayload = null)
+    public function selfDelete($methodName, $ajaxPayload = null)
     {
         return $this->selfHttpRequest('DELETE', 'self-method', $methodName, $ajaxPayload);
     }

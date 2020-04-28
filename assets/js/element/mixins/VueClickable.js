@@ -12,7 +12,11 @@ export default {
             if(!this.vkompo)
                 return
 
-            this.$_runOwnInteractionsWithoutActions('click', ['submitForm', 'sortQuery', 'emitFrom'])
+            this.$_runOwnInteractionsWithoutActions('click', [
+                //'submitForm', 
+                //'sortQuery', 
+                ////'emitFrom'
+            ])
 
         }
     }

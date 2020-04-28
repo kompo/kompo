@@ -3,9 +3,12 @@ import Element from '../../element/mixins/Element'
 export default {
     mixins: [ Element ],
     props: {
-        kompoid: { type: String, required: false }
+        kompoid: { type: String, required: false },
+        kompoinfo: { type: String, required: false }
     },
 	computed: {
+
+        $_kompoInfo() { return this.kompoinfo }, //coming from blade menu
 
         $_submitsOnInput(){ return this.$_data('submitsOnInput') },
         $_hideIndicators(){ return this.$_data('hideIndicators') },
@@ -54,26 +57,7 @@ export default {
             let vm = this.$parent
             while(vm && vm.$options._componentTag !== type) { vm = vm.$parent }
             return vm 
-        },
-        $_attachEvents(){
-            this.$_vlOn('vlDeliverFormInfo'+this.$_elKompoId, (formInfo) => {
-                this.formInfo = formInfo
-            })
-        },
-        $_destroyEvents(){
-            this.$_vlOff([
-                'vlDeliverFormInfo'+this.$_elKompoId
-            ])
         }
 
-    },
-
-    created() {
-        this.$_destroyEvents()
-        this.$_attachEvents()
-    },
-    updated() {
-        this.$_destroyEvents()
-        this.$_attachEvents()
     }
 }

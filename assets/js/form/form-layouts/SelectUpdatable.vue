@@ -41,7 +41,7 @@ export default {
         },
         updateOptionsAndValue(r){
 
-            var relatedValue = r.status == 202 ? r.data.form.model : r.data
+            var relatedValue = r.status == 202 ? r.data.model : r.data
 
             if(this.$_data('ajaxOptions')){
                 

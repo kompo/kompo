@@ -6,7 +6,7 @@ use Kompo\Database\NameParser;
 
 class RequestData
 {
-    protected static $delimiter = '`'; //PHP limitation dot notations are converted to underscore
+    protected static $delimiter = '_'; //PHP limitation dot notations are converted to underscore
 
     public static function get($fieldName)
     {

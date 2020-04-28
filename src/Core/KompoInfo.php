@@ -6,13 +6,18 @@ use Illuminate\Support\Facades\Crypt;
 use Kompo\Exceptions\AuthorizationUnavailableException;
 use Kompo\Exceptions\KompoBootInfoNotFoundException;
 
-class SessionStore
+class KompoInfo extends KompoData
 {
+    protected static $kompoDataKey = 'kompoInfo';
+
     public static function saveKomposer($komposer, $customAttributes = [])
     {
+        KompoId::setForKomposer($komposer);
+
         $bootInfo = array_merge(
             $customAttributes, 
             [
+                'kompoId' => KompoId::getFromElement($komposer),
                 'kompoClass' => get_class($komposer),
                 'store' => $komposer->store(),
                 'parameters' => $komposer->parameter(),
@@ -20,16 +25,16 @@ class SessionStore
                 'method' => optional(request()->route())->methods()[0]
             ]
         );
-        KompoId::setOnElement( $komposer, Crypt::encrypt($bootInfo));
+
+        static::setOnElement( $komposer, Crypt::encrypt($bootInfo));
 
         //old way
-        //KompoId::setForKomposer($komposer);
         //session()->put(static::sessionKey($komposer), $bootInfo);
     }
 
     public static function getKompo()
     {
-        if(! ($bootInfo = request()->header('X-Kompo-Id')))
+        if(! ($bootInfo = request()->header('X-Kompo-Info')))
             throw new KompoBootInfoNotFoundException();
 
         return Crypt::decrypt($bootInfo);
@@ -42,8 +47,9 @@ class SessionStore
         return session('bootedElements')[$kompoId];*/
     }
 
+    /*
     private static function sessionKey($komposer)
     {
-        return 'bootedElements.'.KompoId::get($komposer);
-    }
+        return 'bootedElements.'.KompoId::getFromElement($komposer);
+    }*/
 }

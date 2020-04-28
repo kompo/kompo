@@ -20,7 +20,7 @@ class AuthorizationGuard
 
     public static function mainGate($komposer)
     {
-    	if(method_exists($komposer, 'authorize') && !$komposer->authorize())
+    	if(method_exists($komposer, 'authorization') && !$komposer->authorization())
     		throw new UnauthorizedException( get_class($komposer), 'main' );
 
         return true;
@@ -31,10 +31,7 @@ class AuthorizationGuard
         //todo
     }
 
-    public static function checkIfAllowedToPost($komposer)
-    {
-        //todo
-    }
+    
 
     /**** PRIVATE / PROTECTED ****/
 

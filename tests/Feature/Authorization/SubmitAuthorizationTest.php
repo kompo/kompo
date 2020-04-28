@@ -1,7 +1,7 @@
 <?php
 namespace Kompo\Tests\Feature\Authorization;
 
-use Kompo\Core\KompoId;
+use Kompo\Core\KompoInfo;
 use Kompo\Exceptions\NotFoundKompoActionException;
 use Kompo\Exceptions\UnauthorizedException;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -38,7 +38,7 @@ class SubmitAuthorizationTest extends EnvironmentBoot
 		$this->expectException(AuthorizationException::class);
 
 		$this->withoutExceptionHandling()->withHeaders([
-			'X-Kompo-Id' => KompoId::get(new _SubmitUnauthorizedSubmitToForm())
+			'X-Kompo-Info' => KompoInfo::getFromElement(new _SubmitUnauthorizedSubmitToForm())
 		])->post('submit-route');
 	}
 

@@ -1,7 +1,7 @@
-import Component from './Component'
+import Komponent from './Komponent'
 
 export default {
-    mixins: [ Component ],
+    mixins: [ Komponent ],
 	computed: {
         
         $_attributes() { return this.$_defaultOtherAttributes },

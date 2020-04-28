@@ -8,7 +8,7 @@ class _SubmitUnauthorizedSubmitToForm extends Form
 {
 	public $submitTo = 'submit-route';
 	
-	public function authorize() //used in FormRequest
+	public function authorization() //used in FormRequest
 	{
 		return false;
 	}

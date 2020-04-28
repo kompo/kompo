@@ -53,27 +53,18 @@ export default {
                 this.error(response)
         },
 
-        attachEvents(){
+        $_attachEvents(){
             this.$_vlOn('vlEmit'+this.$_elKompoId, (eventName, eventPayload) => {
                 this.$emit(eventName, eventPayload)
                 if(this.kompoid)
                     this.$_vlEmitFrom(eventName, eventPayload)
             })
         },
-        destroyEvents(){
+        $_destroyEvents(){
             this.$_vlOff([
                 'vlEmit'+this.$_elKompoId
             ])
         }
-    },
-
-    created() {
-        this.destroyEvents()
-        this.attachEvents()
-    },
-    updated() {
-        this.destroyEvents()
-        this.attachEvents()
     }
 }
 

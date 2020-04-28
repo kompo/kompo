@@ -25,7 +25,7 @@ class Interaction
     ];
 
     protected static $allowedInteractions = [
-        'load' => [Panel::class],
+        'load' => [Panel::class, Field::class],
         'click' => [Trigger::class],
         //'focus' => [Field::class, Trigger::class],
         //'blur' => [Field::class, Trigger::class],

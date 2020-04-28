@@ -1,7 +1,7 @@
 <?php
 namespace Kompo\Komposers\Form;
 
-use Kompo\Core\SessionStore;
+use Kompo\Core\KompoInfo;
 use Kompo\Core\ValidationManager;
 use Kompo\Komposers\KomposerManager;
 use Kompo\Routing\RouteFinder;
@@ -16,7 +16,7 @@ class FormDisplayer extends FormBooter
 
         $form->komponents = KomposerManager::prepareKomponentsForDisplay($form, 'komponents');
 
-        SessionStore::saveKomposer($form, ['modelKey' => $form->modelKey()]); 
+        KompoInfo::saveKomposer($form, ['modelKey' => $form->modelKey()]);
 
         return $form;
     }

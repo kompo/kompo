@@ -26,14 +26,11 @@ class KomposerHandler
             case 'handle-submit':
                 return FormSubmitter::callCustomHandle($komposer);
 
-            case 'post-to-form':
-                return FormManager::handlePost($komposer); //?? WHERE IS THIS USED? TODO: remove
-
             case 'include-komponents':
                 return static::getIncludedKomponents($komposer);
 
             case 'self-method':
-                return null; //TODO
+                return static::selfAjaxMethod($komposer);
 
             case 'load-komposer':
                 return static::getKomposerFromKomponent($komposer);
@@ -55,6 +52,23 @@ class KomposerHandler
         }
 
         throw new NotFoundKompoActionException(get_class($komposer));
+    }
+
+
+    /**
+     * Gets the matched select options for Querys or Forms.
+     *
+     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
+     *
+     * @throws     KomposerMethodNotFoundException  (description)
+     *
+     * @return     <type>                       The matched select options.
+     */
+    public static function selfAjaxMethod($komposer)
+    {
+        AuthorizationGuard::mainGate($komposer);
+
+        return DependencyResolver::callKomposerMethod($komposer, null, request()->all());
     }
 
 
@@ -128,7 +142,7 @@ class KomposerHandler
      */
     public static function deleteRecord($komposer)
     {
-        $deleteKey = request('store.deleteKey');
+        $deleteKey = request('deleteKey');
 
         $record = $komposer->model->newInstance()->findOrFail($deleteKey);
 

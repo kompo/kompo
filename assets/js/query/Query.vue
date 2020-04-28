@@ -12,7 +12,7 @@
 
                     <div v-if="isTableLayout" class="vlTableWrapper"><!-- TableWrapper useful for various CSS tricks, ex: border-radius -->
                         <table class="w-full table vlTable">
-                            <vl-table-headers :headers="headers" :kompoid="$_kompoId" />
+                            <vl-table-headers :headers="headers" :kompoid="$_elKompoId" />
                             <component v-bind="layoutAttributes" />
                         </table>
                     </div>
@@ -29,7 +29,7 @@
         </div>
 
         <vl-support-modal 
-            :kompoid="$_kompoId" 
+            :kompoid="$_elKompoId" 
             @refresh="refreshItem"
             @previous="previewPrevious"
             @next="previewNext" />
@@ -40,9 +40,10 @@
 <script>
 import Element from '../element/mixins/Element'
 import DoesAxiosRequests from '../form/mixins/DoesAxiosRequests'
+import IsKomposer from '../mixins/IsKomposer'
 
 export default {
-    mixins: [Element, DoesAxiosRequests],
+    mixins: [Element, IsKomposer, DoesAxiosRequests],
     props: {
         kompoid: { type: String, required: false }
     },
@@ -62,12 +63,6 @@ export default {
         this.cards = this.getCards(this.component)
         this.pagination = this.getPagination(this.component)
         this.headers = this.component.headers
-        this.destroyEvents()
-        this.attachEvents()
-    },
-    updated() {
-        this.destroyEvents()
-        this.attachEvents()
     },
     computed: {
         filtersPlacement(){ return [ 'top', 'left', 'bottom', 'right' ] },
@@ -82,7 +77,7 @@ export default {
             return {
                 is: this.layoutComponent,
                 vkompo: this.component,
-                kompoid: this.$_kompoId,
+                kompoid: this.$_elKompoId,
                 cards: this.cards,
                 headers: this.headers,
                 noItemsFound: this.noItemsFound,
@@ -120,7 +115,7 @@ export default {
             return {
                 filters: this.filters[placement.toLowerCase()],
                 placement: placement,
-                kompoid: this.$_kompoId
+                kompoid: this.$_elKompoId
             }
         },
         getJsonFormData(jsonFormData){
@@ -168,7 +163,7 @@ export default {
                 this.$_state({ loading: false })
             })
         },
-        attachEvents(){
+        $_attachEvents(){
             this.$_vlOn('vlEmit'+this.$_elKompoId, (eventName, eventPayload) => {
                 this.$emit(eventName, eventPayload)
                 if(this.kompoid)
@@ -190,14 +185,16 @@ export default {
             this.$_vlOn('vlPreview'+this.$_elKompoId, (index) => {
                 this.preview(index)
             })
+            this.$_deliverKompoInfoOn()
         },
-        destroyEvents(){
+        $_destroyEvents(){
             this.$_vlOff([
                 'vlEmit'+this.$_elKompoId,
                 'vlRefreshQuery'+this.$_elKompoId,
                 'vlSort'+this.$_elKompoId,
                 'vlToggle'+this.$_elKompoId,
-                'vlPreview'+this.$_elKompoId
+                'vlPreview'+this.$_elKompoId,
+                this.$_deliverKompoInfoOff
             ])
         },
         $_fillRecursive(jsonFormData){

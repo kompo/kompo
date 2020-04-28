@@ -7,7 +7,7 @@ import HasData from './HasData'
 import RunsInteractions from './RunsInteractions'
 
 export default {
-    mixins: [ HasVueComponent, EmitsEvents, HasId, HasClasses, HasStyles, HasData, RunsInteractions ],
+    mixins: [ HasVueComponent, EmitsEvents, HasId, HasClasses, HasStyles, HasData, RunsInteractions],
     props: {
         vkompo: { type: Object, required: true }
     },
@@ -25,8 +25,6 @@ export default {
         $_isSuccess(){ return this.$_state('isSuccess') },
         $_hidden(){ return this.$_state('vlHidden') },
         $_displayNone(){ return this.$_data('displayNone') },
-
-        $_kompoId() { return this.$_data('kompoId') },
 
         $_icon() { return this.$_data('icon') },
         $_pureLabel() { return this.component.label },
@@ -70,7 +68,29 @@ export default {
         $_fillRecursive(formData) {}, 
         $_validate(errors) {}, 
         $_getErrors(errors) {},
-        $_resetSort(exceptId) {}
+        $_resetSort(exceptId) {},
+        $_attachEvents(){
+            /*if(!this.$_hasInteractions) no cuz select does ajax without an interaction for ex.
+                return */
+            if(!this.$_elKompoId)
+                return
+
+            this.$_vlOn('vlDeliverFormInfo'+this.$_elKompoId, (formInfo) => { //for submit TODO: merge with below
+
+                this.formInfo = formInfo
+            })
+            this.$_vlOn('vlDeliverKompoInfo'+this.$_elKompoId, (kompoInfo) => { //for any axios request
+
+                this.kompoInfo = kompoInfo
+
+            })
+        },
+        $_destroyEvents(){
+            this.$_vlOff([
+                'vlDeliverFormInfo'+this.$_elKompoId,
+                'vlDeliverKompoInfo'+this.$_elKompoId
+            ])
+        }
     },
     created(){
         this.vkompo.$_data = this.$_data
@@ -82,5 +102,12 @@ export default {
         this.vkompo.$_toggle = this.$_toggle
         this.vkompo.$_deliverJsonTo = this.$_deliverJsonTo
         this.component = this.vkompo
-    }
+
+        this.$_destroyEvents()
+        this.$_attachEvents()
+    },
+    updated() {
+        this.$_destroyEvents()
+        this.$_attachEvents()
+    },
 }

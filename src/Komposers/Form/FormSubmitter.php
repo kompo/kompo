@@ -17,6 +17,8 @@ class FormSubmitter extends FormBooter
         ValidationManager::addRulesToKomposer($form->rules(), $form);
 
         AuthorizationGuard::mainGate($form);
+        
+        KomposerManager::prepareKomponentsForAction($form, 'komponents'); //mainly to retrieve rules from fields
 
         ValidationManager::validateRequest($form);
     } 
@@ -30,8 +32,6 @@ class FormSubmitter extends FormBooter
 
     public static function eloquentSave($form)
     {
-        KomposerManager::prepareKomponentsForAction($form, 'komponents'); //mainly to retrieve rules from fields
-
         static::prepareForSubmit($form);
 
         return static::saveModel($form);
@@ -118,9 +118,7 @@ class FormSubmitter extends FormBooter
             return $form->response();
 
         if($form->_kompo('options', 'refresh'))
-            return response()->json(['form' => 
-                FormDisplayer::displayKomponents($form)
-            ], 202);
+            return response()->json(FormDisplayer::displayKomponents($form), 202);
 
         if(config('kompo.eloquent_form.return_model_as_response'))
             return $form->model;

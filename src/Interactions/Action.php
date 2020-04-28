@@ -67,10 +67,13 @@ class Action
      *
      * @return     self
      */
-    protected function prepareAction($actionType, $data)
+    protected function prepareAction($actionType, $data = null)
     {
         $this->actionType = $actionType;
-        $this->data($data);
+
+        if($data)
+            $this->data($data);
+        
         return $this;
     }
 

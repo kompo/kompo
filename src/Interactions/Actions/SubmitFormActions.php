@@ -18,7 +18,7 @@ trait SubmitFormActions
     public function submit($methodName = null)
     {
         return $this->prepareAction('submitForm', [
-            'kompoMethod' => KompoTarget::getEncrypted($methodName)
+            'kompoMethod' => $methodName ? KompoTarget::getEncrypted($methodName) : null
         ]);
     }
     

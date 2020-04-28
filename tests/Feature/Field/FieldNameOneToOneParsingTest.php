@@ -59,9 +59,9 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 	{
 		$this->submit($form, [
 			'title' => $postTitle,
-			'obj`title' => $objTitle,
-			'obj`tag' => $objTag,
-			'postTag`title' => $postTagTitle
+			'obj_title' => $objTitle,
+			'obj_tag' => $objTag,
+			'postTag_title' => $postTagTitle
 		])->assertStatus($status)
 		->assertJson([
 			'id' => 1,

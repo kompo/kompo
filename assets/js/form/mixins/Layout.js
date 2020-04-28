@@ -1,8 +1,8 @@
-import Component from './Component'
+import Komponent from './Komponent'
 import Element from '../../element/mixins/Element'
 
 export default {
-    mixins: [ Component ],
+    mixins: [ Komponent ],
     data: () => ({
         komponents: []
     }),
@@ -33,12 +33,12 @@ export default {
                 key: component.id,
                 is: this.$_vueTag(component),
                 vkompo: component,
-                kompoid: this.kompoid || this.$_kompoId //this.$_kompoId is for FormInner or FormPanel outside a form,
+                kompoid: this.kompoid || this.$_elKompoId //this.$_elKompoId is for FormInner or FormPanel outside a form,
             }
         },
         $_getPathById(id, path){
             path = path || ''
-            var result = Component.methods.$_getPathById.call(this, id, path)
+            var result = Komponent.methods.$_getPathById.call(this, id, path)
             if(result) return result
             for(const [key,item] of this.komponents.entries()){
                 result = item.$_getPathById(id, path + '.komponents[' + key + ']')

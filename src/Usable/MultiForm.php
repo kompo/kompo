@@ -110,7 +110,7 @@ class MultiForm extends Field
         $this->childStore = $ajaxPayload ?: [];
 
         return $this->data([
-            'route' => RouteFinder::postKompoRoute(),
+            'route' => RouteFinder::getKompoRoute(),
             'routeMethod' => 'POST', //had to be POST to send ajaxPayload
             'komposerClass' => KompoTarget::getEncrypted($formClass),
             'ajaxPayload' => $ajaxPayload,

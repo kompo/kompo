@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class _InteractionPostRequest extends FormRequest
 {
-    public function authorize()
+    public function authorization()
     {
         return true;
     }

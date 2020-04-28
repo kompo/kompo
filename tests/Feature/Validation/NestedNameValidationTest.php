@@ -8,48 +8,24 @@ class NestedNameValidationTest extends EnvironmentBoot
 {
 
 	/** @test */
-	public function nested_name_is_correctly_validated_in_forms()
+	public function real_life_nested_name_is_correctly_validated_in_forms()
 	{
-		$requestData = [ //real life simulation
-			'obj`title' => null,
-			'obj`tag' => null,
-			'postTag`title' => null
-		];
-
-		$this->submit_validation_on_request_all_and_individually($requestData);
-
-
-		$requestData = [ //dot notation simulation
-			'obj.title' => null,
-			'obj.tag' => null,
-			'postTag.title' => null
-		];
-
-		$this->submit_validation_on_request_all_and_individually($requestData);
-		
+		$this->submit_validation_on_request_all_and_individually([ 
+			'obj_title' => 'title',  //real life simulation
+			'obj_tag' => 1,
+			'postTag_title' => 'title'
+		]);
 	}
 
 
 	/** @test */
-	public function nested_name_is_correctly_validated_in_queries()
+	public function real_life_nested_name_is_correctly_validated_in_queries()
 	{
-		$requestData = [ //real life simulation
-			'obj`title' => null,
-			'obj`tag' => null,
-			'postTag`title' => null
-		];
-
-		$this->browse_validation_on_request_all_and_individually($requestData);
-
-
-		$requestData = [ //dot notation simulation
-			'obj.title' => null,
-			'obj.tag' => null,
-			'postTag.title' => null
-		];
-
-		$this->browse_validation_on_request_all_and_individually($requestData);
-
+		$this->browse_validation_on_request_all_and_individually([ 
+			'obj_title' => 'title', //real life simulation
+			'obj_tag' => 1,
+			'postTag_title' => 'title'
+		]);
 	}
 
 
@@ -70,18 +46,14 @@ class NestedNameValidationTest extends EnvironmentBoot
 	/************ PRIVATE 2 *******************/
 	private function assert_komposer_is_validated_for_action($komposer, $action, $requestData)
 	{
-		$response = $this->{$action}($komposer, $requestData)->assertStatus(422);
-		$this->assertCount(3, $response['errors']);
+		$arrayKeys = array_keys($requestData);
 
-		foreach ($requestData as $key => $value) {
+		foreach ($arrayKeys as $arrayKey) {
+			$permutedRequest = $requestData;
+			$permutedRequest[$arrayKey] = null;
 
-			$response = $this->{$action}($komposer, [
-				$key => $value
-			])->assertStatus(422);
-
-			$this->assertCount(3, $response['errors']);
-
-			$this->assertNotNull($response['errors'][str_replace('`', '.', $key)]);
+			$response = $this->{$action}($komposer, $permutedRequest)->assertStatus(422);
+			$this->assertCount(1, $response['errors']);
 		}
 	}
 }
