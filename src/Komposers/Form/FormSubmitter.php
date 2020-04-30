@@ -14,11 +14,7 @@ class FormSubmitter extends FormBooter
 {
     protected static function prepareForSubmit($form)
     {
-        ValidationManager::addRulesToKomposer($form->rules(), $form);
-
         AuthorizationGuard::mainGate($form);
-        
-        KomposerManager::prepareKomponentsForAction($form, 'komponents'); //mainly to retrieve rules from fields
 
         ValidationManager::validateRequest($form);
     } 

@@ -255,7 +255,7 @@ abstract class Field extends Komponent
      */
     public function prepareForDisplay($komposer)
     {
-        ValidationManager::pushFieldRulesToKomposer($this, $komposer);
+        ValidationManager::pushCleanRulesToKomposer($this, $komposer);
 
         $this->checkSetReadonly($komposer);
 
@@ -266,10 +266,6 @@ abstract class Field extends Komponent
             KomposerManager::pushField($komposer, $this); //when the filters have a value on display
 
         $this->prepareForFront($komposer);
-
-        /*$this->name = is_array($this->name) ? 
-            collect($this->name)->map(function($name){ return RequestData::convert($name); })->all() : 
-            RequestData::convert($this->name);*/
     }
 
     /**
@@ -285,7 +281,7 @@ abstract class Field extends Komponent
         
         parent::prepareForAction($komposer);
 
-        ValidationManager::pushFieldRulesToKomposer($this, $komposer);
+        ValidationManager::pushCleanRulesToKomposer($this, $komposer);
     }
 
     /**

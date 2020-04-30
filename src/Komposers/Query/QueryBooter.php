@@ -6,6 +6,7 @@ use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
 use Kompo\Core\ValidationManager;
+use Kompo\Komposers\Query\QueryFilters;
 use Kompo\Query;
 use Kompo\Routing\RouteFinder;
 
@@ -27,6 +28,8 @@ class QueryBooter
         QueryDisplayer::prepareQuery($query); //setting-up model (like in forms) mainly for 'delete-item' action. 
 
         ValidationManager::addRulesToKomposer($query->rules(), $query); 
+        
+        QueryFilters::prepareFiltersForAction($query);
 
         return $query;
     }

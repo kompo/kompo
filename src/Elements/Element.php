@@ -12,6 +12,7 @@ abstract class Element
         Traits\HasData, 
         Traits\HasStyles, 
         Traits\HasAnimation, 
+        Traits\HasDuskSelector,
         Traits\IsMountable, 
         Traits\ElementHelperMethods;
     

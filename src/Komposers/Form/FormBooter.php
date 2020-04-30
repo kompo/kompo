@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
+use Kompo\Core\ValidationManager;
 use Kompo\Form;
 use Kompo\Komposers\KomposerManager;
 use Kompo\Routing\RouteFinder;
@@ -13,10 +14,10 @@ use Kompo\Routing\RouteFinder;
 class FormBooter
 {
     public static function bootForAction($bootInfo)
-    {
+    {        
         $form = static::instantiateUnbooted($bootInfo['kompoClass']);
 
-        KompoId::setForKomposer($form, $bootInfo['kompoId']);
+        KompoId::setForKomposer($form, $bootInfo['kompoId'] ?? null);
 
         $form->store($bootInfo['store']);
         $form->parameter($bootInfo['parameters']);
@@ -24,6 +25,10 @@ class FormBooter
         $form->model($form->model);
 
         AuthorizationGuard::checkBoot($form);
+        
+        ValidationManager::addRulesToKomposer($form->rules(), $form);
+        
+        KomposerManager::prepareKomponentsForAction($form, 'komponents'); //mainly to retrieve rules from fields
 
         return $form;
     }

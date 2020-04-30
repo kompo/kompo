@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Crypt;
 use Kompo\Exceptions\AuthorizationUnavailableException;
 use Kompo\Exceptions\KompoBootInfoNotFoundException;
 
+use App\Intro\EloquentForm;
+
 class KompoInfo extends KompoData
 {
     protected static $kompoDataKey = 'kompoInfo';

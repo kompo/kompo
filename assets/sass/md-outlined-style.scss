@@ -1,68 +1,6 @@
 @import 'element/elements';
 
-/**
- * Colors
- */
-$form-primary-color: $primary !default;
-$form-field-error-color: #f56565 !default;
-$form-control-bg: #fff !default;
-$form-control-placeholder-color: gainsboro !default;
-
-/**
- * Icons
- */
-$form-field-icon-width: 1.8rem !default;
-$form-field-icon-color: gainsboro !default;
-
-/**
- * Spacing
- */
-$form-row-margin-t: 1rem !default;
-$form-row-margin-b: 1.5rem !default;
-
-$form-control-padding-t: 0.6rem !default;
-$form-control-padding-r: 0.8rem !default;
-$form-control-padding-b: 0.6rem !default;
-$form-control-padding-l: 0.8rem !default;
-$form-control-padding: $form-control-padding-t $form-control-padding-r $form-control-padding-b $form-control-padding-l !default;
-
-$form-control-min-height: 2.7rem !default;
-
-/**
- * Label
- */
-$form-label-position: absolute !default;
-$form-label-position-t: 0.6rem !default;
-$form-label-position-l: $form-control-padding-l !default;
-$form-label-focused-font-size: 80% !default;
-$form-label-focused-position-t: -0.5rem !default;
-$form-label-focused-position-l: 0.7rem !default;
-$form-label-focused-color: $form-control-bg !default;
-$form-label-icon-focused-position-l: $form-label-focused-position-l !default;
-$form-label-select-buttons-position-t: - 1.4rem !default;
-$form-label-select-buttons-focused-position-t: $form-label-select-buttons-position-t !default;
-$form-label-editor-position-t: 2.4rem + $form-label-position-t !default;
-$form-label-editor-focused-position-t: $form-label-focused-position-t !default;
-$form-label-trix-position-t: 1.6rem + $form-label-position-t !default;
-$form-label-trix-focused-position-t: $form-label-focused-position-t !default;
-
-/**
- * Borders
- */
-$form-control-border-radius: .25rem !default;
-$form-control-border-color: gainsboro !default;
-$form-control-border-color-focused: $form-primary-color !default;
-$form-control-border-width-focused: 2px !default;
-$form-control-box-shadow-focused: 0 0 0.1rem 0.2rem mix($form-primary-color, #fff, 25) !default;
-
-$form-control-border: 1px solid $form-control-border-color !default;
-$form-control-box-sizing: border-box !default;
-/**
- * Checkbox & Toggle
- */
-$form-checkbox-height: 1.3rem !default;
-$form-toggle-height: 1.44rem !default;
-$form-toggle-width: 2.7rem !default;
+@import 'md-outlined-variables';
 
 @import 'form/common';
 @import 'query/query';

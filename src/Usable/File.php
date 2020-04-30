@@ -106,6 +106,11 @@ class File extends Field
             $this->fileHandler->mapFromDB($model);
     }
 
+    protected function convertBackToDb($requestValue)
+    {
+        return json_decode($requestValue, true);
+    }
+
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)
     {
         $oldFile = $this->attributesToColumns ? $model : ModelManager::getValueFromDb($model, $name);
@@ -139,6 +144,8 @@ class File extends Field
                 });
 
             return null;
+        }else{
+            return $this->convertBackToDb(RequestData::get($requestName));
         }
     }
 

@@ -1,6 +1,6 @@
 <template>
     <a v-bind="attributes"
-        class="vlImageTitleRow" 
+        class="vlImageRow" 
         @click.stop="scrollTo('#'+$_prop('slug'))">
 
         <div :class="$_prop('class')">
@@ -58,7 +58,7 @@ export default {
 .vlSelected>div>h3{
     font-weight: bold;
 }
-.vlImageTitleRow>div{
+.vlImageRow>div{
     display: flex;
     width: 100%;
     align-items: center;

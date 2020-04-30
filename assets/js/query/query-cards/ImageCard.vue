@@ -1,5 +1,5 @@
 <template>
-    <a class="vlImageTitleDesc"
+    <a class="vlImageCard"
         :class="$_prop('col')" 
         :href="$_prop('url') || 'javascript:void(0)'" >
 
@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.vlImageTitleDesc{
+.vlImageCard{
     >div{
         >h2, >p{
             overflow: hidden;

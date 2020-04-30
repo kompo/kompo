@@ -3,7 +3,6 @@
 namespace Kompo\Core;
 
 use Illuminate\Support\Arr;
-use Kompo\Exceptions\KomposerMethodNotFoundException;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
 use ReflectionParameter;
@@ -19,21 +18,13 @@ class DependencyResolver
      */
     public static function callKomposerMethod($komposer, $method = null, $specialParams = [], $defaultMethod = null)
     {
-        //check if allowed
-
         $method = KompoTarget::getDecrypted($method) ?: $defaultMethod;
 
-        static::checkMethodExists($method, $komposer);
+        AuthorizationGuard::selfMethodGate($komposer, $method);
 
         $reflectionMethod = new ReflectionMethod($komposer, $method);
 
         return $komposer->{$method}(...static::resolveMethodDependencies($specialParams, $reflectionMethod));
-    }
-
-    public static function checkMethodExists($method, $komposer)
-    {
-        if(!method_exists($komposer, $method))
-            throw new KomposerMethodNotFoundException($method);
     }
 
     /* 

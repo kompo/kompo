@@ -62,7 +62,7 @@ class Dispatcher
         }
     }
 
-    protected static function getKomposerType($komposerClass)
+    public static function getKomposerType($komposerClass)
     {
         if(is_a($komposerClass, Form::class, true)){
             return 'Form';

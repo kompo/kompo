@@ -47,12 +47,15 @@ export default {
         $_fill(jsonFormData) {
             this.$_value.forEach( (file, i) => {
                 var name = this.$_name + (this.$_multiple ? '['+i+']' : '')
+                
+                if(file.src)
+                    delete file.src
+                
                 if(file.id){
                     jsonFormData[name]= JSON.stringify(file)
                 }else{
-                    delete file.src
                     jsonFormData[name]= file 
-                }                
+                }            
             })
         },
         remove(index) {

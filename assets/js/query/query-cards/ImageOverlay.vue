@@ -1,5 +1,5 @@
 <template>
-    <a class="vlImageTitleOverlay"
+    <a class="vlImageOverlay"
     	:href="$_prop('url') || 'javascript:void(0)'" 
     	:class="$_prop('col')" 
     	@click="$_preview">
@@ -50,13 +50,13 @@ export default {
 </script>
 
 <style lang="scss">
-.vlImageTitleOverlay .vlToolbar .vlLink{
+.vlImageOverlay .vlToolbar .vlLink{
 	color: white;
 }
 </style>
 
 <style lang="scss" scoped>
-.vlImageTitleOverlay{
+.vlImageOverlay{
 	.vlOverlay{
 		background-color: rgba(0,0,0,0.6);
 		>h2{

@@ -48,9 +48,7 @@ class QueryDisplayer
      * @return Illuminate\...\Paginator
      */
     public static function browseCards($query)
-    {
-        QueryFilters::prepareFiltersForAction($query);
-        
+    {        
         AuthorizationGuard::mainGate($query);
 
         ValidationManager::validateRequest($query);

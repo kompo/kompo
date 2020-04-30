@@ -25,7 +25,7 @@ export default {
 
 	methods: {
         $_vlMargins(component) {
-            return this.$_noMargins || ['Rows', 'Columns'].includes(component.component) ? '' : 'vlMargins'
+            return (this.$_noMargins || ['Rows', 'Columns'].includes(component.component)) ? '' : 'vlMargins'
         },
         $_attributes(component) { return this.$_defaultLayoutAttributes(component) },
         $_defaultLayoutAttributes(component) {

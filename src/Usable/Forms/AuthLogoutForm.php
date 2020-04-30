@@ -8,12 +8,12 @@ class AuthLogoutForm extends Form
 {
     protected $redirectTo = '/';
 
-	public function handle($request)
+	public function handle()
     {
         \Auth::guard()->logout();
         $locale = session('kompo_locale'); //for multi-lang sites
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
         session( ['kompo_locale' => $locale] ); //for multi-lang sites
     }
 

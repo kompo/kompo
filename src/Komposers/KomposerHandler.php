@@ -83,8 +83,8 @@ class KomposerHandler
      */
     public static function getMatchedSelectOptions($komposer)
     {
-        AuthorizationGuard::checkIfAllowedToSeachOptions($komposer);
-
+        AuthorizationGuard::mainGate($komposer);
+        
         return Select::transformOptions(
             DependencyResolver::callKomposerMethod($komposer, null, [
                 'search' => request('search')

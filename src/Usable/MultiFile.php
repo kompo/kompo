@@ -26,7 +26,7 @@ class MultiFile extends File
                 
                 $this->fileHandler->fileToDB($file, $model, $name, true) : 
                 
-                json_decode($file, true);
+                $this->convertBackToDb($file);
         });
 
         $this->fileHandler->unlinkOldFilesInAttribute($oldFiles, $value);

@@ -153,7 +153,11 @@ class Select extends Field
     protected static function transformLabelKey($specsArray, $value)
     {
         return collect($specsArray)->map(function($mapping) use($value) {
-            return $mapping instanceof Closure && is_callable($mapping) ? $mapping($value) : $mapping;
+            return $mapping instanceof Closure && is_callable($mapping) ? 
+
+                    $mapping($value) : 
+
+                    $mapping;
         })->all();
     }
 

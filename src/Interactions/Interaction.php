@@ -32,7 +32,7 @@ class Interaction
         //'mounted' => [Field::class, Trigger::class],
         //'keyup' => [Field::class, Trigger::class],
         //'keydown' => [Field::class, Trigger::class],
-        //'enter' => [Field::class, Trigger::class], //to remove and use with keyup.enter or keydown.enter
+        'enter' => [Field::class], //to remove and use with keyup.enter or keydown.enter
         //'mouseover' => [Field::class, Trigger::class],
         //'mouseleave' => [Field::class, Trigger::class],
         'change' => [Field::class],

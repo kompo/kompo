@@ -49,7 +49,7 @@ export default class Action {
     }
     refreshQueryAction(){
         this.vue.$_state({ loading: true })
-        this.vue.$kompo.vlRefreshQuery(this.kompoid || this.vue.kompoid, this.page)
+        this.vue.$kompo.vlRefreshQuery(this.kompoid || this.vue.kompoid, this.$_data('page'))
     }
     submitFormAction(){
         
@@ -129,6 +129,12 @@ export default class Action {
     }
     addAlertAction(){
         new Alert().asObject(this.$_data('alert')).emitFrom(this.vue)
+    }
+    fillAlertAction(response){
+        new Alert().asObject({
+            ...this.$_data('alert'),
+            message: response.data
+        }).emitFrom(this.vue)
     }
     redirectAction(response){
     	if(this.$_data('redirectUrl') === true){

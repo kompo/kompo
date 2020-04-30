@@ -2,6 +2,7 @@
 
 namespace Kompo\Tests;
 
+use Kompo\Core\KompoInfo;
 use Kompo\Core\KompoTarget;
 
 trait KompoTestRequestsTrait
@@ -56,10 +57,17 @@ trait KompoTestRequestsTrait
     protected function kompoAction($komposer, $action, $data, $headers = [], $method = 'POST')
     {
         return $this->withHeaders(array_merge($headers, [ 
-            'X-Kompo-Info' => $komposer->data('kompoInfo'),
+            'X-Kompo-Info' => KompoInfo::getFromElement($komposer),
             'X-Kompo-Action' => $action
         ]))
         ->json($method, $this->kompoUri, $data);
+    }
+
+    protected function submitToRoute($form, $data = [])
+    {
+        return $this->withHeaders([
+            'X-Kompo-Info' => KompoInfo::getFromElement($form)
+        ])->json('POST', $form->data('submitUrl'), $data);
     }
 
     /***** Dumper helpers ******/
@@ -102,6 +110,11 @@ trait KompoTestRequestsTrait
     protected function selfDeletedd($komposer, $method, $data = [])
     {
         dd($this->withoutExceptionHandling()->selfDelete($komposer, $method, $data)->dump());
+    }
+
+    protected function submitToRoutedd($komposer, $route, $data = [])
+    {
+        dd($this->withoutExceptionHandling()->submitToRoute($komposer, $route, $data)->dump());
     }
 
 }

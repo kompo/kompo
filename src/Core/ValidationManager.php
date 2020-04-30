@@ -50,11 +50,16 @@ class ValidationManager
      * @param      <type>  $field  The field
      * @param Kompo\Komposers\Komposer  $komposer   The form
      */
-    public static function pushFieldRulesToKomposer($field, $komposer)
+    public static function pushCleanRulesToKomposer($field, $komposer)
     {
         if($field->data('rules'))
             static::addRulesToKomposer($field->data('rules'), $komposer);
 
+        static::cleanNestedNameRules($field, $komposer);
+    }
+
+    protected static function cleanNestedNameRules($field, $komposer)
+    {
         Util::collect($field->name)->each(function($name) use ($komposer) {
             
             $komposerRules = static::getRules($komposer);
@@ -77,7 +82,7 @@ class ValidationManager
      */
     public static function getRules($element)
     {
-        return $element->data('rules');
+        return $element->data('rules') ?: [];
     }
 
 

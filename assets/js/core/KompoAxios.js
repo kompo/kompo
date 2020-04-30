@@ -17,8 +17,7 @@ export default class KompoAxios{
         this.$_orderableRoute = element.$_data('orderableRoute') //TODO change to $_route
 
         this.$_kompoAction = element.$_data('kompoAction')
-        this.$_kompoMethod = element.$_data('kompoMethod')
-        this.$_komposerClass = element.$_data('komposerClass')
+        this.$_kompoTarget = element.$_data('X-Kompo-Target')
 
         this.$_kompoRoute = element.$_data('kompoRoute')
     
@@ -37,7 +36,7 @@ export default class KompoAxios{
             headers: Object.assign(
                 {'X-Kompo-Info': this.$_getKompoInfo()}, 
                 this.$_kompoAction ? { 'X-Kompo-Action': this.$_kompoAction } : {},
-                this.$_kompoMethod ? { 'X-Kompo-Target': this.$_kompoMethod } : {}
+                this.$_kompoTarget ? { 'X-Kompo-Target': this.$_kompoTarget } : {}
             )
         })
     }
@@ -53,8 +52,8 @@ export default class KompoAxios{
                 this.$_komponent.formInfo.action ? {
                     'X-Kompo-Action': this.$_komponent.formInfo.action
                 } : {},
-                this.$_kompoMethod ? {
-                    'X-Kompo-Target': this.$_kompoMethod,
+                this.$_kompoTarget ? {
+                    'X-Kompo-Target': this.$_kompoTarget,
                     'X-Kompo-Action': 'handle-submit' //X-Kompo-Action above will be overwritten if this.handle
                 } : {}
             )
@@ -96,7 +95,7 @@ export default class KompoAxios{
             headers: {
                 'X-Kompo-Info': this.$_getKompoInfo(),
                 'X-Kompo-Action': 'load-komposer',
-                'X-Kompo-Target': this.$_komposerClass //using method slot for simplicity
+                'X-Kompo-Target': this.$_kompoTarget //komposerClass here
             }
         })
     }
@@ -108,7 +107,7 @@ export default class KompoAxios{
             headers: {
                 'X-Kompo-Info': this.$_getKompoInfo(),
                 'X-Kompo-Action': 'updated-option',
-                'X-Kompo-Target': this.$_komposerClass //using method slot for simplicity
+                'X-Kompo-Target': this.$_kompoTarget //komposerClass here
             }
         })
     }

@@ -18,7 +18,10 @@ class Input extends Field
         $this->inputType('text');
 
         $this->debounce();
+    }
 
-        //$this->submitsOnEnter(); TODO: uncomment
+    public function mounted($komposer)
+    {
+        $this->onEnter->submit();
     }
 }

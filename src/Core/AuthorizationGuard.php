@@ -2,8 +2,12 @@
 
 namespace Kompo\Core;
 
+use Kompo\Exceptions\KomposerMethodNotFoundException;
+use Kompo\Exceptions\KomposerNotDirectMethodException;
 use Kompo\Exceptions\UnauthorizedException;
 use Kompo\Komposers\KomposerManager;
+use Kompo\Routing\Dispatcher;
+use ReflectionClass;
 
 class AuthorizationGuard
 {
@@ -26,14 +30,27 @@ class AuthorizationGuard
         return true;
     }
 
-    public static function checkIfAllowedToSeachOptions($komposer)
+    public static function selfMethodGate($komposer, $method)
     {
-        //todo
+        static::checkMethodExists($komposer, $method);
+
+        $komposerType = 'Kompo\\'.Dispatcher::getKomposerType($komposer);
+
+        $baseMethodNames = collect((new ReflectionClass($komposerType))->getMethods())->pluck('name')->all();
+
+        if (in_array($method, $baseMethodNames))
+            throw new KomposerNotDirectMethodException($method, get_class($komposer));
     }
 
     
 
     /**** PRIVATE / PROTECTED ****/
+
+    protected static function checkMethodExists($komposer, $method)
+    {
+        if(!method_exists($komposer, $method))
+            throw new KomposerMethodNotFoundException($method);
+    }
 
     protected static function checkPreventSubmit($komposer)
     {

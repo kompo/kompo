@@ -14,7 +14,7 @@
 		padding: $form-control-padding;
 		>div{
 			@include ellipsis1();
-			i{
+			.icon-times{
 				color: gainsboro;
 				cursor: pointer;
 			}

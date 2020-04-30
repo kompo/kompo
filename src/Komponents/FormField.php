@@ -2,6 +2,7 @@
 
 namespace Kompo\Komponents;
 
+use Kompo\Core\LaravelApp;
 use Kompo\Core\RequestData;
 use Kompo\Core\Util;
 use Kompo\Database\Lineage;
@@ -100,7 +101,7 @@ class FormField
     {
         $name = $name ?: $requestName;
 
-        if($field->shouldCastToArray($model, $name))
+        if(LaravelApp::isVersion7orHigher() && $field->shouldCastToArray($model, $name))
             $model->mergeCasts([$name => 'array']);
 
         $value = $field->setAttributeFromRequest($requestName, $name, $model, $key);

@@ -66,6 +66,14 @@ trait UploadsImages
         return $file;
     }
 
+    protected function convertBackToDb($requestValue)
+    {
+        $decodedFromFront = json_decode($requestValue, true);
+        unset($decodedFromFront['src']);
+
+        return $decodedFromFront;
+    }
+
     /**
      * Validates the uploaded file is an image.
      *

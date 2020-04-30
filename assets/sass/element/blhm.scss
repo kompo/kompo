@@ -3,6 +3,8 @@
 
 $btn-depth: 1px !default;
 $table-color: $primary !default;
+$modal-header-bg: mix($primary, white, 30%) !default;
+$model-header-h1-color: mix($primary, black, 50%) !default;
 
 
 /***** CSS ********/
@@ -26,12 +28,12 @@ a{
 }
 
 .vlModalHeader{
-	background-color: mix($primary, white, 30%);
+	background-color: $modal-header-bg;
     margin-left: -1rem;
     margin-right: -1rem;
     padding: 1rem;
 	h1{
-        color: mix($primary, black, 50%);
+        color: $model-header-h1-color;
 		font-size: 1.5rem;
 	}
 }
@@ -45,15 +47,15 @@ a{
 
 .vlTableWrapper {
     border: 1px solid gainsboro;
-    border-radius: 0.5rem;
+    border-radius: 0.4rem;
 	thead th {
 		background-color: $table-color;
 		color: white;
 		&:first-child{
-			border-top-left-radius: 0.5rem;
+			border-top-left-radius: 0.4rem;
 		}
 		&:last-child{
-			border-top-right-radius: 0.5rem;
+			border-top-right-radius: 0.4rem;
 		}
 	}
 }

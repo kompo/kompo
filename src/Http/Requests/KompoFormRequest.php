@@ -4,6 +4,7 @@ namespace Kompo\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Kompo\Core\AuthorizationGuard;
+use Kompo\Core\ValidationManager;
 use Kompo\Routing\Dispatcher;
 
 class KompoFormRequest extends FormRequest
@@ -34,7 +35,7 @@ class KompoFormRequest extends FormRequest
      */
     public function rules()
     {
-        return [];
+        return ValidationManager::getRules($this->komposer);
     }
 
     /**

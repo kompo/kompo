@@ -72,27 +72,27 @@ if(! function_exists('_IconText'))
     }
 }
 
-if(! function_exists('_ImageTitleDesc'))
+if(! function_exists('_ImageCard'))
 {
-    function _ImageTitleDesc()
+    function _ImageCard()
     {
-        return Kompo\ImageTitleDesc::form(...func_get_args());
+        return Kompo\ImageCard::form(...func_get_args());
     }
 }
 
-if(! function_exists('_ImageTitleOverlay'))
+if(! function_exists('_ImageOverlay'))
 {
-    function _ImageTitleOverlay()
+    function _ImageOverlay()
     {
-        return Kompo\ImageTitleOverlay::form(...func_get_args());
+        return Kompo\ImageOverlay::form(...func_get_args());
     }
 }
 
-if(! function_exists('_ImageTitleRow'))
+if(! function_exists('_ImageRow'))
 {
-    function _ImageTitleRow()
+    function _ImageRow()
     {
-        return Kompo\ImageTitleRow::form(...func_get_args());
+        return Kompo\ImageRow::form(...func_get_args());
     }
 }
 

@@ -1,19 +1,19 @@
 <template>
-    <div class="vlRowTitle flex justify-between" :class="prop('class')">
+    <div class="vlRowTitle flex justify-between" :class="$_prop('class')">
 
-        <i v-if="prop('icon')" :class="prop('icon')" />
+        <i v-if="$_prop('icon')" :class="$_prop('icon')" />
 
         <vlEditLink 
-            v-if="prop('edit')"
+            v-if="$_prop('edit')"
             :kompoid="kompoid"
-            :vkompo="prop('edit')" />
+            :vkompo="$_prop('edit')" />
 
-        <span v-else v-html="prop('title')" />
+        <span v-else v-html="$_prop('title')" />
 
         <vlDeleteLink 
-            v-if="prop('delete')"
+            v-if="$_prop('delete')"
             :kompoid="kompoid"
-            :vkompo="prop('delete')" />
+            :vkompo="$_prop('delete')" />
 
     </div>
 </template>
