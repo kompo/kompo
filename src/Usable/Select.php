@@ -64,9 +64,11 @@ class Select extends Field
         }else{
             //Not recommended last case scenario. This will load all options which may not be desired.
             //User should fix by using the above scenarios. Should I throw error or not?? No for now: worst case, the query will be slow.
-            $allOptions = DependencyResolver::callKomposerMethod($komposer, $this->data('ajaxOptionsMethod'), [
-                'search' => ''
-            ])->all();
+            $allOptions = DependencyResolver::callKomposerMethod(
+                $komposer, 
+                KompoTarget::getDecrypted($this->data('ajaxOptionsMethod')), 
+                ['search' => '']
+            )->all();
 
             $this->options(Util::collect($this->value)->mapWithKeys(function($optionKey) use($allOptions){
 

@@ -16,18 +16,18 @@ export default {
     methods: {
         //hack continued... this had to be a method...
         submitOnInput(){ this.$_runOwnInteractionsWithAction('input', 'submitForm') },
-        filterOnInput(){ this.$_runOwnInteractionsWithAction('input', 'refreshQuery') },
+        filterOnInput(){ this.$_runOwnInteractionsWithAction('input', 'browseQuery') },
 
         $_interactionsOfType(type){
             return _.filter(this.$_interactions, (i) => {
                 return i.interactionType == type
             })
         },
-        $_runOwnInteractions(type){
+        $_runOwnInteractions(type, parameters){
             if(this.$_hasInteractions)
                 this.$_interactions.forEach( interaction => {
                     if(interaction.interactionType == type)
-                        this.$_runAction(interaction.action) 
+                        this.$_runAction(interaction.action, parameters) 
                 })
 
         },
@@ -51,12 +51,15 @@ export default {
             if(parentAction.interactions && parentAction.interactions.length)
                 parentAction.interactions.forEach( interaction => {
                     if(interaction.interactionType == type)
-                        this.$_runAction(interaction.action, response, parentAction)
+                        this.$_runAction(interaction.action, {
+                            response: response, 
+                            parentAction: parentAction
+                        })
                 })
         },
-        $_runAction(actionSpecs, response, parentAction){
+        $_runAction(actionSpecs, parameters){
             var action = new Action(actionSpecs, this)
-            action.run(response, parentAction)
+            action.run(parameters)
         }
     }
 }

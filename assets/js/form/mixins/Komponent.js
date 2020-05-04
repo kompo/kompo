@@ -31,8 +31,8 @@ export default {
                 return path.substring(1) //because the first . should not be taken into account
         },
         $_togglesForm(toggleId){
-            if(toggleId || this.$_togglesId)
-                this.$kompo.vlToggle(this.kompoid, toggleId || this.$_togglesId)
+            if(toggleId || this.$_toggleId)
+                this.$kompo.vlToggle(this.kompoid, toggleId || this.$_toggleId)
         },
         $_submit(){
             this.$_state({ loading: true })

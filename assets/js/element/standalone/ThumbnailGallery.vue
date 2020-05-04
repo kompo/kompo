@@ -13,7 +13,7 @@
                     :height="calculatedHeight"
                     :index="index"
                     @remove="remove"
-                    @preview="preview" />
+                    @preview="previewAndOpen" />
             </transition-group>
         </draggable>
 
@@ -49,10 +49,13 @@ export default {
     },
 
     methods: {
+        previewAndOpen(index){
+            this.preview(index)
+            this.$modal.show(this.modalname)
+        },
         preview(index){
             this.previewIndex = index
             this.previewImage = this.images[this.previewIndex]
-            this.$modal.show(this.modalname)
         },
         previousImage(){
             this.preview(this.previewIndex == 0 ? this.images.length - 1 : this.previewIndex - 1)

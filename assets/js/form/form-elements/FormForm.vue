@@ -1,6 +1,6 @@
 <template>
 
-    <vl-query v-bind="$_attributes" @click.stop="$_clickAction" />
+    <vl-form v-bind="$_attributes" @click.stop="$_clickAction" />
 
 </template>
 

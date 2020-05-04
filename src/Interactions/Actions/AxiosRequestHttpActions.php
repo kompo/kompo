@@ -7,21 +7,19 @@ use Kompo\Routing\RouteFinder;
 trait AxiosRequestHttpActions
 {
 
-    public function routeHttpRequest($routeMethod, $route, $parameters = null, $ajaxPayload = null)
+    public function routeHttpRequest($routeMethod, $route, $parameters = null, $payload = null)
     {
         return $this->prepareAxiosRequest([
-            'route' => RouteFinder::guessRoute($route, $parameters),
+            'route' => RouteFinder::guessRoute($route, $parameters, $payload, $routeMethod),
             'routeMethod' => $routeMethod,
-            'ajaxPayload' => $ajaxPayload
+            'ajaxPayload' => $payload
         ]);
     }
 
     /**
-     * Loads a view with a GET ajax request. 
-     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
-     * <php>->getView('get-route-of-view')->inModal()</php>
+     * Performs a GET request to a route in your application.
      *
-     * @param      string  $route    The route name or uri.
+     * @param      string      $route        The route name or uri.
      * @param      array|null  $parameters   The route parameters (optional).
      * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
      *
@@ -33,9 +31,7 @@ trait AxiosRequestHttpActions
     }
 
     /**
-     * Loads a view with a POST ajax request. 
-     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
-     * <php>->postView('get-route-of-view')->inModal()</php>
+     * Performs a POST request to a route in your application.
      *
      * @param      string  $route    The route name or uri.
      * @param      array|null  $parameters   The route parameters (optional).
@@ -49,9 +45,7 @@ trait AxiosRequestHttpActions
     }
 
     /**
-     * Loads a view with a POST ajax request. 
-     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
-     * <php>->postView('get-route-of-view')->inModal()</php>
+     * Performs a PUT request to a route in your application.
      *
      * @param      string  $route    The route name or uri.
      * @param      array|null  $parameters   The route parameters (optional).
@@ -65,9 +59,7 @@ trait AxiosRequestHttpActions
     }
 
     /**
-     * Loads a view with a POST ajax request. 
-     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
-     * <php>->postView('get-route-of-view')->inModal()</php>
+     * Performs a DELETE request to a route in your application.
      *
      * @param      string  $route    The route name or uri.
      * @param      array|null  $parameters   The route parameters (optional).

@@ -16,7 +16,7 @@ class QueryBooter
     {
         $query = static::instantiateUnbooted($bootInfo['kompoClass']);
 
-        KompoId::setForKomposer($query, $bootInfo['kompoId']);
+        KompoId::setForKomposer($query, $bootInfo);
 
         $query->store($bootInfo['store']);
         $query->parameter($bootInfo['parameters']);

@@ -51,7 +51,7 @@ class SuccessErrorInteractionsTest extends EnvironmentBoot
 		$this->assertEquals('success', $nested[1]->interactionType);
 		$this->assertEquals('sortQuery', $nested[1]->action->actionType);
 		$this->assertEquals('error', $nested[2]->interactionType);
-		$this->assertEquals('refreshQuery', $nested[2]->action->actionType);
+		$this->assertEquals('browseQuery', $nested[2]->action->actionType);
 	}
 
 	/** @test */
@@ -87,7 +87,7 @@ class SuccessErrorInteractionsTest extends EnvironmentBoot
 
 
 		$this->assertEquals('error', $nested[2]->interactionType);
-		$this->assertEquals('refreshQuery', $nested[2]->action->actionType);
+		$this->assertEquals('browseQuery', $nested[2]->action->actionType);
 	}
 	
 	/** ------------------ PRIVATE --------------------------- */  

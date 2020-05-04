@@ -98,7 +98,7 @@ export default {
                 this.$_runOwnInteractionsWithAction('change', 'axiosRequest')
             
             this.$_runOwnInteractionsWithAction('change', 'submitForm')
-            this.$_runOwnInteractionsWithAction('change', 'refreshQuery')
+            this.$_runOwnInteractionsWithAction('change', 'browseQuery')
             this.$_runOwnInteractionsWithAction('change', 'sortQuery')
 
             this.$_clearErrors()
@@ -152,9 +152,8 @@ export default {
     },
     mounted(){
         this.$_updateFieldState()
-        if(this.$_pristine)
-            this.$_togglesForm()
-        
+        if(this.$_toggleOnLoad)
+            this.$_togglesForm()        
 
         this.$_runOwnInteractionsWithAction('load', 'axiosRequest')
     },

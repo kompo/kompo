@@ -62,7 +62,7 @@ export default {
         },
         $_destroyEvents(){
             this.$_vlOff([
-                'vlEmit'+this.$_elKompoId
+                'vlEmit'+this.$_elKompoId,
             ])
         }
     }

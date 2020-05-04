@@ -41,28 +41,15 @@ export default {
         },
         updateOptionsAndValue(r){
 
-            var relatedValue = r.status == 202 ? r.data.model : r.data
+            var option = r.data,
+                optionValue = Object.keys(option)[0],
+                newSelect = this.komponents[0]
 
-            if(this.$_data('ajaxOptions')){
-                
-                var newLabel = relatedValue[this.$_data('optionsLabel')] //!! does not work if label is array
-                var newKey = relatedValue[this.$_data('optionsKey')]
-                this.updateComponentOptionsAndValue([{value: newKey, label: newLabel}], relatedValue)
-
-            }else{
-
-                this.$_kAxios.$_updatedOption().then(response => {
-
-                    this.updateComponentOptionsAndValue(response.data, relatedValue)
-
-                })
-            }
-        },
-        updateComponentOptionsAndValue(newOptions, relatedValue)
-        {
-            var newSelect = this.komponents[0]
-            newSelect.options = newOptions
-            newSelect.value = relatedValue[this.$_data('optionsKey')]
+            newSelect.options.push({
+                value: optionValue, 
+                label: option[optionValue] 
+            })
+            newSelect.value = optionValue
             this.komponents.splice(0, 1, newSelect)
             this.renderKey += 1
 

@@ -2,6 +2,7 @@
 
 namespace Kompo\Interactions\Actions;
 
+use Kompo\Core\KompoAction;
 use Kompo\Core\KompoTarget;
 use Kompo\Routing\RouteFinder;
 
@@ -20,16 +21,16 @@ trait AxiosRequestActions
         return $this->prepareAxiosRequest(array_merge([
             'route' => RouteFinder::getKompoRoute($requestType, $ajaxPayload),
             'routeMethod' => $requestType,
-            'kompoAction' => $kompoAction,
             'ajaxPayload' => $ajaxPayload
         ],
+            KompoAction::headerArray($kompoAction),
             KompoTarget::getEncryptedArray($methodName)
         ));
     }
 
     /**
-     * Includes additional komponents from the server, which will be included in the Form data.
-     * To display it, you should chain it with the methods `inModal` or `inPanel`, the containers in which the view will be displayed. For example:
+     * Includes additional komponents from the server. If they contain Fields, they will be included in the Form data and handled in an Eloquent Form.
+     * To display the new Komponents, you need to chain a method `inModal` or `inPanel`. For example:
      * <php>->getKomponents('newKomponentsMethod')->inPanel('panel-id')</php>
      * 
      *
@@ -49,9 +50,12 @@ trait AxiosRequestActions
     }
 
     /**
-     * Loads a view through AJAX. 
-     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
-     * <php>->loadView('route-of-view')->inModal()</php>
+     * Loads a fresh Komposer class from the server. 
+     * To display the new Komposer, you need to chain a method `inModal` or `inPanel`.
+     * You may also pass it additional data in the $payload argument. This data will be injected in the Komposer's store.
+     * Note that the new Komposer will be separate from the parent Komposer where this call is made. If you wanted to include the Komponents as part of the parent, use `getKomponents()` instead.
+     * For example: 
+     * <php>->getKomposer(PostForm::class, ['payload' => 'some-data'])->inModal()</php>
      *
      * @param      string  $methodName    The method name that will return a view or HTML response.
      * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
@@ -65,18 +69,20 @@ trait AxiosRequestActions
     }
 
     /**
-     * Loads a view through AJAX. 
-     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. For example: 
+     * Loads a backend Blade view from the server. 
+     * To display the view in a container, you may chain it with the methods `inModal` or `inPanel`. 
+     * You may also pass it additional data in the $payload argument. This data will be available with the request() helper.
+     * For example: 
      * <php>->loadView('route-of-view')->inModal()</php>
      *
-     * @param      string  $methodName    The method name that will return a view or HTML response.
-     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
+     * @param      string      $viewPath     The view path as in the view() helper.
+     * @param      array|null  $ajaxPayload  Additional custom data to include in the view (optional).
      *
      * @return     self   
      */
-    public function getView($methodName, $ajaxPayload = null)
+    public function getView($viewPath, $ajaxPayload = null)
     {
-        return $this->selfHttpRequest('POST', 'get-view', $methodName, $ajaxPayload);
+        return $this->selfHttpRequest('POST', 'get-view', $viewPath, $ajaxPayload);
     }
 
 

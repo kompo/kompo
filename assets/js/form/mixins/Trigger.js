@@ -18,12 +18,7 @@ export default {
 	},
     methods:{
         $_clickAction(){
-            this.$_togglesForm()
-            
-            //this.$_runOwnInteractionsWithAction('click', 'emitFrom')
-            //this.$_runOwnInteractionsWithAction('click', 'submitForm')
-            //this.$_runOwnInteractionsWithAction('click', 'refreshQuery')
-            //this.$_runOwnInteractionsWithAction('click', 'sortQuery')
+            this.$_runOwnInteractions('click')
             
             this.$_revertPanel()
             this.$_revertFormRow()
@@ -31,7 +26,8 @@ export default {
         }
     },
     mounted(){
-        this.$_togglesForm()
+        if(this.$_toggleOnLoad)
+            this.$_togglesForm()
     }
 
 }

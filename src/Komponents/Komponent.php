@@ -2,6 +2,7 @@
 
 namespace Kompo\Komponents;
 
+use Kompo\Core\KompoAction;
 use Kompo\Core\KompoId;
 use Kompo\Elements\Element;
 use Kompo\Komposers\KomposerManager;
@@ -56,8 +57,8 @@ abstract class Komponent extends Element
      */
     public function prepareForAction($komposer)
     {
-        if($this->data('includes')) //TODO: check authorize here!
-            KomposerManager::prepareKomponentsForAction($komposer, $this->data('includes'));
+        if($this->data('includes') && KompoAction::is('eloquent-save'))
+            KomposerManager::prepareKomponentsForAction($komposer, $this->data('includes'), true);
     }
 
     /**
@@ -104,19 +105,6 @@ abstract class Komponent extends Element
     public static function iconStatic($iconClass)
     {
         return static::form('')->icon($iconClass);
-    }
-
-    /**
-     * Toggles another item identified by the $id on click if it's a Trigger, or on blur if it's a Field.
-     *
-     * @param      string  $id     The id of the element to be toggled.
-     *
-     * @return self 
-     */
-    public function togglesId($id)
-    {
-        $this->data(['togglesId' => $id]);
-        return $this;
     }
 
     /**

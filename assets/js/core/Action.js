@@ -18,12 +18,16 @@ export default class Action {
     $_data(key){
         return this.actionData[key] || null
     }
-	run(response, parentAction){
+	run(parameters){
         if(!this.actionType)
             return
 
 		var actionFunction = this.actionType + 'Action'
-        this[actionFunction](response, parentAction) 
+        this[actionFunction](
+            parameters ? parameters.response : null, 
+            parameters ? parameters.parentAction : null, 
+            parameters ? parameters.payload : null
+        ) 
 	}
     axiosRequestAction(){
     	this.vue.$_state({ loading: true })
@@ -47,9 +51,16 @@ export default class Action {
 
         })
     }
-    refreshQueryAction(){
+    browseQueryAction(){
         this.vue.$_state({ loading: true })
-        this.vue.$kompo.vlRefreshQuery(this.kompoid || this.vue.kompoid, this.$_data('page'))
+        this.vue.$kompo.vlBrowseQuery(this.$_data('kompoid') || this.vue.kompoid, this.$_data('page'))
+    }
+    refreshKomposerAction(r, pa, payload){
+        this.vue.$_state({ loading: true })
+
+        this.getAsArray(this.$_data('kompoid'), this.vue.kompoid).forEach(kompoid => 
+            this.vue.$kompo.vlRefreshKomposer(kompoid, this.$_data('route'), payload)
+        )
     }
     submitFormAction(){
         
@@ -114,6 +125,13 @@ export default class Action {
     emitDirectAction(response){
     	this.vue.$emit(this.$_data('event'), response.data)
     }
+    toggleElementAction(){
+        if(this.$_data('toggleId'))
+            this.vue.$kompo.vlToggle(this.vue.kompoid, this.$_data('toggleId'))
+    }
+    hideSelfAction(){
+        this.vue.$_toggleSelf()
+    }
     fillModalAction(response){
     	var modalName = this.$_data('modalName') || (this.vue.kompoid ? 'modal'+this.vue.kompoid : 'vlDefaultModal')
         var panelId = this.$_data('panelId') || (this.vue.kompoid ? 'modal'+this.vue.kompoid : 'vlDefaultModal')
@@ -143,6 +161,8 @@ export default class Action {
             setTimeout( () => { this.redirect(this.$_data('redirectUrl')) }, 300)
         }
     }
+
+    /* internal */
     redirect(url){
         window.location.href = url
     }
@@ -160,5 +180,10 @@ export default class Action {
         if(this.warningConfirmed)
             formData.append('vuravelConfirmed', this.warningConfirmed)
         return formData
+    }
+
+    /* utils */
+    getAsArray(data, fallback){
+        return data ? (_.isArray(data) ? data : [data]) : [fallback]
     }
 }

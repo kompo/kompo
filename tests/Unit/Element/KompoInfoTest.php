@@ -2,9 +2,11 @@
 
 namespace Kompo\Tests\Unit\Element;
 
+use Illuminate\Support\Facades\Crypt;
+use Kompo\Core\KompoId;
+use Kompo\Core\KompoInfo;
 use Kompo\Input;
 use Kompo\Tests\EnvironmentBoot;
-use Illuminate\Support\Facades\Crypt;
 
 class KompoInfoTest extends EnvironmentBoot
 {
@@ -13,18 +15,18 @@ class KompoInfoTest extends EnvironmentBoot
 	{
 		$form = new _SetElementIdForm();
 
-		$bootInfo = Crypt::decrypt($form->data('kompoInfo'));
+		$bootInfo = Crypt::decrypt(KompoInfo::getFromElement($form));
 		$this->assertNotNull($bootInfo);
 		$this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass'] );
 
 		$form = new _SetElementIdForm();
-		$bootInfo2 = Crypt::decrypt($form->data('kompoInfo'));
+		$bootInfo2 = Crypt::decrypt(KompoInfo::getFromElement($form));
 		$this->assertNotNull($bootInfo2);
 		$this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass'] );
 
 		foreach($bootInfo as $key => $value)
         {
-        	if($key !== 'kompoId')
+        	if($key !== KompoId::$key)
             	$this->assertEquals($value, $bootInfo2[$key]);
         }		
 	}

@@ -21,6 +21,8 @@ class Action
         Actions\EmitEventActions,
         Actions\FillPanelActions, 
         Actions\FillModalActions, 
+        Actions\FrontEndActions, 
+        Actions\KomposerActions, 
         Actions\RedirectActions, 
         Actions\SubmitFormActions;
 

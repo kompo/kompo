@@ -15,9 +15,10 @@
 import Layout from './mixins/Layout'
 import Alert from '../core/Alert'
 import IsKomposer from '../mixins/IsKomposer'
+import DoesAxiosRequests from '../form/mixins/DoesAxiosRequests'
 
 export default {
-    mixins: [Layout, IsKomposer],
+    mixins: [Layout, IsKomposer, DoesAxiosRequests],
 
     data(){
         return {
@@ -127,6 +128,12 @@ export default {
                     action: this.submitAction
                 })
             })
+            this.$_vlOn('vlRefreshKomposer'+this.$_elKompoId, (url, payload) => {
+                this.$_kAxios.$_refreshSelf(url, payload).then(r => {
+                    this.$_destroyEvents()
+                    this.$emit('refreshForm', r.data)
+                })
+            })
 
             this.$_deliverKompoInfoOn()
         },
@@ -140,6 +147,7 @@ export default {
                 'vlDeliverJsonFormData'+this.$_elKompoId,
                 'vlToggleSubmit'+this.$_elKompoId,
                 'vlRequestFormInfo'+this.$_elKompoId,
+                'vlRefreshKomposer'+this.$_elKompoId,
                 this.$_deliverKompoInfoOff
             ])
         }

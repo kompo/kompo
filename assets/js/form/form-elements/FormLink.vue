@@ -1,7 +1,8 @@
 <template>
-    <vl-link 
+    <a
         v-if="!$_displayNone" v-show="!$_hidden"
         v-bind="$_attributes" 
+        v-turbo-click="component.turbo"
         @click="$_clickAction">
 
         <label v-html="$_label" />
@@ -14,7 +15,7 @@
 
         <vl-form-info :component="component" />
     
-    </vl-link>
+    </a>
 </template>
 
 <script>
@@ -25,9 +26,22 @@ export default {
         $_attributes(){
             return {
                 ...this.$_defaultTriggerAttributes,
-                vkompo: Object.assign({}, this.vkompo), //otherwise elementStore wasn't persisting
-                kompoid: this.kompoid
+                href: this.component.href || 'javascript:void(0)',
+                target: this.component.target
             }
+        },
+        $_customClassArray(){
+            return [
+                this.linkClass
+            ]
+        },
+        linkClass(){
+            return (this.$_data('btnStyle') ? 'vlBtn' : 'vlLink') + 
+                (this.$_data('btnOutlined') ? ' vlBtnOutlined' : '') +
+                (this.$_data('btnPlain') ? ' vlBtnPlain' : '') +
+                (this.$_data('secondary') ? ' vlSecondary' : '')+
+                (this.$_data('btnInline') ? ' vlBtnInline' : '') +
+                (this.$_data('btnBlock') ? ' vlBtnBlock' : '') //inline by default
         }
     }
 }

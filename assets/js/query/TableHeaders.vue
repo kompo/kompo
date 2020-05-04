@@ -15,8 +15,11 @@ import HasVueComponent from '../element/mixins/HasVueComponent'
 export default {
     mixins: [HasVueComponent],
     props: {
-        headers: {type: Array, required: true},
+        vkompo: {type: Object, required: true},
         kompoid: {type: String, required: true}
+    },
+    computed:{
+        headers(){ return this.vkompo.headers }
     },
     methods:{
         $_thAttributes(th, index) { 

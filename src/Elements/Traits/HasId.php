@@ -2,6 +2,9 @@
 
 namespace Kompo\Elements\Traits;
 
+use Kompo\Core\KompoId;
+use Kompo\Komposers\Komposer;
+
 trait HasId
 {
     /**
@@ -21,6 +24,9 @@ trait HasId
     public function id($id)
     {
         $this->id = $id;
+
+        if($this instanceOf Komposer)
+            KompoId::setForKomposer($this, $this->id);
 
         return $this;
     }

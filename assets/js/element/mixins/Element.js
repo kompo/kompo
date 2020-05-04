@@ -40,7 +40,8 @@ export default {
             )
         },
         
-        $_togglesId(){ return this.$_data('togglesId') }
+        $_toggleId(){ return this.$_data('toggleId') },
+        $_toggleOnLoad(){ return this.$_data('toggleOnLoad') }
 
     },
     methods: {
@@ -58,7 +59,10 @@ export default {
         },
         $_toggle(toggleId){
             if(this.$_elementId() == toggleId)
-                this.$_state({ vlHidden: this.$_state('vlHidden') ? false : true })
+                this.$_toggleSelf()
+        },
+        $_toggleSelf(){
+            this.$_state({ vlHidden: this.$_state('vlHidden') ? false : true })
         },
         $_deliverJsonTo(componentId, json){
             if(this.$_elKompoId == componentId)

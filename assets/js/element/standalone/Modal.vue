@@ -18,10 +18,10 @@
             </div>
 
             <i v-if="arrows" class="vlModalBtn icon-chevron-left" 
-                @click.stop="previous" />
+                @mouseup.stop="previous" />
 
             <i v-if="arrows" class="vlModalBtn icon-chevron-right" 
-                @click.stop="next" />
+                @mouseup.stop="next" />
 
             <div class="vlModalWrapper">
 
@@ -134,7 +134,7 @@
                 if(modalName == this.name){
                     this.warnData = warnbeforeclose || false
                     this.open(ajaxContent)
-                    if(this.$refs.modal)
+                    if(this.arrows)
                         this.$nextTick(() => this.$refs.modal.focus()) //to be able to use keydown events
                 }
             })

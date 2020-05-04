@@ -112,12 +112,22 @@
 	    function fixWrapperOnDesktop()
 	    {
 	    	if(!vlMobile){
+	    		
+	    		var wrapperWidth = 'calc(100vw'
+
 				@if(optional($LeftSidebar)->fixed)
 					vlWrapper.css('margin-left', width(vlSidebarL))
+					wrapperWidth += ' - '+width(vlSidebarL)+'px'
 				@endif
+
 				@if(optional($RightSidebar)->fixed)
 					vlWrapper.css('margin-right', width(vlSidebarR))
+					wrapperWidth += ' - '+width(vlSidebarR)+'px'
 				@endif
+
+				wrapperWidth += ')'
+				vlWrapper.css('width', wrapperWidth)
+
 	    	}else{
 	    		vlWrapper.css('margin-left', 0).css('margin-right', 0)
 	    	}

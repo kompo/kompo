@@ -4,8 +4,7 @@
         v-if="!$_displayNone" 
         v-show="!$_hidden" 
         v-bind="$_attributes" 
-        v-html="$_label" 
-        @click.stop="activate" />
+        v-html="$_label"  />
 
 </template>
 
@@ -13,15 +12,6 @@
 import Other from '../mixins/Other'
 
 export default {
-    mixins: [Other],
-    methods: {
-    	activate(){
-            if(!this.$_interactionsOfType('click'))
-                return
-            
-            this.$emit('activate') //for query activation
-            this.$_clickAction()
-    	}
-    }
+    mixins: [Other]
 }
 </script>

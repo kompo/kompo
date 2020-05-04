@@ -16,7 +16,7 @@ export default class KompoAxios{
 
         this.$_orderableRoute = element.$_data('orderableRoute') //TODO change to $_route
 
-        this.$_kompoAction = element.$_data('kompoAction')
+        this.$_kompoAction = element.$_data('X-Kompo-Action')
         this.$_kompoTarget = element.$_data('X-Kompo-Target')
 
         this.$_kompoRoute = element.$_data('kompoRoute')
@@ -61,7 +61,7 @@ export default class KompoAxios{
     }
 
     /******* Komponents *********/
-    $_browseQuery(page, sort){
+    $_browseQuery(page, sort, addStore){
         return this.$_axios({
             url: this.$_komponent.queryUrl, 
             method: 'POST',
@@ -70,7 +70,8 @@ export default class KompoAxios{
                 'X-Kompo-Info': this.$_getKompoInfo(),
                 'X-Kompo-Page': page,
                 'X-Kompo-Sort': sort,
-                'X-Kompo-Action': 'browse-items'
+                'X-Kompo-Action': 'browse-items',
+                'X-Kompo-Store': JSON.stringify(addStore)
             }
         })
     }
@@ -99,15 +100,14 @@ export default class KompoAxios{
             }
         })
     }
-    $_updatedOption(){
-
+    $_refreshSelf(url, payload){
         return this.$_axiosWithErrorHandling({
-            url: this.$_kompoRoute, 
+            url: url, 
             method: 'POST',
+            data: payload,
             headers: {
                 'X-Kompo-Info': this.$_getKompoInfo(),
-                'X-Kompo-Action': 'updated-option',
-                'X-Kompo-Target': this.$_kompoTarget //komposerClass here
+                'X-Kompo-Action': 'refresh-self'
             }
         })
     }

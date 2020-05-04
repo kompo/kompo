@@ -38,7 +38,13 @@
         "laravel": {
             "providers": [
                 "Kompo\\KompoServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "VlForm": "Kompo\\Form",
+                "VlQuery": "Kompo\\Query",
+                "VlTable": "Kompo\\Table",
+                "VlMenu": "Kompo\\Menu"
+            }
         }
     },
     "config": {

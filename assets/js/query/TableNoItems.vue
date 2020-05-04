@@ -9,8 +9,11 @@
 <script>
 export default {
     props: {
-        headers: {type: Array, required: true},
-        noItemsFound: {type: String, required: true}
+        vkompo: {type: Object, required: true}
+    },
+    computed: {
+    	noItemsFound(){ return this.vkompo.noItemsFound },
+        headers(){ return this.vkompo.headers }
     }
 }
 </script>

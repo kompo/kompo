@@ -2,6 +2,7 @@
 
 namespace Kompo\Core;
 
+use Kompo\Core\KompoAction;
 use Kompo\Exceptions\KomposerMethodNotFoundException;
 use Kompo\Exceptions\KomposerNotDirectMethodException;
 use Kompo\Exceptions\UnauthorizedException;
@@ -16,7 +17,7 @@ class AuthorizationGuard
         if(!$komposer->bootAuthorization())
             throw new UnauthorizedException( get_class($komposer), 'boot' );
 
-        if(in_array(request()->header('X-Kompo-Action'),['eloquent-submit', 'handle-submit']))
+        if(KompoAction::is(['eloquent-submit', 'handle-submit']))
             static::checkPreventSubmit($komposer);
 
         KomposerManager::created($komposer);

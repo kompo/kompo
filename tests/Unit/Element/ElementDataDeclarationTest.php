@@ -2,6 +2,7 @@
 
 namespace Kompo\Tests\Unit\Element;
 
+use Kompo\Core\KompoId;
 use Kompo\Input;
 use Kompo\Tests\EnvironmentBoot;
 use Kompo\Tests\Unit\Element\Forms\SetElementClassForm;
@@ -14,7 +15,7 @@ class ElementDataDeclarationTest extends EnvironmentBoot
 		$el = Input::form('SomeLabel');
 		
 		$this->assertIsArray($el->data);
-		$this->assertNotNull($el->data['kompoId']);
+		$this->assertNotNull(KompoId::getFromElement($el));
 
 		$el->data(['some-key' => 'some-value']);
 		$this->assertIsArray($el->data);

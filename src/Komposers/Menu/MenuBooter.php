@@ -14,7 +14,7 @@ class MenuBooter
     {
         $menu = static::instantiateUnbooted($bootInfo['kompoClass']);
 
-        KompoId::setForKomposer($menu, $bootInfo['kompoId']);
+        KompoId::setForKomposer($menu, $bootInfo);
 
         $menu->store($bootInfo['store']);
         $menu->parameter($bootInfo['parameters']); //Parameters necessary for menus??

@@ -17,7 +17,6 @@ export default {
         this.items = this.cards
     },
     computed:{
-        $_noItemsFound(){ return this.component.noItemsFound },
         $_hasItems(){ return this.items.length > 0 },
         $_orderable(){ return this.component.orderable },
         $_sortingAttributes(){

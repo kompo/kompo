@@ -36,7 +36,7 @@ class Router
     private static function getAsJson($router, $uri, $komposerClass)
     {
         return $router->get($uri, function() use($komposerClass) {
-            return with(new Dispatcher($komposerClass))->bootFromRoute();
+            return with(new Dispatcher($komposerClass))->bootKomposerForDisplay();
         });
     }
 
@@ -58,7 +58,7 @@ class Router
         return $router->get($uri, function () use ($layout, $router, $komposerClass) {
 
             $dispatcher = new Dispatcher($komposerClass);
-            $komposer = $dispatcher->bootFromRoute();
+            $komposer = $dispatcher->bootKomposerForDisplay();
             $booter = $dispatcher->booter;
 
             return view('kompo::view', [

@@ -3,6 +3,7 @@ namespace Kompo\Komposers\Form;
 
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\DependencyResolver;
+use Kompo\Core\KompoTarget;
 use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\ModelManager;
@@ -23,7 +24,7 @@ class FormSubmitter extends FormBooter
     {
         static::prepareForSubmit($form);
 
-        return DependencyResolver::callKomposerMethod($form, null, [], 'handle');
+        return DependencyResolver::callKomposerMethod($form, KompoTarget::getDecrypted() ?: 'handle');
     }
 
     public static function eloquentSave($form)

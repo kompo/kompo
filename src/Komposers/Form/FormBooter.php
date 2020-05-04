@@ -17,7 +17,7 @@ class FormBooter
     {        
         $form = static::instantiateUnbooted($bootInfo['kompoClass']);
 
-        KompoId::setForKomposer($form, $bootInfo['kompoId'] ?? null);
+        KompoId::setForKomposer($form, $bootInfo);
 
         $form->store($bootInfo['store']);
         $form->parameter($bootInfo['parameters']);
@@ -28,7 +28,7 @@ class FormBooter
         
         ValidationManager::addRulesToKomposer($form->rules(), $form);
         
-        KomposerManager::prepareKomponentsForAction($form, 'komponents'); //mainly to retrieve rules from fields
+        KomposerManager::prepareKomponentsForAction($form, 'komponents', true); //mainly to retrieve rules from fields
 
         return $form;
     }

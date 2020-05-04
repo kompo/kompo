@@ -2,9 +2,9 @@
 
 namespace Kompo\Core;
 
-class KompoId extends KompoData
+class KompoId extends KompoAjax
 {
-    protected static $kompoDataKey = 'kompoId';
+    public static $key = 'X-Kompo-Id';
 
     public static function setForKomponent($el, $label = null)
     {
@@ -15,6 +15,8 @@ class KompoId extends KompoData
 
     public static function setForKomposer($el, $kompoId = null)
     {
+        $kompoId = is_array($kompoId) ? ($kompoId[static::$key] ?? null) : $kompoId; //array is when coming from bootInfo
+
         $bestKompoId = $kompoId ?: class_basename($el).uniqid();
         
         return static::setOnElement( $el, $bestKompoId);

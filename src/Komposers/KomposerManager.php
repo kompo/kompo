@@ -3,6 +3,7 @@
 namespace Kompo\Komposers;
 
 use Kompo\Core\DependencyResolver;
+use Kompo\Core\KompoTarget;
 use Kompo\Core\Util;
 
 class KomposerManager
@@ -30,12 +31,13 @@ class KomposerManager
      * 
      * @param Kompo\Komposers\Komposer $komposer
      * @param string|null $method
+     * @param boolean $force                     Force the method to run (base method for ex.)
      *
      * @return Collection
      */
-    public static function prepareKomponentsForDisplay($komposer, $method = null)
+    public static function prepareKomponentsForDisplay($komposer, $method = null, $force = false)
     {
-        return static::collectFrom($komposer, $method)->filter()->each( function($component) use ($komposer) {
+        return static::collectFrom($komposer, $method, $force)->filter()->each( function($component) use ($komposer) {
 
             $component->prepareForDisplay($komposer);
 
@@ -49,12 +51,13 @@ class KomposerManager
      * 
      * @param Kompo\Komposers\Komposer $komposer
      * @param string|null $method
+     * @param boolean $force                     Force the method to run (base method for ex.)
      *
      * @return void
      */
-    public static function prepareKomponentsForAction($komposer, $method = null)
+    public static function prepareKomponentsForAction($komposer, $method = null, $force = false)
     {
-        static::collectFrom($komposer, $method)->filter()->each( function($component) use ($komposer) {
+        static::collectFrom($komposer, $method, $force)->filter()->each( function($component) use ($komposer) {
 
             $component->prepareForAction($komposer);
 
@@ -106,17 +109,19 @@ class KomposerManager
      *
      * @param Kompo\Komposers\Komposer $komposer
      * @param string|null              $method
+     * @param boolean $force                     Force the method to run (base method for ex.)
      *
      * @return Collection
      */
-    protected static function collectFrom($komposer, $method = null)
+    protected static function collectFrom($komposer, $method = null, $force = false)
     {
         return Util::collect(
-            $method ? 
-                
-                $komposer->{$method}() : //for 'komponents', 'top', 'right', 'left', 'bottom'.
-                
-                DependencyResolver::callKomposerMethod($komposer, null, request()->all()) //mainly for getKomponents
+            DependencyResolver::callKomposerMethod(
+                $komposer, 
+                $method ?: KompoTarget::getDecrypted(), 
+                request()->all(),  //mainly for getKomponents
+                $force
+            )
         );
     }
 }

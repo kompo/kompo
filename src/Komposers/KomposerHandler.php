@@ -4,6 +4,7 @@ namespace Kompo\Komposers;
 
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\DependencyResolver;
+use Kompo\Core\KompoAction;
 use Kompo\Core\KompoTarget;
 use Kompo\Exceptions\NotFoundKompoActionException;
 use Kompo\Komposers\Form\FormDisplayer;
@@ -17,8 +18,8 @@ use Kompo\Select;
 class KomposerHandler
 {
     public static function performAction($komposer)
-    {        
-        switch(request()->header('X-Kompo-Action'))
+    {
+        switch(KompoAction::header())
         {
             case 'eloquent-submit':
                 return FormSubmitter::eloquentSave($komposer);
@@ -35,11 +36,11 @@ class KomposerHandler
             case 'load-komposer':
                 return static::getKomposerFromKomponent($komposer);
 
+            case 'get-view':
+                return static::returnBladeView($komposer);
+
             case 'search-options':
                 return static::getMatchedSelectOptions($komposer);
-
-            case 'updated-option':
-                return static::reloadUpdatedSelectOptions($komposer);
 
             case 'browse-items':
                 return QueryDisplayer::browseCards($komposer);
@@ -68,7 +69,7 @@ class KomposerHandler
     {
         AuthorizationGuard::mainGate($komposer);
 
-        return DependencyResolver::callKomposerMethod($komposer, null, request()->all());
+        return DependencyResolver::callKomposerMethod($komposer, KompoTarget::getDecrypted(), request()->all());
     }
 
 
@@ -86,29 +87,10 @@ class KomposerHandler
         AuthorizationGuard::mainGate($komposer);
         
         return Select::transformOptions(
-            DependencyResolver::callKomposerMethod($komposer, null, [
+            DependencyResolver::callKomposerMethod($komposer, KompoTarget::getDecrypted(), [
                 'search' => request('search')
             ])
         );
-    }
-
-    /**
-     * { function_description }
-     *
-     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
-     *
-     * @return     <type>
-     */
-    public static function reloadUpdatedSelectOptions($komposer)
-    {
-        foreach (KomposerManager::collectFields($komposer) as $field) {
-
-            if($field->name == request()->header('X-Komponent')){
-
-                return $field->options;
-
-            }
-        }
     }
 
     /**
@@ -131,7 +113,20 @@ class KomposerHandler
     protected static function getKomposerFromKomponent($komposer)
     {
         $komposerClass = KompoTarget::getDecrypted();
-        return with(new Dispatcher($komposerClass))->bootFromRoute();
+        return with(new Dispatcher($komposerClass))->bootKomposerForDisplay();
+    }
+
+    /**
+     * Returns a Blade view.
+     *
+     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
+     *
+     * @return Kompo\Komposers\Komposer
+     */
+    protected static function returnBladeView($komposer)
+    {
+        $viewPath = KompoTarget::getDecrypted();
+        return view($viewPath, request()->all());
     }
 
     /**

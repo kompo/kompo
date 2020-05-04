@@ -2,12 +2,13 @@
 
 namespace Kompo\Routing;
 
-use Kompo\Query;
+use Kompo\Core\KompoAction;
 use Kompo\Core\KompoInfo;
 use Kompo\Exceptions\NotBootableFromRouteException;
 use Kompo\Form;
 use Kompo\Komposers\KomposerHandler;
 use Kompo\Menu;
+use Kompo\Query;
 
 class Dispatcher
 {
@@ -33,6 +34,9 @@ class Dispatcher
     
     public static function dispatchConnection()
     {
+        if(KompoAction::is('refresh-self'))
+            return with(new static())->rebootKomposerForDisplay();
+
         return KomposerHandler::performAction(static::bootKomposerForAction());
     }
 
@@ -44,21 +48,25 @@ class Dispatcher
         return $booter::bootForAction($dispatcher->bootInfo);
     }
 
-    public function bootFromRoute() 
+    public function bootKomposerForDisplay() 
     {
         $booter = $this->booter;
 
         if($this->type == 'Form'){
-            return $booter::bootForDisplay(
-                $this->komposerClass, 
-                request('id'), 
-                request()->except('id')
-            );
+            return $booter::bootForDisplay($this->komposerClass, request('id'), request()->except('id'));
         }else{
-            return $booter::bootForDisplay(
-                $this->komposerClass, 
-                request()->all()
-            );
+            return $booter::bootForDisplay($this->komposerClass, request()->all());
+        }
+    }
+
+    public function rebootKomposerForDisplay() 
+    {
+        $booter = $this->booter;
+
+        if($this->type == 'Form'){
+            return $booter::bootForDisplay($this->komposerClass, $this->bootInfo['modelKey'], $this->bootInfo['store']);
+        }else{
+            return $booter::bootForDisplay($this->komposerClass, $this->bootInfo['store']);
         }
     }
 

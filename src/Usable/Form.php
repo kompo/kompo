@@ -17,7 +17,7 @@ abstract class Form extends Komposer
      *
      * @var string
      */
-    public $vueComponent = 'Rows';
+    public $vueComponent = 'FormForm';
 
     /**
      * The Blade component to render the Form.

@@ -5,7 +5,10 @@
 <script>
 export default {
     props: {
-        noItemsFound: {type: String, required: true}
+        vkompo: {type: Object, required: true}
+    },
+    computed: {
+    	noItemsFound(){ return this.vkompo.noItemsFound }
     }
 }
 </script>

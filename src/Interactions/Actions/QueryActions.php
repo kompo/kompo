@@ -43,7 +43,7 @@ trait QueryActions
             $element->data([ 'filterOperator' => $operator  ]);
         });
 
-        return $this->refresh(null, 1); //filtering works for it's own query only
+        return $this->browse(null, 1); //filtering works for it's own query only
     }
 
     /**
@@ -65,11 +65,11 @@ trait QueryActions
         return $this->prepareAction('sortQuery');
     }
 
-    public function refresh($queryId = null, $page = null)
+    public function browse($queryId = null, $page = null)
     {
-        return $this->prepareAction('refreshQuery', [
+        return $this->prepareAction('browseQuery', [
             'page' => $page,
-            'vuravelid' => $queryId
+            'kompoid' => $queryId
         ]);
     }
 

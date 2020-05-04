@@ -12,7 +12,7 @@
 
                     <div v-if="isTableLayout" class="vlTableWrapper"><!-- TableWrapper useful for various CSS tricks, ex: border-radius -->
                         <table class="w-full table vlTable">
-                            <vl-table-headers :headers="headers" :kompoid="$_elKompoId" />
+                            <vl-table-headers :vkompo="component" :kompoid="$_elKompoId" />
                             <component v-bind="layoutAttributes" />
                         </table>
                     </div>
@@ -55,11 +55,12 @@ export default {
         pagination: null,
         headers: [],
         cardsKey: '',
+        filtersKey: 1,
         previewIndex: null
     }),
     created() {
-        this.cardsKey = 'cards' + this.vkompo.id
-        this.filters = this.vkompo.filters
+        this.cardsKey = 'cards' + this.component.id
+        this.filters = this.component.filters
         this.cards = this.getCards(this.component)
         this.pagination = this.getPagination(this.component)
         this.headers = this.component.headers
@@ -79,8 +80,6 @@ export default {
                 vkompo: this.component,
                 kompoid: this.$_elKompoId,
                 cards: this.cards,
-                headers: this.headers,
-                noItemsFound: this.noItemsFound,
                 key: this.cardsKey
             }
         },
@@ -105,7 +104,6 @@ export default {
         layoutComponent(){ return this.hasItems ? 'vl-' + this.component.layout : this.noItemsComponent },
         isTableLayout(){ return this.component.layout.indexOf('Table') > -1 },
         hasItems(){ return this.cards.length > 0 },
-        noItemsFound(){ return this.component.noItemsFound },
         noItemsComponent(){ return this.isTableLayout ? 'vl-table-no-items' : 'vl-no-items' },
     },
     methods: {
@@ -115,7 +113,8 @@ export default {
             return {
                 filters: this.filters[placement.toLowerCase()],
                 placement: placement,
-                kompoid: this.$_elKompoId
+                kompoid: this.$_elKompoId,
+                key: placement+this.filtersKey
             }
         },
         getJsonFormData(jsonFormData){
@@ -166,12 +165,32 @@ export default {
         $_attachEvents(){
             this.$_vlOn('vlEmit'+this.$_elKompoId, (eventName, eventPayload) => {
                 this.$emit(eventName, eventPayload)
-                if(this.kompoid)
-                    this.$_vlEmitFrom(eventName, eventPayload)
+
+                this.$_runOwnInteractions('emit', {
+                    payload: eventPayload
+                })
+
+                //to delete??
+                /*if(this.kompoid)
+                    this.$_vlEmitFrom(eventName, eventPayload)*/
             })
-            this.$_vlOn('vlRefreshQuery'+this.$_elKompoId, (page) => {
+            this.$_vlOn('vlBrowseQuery'+this.$_elKompoId, (page) => {
                 this.currentPage = page ? page : this.currentPage
+
                 this.browseQuery()
+            })
+            this.$_vlOn('vlRefreshKomposer'+this.$_elKompoId, (url, payload) => {
+                this.$_kAxios.$_refreshSelf(url, payload).then(r => {
+                    this.component = r.data
+
+                    Vue.set(this, 'filters', this.component.filters)
+                    Vue.set(this, 'pagination', this.getPagination(this.component))
+                    Vue.set(this, 'cards', this.getCards(this.component))
+                    Vue.set(this, 'headers', this.component.headers)
+
+                    this.cardsKey += 1
+                    this.filtersKey += 1
+                })
             })
             this.$_vlOn('vlSort'+this.$_elKompoId, (sortValue, emitterId) => {
                 this.currentSort = sortValue == this.currentSort ? '' : sortValue
@@ -190,7 +209,8 @@ export default {
         $_destroyEvents(){
             this.$_vlOff([
                 'vlEmit'+this.$_elKompoId,
-                'vlRefreshQuery'+this.$_elKompoId,
+                'vlBrowseQuery'+this.$_elKompoId,
+                'vlRefreshKomposer'+this.$_elKompoId,
                 'vlSort'+this.$_elKompoId,
                 'vlToggle'+this.$_elKompoId,
                 'vlPreview'+this.$_elKompoId,

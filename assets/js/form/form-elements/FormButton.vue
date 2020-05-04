@@ -1,5 +1,6 @@
 <template>
-    <vl-button 
+    <button 
+        type="button"
         v-if="!$_displayNone" v-show="!$_hidden"
         v-bind="$_attributes"
         @click="$_clickAction">
@@ -14,7 +15,7 @@
 
         <vl-form-info :component="component" />
 
-    </vl-button>
+    </button>
 </template>
 
 <script>
@@ -29,6 +30,19 @@ export default {
                 disabled: this.showSpinner,
                 kompoid: this.kompoid
             }
+        },
+        $_customClassArray(){
+            return [
+                this.btnClass
+            ]
+        },
+        btnClass(){
+            return 'vlBtn' + 
+                (this.$_data('btnOutlined') ? ' vlBtnOutlined' : '') +
+                (this.$_data('btnPlain') ? ' vlBtnPlain' : '') +
+                (this.$_data('btnInline') ? ' vlBtnInline' : '') +
+                (this.$_data('btnBlock') ? ' vlBtnBlock' : '') +
+                (this.$_data('secondary') ? ' vlSecondary' : '')
         }
     }
 }

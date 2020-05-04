@@ -16,7 +16,7 @@ trait HasInteractions
 
     protected static $proxies = [
         'onClick', 'onChange', 'onBlur', 'onInput', 'onEnter', 
-        'onSuccess', 'onError', 
+        'onSuccess', 'onError', 'onEmit'
     ];
 
     /**
@@ -77,6 +77,11 @@ trait HasInteractions
     public function onChange($function)
     {
         return $this->on('change', $function);
+    }
+
+    public function onEmit($function)
+    {
+        return $this->on('emit', $function);
     }
 
     public function onBlur($function)

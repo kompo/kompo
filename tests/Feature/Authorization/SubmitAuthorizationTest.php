@@ -37,9 +37,9 @@ class SubmitAuthorizationTest extends EnvironmentBoot
 
 		$this->expectException(AuthorizationException::class);
 
-		$this->withoutExceptionHandling()->withHeaders([
-			'X-Kompo-Info' => KompoInfo::getFromElement(new _SubmitUnauthorizedSubmitToForm())
-		])->post('submit-route');
+		$this->withoutExceptionHandling()->withHeaders(
+			KompoInfo::arrayFromElement(new _SubmitUnauthorizedSubmitToForm())
+		)->post('submit-route');
 	}
 
 	/** ------------------ PRIVATE --------------------------- */    

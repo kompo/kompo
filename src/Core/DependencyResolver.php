@@ -10,17 +10,18 @@ use ReflectionParameter;
 class DependencyResolver
 {
     /**
-     * Resolve the given method's type-hinted dependencies.
+     * Calls one of the Komposer's method with Dependency injection
      *
-     * @param  array  $parameters
-     * @param  \ReflectionFunctionAbstract  $reflector
-     * @return array
+     * @param Komposer  $komposer       
+     * @param string    $method         
+     * @param array     $specialParams  
+     *
+     * @return mixed
      */
-    public static function callKomposerMethod($komposer, $method = null, $specialParams = [], $defaultMethod = null)
+    public static function callKomposerMethod($komposer, $method, $specialParams = [], $force = false)
     {
-        $method = KompoTarget::getDecrypted($method) ?: $defaultMethod;
-
-        AuthorizationGuard::selfMethodGate($komposer, $method);
+        if(!$force)
+            AuthorizationGuard::selfMethodGate($komposer, $method);
 
         $reflectionMethod = new ReflectionMethod($komposer, $method);
 
@@ -38,7 +39,7 @@ class DependencyResolver
      * @param  \ReflectionFunctionAbstract  $reflector
      * @return array
      */
-    public static function resolveMethodDependencies(array $parameters, ReflectionFunctionAbstract $reflector)
+    protected static function resolveMethodDependencies(array $parameters, ReflectionFunctionAbstract $reflector)
     {
         $instanceCount = 0;
 

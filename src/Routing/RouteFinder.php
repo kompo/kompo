@@ -52,7 +52,7 @@ class RouteFinder
             return $komponent->data([
                 'route' => RouteFinder::getKompoRoute(),
                 'routeMethod' => $routeMethod,
-                'komposerClass' => KompoTarget::getEncrypted($routeOrKomposer)
+                'X-Kompo-Target' => KompoTarget::getEncrypted($routeOrKomposer)
             ]);
 
         return $komponent->data([
@@ -68,14 +68,18 @@ class RouteFinder
      * @param  mixed  $parameters
      * @return mixed
      */
-    public static function guessRoute($route, $parameters = null)
+    public static function guessRoute($route, $parameters = null, $payload = null, $routeMethod = null)
     {
         if(!$route)
             throw new EmptyRouteException();
         
         $routeObject = static::getRouteByName($route);
 
-        return is_null( $routeObject ) ? url($route, $parameters) : route($route, $parameters);
+        return static::appendQueryString(
+            is_null( $routeObject ) ? url($route, $parameters) : route($route, $parameters),
+            $routeMethod,
+            $payload
+        );
     }
 
     /**
@@ -105,9 +109,11 @@ class RouteFinder
      */
     public static function getKompoRoute($requestType = 'POST', $ajaxPayload = [])
     {
-        return url('_kompo').
-
-            (($requestType == 'GET' && count($ajaxPayload) ) ? ('?'.Arr::query($ajaxPayload)) : '');
+        return static::appendQueryString(
+            url('_kompo'), 
+            $requestType, 
+            $ajaxPayload
+        );
     }
 
 
@@ -137,5 +143,11 @@ class RouteFinder
     protected static function getRouteByName($route)
     {
         return \Route::getRoutes()->getByName($route);
+    }
+
+
+    protected static function appendQueryString($url, $method = null, $payload = null)
+    {
+        return $url.(($method == 'GET' && count($payload ?: []) ) ? ('?'.Arr::query($payload)) : '');
     }
 }
