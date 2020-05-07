@@ -6,7 +6,7 @@ use Kompo\Menu;
 
 class _BootUnauthorizedMenu extends Menu
 {
-	public function bootAuthorization()
+	public function authorizeBoot()
 	{
 		return false;
 	}

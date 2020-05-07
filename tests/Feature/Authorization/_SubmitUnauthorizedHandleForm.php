@@ -6,7 +6,7 @@ use Kompo\Form;
 
 class _SubmitUnauthorizedHandleForm extends Form
 {
-	public function authorization()
+	public function authorize()
 	{
 		return false;
 	}

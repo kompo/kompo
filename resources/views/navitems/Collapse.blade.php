@@ -14,9 +14,11 @@
             @include('kompo::partials.ItemContent', ['component' => $component])
         
         </a>
+        @if(count($component->komponents))
         <div>
             <i class="icon-down-dir"></i>
         </div>
+        @endif
     </div>
     
     <div class="vl-collapse-menu {{ $vlCollapseOpen ? '' : 'vl-menu-closed' }}">

@@ -2,12 +2,13 @@
 
 namespace Kompo;
 
+use Kompo\Elements\Traits\HasGutters;
 use Kompo\Komponents\Layout;
 use Kompo\Komponents\Traits\VerticalAlignmentTrait;
 
 class Columns extends Layout
 {
-    use VerticalAlignmentTrait;
+    use VerticalAlignmentTrait, HasGutters;
 
     public $vueComponent = 'Columns';
 
@@ -38,17 +39,6 @@ class Columns extends Layout
     public function breakpoint($breakpoint = null)
     {
         $this->data(['breakpoint' => $breakpoint]);
-        return $this;
-    }
-
-    /**
-     * Removes the gutters (no padding between the columns).
-     *
-     * @return self 
-     */
-    public function noGutters()
-    {
-        $this->data(['guttersClass' => 'no-gutters']);
         return $this;
     }
 

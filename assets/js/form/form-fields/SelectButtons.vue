@@ -26,7 +26,12 @@ import Field from '../mixins/Field'
 export default {
     mixins: [Field],
     computed:{
-        containerClass(){ return this.$_data('containerClass') },
+        containerClass(){ 
+            return this.$_classString([
+                this.$_data('containerClass'),
+                this.$_data('guttersClass') 
+            ])
+        },
         optionClass(){ return this.$_data('optionClass') },
         options(){ return this.component.options }
     },

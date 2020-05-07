@@ -6,7 +6,7 @@ use Kompo\Menu;
 
 class _SelfRequestUnauthorizedMenu extends Menu
 {
-	public function authorization()
+	public function authorize()
 	{
 		return false;
 	}

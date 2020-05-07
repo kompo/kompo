@@ -295,11 +295,11 @@ abstract class Field extends Komponent
     {
         if(config('kompo.smart_readonly_fields') && method_exists($komposer, 'authorize')){
 
-            $authorization = $komposer->authorize();
+            $authorize = $komposer->authorize();
 
             Util::collect($this->name)->each(function($name) {
             
-                if(!$authorization || (is_array($authorization) && !in_array($name, $authorization)))
+                if(!$authorize || (is_array($authorize) && !in_array($name, $authorize)))
                     $this->readOnly();
 
             });

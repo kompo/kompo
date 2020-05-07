@@ -4,7 +4,7 @@
     	:class="$_prop('col')">
     	<div :class="$_prop('class')" :style="divStyle">
 	        <i :class="$_prop('icon')" />
-	        <h3 v-html="$_prop('text')" />
+	        <div :class="$_prop('textClass')" v-html="$_prop('text')" />
 	    </div>
     </a>
 </template>
@@ -23,19 +23,19 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.vlSelected>div>h3{
+.vlSelected>div>div{
     font-weight: bold;
 }
 .vlIconText>div{
 	display: flex;
 	width: 100%;
 	align-items: center;
+	justify-content: space-around;
 	padding: 0.5rem;
 	>i{
-		width: 3rem;
 		text-align: center;
 	}
-	>h3{
+	>div{
 		flex: 1;
 	}
 }

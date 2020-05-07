@@ -9,7 +9,7 @@ class _SubmitUnauthorizedEloquentForm extends Form
 {
 	public $model = Obj::class;
 	
-	public function authorization()
+	public function authorize()
 	{
 		return false;
 	}

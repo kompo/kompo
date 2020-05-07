@@ -14,7 +14,7 @@ class AuthorizationGuard
 {
     public static function checkBoot($komposer)
     {
-        if(!$komposer->bootAuthorization())
+        if(!$komposer->authorizeBoot())
             throw new UnauthorizedException( get_class($komposer), 'boot' );
 
         if(KompoAction::is(['eloquent-submit', 'handle-submit']))
@@ -25,7 +25,7 @@ class AuthorizationGuard
 
     public static function mainGate($komposer)
     {
-    	if(method_exists($komposer, 'authorization') && !$komposer->authorization())
+    	if(method_exists($komposer, 'authorize') && !$komposer->authorize())
     		throw new UnauthorizedException( get_class($komposer), 'main' );
 
         return true;

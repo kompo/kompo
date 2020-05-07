@@ -23,11 +23,10 @@ trait QueryActions
     ];
 
     /**
-     * Filters a Query onChange for a Field. 
-     * - To filter by an attribute, the field name should be the attribute that will be filtered. 
-     * - For a relationship, you may chain a dot-separated string to filter against a nested relationship.
+     * Filters a Query `onChange` for a Field or `onInput` for a text Input field by default. 
+     * If these default triggers do not suit you, use another one, for example: <php>->onBlur->filter('>=')</php>
      *
-     * @param string|null $operator A supported operator =, >, <, >=, <=, LIKE, STARTSWITH, ENDSWITH, BETWEEN, IN
+     * @param string|null $operator Pick one of these supported operators `=`, `>`, `<`, `>=`, `<=`, `LIKE`, `STARTSWITH`, `ENDSWITH`, `BETWEEN`, `IN`.<br>Or keep blank to fallback to the field's default operator.
      *
      * @return     self
      */
@@ -65,6 +64,16 @@ trait QueryActions
         return $this->prepareAction('sortQuery');
     }
 
+
+    /**
+     * Reload the cards of one or many Query(ies). If $queryId is left blank, it will browse cards of it's parent query.
+     * Otherwise, you may set a string or an array of query ids to refresh.
+     *
+     * @param string|null   $queryId  The target Query Id or
+     * @param integer|null  $page     The page
+     *
+     * @return self
+     */
     public function browse($queryId = null, $page = null)
     {
         return $this->prepareAction('browseQuery', [

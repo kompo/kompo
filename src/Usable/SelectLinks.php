@@ -2,10 +2,13 @@
 
 namespace Kompo;
 
+use Kompo\Elements\Traits\HasGutters;
 use Kompo\Select;
 
 class SelectLinks extends Select
 {
+    use HasGutters;
+    
     public $vueComponent = 'SelectButtons';
 
     protected function vlInitialize($label)

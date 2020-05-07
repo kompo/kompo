@@ -35,7 +35,7 @@ abstract class Komposer extends Element
 	 *
 	 * @return boolean Is booting the Komposer authorized or not?
 	 */
-	public function bootAuthorization()
+	public function authorizeBoot()
 	{
 		return true;
 	}
