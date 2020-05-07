@@ -14,7 +14,7 @@ class Locales extends Dropdown
         parent::vlInitialize($label ?: strtoupper(session('kompo_locale')));
 
     	$this->submenu(
-            collect(config('vuravel.locales'))->map(function($language, $locale){
+            collect(config('kompo.locales'))->map(function($language, $locale){
 				return Link::form($language)->href('setLocale',['locale' => $locale]);
 			})
 		)->alignRight();

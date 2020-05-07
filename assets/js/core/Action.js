@@ -178,7 +178,7 @@ export default class Action {
             formData.append(key, jsonFormData[key])
         }
         if(this.warningConfirmed)
-            formData.append('vuravelConfirmed', this.warningConfirmed)
+            formData.append('kompoConfirmed', this.warningConfirmed)
         return formData
     }
 

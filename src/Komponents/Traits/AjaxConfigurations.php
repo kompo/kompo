@@ -22,7 +22,7 @@ trait AjaxConfigurations
     /**
      * Cancels or reverts the closest parent Panel (hides it and shows previous state).
      *
-     * @return Vuravel\Elements\Element
+     * @return Kompo\Elements\Element
      */
     public function revertsPanel()
     {
@@ -33,7 +33,7 @@ trait AjaxConfigurations
     /**
      * Removes the form Row of the closes parent MultiForm.
      *
-     * @return Vuravel\Elements\Element
+     * @return Kompo\Elements\Element
      */
     public function revertsFormRow()
     {
@@ -44,7 +44,7 @@ trait AjaxConfigurations
     /**
      * Keeps the modal open after a form submit.
      *
-     * @return Vuravel\Elements\Element
+     * @return Kompo\Elements\Element
      */
     public function keepModalOpen()
     {

@@ -4,10 +4,10 @@
   </a>
 </p>
 <h6 align="center">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/vuravel/komponents.svg">
-    <img src="https://img.shields.io/npm/dt/vuravel-komponents.svg?style=flat-square" alt="Downloads" />
-    <img src="https://img.shields.io/npm/v/vuravel-komponents.svg?style=flat-square" alt="Version" />
-    <img src="https://img.shields.io/npm/l/vuravel-komponents.svg?style=flat-square" alt="License" />
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/kompophp/kompo.svg">
+    <img src="https://img.shields.io/npm/dt/kompophp/kompo.svg?style=flat-square" alt="Downloads" />
+    <img src="https://img.shields.io/npm/v/kompophp/kompo.svg?style=flat-square" alt="Version" />
+    <img src="https://img.shields.io/npm/l/kompophp/kompo.svg?style=flat-square" alt="License" />
 </h6>
 <h3 align="center">
     <a href="https://kompo.io" target="_blank">kompo.io</a>
@@ -16,7 +16,7 @@
     &nbsp;&nbsp;&bull;&nbsp;&nbsp;
     <a href="https://kompo.io/examples" target="_blank">Demos</a>
     &nbsp;&nbsp;&bull;&nbsp;&nbsp;
-    <a href="https://twitter.com/vuravel" target="_blank">Twitter</a>
+    <a href="https://twitter.com/kompophp" target="_blank">Twitter</a>
 </h3>
 
 # kompophp/kompo

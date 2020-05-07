@@ -11,7 +11,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.Vue = require('vue');
 
-// Vuravel packages
+// Kompo packages
 require('vue-kompo')
 /*require('kompo-ckeditor')
 require('kompo-googlemaps')
