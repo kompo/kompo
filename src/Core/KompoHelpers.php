@@ -152,6 +152,14 @@ if(! function_exists('_Form'))
     }
 }
 
+if(! function_exists('_Alert'))
+{
+    function _Alert()
+    {
+        return Kompo\Alert::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Badge'))
 {
     function _Badge()
@@ -501,6 +509,14 @@ if(! function_exists('_Stripe'))
     function _Stripe()
     {
         return Kompo\Stripe::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_SubmitButton'))
+{
+    function _SubmitButton()
+    {
+        return Kompo\SubmitButton::form(...func_get_args());
     }
 }
 

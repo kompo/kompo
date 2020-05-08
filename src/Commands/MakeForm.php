@@ -11,7 +11,7 @@ class MakeForm extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'kompo:form {name}';
+    protected $signature = 'kompo:form {name} {--demo}';
 
     /**
      * The console command description.
@@ -46,7 +46,7 @@ class MakeForm extends GeneratorCommand
      */
     protected function getStub()
     {
-        return  __DIR__ . '/stubs/kompo-form.stub';
+        return  __DIR__ . '/stubs/kompo-'.($this->option('demo') ? 'demo-' : '').'form.stub';
     }
     /**
      * Get the default namespace for the class.
@@ -67,6 +67,13 @@ class MakeForm extends GeneratorCommand
     {
         return [
             ['name', InputArgument::REQUIRED, 'The class name of the form.'],
+        ];
+    }
+
+    protected function getOptions()
+    {
+        return [
+            ['demo', InputOption::VALUE_NONE, 'Copy the Kompo Demo Form for first render in quick installation']
         ];
     }
 

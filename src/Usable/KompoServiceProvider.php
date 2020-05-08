@@ -36,7 +36,7 @@ class KompoServiceProvider extends ServiceProvider
                 Commands\MakeForm::class,
                 Commands\MakeQuery::class,
                 Commands\MakeTable::class,
-                Commands\MakeMenu::class
+                Commands\MakeMenu::class,
             ]);
         }
 

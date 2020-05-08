@@ -297,7 +297,7 @@ abstract class Field extends Komponent
 
             $authorize = $komposer->authorize();
 
-            Util::collect($this->name)->each(function($name) {
+            Util::collect($this->name)->each(function($name) use($authorize) {
             
                 if(!$authorize || (is_array($authorize) && !in_array($name, $authorize)))
                     $this->readOnly();
