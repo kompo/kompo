@@ -17,6 +17,12 @@ trait SubmitFormActions
      */
     public function submit($methodName = null)
     {
+        $this->applyToElement(function($element) {
+            $element->data([
+                'submitsForm' => true
+            ]);
+        });
+
         return $this->prepareAction('submitForm', [
             'kompoMethod' => $methodName ? KompoTarget::getEncrypted($methodName) : null
         ]);

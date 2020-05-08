@@ -21,7 +21,7 @@
 
 # kompophp/kompo
 
-`kompophp/kompo` is a library of Fullstack Komponents to help you write forms, queries and menus in a matter of seconds. 
+This package is the Frontend for `kompophp/kompo`, a library of Fullstack Komponents to write forms, queries and menus in a matter of seconds. 
 
 It is built on top of Laravel and Vue.js.
 
@@ -36,7 +36,7 @@ It is built on top of Laravel and Vue.js.
 
 <a href="https://kompo.io/docs" target="_blank">Documentation</a>
 
-## COMPONENTS API
+## KOMPONENTS API
 
 <a href="https://kompo.io/api" target="_blank">API</a>
 

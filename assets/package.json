@@ -1,6 +1,6 @@
 {
   "name": "vue-kompo",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Laravel Vue components for Rapid Application Development",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "form-controls",
     "relationships"
   ],
-  "author": "Seba Hmi <contact@kompophp.com> (https://kompophp.com)",
+  "author": "Seba Hmi <contact@kompo.io> (https://kompo.io)",
   "license": "MIT",
   "dependencies": {
     "vue": "^2.5.7"
