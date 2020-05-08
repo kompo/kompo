@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://kompo.io" target="_blank">
-    <img src="https://kompo.io/img/kompo-logo.svg" width="151" height="30" alt="Kompo-logo" />
+    <img src="https://kompo.io/img/kompo-logo.svg?" width="151" height="30" alt="Kompo-logo" />
   </a>
 </p>
 <h6 align="center">
