@@ -224,6 +224,14 @@ if(! function_exists('_Date'))
     }
 }
 
+if(! function_exists('_DateRange'))
+{
+    function _DateRange()
+    {
+        return Kompo\DateRange::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_DateTime'))
 {
     function _DateTime()
