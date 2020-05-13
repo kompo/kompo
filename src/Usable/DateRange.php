@@ -6,7 +6,14 @@ use Kompo\Date;
 
 class DateRange extends Date
 {
-    public $vueComponent = 'DateRange';
+    public $vueComponent = 'Date';
+
+    protected function vlInitialize($label)
+    {
+        parent::vlInitialize($label);
+
+        $this->dateMode('range');
+    }
 
     public function setOutput($value, $key)
     {

@@ -11,7 +11,7 @@ class _SubmitUnauthorizedHandleForm extends Form
 		return false;
 	}
 
-	public function handle($request)
+	public function handle()
 	{
 		
 	}

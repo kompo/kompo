@@ -36,18 +36,17 @@ class SelectUpdatable extends Select
      * After submit, the object will be added to the select options (and selected).
      *
      * @param string       $formClassOrRoute  The fully qualified form class or kompo route url. 
-     * @param string|null  $routeMethod       The desired method for the request. Default is a GET request.
      * @param array|null   $ajaxPayload       Additional custom data to add to the request (optional).
      *
      * @return self 
      */
     public function addsRelatedOption(
         $formClassOrRoute, 
-        $routeMethod = 'GET',
         $ajaxPayload = null
     )
     {
-        return RouteFinder::setUpKomposerRoute($this, $formClassOrRoute, $routeMethod)->data([
+        //it has to be POST... automatic payload contains id for reopening Form
+        return RouteFinder::setUpKomposerRoute($this, $formClassOrRoute, 'POST')->data([
             'ajaxPayload' => $ajaxPayload,
             'sessionTimeoutMessage' => __('sessionTimeoutMessage')
         ]);

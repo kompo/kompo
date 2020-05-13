@@ -33,4 +33,21 @@ class Date extends Field
     	return $this;
     }
 
+    /**
+     * Sets the mode of the FlatPickr instance. 
+     *
+     * @param string  $dateMode  The date mode, ex: 'range'
+     *
+     * @return self   
+     */
+    public function dateMode($mode)
+    {
+        $this->data([
+            'dateMode' => $mode
+        ]);
+        return $this;
+    }
+
+
+
 }

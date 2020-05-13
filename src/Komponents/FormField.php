@@ -85,7 +85,7 @@ class FormField
     {
         $field->checkSetReadonly($komposer);
 
-        return static::getConfig($field, 'doesNotFill') || $field->data('readOnly');
+        return static::getConfig($field, 'doesNotFill') || static::getConfig($field, 'ignoresModel') || $field->data('readOnly');
     }
 
     /**
