@@ -9,6 +9,6 @@ class Button extends Trigger
 { 	
 	use TriggerStyles;
 	
-    public $vueComponent = 'FormButton';
+    public $vueComponent = 'Button';
     public $bladeComponent = 'Button';
 }

@@ -137,9 +137,10 @@ class KomposerHandler
      */
     public static function deleteRecord($komposer)
     {
-        $deleteKey = request('deleteKey');
+        $model = KompoTarget::getDecrypted();
 
-        $record = $komposer->model->newInstance()->findOrFail($deleteKey);
+        //$record = $komposer->model->newInstance()->findOrFail($deleteKey);
+        $record = $model::findOrFail(request('deleteKey'));
 
         if( 
             (method_exists($record, 'deletable') && $record->deletable()) 

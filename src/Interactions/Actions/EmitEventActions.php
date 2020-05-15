@@ -5,12 +5,13 @@ namespace Kompo\Interactions\Actions;
 trait EmitEventActions
 {
     /**
-     * Emits a Vue event when clicked with an optional payload as the event's first parameter.
+     * Emits a Vue event to the parent <b>Komposer</b>.
+     * You may add an optional payload as the event's first parameter.
      *
-     * @param      string  $event  The event name
-     * @param      array|null  $data   The optional additional data
+     * @param  string  $event  The event name
+     * @param  array|null  $data   The optional additional data
      *
-     * @return     self  
+     * @return self  
      */
     public function emit($event, $data = null)
     {
@@ -20,8 +21,15 @@ trait EmitEventActions
 	    ]);
     }
 
-    /********** INTERNAL USE *********************/
-    //Internal use only for now. To emit from vl-button, vl-link
+    /**
+     * Emits a regular Vue event to it's parent <b>Komponent</b>. This is useful for custom Komponents.
+     * You may add an optional payload as the event's first parameter.
+     *
+     * @param  string  $event  The event name
+     * @param  array|null  $data   The optional additional data
+     *
+     * @return self  
+     */
     public function emitDirect($event)
     {
         return $this->prepareAction('emitDirect', [

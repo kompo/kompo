@@ -19,22 +19,18 @@ class DeleteLink extends Link
     }
 
 	/**
-	 * Activates the delete functionality by specifying the key of the item to be deleted.
+	 * Activates the delete functionality by specifying the Model's record that will be deleted.
 	 *
-	 * @param Eloquent\Model  $deleteItem  The model that will be deleted. 
+	 * @param Eloquent\Model $deleteItem  The model that will be deleted. 
 	 *
 	 * @return self  
 	 */
 	public function byKeyNonStatic($deleteItem)
 	{
-		return $this->selfHttpRequest('DELETE', 'delete-item', null, [
+		return $this->selfHttpRequest('DELETE', 'delete-item', get_class($deleteItem), [
 
-			'deleteKey' => $deleteItem instanceOf Model ? 
+			'deleteKey' => $deleteItem instanceOf Model ? $deleteItem->getKey() : ($deleteItem->id ?? null)
 
-								$deleteItem->getKey() : 
-
-								($deleteItem->id ?? null)
-			
 		])->emitDirect('deleted');
 	}
 

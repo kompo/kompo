@@ -16,7 +16,7 @@ trait AxiosRequestActions
     }
 
 
-    public function selfHttpRequest($requestType, $kompoAction, $methodName, $ajaxPayload = null)
+    public function selfHttpRequest($requestType, $kompoAction, $classOrMethod, $ajaxPayload = null)
     {
         return $this->prepareAxiosRequest(array_merge([
             'route' => RouteFinder::getKompoRoute($requestType, $ajaxPayload),
@@ -24,7 +24,7 @@ trait AxiosRequestActions
             'ajaxPayload' => $ajaxPayload
         ],
             KompoAction::headerArray($kompoAction),
-            KompoTarget::getEncryptedArray($methodName)
+            KompoTarget::getEncryptedArray($classOrMethod)
         ));
     }
 

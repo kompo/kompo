@@ -109,6 +109,7 @@ abstract class Field extends Komponent
      * <u>Note</u>: if the Form is connected to an Eloquent Model, the DB value takes precedence.
      *
      * @param  string|array $value The value to be set.
+     * 
      * @return self
      */
     public function value($value)
