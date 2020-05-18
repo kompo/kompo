@@ -96,15 +96,26 @@ abstract class Komponent extends Element
         return $this;
     }
 
+    public static function iconStatic($iconClass)
+    {
+        return static::form('')->icon($iconClass);
+    }
+
     /**
-     * Adds an icon before component's label.
+     * Adds an icon after component's label.
      *
      * @param  string $iconClass This is the class in &lt;i class="...">&lt;/i>
      * @return Element
      */
-    public static function iconStatic($iconClass)
+    public function rIconNonStatic($iconClass)
     {
-        return static::form('')->icon($iconClass);
+        $this->data(['rIcon' => $iconClass]);
+        return $this;
+    }
+
+    public static function rIconStatic($iconClass)
+    {
+        return static::form('')->rIcon($iconClass);
     }
 
     /**
@@ -114,6 +125,6 @@ abstract class Komponent extends Element
      */
     public static function duplicateStaticMethods()
     {
-        return ['label', 'icon'];
+        return ['label', 'icon', 'rIcon'];
     }
 }
