@@ -25,6 +25,8 @@ class DateRangeFieldTest extends EnvironmentBoot
 
 		$form = new _DateRangeValueFromModelForm(1);
 
+		//dd($post->created_at);
+
 		$this->assertIsArray($form->komponents[0]->value);
 		$this->assertEquals($post->created_at, $form->komponents[0]->value[0]);
 		$this->assertEquals($post->updated_at, $form->komponents[0]->value[1]);

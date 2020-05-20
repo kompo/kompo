@@ -8,17 +8,22 @@ class Date extends Field
 {
     public $vueComponent = 'Date';
 
+    protected $dbFormat = 'Y-m-d';
+    protected $configFormatKey = 'default_date_format';
+
     protected function vlInitialize($label)
     {
         parent::vlInitialize($label);
 
         $this->icon('icon-calendar');
+
+        $this->setDbFormat();
         
-        $this->dateFormat(config('kompo.default_date_format') ?: 'Y-m-d');
+        $this->dateFormat($this->configDateFormat());
     }
 
     /**
-     * Sets a FlatPickr accepted date format. By default, it's 'Y-m-d'.
+     * Sets a FlatPickr accepted alt format. By default, it's 'Y-m-d'.
      *
      * @param      string  $dateFormat  The date format
      *
@@ -27,7 +32,6 @@ class Date extends Field
     public function dateFormat($dateFormat)
     {
     	$this->data([
-            'dateFormat' => $dateFormat,
             'altFormat' => $dateFormat
         ]);
     	return $this;
@@ -48,6 +52,18 @@ class Date extends Field
         return $this;
     }
 
+    /** PROTECTED ***/
 
+    protected function setDbFormat()
+    {
+        return $this->data([
+            'dateFormat' => $this->dbFormat
+        ]);
+    }
+
+    protected function configDateFormat()
+    {
+        return config('kompo.'.$this->configFormatKey) ?: $this->dbFormat;
+    }
 
 }
