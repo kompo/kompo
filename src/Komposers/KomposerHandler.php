@@ -67,7 +67,7 @@ class KomposerHandler
      */
     public static function selfAjaxMethod($komposer)
     {
-        AuthorizationGuard::mainGate($komposer);
+        AuthorizationGuard::mainGate($komposer, 'selfAjax');
 
         return DependencyResolver::callKomposerMethod($komposer, KompoTarget::getDecrypted(), request()->all());
     }
@@ -84,7 +84,7 @@ class KomposerHandler
      */
     public static function getMatchedSelectOptions($komposer)
     {
-        AuthorizationGuard::mainGate($komposer);
+        AuthorizationGuard::mainGate($komposer, 'search-options');
         
         return Select::transformOptions(
             DependencyResolver::callKomposerMethod($komposer, KompoTarget::getDecrypted(), [

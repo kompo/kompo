@@ -38,20 +38,4 @@ class KompoFormRequest extends FormRequest
         return ValidationManager::getRules($this->komposer);
     }
 
-    /**
-     * Gets the failed authorization message.
-     *
-     * @return     Illuminate\Auth\Access\AuthorizationException
-     */
-    protected function failedAuthorization()
-    {
-        if(method_exists($this->komposer, 'failedAuthorization'))
-            return $this->komposer->failedAuthorization();
-
-        if($this->komposer->getFailedAuthorizationMessage())
-            throw new AuthorizationException($this->komposer->getFailedAuthorizationMessage());
-
-        parent::failedAuthorization(); 
-    }
-
 }

@@ -2,7 +2,7 @@
 
 namespace Kompo\Tests\Unit\Form;
 
-use Kompo\Exceptions\UnauthorizedException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Kompo\Tests\EnvironmentBoot;
 
 class SubmitRedirectBehaviorTest extends EnvironmentBoot
@@ -60,7 +60,7 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
 	/** @test */
 	public function form_has_submit_prevented_by_property()
 	{
-		$this->expectException(UnauthorizedException::class);
+		$this->expectException(AuthorizationException::class);
 
 		$form = new _PreventSubmitForm();
 

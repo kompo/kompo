@@ -3,7 +3,6 @@ namespace Kompo\Tests\Feature\Authorization;
 
 use Kompo\Core\KompoInfo;
 use Kompo\Exceptions\NotFoundKompoActionException;
-use Kompo\Exceptions\UnauthorizedException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Kompo\Http\Requests\KompoFormRequest;
 use Kompo\Tests\EnvironmentBoot;
@@ -46,7 +45,7 @@ class SubmitAuthorizationTest extends EnvironmentBoot
 
 	private function assert_unauthorized_submit($objClass)
 	{
-		$this->expectException(UnauthorizedException::class);
+		$this->expectException(AuthorizationException::class);
 		
 		$this->withoutExceptionHandling()->submit($objClass);
 	}

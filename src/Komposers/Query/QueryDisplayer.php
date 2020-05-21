@@ -49,7 +49,7 @@ class QueryDisplayer
      */
     public static function browseCards($query)
     {        
-        AuthorizationGuard::mainGate($query);
+        AuthorizationGuard::mainGate($query, 'browsing');
 
         ValidationManager::validateRequest($query);
 

@@ -2,7 +2,7 @@
 namespace Kompo\Tests\Feature\Authorization;
 
 use Kompo\Tests\EnvironmentBoot;
-use Kompo\Exceptions\UnauthorizedException;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class BootAuthorizationTest extends EnvironmentBoot
 {
@@ -69,7 +69,7 @@ class BootAuthorizationTest extends EnvironmentBoot
 
 	private function assert_unauthorized_boot_display($objClass)
 	{
-		$this->expectException(UnauthorizedException::class);
+		$this->expectException(AuthorizationException::class);
 		
 		$obj = new $objClass();
 	}
@@ -78,7 +78,7 @@ class BootAuthorizationTest extends EnvironmentBoot
 	{
 		\Route::kompo('test-route', $objClass);
 
-		$this->expectException(UnauthorizedException::class);
+		$this->expectException(AuthorizationException::class);
 		
 		$this->withoutExceptionHandling()->get('test-route');
 	}

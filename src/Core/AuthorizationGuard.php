@@ -6,6 +6,7 @@ use Kompo\Core\KompoAction;
 use Kompo\Exceptions\KomposerMethodNotFoundException;
 use Kompo\Exceptions\KomposerNotDirectMethodException;
 use Kompo\Exceptions\UnauthorizedException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Kompo\Komposers\KomposerManager;
 use Kompo\Routing\Dispatcher;
 use ReflectionClass;
@@ -15,7 +16,7 @@ class AuthorizationGuard
     public static function checkBoot($komposer)
     {
         if(!$komposer->authorizeBoot())
-            throw new UnauthorizedException( get_class($komposer), 'boot' );
+            return static::throwUnauthorizedException( $komposer, 'boot' );
 
         if(KompoAction::is(['eloquent-submit', 'handle-submit']))
             static::checkPreventSubmit($komposer);
@@ -23,10 +24,10 @@ class AuthorizationGuard
         KomposerManager::created($komposer);
     }
 
-    public static function mainGate($komposer)
+    public static function mainGate($komposer, $stage = null)
     {
     	if(method_exists($komposer, 'authorize') && !$komposer->authorize())
-    		throw new UnauthorizedException( get_class($komposer), 'main' );
+    		return static::throwUnauthorizedException( $komposer, $stage );
 
         return true;
     }
@@ -47,6 +48,17 @@ class AuthorizationGuard
 
     /**** PRIVATE / PROTECTED ****/
 
+    protected static function throwUnauthorizedException($komposer, $stage = null)
+    {
+        $message = method_exists($komposer, 'failedAuthorization') ? 
+            $komposer->failedAuthorization() :
+            $komposer->getFailedAuthorizationMessage();
+
+        throw new AuthorizationException($message ?: 
+            ("The ".($stage ?: 'called')." functionality is unauthorized on this class.")
+        );
+    }
+
     protected static function checkMethodExists($komposer, $method)
     {
         if(!method_exists($komposer, $method))
@@ -56,6 +68,6 @@ class AuthorizationGuard
     protected static function checkPreventSubmit($komposer)
     {
         if($komposer->_kompo('options', 'preventSubmit'))
-            throw new UnauthorizedException( get_class($komposer), 'submit' );
+            return static::throwUnauthorizedException( $komposer, 'submit');
     }
 }

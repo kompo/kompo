@@ -1,7 +1,7 @@
 <?php
 namespace Kompo\Tests\Feature\Authorization;
 
-use Kompo\Exceptions\UnauthorizedException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Kompo\Tests\EnvironmentBoot;
 
 class BrowseFilterAuthorizationTest extends EnvironmentBoot
@@ -9,7 +9,7 @@ class BrowseFilterAuthorizationTest extends EnvironmentBoot
     /** @test */
 	public function browse_is_unauthorized_for_query()
 	{
-		$this->expectException(UnauthorizedException::class);
+		$this->expectException(AuthorizationException::class);
 		
 		$this->withoutExceptionHandling()->browse(new _BrowseFilterUnauthorizedQuery());
 	}

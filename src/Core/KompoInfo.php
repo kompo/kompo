@@ -21,8 +21,8 @@ class KompoInfo extends KompoAjax
                 'kompoClass' => get_class($komposer),
                 'store' => $komposer->store(),
                 'parameters' => $komposer->parameter(),
-                'uri' => optional(request()->route())->uri(),
-                'method' => optional(request()->route())->methods()[0]
+                //'uri' => optional(request()->route())->uri(),
+                //'method' => optional(request()->route())->methods()[0]
             ]
         );
 

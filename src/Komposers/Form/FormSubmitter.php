@@ -15,7 +15,7 @@ class FormSubmitter extends FormBooter
 {
     protected static function prepareForSubmit($form)
     {
-        AuthorizationGuard::mainGate($form);
+        AuthorizationGuard::mainGate($form, 'submit');
 
         ValidationManager::validateRequest($form);
     } 

@@ -1,7 +1,7 @@
 <?php
 namespace Kompo\Tests\Feature\Authorization;
 
-use Kompo\Exceptions\UnauthorizedException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Kompo\Tests\EnvironmentBoot;
 
 class SelfRequestsAuthorizationTest extends EnvironmentBoot
@@ -79,7 +79,7 @@ class SelfRequestsAuthorizationTest extends EnvironmentBoot
 
 	private function self_request_unauthorized_for($komposer, $type)
 	{
-		$this->expectException(UnauthorizedException::class);
+		$this->expectException(AuthorizationException::class);
 
 		$this->withoutExceptionHandling()->{'self'.$type}($komposer, 'whatever');
 
