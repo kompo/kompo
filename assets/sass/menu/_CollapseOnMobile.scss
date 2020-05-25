@@ -1,0 +1,68 @@
+//helper class
+.vl-flex-column-stretch{display: flex; flex-direction: column; align-items: stretch;}
+
+.vl-navbar-toggler{
+	cursor: pointer;
+	font-size: 1.5rem;
+	width: 3.5rem;
+	text-align: center;
+	span:first-child{
+		display: none;
+	}
+	span:last-child{
+		display: inline;
+	}		
+	&.vl-toggler-closed{
+		span:first-child{
+			display: inline;
+		}
+		span:last-child{
+			display: none;
+		}
+	}
+}
+.vl-collapse-on-mobile-menu{
+	flex-basis:100%;
+	@extend .vl-flex-column-stretch;
+    overflow-y: auto;
+    max-height: calc(100vh - 50px);
+	.vl-nav-left{
+		justify-content: flex-start;
+		@extend .vl-flex-column-stretch;
+	}
+	.vl-nav-right{
+		justify-content: flex-end;
+		@extend .vl-flex-column-stretch;
+	}
+	&.vl-menu-closed{
+		display: none;
+	}
+}
+@include media-breakpoint-down(md) {
+	.vl-collapse-on-mobile-menu{
+		padding-bottom: 50px; //for iOS Safari's bottom toolbar and give room to breathe
+	}
+}
+@include media-breakpoint-up(lg) {
+	.vl-navbar-toggler{
+		display: none;
+	}
+	.vl-collapse-on-mobile-menu{
+		flex-basis:auto;
+		flex-grow: 1;
+		justify-content: space-between;
+		flex-direction: row;
+		overflow-y: initial;
+		&.vl-menu-closed{
+			display: flex; //&.vl-menu-closed to override mobile default
+		}
+		.vl-nav-left{
+			justify-content: flex-start;
+			flex-direction: row;
+		}
+		.vl-nav-right{
+			justify-content: flex-end;
+			flex-direction: row;
+		}
+	}
+}

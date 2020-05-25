@@ -1,0 +1,108 @@
+.vlFormLabel{
+	color: $form-primary-color;
+	display: inline-block;
+	
+	@if variable-exists(form-label-margin-b){
+		margin-bottom: $form-label-margin-b;
+	}
+
+	@if variable-exists(form-label-position){
+		//&:not(.vlFixedLabel){
+			position: $form-label-position;
+			top: $form-label-position-t;
+			left: $form-label-position-l;
+			transition: all 0.3s;
+			z-index: 5;
+		//}
+	}
+}
+
+@if variable-exists(form-label-position){
+	
+	//Initial state
+	.vlSelectButtons, .vlSelectLinks{
+		.vlFormLabel{
+			top: $form-label-select-buttons-position-t;
+		}
+	}
+	.vlCKEditor, .vlTranslatableEditor{
+		.vlFormLabel{
+			top: $form-label-editor-position-t;
+		}
+	}
+	.vlTrix{
+		.vlFormLabel{
+			top: $form-label-trix-position-t;
+		}
+	}
+
+	//Focused/Dirty state
+	.vlFormField{
+		&:focus-within, &.vlDirtyField{
+			.vlFormLabel{
+				top: $form-label-focused-position-t;
+				left: $form-label-focused-position-l;
+				font-size: $form-label-focused-font-size;
+				@if variable-exists(form-label-focused-font-weight){
+					font-weight: $form-label-focused-font-weight;
+				}
+				transition: all 0.2s;
+				@if variable-exists(form-label-focused-color){
+					background-color: $form-label-focused-color;
+					padding: 0 0.3rem;
+				}
+			}
+		}
+
+		&.vlCheckbox,&.vlToggle,&.vlToggleInput {
+			.vlFormLabel{
+				position: static;
+	            font-size: inherit;  
+				@if variable-exists(form-label-focused-font-weight){
+	            	font-weight: inherit;
+	            }
+	        }
+        }
+        &.vlSelectButtons, &.vlSelectLinks{
+			&:focus-within, &.vlDirtyField{
+				.vlFormLabel{
+					top: $form-label-select-buttons-focused-position-t;
+				}
+			}
+		}
+		&.vlDate, &.vlTime, &.vlJson, &.vlListe, &.vlInput.vlLeftIcon{
+			.vlFormLabel{
+				left: $form-field-icon-width + $form-control-padding-l;
+			}
+			&:focus-within, &.vlDirtyField{
+				.vlFormLabel{
+					left: $form-label-icon-focused-position-l;
+				}
+			}
+		}
+		&.vlCKEditor, &.vlTranslatableEditor{
+			&:focus-within, &.vlDirtyField{
+				.vlFormLabel{
+					top: $form-label-editor-focused-position-t;
+				}
+			}
+		}
+		&.vlTrix{
+			&:focus-within, &.vlDirtyField{
+				.vlFormLabel{
+					top: $form-label-trix-focused-position-t;
+				}
+			}
+		}
+	}
+}
+
+.vlMultiForm>.vlFormLabel{
+	position: static;
+    font-size: inherit;  
+    font-weight: inherit;
+}
+
+.vlHasErrors .vlFormLabel{
+	color: $form-field-error-color;
+}

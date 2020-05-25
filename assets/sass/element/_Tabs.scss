@@ -1,0 +1,20 @@
+.vlTabs>ul{
+	list-style-type: none;
+	padding: 0;
+}
+
+
+.vlTabLink{
+	display: block; //so that we can add block elements in labels
+	padding: 0.45rem 1rem 0.35rem;
+	opacity: 0.7;
+}
+.vlActive{
+	.vlTabLink{
+		opacity: 1;
+	}
+}
+.vlTabContent{
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}

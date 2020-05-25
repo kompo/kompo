@@ -1,0 +1,27 @@
+@mixin box-shadow($shadow...) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;       
+          box-shadow: $shadow;
+}
+
+@mixin transform($transform...) {
+	-moz-transform: $transform;  
+	-o-transform: $transform;  
+	-webkit-transform: $transform;  
+	-ms-transform: $transform;  
+	transform: $transform;
+}
+
+@mixin ellipsis1(){
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+@mixin tag($color){
+	background-color: $color;
+	color: white;
+	font-weight: 700;
+	border-radius: 0.2rem;
+    padding: 0.15rem 0.2rem;
+}

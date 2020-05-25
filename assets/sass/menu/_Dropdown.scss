@@ -1,0 +1,43 @@
+.vl-dropdown{
+	position: relative;
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	.icon-down{
+		font-size: 70%;
+		color: gainsboro;
+	}
+	.vl-nav-item{
+		align-items: flex-start;
+	}
+	.vl-dropdown-menu{
+        &.vl-menu-closed{
+            display: none;
+        }
+	}
+}
+@include media-breakpoint-up(lg) {
+	.vl-dropdown{
+		flex-direction: row;
+		align-items: center;
+		.vl-nav-item{
+			align-items: center;
+		}
+		.vl-dropdown-menu {
+			display: none;
+			position: absolute;
+			left: 0;
+			top: 100%;
+			background-color: white;
+			z-index: 100;
+			&.vl-dropdown-menu-right{
+				left: auto;
+				right: 0;
+			}
+		}
+		&:hover .vl-dropdown-menu{
+			display: block;
+		}
+	}
+}

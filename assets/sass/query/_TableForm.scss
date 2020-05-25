@@ -1,0 +1,29 @@
+.vlTableForm{
+	tbody{
+		tr{
+			td{
+				.vlEditableTextareaWrapper{
+					position: relative;
+					.vlEditableText{
+						max-width: 120px;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						font-size: 85%;
+					}
+					.vlFormField{
+						margin: 0.2rem 0;
+						position: absolute;
+						left: 0;
+						top: 0;
+						z-index: 1;
+						.vlFormControl{
+							font-size: 80%;
+							resize: both;
+						}
+					}
+				}
+			}
+		}
+	}
+}

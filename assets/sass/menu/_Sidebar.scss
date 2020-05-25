@@ -1,0 +1,21 @@
+.vl-sidebar-l, .vl-sidebar-r{
+	display: none;
+}
+.vl-sidebar-l{
+    direction: rtl;
+    *{
+        direction: ltr;
+    }
+}
+@include media-breakpoint-up(lg) {
+    .vl-sidebar-l, .vl-sidebar-r{
+        display: flex;
+        flex-direction: column;
+        overflow-x: hidden;
+        overflow-y: auto;
+        .vl-nav-item{
+            align-items: center;
+            white-space: initial;
+        }
+    }
+}

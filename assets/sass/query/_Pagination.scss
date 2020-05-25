@@ -1,0 +1,24 @@
+.pagination {
+    list-style-type: none;
+    padding-left: 0;
+    
+	display: flex;
+    flex-wrap: wrap;
+    border-radius: .25rem;
+}
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: $primary;
+    border-color: $primary;
+}
+.page-link {
+    position: relative;
+    display: block;
+    padding: .5rem .75rem;
+    margin-left: -1px;
+    line-height: 1.25;
+    color: $primary;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+}

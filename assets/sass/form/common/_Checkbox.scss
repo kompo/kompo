@@ -1,0 +1,80 @@
+.vlCheckbox{
+    .vlToggleArea{
+        height: $form-checkbox-height;
+        width: $form-checkbox-height;
+        @extend .vlFlexCenter;
+        >i{
+            display: none;
+            color: $form-control-bg;
+        }
+    }
+    input:checked ~ .vlToggleArea{
+        background-color: $form-primary-color;
+        >i {
+            display: block;
+        }
+    }
+}
+.vlToggle,.vlToggleInput {
+    .vlInputWrapper:not(.vlOptionalInput){
+        border-radius: 0.5*$form-toggle-height;
+    }
+    .vlToggleArea{
+        height: $form-toggle-height;
+        width: $form-toggle-width;
+        border-radius: 0.5*$form-toggle-height;
+        display: flex;
+        align-items: center;
+        padding-left: 2px;
+        &:after{
+            content: "";
+            width: calc( #{$form-toggle-height} - 4px);
+            height: calc( #{$form-toggle-height} - 4px);
+            background-color: $form-control-border-color;
+            border-radius: 50%;
+            transition: all .15s ease-in-out;
+        }
+    }
+    input:checked ~ .vlToggleArea{
+        &:after{
+            background-color: $form-primary-color;
+            -webkit-transform: translateX( #{$form-toggle-width - $form-toggle-height} );
+            transform: translateX( #{$form-toggle-width - $form-toggle-height} );
+        }
+    }
+}
+
+.vlToggleInput {
+    .vlOptionalInput{
+        margin-top: $form-control-padding-t;
+        order: 3;
+        width: 100%;
+    }
+}
+
+//Common properties
+.vlCheckbox,.vlToggle,.vlToggleInput {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .vlFormLabel{
+        margin-bottom: 0;
+        margin-left: $form-control-padding-l;
+        order: 2;
+        cursor: pointer;
+    }
+    .vlToggleArea{
+        cursor: pointer;
+    }
+    .vlInputWrapper:not(.vlOptionalInput){
+        display: inline-block;
+        overflow: hidden; //to handle background overflow
+        order: 1;
+    }
+    input[type=checkbox]{
+        position: absolute;
+        opacity: 0;
+        height: 0;
+        width: 0;
+    }
+}

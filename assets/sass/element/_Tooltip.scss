@@ -1,0 +1,10 @@
+.tooltip{
+    > .tooltip-inner{
+        padding: 12px 15px;
+        text-align: left;
+        background-color: #37383a;
+	}
+    &.show{
+        opacity: 1 ;
+    }
+}

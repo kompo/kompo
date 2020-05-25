@@ -1,0 +1,28 @@
+.vl-collapse{
+    display: flex;
+    flex-direction: column;
+    .vl-collapse-toggler{
+        display: flex;
+        justify-content: space-between;
+        
+        width: 100%;
+        cursor: pointer;
+
+        &.vl-toggler-closed .icon-down-dir{
+            display: block;
+            transform: rotate(90deg);
+            z-index: 0; // for somee reason, transform rotate adds z-index...
+            &:before{
+                margin-left: 4px; //re-centering the rotated icon
+            }
+        }
+    }
+    .vl-collapse-menu{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        &.vl-menu-closed{
+            display: none;
+        }
+    }
+}

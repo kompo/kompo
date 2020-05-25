@@ -1,0 +1,37 @@
+.vlSelect{
+	.icon-down{
+		color: $form-control-placeholder-color;
+	}
+	.vlOptions{
+		position: absolute;
+		left: 0;
+		display: none;
+		background-color: $form-control-bg;
+		z-index:100;
+		max-height: 240px;
+		overflow-y: auto;
+		@extend .mini-scroll !optional;
+		width: 100%;
+		border: 1px solid $form-control-border-color;
+		border-radius: 0 0 5px 5px;
+		.vlOption{
+			cursor: pointer;
+			padding: $form-control-padding-t $form-control-padding-r $form-control-padding-b $form-control-padding-l;
+			color: #444444;
+			&.vlHoveredOption{
+				background-color: ghostwhite;
+			}
+			&.vlSelected{
+				background-color: mix($form-primary-color, #fff, 15);
+			}
+			&.vlSelected.vlHoveredOption{
+				background-color: mix(red, #fff, 15);
+			}
+		}
+	}
+	&.vlFocusedField{ //doesn't work with focus-within... CSS executes before click so option can't be selected
+		.vlOptions{
+			display: block;
+		}
+	}
+}
