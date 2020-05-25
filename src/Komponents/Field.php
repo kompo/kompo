@@ -248,6 +248,17 @@ abstract class Field extends Komponent
     }
 
     /**
+     * Removes the default margin applied to fields. 
+     * To disable ALL the fields in a form, use the $noMargins property on the Form.
+     *
+     * @return     self
+     */
+    public function noMargins()
+    {
+        return $this->data(['noMargins' => true]);
+    }
+
+    /**
      * Passes Form attributes to the component and sets it's value if it is a Field.
      * 
      * @param Kompo\Komposers\Komposer  $komposer
@@ -256,6 +267,9 @@ abstract class Field extends Komponent
      */
     public function prepareForDisplay($komposer)
     {
+        if($komposer->noMargins ?? false)
+            $this->noMargins();
+
         ValidationManager::pushCleanRulesToKomposer($this, $komposer);
 
         $this->checkSetReadonly($komposer);

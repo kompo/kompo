@@ -52,9 +52,6 @@ abstract class Layout extends Komponent
      */
     protected function prepareFor($methodName, $komposer)
     {
-        if($komposer->noMargins ?? false)
-            $this->noMargins();
-
         collect($this->komponents)->each(function($komponent) use($methodName, $komposer) {
 
             $komponent->{$methodName}($komposer);
@@ -65,16 +62,6 @@ abstract class Layout extends Komponent
             //$this->prepareHashAndActiveState($komponent); //added this to extend Flex becoming a Menuitem
 
         });
-    }
-
-    /**
-     * Removes the default margins applied to rows and columns layouts.
-     *
-     * @return     self
-     */
-    public function noMargins()
-    {
-        return $this->data(['noMargins' => true]);
     }
     
 }

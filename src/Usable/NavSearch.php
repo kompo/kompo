@@ -12,7 +12,7 @@ class NavSearch extends Search
     {
         parent::vlInitialize($label);
 
-        $this->noLabel()->placeholder($label);
+        $this->noLabel()->placeholder($label)->noMargins();
     }
 
 }

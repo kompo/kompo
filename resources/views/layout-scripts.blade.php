@@ -39,11 +39,11 @@
     @if($_kompo->hasAnySidebar())
 	    function copySidebarsToNav()
 	    {
-	    	@if($_kompo->has('lsidebar'))
+	    	@if($_kompo->has('lsidebar') && $_kompo->collapse('lsidebar'))
 	    		vlMobile ? vlSwitchSidebars(vlSidebarL, vlSidebarLMobile) : 
 	    				   vlSwitchSidebars(vlSidebarLMobile, vlSidebarL)
     		@endif
-    		@if($_kompo->has('rsidebar'))
+    		@if($_kompo->has('rsidebar') && $_kompo->collapse('rsidebar'))
     			vlMobile ? vlSwitchSidebars(vlSidebarR, vlSidebarRMobile) : 
     					   vlSwitchSidebars(vlSidebarRMobile, vlSidebarR)
     		@endif

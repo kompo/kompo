@@ -157,9 +157,6 @@ abstract class Form extends Komposer
     public function prepareForDisplay($komposer)
     {
         ValidationManager::addRulesToKomposer($this->data('rules'), $komposer);
-
-        if($komposer->noMargins ?? false)
-            $this->noMargins();
     }
 
     /**

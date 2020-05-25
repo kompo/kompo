@@ -12,7 +12,7 @@ class KompoLayout
     protected $footer;
 
     protected $isFixed = [];
-    protected $isPrimary = [];
+    protected $order = [];
     protected $isAvailable = [];
 
     protected $hasAnyFixedMenus = false;
@@ -21,20 +21,21 @@ class KompoLayout
     public function __construct($n, $l, $r, $f)
     {
     	$this->setMenu($n, 'navbar', 'vl-nav', 'nav');
-    	$this->setMenu($l, 'lsidebar', 'vl-sidebar-l', 'aside');
-    	$this->setMenu($r, 'rsidebar', 'vl-sidebar-r', 'aside');
+    	$this->setMenu($l, 'lsidebar', 'vl-sidebar-l', 'aside', true);
+    	$this->setMenu($r, 'rsidebar', 'vl-sidebar-r', 'aside', true);
     	$this->setMenu($f, 'footer', 'vl-footer', 'footer');
 
     	$this->hasAnyFixedMenus = count($this->isFixed) > 0;
     }
 
-	protected function setMenu($menu, $key, $menuClass, $menuTag)
+	protected function setMenu($menu, $key, $menuClass, $menuTag, $menuCollapse = false)
 	{
 		//Setting the default kompo class
 		if($menu)
 			$menu->data([
 				'menuClass' => $menuClass,
-				'menuTag' => $menuTag
+				'menuTag' => $menuTag,
+				'menuCollapse' => $menu->collapse ?? $menuCollapse
 			]);
 
 		//Set Menu
@@ -44,9 +45,8 @@ class KompoLayout
 		if(optional($menu)->fixed)
 			$this->isFixed[$key] = true;
 
-		//Check primary
-		if(optional($menu)->primary)
-			$this->isPrimary[$key] = true;
+		//Set order
+		$this->order[$key] = optional($menu)->order;
 
 		//Check if available
 		if($menu)
@@ -102,12 +102,14 @@ class KompoLayout
 
     public function getPrimaryMenu()
 	{
-	    if(!$this->check('lsidebar') && $this->check('rsidebar')) return 'rsidebar';
-	    if($this->check('lsidebar') && $this->check('rsidebar')) return 'lsidebar|rsidebar';
-	    if($this->check('lsidebar') && !$this->check('rsidebar')) return 'lsidebar';
-	    if(!$this->check('navbar') && $this->check('footer')) return 'footer';
-	    if($this->check('navbar') && $this->check('footer')) return 'navbar|footer';
-	    if($this->check('navbar') && !$this->check('footer')) return 'navbar';
+		foreach ([1,2,3] as $o) {
+		    if(!$this->check('lsidebar', $o) && $this->check('rsidebar', $o)) return 'rsidebar';
+		    if($this->check('lsidebar', $o) && $this->check('rsidebar', $o)) return 'lsidebar|rsidebar';
+		    if($this->check('lsidebar', $o) && !$this->check('rsidebar', $o)) return 'lsidebar';
+		    if(!$this->check('navbar', $o) && $this->check('footer', $o)) return 'footer';
+		    if($this->check('navbar', $o) && $this->check('footer', $o)) return 'navbar|footer';
+		    if($this->check('navbar', $o) && !$this->check('footer', $o)) return 'navbar';
+		}
 
 	    //if the user has not defined a primary menu, use the order below
 	    if($this->softCheck('navbar')) return 'navbar';
@@ -116,9 +118,9 @@ class KompoLayout
 	    if($this->softCheck('footer')) return 'footer';
 	}
 
-	protected function check($key)
+	protected function check($key, $order)
 	{
-		return $this->softCheck($key) && ($this->isPrimary[$key] ?? false);
+		return $this->softCheck($key) && ($this->order[$key] == $order);
 	}
 
 	protected function softCheck($key)
@@ -153,6 +155,11 @@ class KompoLayout
 	public function hasAnySidebar()
 	{
 		return $this->has('lsidebar') || $this->has('rsidebar');
+	}
+
+	public function collapse($key)
+	{
+		return $this->{$key}->data('menuCollapse');
 	}
 
 	/********************************************

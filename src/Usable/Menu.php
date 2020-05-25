@@ -15,25 +15,20 @@ abstract class Menu extends Komposer
     public $komponents = [];
 
     /**
-     * The CSS position of the menu.
+     * If the menu fixed or scrollable?
      *
      * @var boolean
      */
     public $fixed;
 
     /**
-     * Does the sidebar touch the top of the page or is it below the navbar?
+     * The order of display of menus, integer between [1-4]. 
+     * For example, a primary left sidebar would need $order = 1
+     * If left blank, the default order is: Navbar > LeftSidebar > RightSidebar > Footer.
      *
-     * @var boolean
+     * @var integer
      */
-    public $top = false;
-
-    /**
-     * Is the footer an outer or inner?
-     *
-     * @var boolean
-     */
-    public $out = false;
+    public $order;
 
 	/**
      * Constructs a Menu
