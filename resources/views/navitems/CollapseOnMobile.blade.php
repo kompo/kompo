@@ -1,9 +1,10 @@
-<div class="vl-navbar-toggler vl-nav-item"
+<div class="vl-navbar-toggler vl-toggler-closed vl-nav-item"
     onclick="toggleMenu(this, true)"
  	aria-label="Open menu"
  	aria-expanded="false">
- 	{!! $component->label ? : '&#9776;' !!}
- </div>
+ 	<span>{!! $component->label ?: '&#9776;' !!}</span>
+ 	<span class="vlHidden">&#10005;</span>
+</div>
  	
 <div class="vl-collapse-on-mobile-menu vl-menu-closed {{ $component->class() }}" 
 	@include('kompo::partials.IdStyle')>
@@ -19,13 +20,13 @@
 		@endif
 	</div>
 
-	@if(isset($VlHasAnySidebar) && $VlHasAnySidebar)
+	@if($_kompo->hasAnySidebar())
 	<div class="vlBlock vlHiddenLg">
-		@if($LeftSidebar)
-			<div id="{{ $LeftSidebar->data('menuType') }}-mobile"></div>
+		@if($_kompo->has('lsidebar'))
+			<div id="vl-sidebar-l-mobile"></div>
 		@endif
-		@if($RightSidebar)
-			<div id="{{ $RightSidebar->data('menuType') }}-mobile"></div>
+		@if($_kompo->has('rsidebar'))
+			<div id="vl-sidebar-r-mobile"></div>
 		@endif
 	</div>
 	@endif

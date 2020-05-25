@@ -168,6 +168,14 @@ if(! function_exists('_Badge'))
     }
 }
 
+if(! function_exists('_Blade'))
+{
+    function _Blade()
+    {
+        return Kompo\Blade::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Button'))
 {
     function _Button()

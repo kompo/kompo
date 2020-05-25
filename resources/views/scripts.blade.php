@@ -26,7 +26,6 @@
 
 <!-- kompo internal scripts -->
 @include('kompo::layout-scripts')
-@include('kompo::keep-session-active-script')
 
 <!-- additional local custom stack of scripts -->
 @stack('scripts')

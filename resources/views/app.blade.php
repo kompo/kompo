@@ -2,15 +2,17 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <?php 
-$Navbar = $Navbar ?? false;
-$Footer = $Footer ?? false;
-$LeftSidebar = isset($LeftSidebar) ? $LeftSidebar->data(['menuType' => 'vl-sidebar-l']) : false;
-$RightSidebar = isset($RightSidebar) ? $RightSidebar->data(['menuType' => 'vl-sidebar-r']) : false;
 
-$VlHasAnySidebar = $LeftSidebar || $RightSidebar;
-$VlHasAnyTopSidebar = optional($LeftSidebar)->top || optional($RightSidebar)->top;
+$_kompo = new Kompo\Core\KompoLayout(
+    $Navbar ?? false,
+    $LeftSidebar ?? false,
+    $RightSidebar ?? false,
+    $Footer ?? false
+);
+/*TODO: remove docs & fix centering
+
 $VlFooterOutside = optional($Footer)->out;
-$VlCentered = ($VlHasAnySidebar || $Navbar) ? '' : (($neverCenter ?? false) ? '' : 'justify-center items-center');
+$VlCentered = ($VlHasAnySidebar || $Navbar) ? '' : (($neverCenter ?? false) ? '' : 'justify-center items-center');*/
 
 ?>
 
@@ -21,40 +23,11 @@ $VlCentered = ($VlHasAnySidebar || $Navbar) ? '' : (($neverCenter ?? false) ? ''
 <body>
     <div id="vl-mobile-indicator" class="vlBlock vlHiddenLg"></div>
 
-    <div id="app">
+    {!! $_kompo->wrapperOpenTag(config('kompo.vue_app_id')) !!}
 
-        @includeWhen(!$VlHasAnyTopSidebar, 'kompo::menus.nav')
+        @include('kompo::layout', $_kompo->getLayoutKey())
 
         <vl-alerts></vl-alerts>
-
-        <div class="vlFlex vlWFull">
-
-            @include('kompo::menus.sidebar', ['Sidebar' => $LeftSidebar])
-
-            <div id="vl-wrapper" class="vlWFull">
-                
-                @includeWhen($VlHasAnyTopSidebar, 'kompo::menus.nav')
-
-                <main id="vl-main" class="vlFlexCol {{ $VlCentered }}">
-                    
-                    <vl-panel id="vl-main-panel"></vl-panel>
-
-                    <div id="vl-content">
-                        @yield('content')
-                    </div>
-
-                </main>
-
-                @includeWhen(!$VlFooterOutside, 'kompo::menus.footer')
-
-            </div>
-
-            @include('kompo::menus.sidebar', ['Sidebar' => $RightSidebar])
-
-        </div>
-
-        @includeWhen($VlFooterOutside,'kompo::menus.footer')
-
         <vl-modal name="vlDefaultModal"></vl-modal>
 
     </div>

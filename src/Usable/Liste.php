@@ -38,6 +38,7 @@ class Liste extends Input
     public function value($value)
     {
         $this->value = is_string($value) ? json_decode($value, true) :  $value;
+        return $this;
     }
 
     /**

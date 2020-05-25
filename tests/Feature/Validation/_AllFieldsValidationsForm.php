@@ -4,10 +4,7 @@ namespace Kompo\Tests\Feature\Validation;
 
 use Illuminate\Support\Str;
 use Kompo\Form;
-use Kompo\KompoServiceProvider;
 use Kompo\Komponents\Field;
-use Kompo\Komposers\Komposer;
-use Kompo\Model;
 
 class _AllFieldsValidationsForm extends Form
 {
@@ -23,11 +20,8 @@ class _AllFieldsValidationsForm extends Form
 			$komponent = str_replace('.php', '', $komponent);
 			$komponentClass = 'Kompo\\'.$komponent;
 
-			if($this->excludedFiles($dir, $komponent, $komponentClass))
-				return null;
-			
-			if(($komponent = new $komponentClass($komponent)) instanceOf Field)
-				return $komponent;
+			if(is_a($komponentClass, Field::class, true))
+				return new $komponentClass($komponent);
 
 		})->filter();
 	}
@@ -40,12 +34,6 @@ class _AllFieldsValidationsForm extends Form
 	public function komponents()
 	{
 		return $this->fields;
-	}
-
-	public function excludedFiles($dir, $komponent, $komponentClass)
-	{
-		return is_dir($dir.'/'.$komponent) || is_a($komponentClass, Komposer::class, true) 
-			|| is_a($komponentClass, Model::class, true) || is_a($komponentClass, KompoServiceProvider::class, true);
 	}
 
 	public function rules()

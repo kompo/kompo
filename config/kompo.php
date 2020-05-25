@@ -2,6 +2,8 @@
 
 return [
 
+	'vue_app_id' => 'app',
+
 	'auto_classes_for_komposers' => false,
 
     'smart_readonly_fields' => false,

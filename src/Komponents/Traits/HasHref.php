@@ -133,9 +133,10 @@ trait HasHref {
      */
     public function checkTurbo($route, $parameters = null)
     {
-        $routeObject = RouteFinder::getRouteObject($route, $parameters);
-
-        if( $routeObject && (($routeObject->action['layout'] ?? '') === (request()->route()->action['layout'] ?? false )))
+        if( 
+            ($routeObject = RouteFinder::getRouteObject($route, $parameters)) && 
+            (($routeObject->action['layout'] ?? '') === (request()->route()->action['layout'] ?? false ))
+        )
             $this->turbo = true;
     }
 
