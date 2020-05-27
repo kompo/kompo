@@ -35,7 +35,7 @@ class KompoLayout
 			$menu->data([
 				'menuClass' => $menuClass,
 				'menuTag' => $menuTag,
-				'menuCollapse' => $menu->collapse ?? $menuCollapse
+				'menuCollapse' => property_exists($menu, 'collapse') ? $menu->collapse : $menuCollapse
 			]);
 
 		//Set Menu
@@ -230,6 +230,6 @@ class KompoLayout
 
 	protected function hasContainer($menu)
 	{
-		return $menu->containerClass ?? false;
+		return property_exists($menu, 'containerClass') ? $menu->containerClass : false;
 	}
 }

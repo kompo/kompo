@@ -267,7 +267,7 @@ abstract class Field extends Komponent
      */
     public function prepareForDisplay($komposer)
     {
-        if($komposer->noMargins ?? false)
+        if(property_exists($komposer, 'noMargins') && $komposer->noMargins)
             $this->noMargins();
 
         ValidationManager::pushCleanRulesToKomposer($this, $komposer);
@@ -404,7 +404,9 @@ abstract class Field extends Komponent
      */
     public function shouldCastToArray($model, $name)
     {
-        return !$model->hasCast($name) && ($this->castsToArray ?? false) && !($this->attributesToColumns ?? false);
+        return !$model->hasCast($name) && 
+            (property_exists($this, 'castsToArray') && $this->castsToArray) && 
+            (!property_exists($this, 'attributesToColumns') || (property_exists($this, 'attributesToColumns') && !$this->attributesToColumns));
     }
     
 }

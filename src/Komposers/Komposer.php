@@ -47,7 +47,7 @@ abstract class Komposer extends Element
      */
     public function getFailedAuthorizationMessage()
     {
-        return $this->failedAuthorizationMessage ?? null;
+        return property_exists($this, 'failedAuthorizationMessage') ? $this->failedAuthorizationMessage : null;
     }
 
     /**

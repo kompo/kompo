@@ -2,7 +2,7 @@
 
 namespace Kompo\Tests\Unit\Interaction;
 
-use Error;
+use Exception;
 use ErrorException;
 use Kompo\Button;
 use Kompo\Exceptions\NotAllowedInteractionException;
@@ -24,7 +24,7 @@ class HigherOrderInteractionsTest extends EnvironmentBoot
 	/** @test */
 	public function element_higher_order_interaction_does_not_exist()
 	{
-		$this->expectException(Error::class);
+		$this->expectException(Exception::class);
 
 		Button::form()->onTouch->submit();
 	}

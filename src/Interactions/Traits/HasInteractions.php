@@ -29,8 +29,12 @@ trait HasInteractions
     */
     public function __get($key)
     {
-        if(in_array($key, static::$proxies))
-            return new HigherOrderInteraction($this, $key);
+        if (! in_array($key, static::$proxies)) {
+            throw new Exception("Property [{$key}] does not exist on this class.");
+        }
+
+        //if(in_array($key, static::$proxies)) //todelete. Previously no exception was raised when property wasn't found and we returned null.
+        return new HigherOrderInteraction($this, $key);
     }
 
     /**
@@ -51,12 +55,17 @@ trait HasInteractions
             Interaction::checkIfAcceptable($this, $interaction);
             
             if($closure instanceof Closure && is_callable($closure))
-                return ActionGroup::appendFromClosure($this, $interaction, $closure, $this->element ?? $this);
+                return ActionGroup::appendFromClosure($this, $interaction, $closure, $this->getInitialElement());
 
             throw new NotAcceptableInteractionClosureException($closure);
         });
 
         return $this;
+    }
+
+    protected function getInitialElement()
+    {
+        return property_exists($this, 'element') ? $this->element : $this;
     }
 
     public function onClick($function)
