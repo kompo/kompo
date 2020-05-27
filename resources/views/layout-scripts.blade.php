@@ -82,25 +82,13 @@
 	function toggleMenu(toggler, fixHeight) {
 		var target = $(toggler).next()
     	if(target.hasClass('vl-menu-closed')){
-    		
-    		/*
-    		if(fixHeight){
-    			target.css('max-height', 'calc(100vh - '+height(vlNav)+'px)')
-    			$('body').css('overflow', 'hidden') //no double scrolling, better navigation
-    		}*/
 
     		$(toggler).removeClass('vl-toggler-closed').attr("aria-expanded","true")
-    		target.slideDown().css('display','flex').removeClass('vl-menu-closed')
+    		target.slideDown().removeClass('vl-menu-closed')
     	}else{
 
-    		/*
-    		if(fixHeight)
-    			$('body').css('overflow', 'visible')
-    		*/
-
-
     		$(toggler).addClass('vl-toggler-closed').attr("aria-expanded","false")
-    		target.slideUp().css('display','none').addClass('vl-menu-closed')
+    		target.slideUp().addClass('vl-menu-closed')
     	}
 	}
 

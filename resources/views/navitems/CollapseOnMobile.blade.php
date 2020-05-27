@@ -20,7 +20,7 @@
 		@endif
 	</div>
 
-	@if($_kompo->hasAnySidebar())
+	@if(isset($_kompo) && $_kompo->hasAnySidebar())
 	<div class="vlBlock vlHiddenLg">
 		@if($_kompo->has('lsidebar'))
 			<div id="vl-sidebar-l-mobile"></div>
