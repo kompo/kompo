@@ -2,6 +2,9 @@
 
 namespace Kompo\Database;
 
+use Kompo\Core\RequestData;
+use Kompo\Input;
+
 abstract class QueryOperations
 {    
     protected $query;
@@ -28,6 +31,18 @@ abstract class QueryOperations
     public function getQuery()
     {
         return $this->query;
+    }
+
+    protected function inferBestOperator($field)
+    {
+        return $field->data('filterOperator') ?: (
+            (property_exists($field, 'multiple') && $field->multiple) ? 'IN' : ($field instanceOf Input ? 'LIKE' : '=')
+        );
+    }
+
+    protected function getFilterValueFromRequest($name)
+    {
+        return RequestData::get($name);
     }
 
 

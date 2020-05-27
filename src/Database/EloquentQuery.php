@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Kompo\Core\RequestData;
 use Kompo\Database\DatabaseQuery;
 use Kompo\Database\Lineage;
 use Kompo\Database\NameParser;
@@ -40,7 +39,7 @@ class EloquentQuery extends DatabaseQuery
      */
     public function handleFilter($field)
     {        
-        $value = RequestData::get($field->name);
+        $value = $this->getFilterValueFromRequest($field->name);
         $operator = $this->inferBestOperator($field);
 
         $morphToModel = FormField::getConfig($field, 'morphToModel');

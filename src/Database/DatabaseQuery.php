@@ -2,9 +2,7 @@
 
 namespace Kompo\Database;
 
-use Kompo\Core\RequestData;
 use Kompo\Database\QueryOperations;
-use Kompo\Input;
 
 class DatabaseQuery extends QueryOperations
 {
@@ -12,7 +10,7 @@ class DatabaseQuery extends QueryOperations
     {
         $name = $field->name;
         $operator = $this->inferBestOperator($field);
-        $value = RequestData::get($name);
+        $value = $this->getFilterValueFromRequest($name);
 
         $this->query = $this->applyWhere($this->query, $name, $operator, $value);
     }
@@ -20,13 +18,6 @@ class DatabaseQuery extends QueryOperations
     public function getPaginated()
     {
         return $this->query->paginate($this->komposer->perPage, ['*'], 'page', $this->komposer->currentPage());
-    }
-
-    protected function inferBestOperator($field)
-    {
-        return $field->data('filterOperator') ?: (
-            ($field->multiple ?? false) ? 'IN' : ($field instanceOf Input ? 'LIKE' : '=')
-        );
     }
 
     public function applyWhere($q, $name, $operator, $value, $table = null)

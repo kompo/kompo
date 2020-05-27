@@ -11,15 +11,15 @@ class CardGenerator
     {
         $komposer->query = $komposer->query->getPaginated();
 
-        $komposer->query->getCollection()->transform(function($item) use($komposer){
+        $komposer->query->getCollection()->transform(function($item, $key) use($komposer){
 
-            return static::getItemCard($item, $komposer);
+            return static::getItemCard($item, $key, $komposer);
 
         });
     }
 
 
-    protected static function getItemCard($item, $komposer)
+    protected static function getItemCard($item, $key, $komposer)
     {
         $defaultItems = array_merge(
             $komposer->orderable ? [
@@ -28,14 +28,14 @@ class CardGenerator
             ] : []
         );
 
-        $card = static::getCardDefaultFallback($item, $komposer);
+        $card = static::getCardDefaultFallback($item, $key, $komposer);
         $card->komponents = array_merge($defaultItems, $card->komponents);
         return $card;
     }
 
-    protected static function getCardDefaultFallback($item, $komposer)
+    protected static function getCardDefaultFallback($item, $key, $komposer)
     {
-        $card = method_exists($komposer, 'card') ? $komposer->card($item) : [];
+        $card = method_exists($komposer, 'card') ? $komposer->card($item, $key) : [];
 
         if(is_array($card)){
             $defaultCard = $komposer->card ?: Card::class;

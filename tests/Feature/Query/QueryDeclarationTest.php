@@ -74,6 +74,30 @@ class QueryDeclarationTest extends EnvironmentBoot
 	}
 
 	/** @test */
+	public function query_returns_an_assoc_array()
+	{
+		$query = new _QueryAssocArray();
+
+		$this->assertCount(10, $query->query->getCollection());
+	}
+
+	/** @test */
+	public function query_returns_an_array_of_objs()
+	{
+		$query = new _QueryArrayOfObjs();
+
+		$this->assertCount(10, $query->query->getCollection());
+	}
+
+	/** @test */
+	public function query_returns_an_array_of_arrays()
+	{
+		$query = new _QueryArrayOfArrays();
+
+		$this->assertCount(10, $query->query->getCollection());
+	}
+
+	/** @test */
 	public function query_returns_null()
 	{
 		$query = new _QueryNull();

@@ -209,7 +209,10 @@ abstract class Form extends Komposer
      */
     public function __toString()
     {
-        if(($this->hideModel ?? false) || (!isset($this->hideModel) && config('kompo.eloquent_form.hide_model_in_forms')))
+        if(
+            (property_exists($this, 'hideModel') && $this->hideModel) || 
+            (!property_exists($this, 'hideModel') && config('kompo.eloquent_form.hide_model_in_forms'))
+        )
             unset($this->model);
 
         return json_encode($this);
