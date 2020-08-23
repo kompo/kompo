@@ -1,6 +1,4 @@
 <script class="reloadable-script">
-
-    var vlMobileIndicator = $('#vl-mobile-indicator')
     	
     	@if($_kompo->has('lsidebar'))
     		var vlSidebarL = $('.vl-sidebar-l').eq(0)
@@ -18,13 +16,13 @@
 	$(document).ready(function(){
 
 		vlOnLoadScrollResize()
-		$(window).resize(function () { vlOnLoadScrollResize() })
+        window.addEventListener('resize', vlOnLoadScrollResize)
       	
     })
 
     function vlSetMobile()
     {
-    	window.vlMobile = vlMobileIndicator.css('display') === 'block'
+    	window.vlMobile = getComputedStyle(document.getElementById('vl-md')).display === 'block'
     }
 
     function vlOnLoadScrollResize()
@@ -32,7 +30,6 @@
     	vlSetMobile()
     	@if($_kompo->hasAnySidebar())
 	    	copySidebarsToNav()
-    		highlightHashLinkOnScroll()
     	@endif
     }
 
@@ -47,23 +44,6 @@
     			vlMobile ? vlSwitchSidebars(vlSidebarR, vlSidebarRMobile) : 
     					   vlSwitchSidebars(vlSidebarRMobile, vlSidebarR)
     		@endif
-	    }
-
-	    function highlightHashLinkOnScroll(){
-	    	var scrollTop = $(window).scrollTop(),
-	    		activeLink,
-	    		activeHash
-
-	    	$($('.vl-nav-item.vlActive .vl-has-hash').get().reverse()).each(function(){
-	    		var linkHref = $(this).attr('href')
-	    		var hashLink = linkHref.substring(linkHref.indexOf('#'))
-	    		if($(hashLink).length && $(hashLink).offset().top - 100 < $(window).scrollTop()){
-	    			$('.vl-nav-item.vlActive .vl-has-hash').css('font-weight', 'normal')
-	    			$(this).css('font-weight', 'bold')
-	    			return false //breaking out
-	    		}
-	    	})
-
 	    }
 
 	@endif

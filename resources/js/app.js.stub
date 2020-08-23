@@ -8,6 +8,7 @@ window.Vue = require('vue');
 require('vue-kompo')
 //require('kompo-ckeditor')
 //require('kompo-googlemaps')
+//require('kompo-leaflet')
 //require('kompo-trix')
 
 const files = require.context('./', true, /\.vue$/i)

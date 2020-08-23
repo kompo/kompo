@@ -4,7 +4,7 @@
   </a>
 </p>
 <h6 align="center">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/kompophp/kompo.svg">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/kompo/kompo.svg">
     <img src="https://img.shields.io/npm/dt/vue-kompo.svg?style=flat-square" alt="Downloads" />
     <img src="https://img.shields.io/npm/v/vue-kompo.svg?style=flat-square" alt="Version" />
     <img src="https://img.shields.io/npm/l/vue-kompo.svg?style=flat-square" alt="License" />
@@ -19,9 +19,9 @@
     <a href="https://twitter.com/kompophp" target="_blank">Twitter</a>
 </h3>
 
-# kompophp/kompo
+# kompo/kompo
 
-`kompophp/kompo` is a library of Fullstack Komponents to help you write forms, queries and menus in a matter of seconds. 
+`kompo/kompo` is a library of Fullstack Komponents to help you write forms, queries and menus in a matter of seconds. 
 
 It is built on top of Laravel and Vue.js.
 

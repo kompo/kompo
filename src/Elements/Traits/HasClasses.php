@@ -12,20 +12,6 @@ trait HasClasses
     public $class = '';
 
     /**
-     * Adds classes to the element.
-     *
-     * @param  string  $classes
-     * @return mixed
-     */
-    public function addClass($classes)
-    {
-        return $this->class($this->class ? 
-            ($this->class.' '.trim($classes)) :
-            $classes
-        );
-    }
-
-    /**
      * Sets the class attribute of the element.
      * For multiple classes, use a space-separated string.
      *
@@ -52,6 +38,34 @@ trait HasClasses
     public function inputClass($classes)
     {        
         return $this->data(['inputClass' => $classes]);
+    }
+
+    /**
+     * Adds classes to the element.
+     *
+     * @param  string  $classes
+     * @return mixed
+     */
+    public function addClass($classes)
+    {
+        return $this->class($this->class ? 
+            ($this->class.' '.trim($classes)) :
+            $classes
+        );
+    }
+
+    /**
+     * Removes a class or space separated classes from the element.
+     *
+     * @param  string  $classes
+     * @return mixed
+     */
+    public function removeClass($classes)
+    {
+        $currentClasses = explode(' ', $this->class);
+        $newClasses = explode(' ', $classes);
+
+        return $this->class(implode(' ', array_diff($currentClasses, $newClasses)));
     }
 
     /**

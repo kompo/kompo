@@ -21,7 +21,7 @@
 @endif
 
 @section($section)
-	<div class="container">
+	<div class="{{ $containerClass }}">
 		{!! $vueComponent !!}
 	</div>
 @endsection

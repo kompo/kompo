@@ -63,6 +63,7 @@ class Router
 
             return view('kompo::view', [
                 'vueComponent' => $booter::renderVueComponent($komposer),
+                'containerClass' => property_exists($komposer, 'containerClass') ? $komposer->containerClass : 'container',
                 'metaTags' => $komposer->getMetaTags($komposer),
                 'layout' => $layout,
                 'section' => static::getLastSection($router)

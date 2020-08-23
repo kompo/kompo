@@ -312,6 +312,54 @@ if(! function_exists('_FlexEnd'))
     }
 }
 
+if(! function_exists('_H1'))
+{
+    function _H1()
+    {
+        return Kompo\H1::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_H2'))
+{
+    function _H2()
+    {
+        return Kompo\H2::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_H3'))
+{
+    function _H3()
+    {
+        return Kompo\H3::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_H4'))
+{
+    function _H4()
+    {
+        return Kompo\H4::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_H5'))
+{
+    function _H5()
+    {
+        return Kompo\H5::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_H6'))
+{
+    function _H6()
+    {
+        return Kompo\H6::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Hidden'))
 {
     function _Hidden()
@@ -333,6 +381,14 @@ if(! function_exists('_Image'))
     function _Image()
     {
         return Kompo\Image::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_Img'))
+{
+    function _Img()
+    {
+        return Kompo\Img::form(...func_get_args());
     }
 }
 

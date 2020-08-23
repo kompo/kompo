@@ -3,11 +3,13 @@
 namespace Kompo;
 
 use Kompo\Komponents\Layout;
+use Kompo\Komponents\Traits\HasHref;
 use Kompo\Komponents\Traits\VerticalAlignmentTrait;
 
 class Flex extends Layout
 {
     use VerticalAlignmentTrait;
+    use HasHref;
 
     public $vueComponent = 'Flex';
     public $bladeComponent = 'Flex';
