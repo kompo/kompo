@@ -12,7 +12,7 @@ trait HasHref {
      *
      * @var string
      */
-    public $href = 'javascript:void(0)';
+    public $href = 'javascript:void(0)'; //TODO: should be empty by default
 
     /**
      * The element's hash, if any.

@@ -10,10 +10,6 @@
         $Footer ?? false
     );
 
-    /*TODO: remove docs & fix centering
-    $VlFooterOutside = optional($Footer)->out;
-    $VlCentered = ($VlHasAnySidebar || $Navbar) ? '' : (($neverCenter ?? false) ? '' : 'justify-center items-center');*/
-
     $savedCloseTag = $_kompo->wrapperCloseTag(); //cuz by the time it gets there, things change
 ?>
 <head>
