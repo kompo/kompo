@@ -2,6 +2,7 @@
 
 namespace Kompo\Komponents;
 
+use Kompo\Core\IconGenerator;
 use Kompo\Core\KompoAction;
 use Kompo\Core\KompoId;
 use Kompo\Elements\Element;
@@ -87,35 +88,39 @@ abstract class Komponent extends Element
     /**
      * Adds an icon before component's label.
      *
-     * @param  string $iconClass This is the class in &lt;i class="...">&lt;/i>
+     * @param  string $iconString This is the icon HTML or icon class in &lt;i class="...">&lt;/i>
+     * 
      * @return Element
      */
-    public function iconNonStatic($iconClass)
+    public function iconNonStatic($iconString)
     {
-        $this->data(['icon' => $iconClass]);
+        $this->data(['icon' => IconGenerator::toHtml($iconString) ]);
         return $this;
     }
 
-    public static function iconStatic($iconClass)
+    public static function iconStatic($iconString)
     {
-        return static::form('')->icon($iconClass);
+        return static::form('')->icon($iconString);
     }
+
+
 
     /**
      * Adds an icon after component's label.
      *
-     * @param  string $iconClass This is the class in &lt;i class="...">&lt;/i>
+     * @param  string $iconString This is the icon HTML or icon class in &lt;i class="...">&lt;/i>
+     * 
      * @return Element
      */
-    public function rIconNonStatic($iconClass)
+    public function rIconNonStatic($iconString)
     {
-        $this->data(['rIcon' => $iconClass]);
+        $this->data(['rIcon' => IconGenerator::toHtml($iconString) ]);
         return $this;
     }
 
-    public static function rIconStatic($iconClass)
+    public static function rIconStatic($iconString)
     {
-        return static::form('')->rIcon($iconClass);
+        return static::form('')->rIcon($iconString);
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace Kompo\Komponents\Traits;
 
+use Kompo\Core\IconGenerator;
+
 trait LabelInfoComment 
 {
     /**
@@ -56,14 +58,15 @@ trait LabelInfoComment
     }
 
     /**
-     * Sets the info text's class icon. By default, it is a question mark.
+     * Sets the info text's icon or class icon. By default, it is the built-in question mark icon.
      * 
-     * @param  string $iconClass This is the class in &lt;i class="...">&lt;/i>
+     * @param  string $iconClassOrHtml This is the icon HTML or class in &lt;i class="...">&lt;/i>
+     * 
      * @return self
      */
-    public function infoIcon($iconClass)
+    public function infoIcon($iconClassOrHtml)
     {
-        return $this->data(['infoIcon' => $iconClass]);
+        return $this->data(['infoIcon' => IconGenerator::toHtml($iconClassOrHtml)]);
     }
 
     /**

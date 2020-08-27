@@ -2,6 +2,8 @@
 
 namespace Kompo\Interactions\Actions;
 
+use Kompo\Core\IconGenerator;
+
 trait AddAlertActions
 {
     /**
@@ -10,17 +12,17 @@ trait AddAlertActions
      * You may also add an class to the whole box with the alertClass parameter.
      *
      * @param      string               $message    The message to be displayed
-     * @param      string|boolean|null  $iconClass  An optional icon class. Default is "icon-check".
+     * @param      string|boolean|null  $icon  An optional icon class. Default is "icon-check".
      * @param      string|null          $alertClass The class for the alert box. Default is "vlAlertSuccess" (green background).
      *
      * @return     self    
      */
-    public function alert($message, $iconClass = true, $alertClass = 'vlAlertSuccess')
+    public function alert($message, $icon = true, $alertClass = 'vlAlertSuccess')
     {
         return $this->prepareAction('addAlert', [
             'alert' => [
                 'message' => $message,                
-                'iconClass' => $iconClass === true ? 'icon-check' : $iconClass,
+                'icon' => IconGenerator::toHtml($icon === true ? 'icon-check' : $icon),
                 'alertClass' => $alertClass
             ]
         ]);
@@ -29,16 +31,16 @@ trait AddAlertActions
     /**
      * Displays a Bootstrap-style alert message after an AJAX request, using the response from the request as the message.
      * 
-     * @param      string|boolean|null  $iconClass  An optional icon class. Default is "icon-check".
+     * @param      string|boolean|null  $icon  An optional icon class. Default is "icon-check".
      * @param      string|null          $alertClass The class for the alert box. Default is "vlAlertSuccess" (green background).
      *
      * @return     self  
      */
-    public function inAlert($iconClass = true, $alertClass = 'vlAlertSuccess')
+    public function inAlert($icon = true, $alertClass = 'vlAlertSuccess')
     {
         return $this->prepareAction('fillAlert', [  
             'alert' => [              
-                'iconClass' => $iconClass === true ? 'icon-check' : $iconClass,
+                'icon' => IconGenerator::toHtml($icon === true ? 'icon-check' : $icon),
                 'alertClass' => $alertClass
             ]
         ]);

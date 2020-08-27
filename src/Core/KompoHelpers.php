@@ -424,6 +424,14 @@ if(! function_exists('_Liste'))
     }
 }
 
+if(! function_exists('_ListeSelect'))
+{
+    function _ListeSelect()
+    {
+        return Kompo\ListeSelect::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_MultiFile'))
 {
     function _MultiFile()

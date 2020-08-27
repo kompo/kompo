@@ -38,7 +38,10 @@ class EloquentQuery extends DatabaseQuery
      * @param      <type>  $field  The field
      */
     public function handleFilter($field)
-    {        
+    {
+        if(FormField::getConfig($field, 'ignoresModel'))
+            return;
+
         $value = $this->getFilterValueFromRequest($field->name);
         $operator = $this->inferBestOperator($field);
 
