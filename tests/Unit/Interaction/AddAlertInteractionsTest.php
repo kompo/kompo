@@ -11,8 +11,8 @@ class AddAlertInteractionsTest extends EnvironmentBoot
 	/** @test */
 	public function higher_order_success_error_alert()
 	{
-		$al1 = ['success message', 'success icon', 'successClass'];
-		$al2 = ['error message', 'error icon', 'errorClass'];
+		$al1 = ['success message', '<i class="success-icon"></i>', 'successClass'];
+		$al2 = ['error message', '<i class="error-icon"></i>', 'errorClass'];
 
 		$nested = SubmitButton::form()
 			->onSuccess->alert($al1[0], $al1[1], $al1[2])
@@ -29,8 +29,8 @@ class AddAlertInteractionsTest extends EnvironmentBoot
 	/** @test */
 	public function higher_order_implied_success_error_alert()
 	{
-		$al1 = ['success message', 'success icon', 'successClass'];
-		$al2 = ['error message', 'error icon', 'errorClass'];
+		$al1 = ['success message', '<i class="success-icon"></i>', 'successClass'];
+		$al2 = ['error message', '<i class="error-icon"></i>', 'errorClass'];
 
 		$nested = SubmitButton::form()
 			->alert($al1[0], $al1[1], $al1[2]) //onSuccess not explicit
