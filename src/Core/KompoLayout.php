@@ -74,7 +74,7 @@ class KompoLayout
 	    ];
 	}
 
-	public function wrapperOpenTag($main = false)
+	public function wrapperOpenTag($appId = false)
 	{
 	    $pm = $this->getPrimaryMenu();
 
@@ -84,9 +84,10 @@ class KompoLayout
 
 	    $tag = $pm ? '<div' : '<main';
 
-	    $tag .= $main ? ' id="'.$main.'"': ''; //adding vue app id if main layout
+	    $tag .= $appId ? ' id="'.$appId.'"': '';
 
-	    $overflow = $main ? 'vl100vh ' : '';
+	    $overflow = $appId && $this->hasAnyFixedMenus ? 'vl100vh ' : '';
+
 	    if($this->hasAnyFixedMenus && !$this->overFlowSet)
 	        $overflow .= $this->noFixedMenusLeft() ? 'kompoScrollableContent' : 'kompoFixedContent';
 
