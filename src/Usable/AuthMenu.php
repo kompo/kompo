@@ -13,6 +13,7 @@ class AuthMenu extends Dropdown
         
     	$this->submenu([
             new AuthLogoutForm()
-        ]);
+        ])
+        ->alignRight(); //Auth should align right by default. TODO: add alignLeft() to override in rare cases
     }
 }

@@ -54,6 +54,7 @@ trait LabelInfoComment
      */
     public function info($info)
     {
+        //This method should be renamed hint()!!
         return $this->data(['info' => $info]);
     }
 
