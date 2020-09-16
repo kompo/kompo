@@ -48,36 +48,36 @@ trait LabelInfoComment
     /**
      * Adds a help text next to the label that appears on hover. By default, a question mark icon is used.
      *
-     * @param      string  $info   The information text that displays on hover.
+     * @param      string  $hint   The information text that displays on hover.
      *
      * @return     self
      */
-    public function info($info)
+    public function hint($hint)
     {
-        //This method should be renamed hint()!!
-        return $this->data(['info' => $info]);
+        //TODO: info should be renamed hint() in the Front-end!!
+        return $this->data(['info' => $hint]);
     }
 
     /**
-     * Sets the info text's icon or class icon. By default, it is the built-in question mark icon.
+     * Sets the hint text's icon or class icon. By default, it is the built-in question mark icon.
      * 
      * @param  string $iconClassOrHtml This is the icon HTML or class in &lt;i class="...">&lt;/i>
      * 
      * @return self
      */
-    public function infoIcon($iconClassOrHtml)
+    public function hintIcon($iconClassOrHtml)
     {
         return $this->data(['infoIcon' => IconGenerator::toHtml($iconClassOrHtml)]);
     }
 
     /**
-     * Sets where the info text's will show on hover. By default, it displays on top.
+     * Sets where the hint text's will show on hover. By default, it displays on top.
      *
      * @param      string  $infoPlacement  Accepted values are top, bottom, left, right
      *
      * @return     self    ( description_of_the_return_value )
      */
-    public function infoPlacement($infoPlacement)
+    public function hintPlacement($infoPlacement)
     {
         return $this->data(['infoPlacement' => $infoPlacement]);
     }
