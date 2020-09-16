@@ -86,7 +86,7 @@ class KompoLayout
 
 	    $tag .= $appId ? ' id="'.$appId.'"': '';
 
-	    $overflow = $appId ? 'vl100vh ' : '';
+	    $overflow = $appId ? 'vlMin100vh ' : '';
 
 	    if($this->hasAnyFixedMenus && !$this->overFlowSet)
 	        $overflow .= $this->noFixedMenusLeft() ? 'kompoScrollableContent' : 'kompoFixedContent';
