@@ -10,7 +10,7 @@ use Kompo\Database\DatabaseQuery;
 use Kompo\Database\Lineage;
 use Kompo\Database\NameParser;
 use Kompo\Exceptions\NotFoundMorphToModelException;
-use Kompo\Komponents\FormField;
+use Kompo\Komponents\Managers\FormField;
 
 class EloquentQuery extends DatabaseQuery
 {

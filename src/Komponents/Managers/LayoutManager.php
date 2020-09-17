@@ -1,9 +1,10 @@
 <?php
 
-namespace Kompo\Komponents;
+namespace Kompo\Komponents\Managers;
 
 use Illuminate\Support\Collection;
 use Kompo\Core\Util;
+use Kompo\Komponents\Layout;
 
 class LayoutManager extends Layout
 {

@@ -6,7 +6,7 @@ use Kompo\Core\RequestData;
 use Kompo\Core\Util;
 use Kompo\Database\ModelManager;
 use Kompo\Komponents\Field;
-use Kompo\Komponents\FormField;
+use Kompo\Komponents\Managers\FormField;
 
 class Place extends Field
 {

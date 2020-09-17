@@ -1,6 +1,6 @@
 <?php
 
-namespace Kompo\Komponents;
+namespace Kompo\Komponents\Managers;
 
 use Kompo\Core\LaravelApp;
 use Kompo\Core\RequestData;

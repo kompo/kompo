@@ -7,7 +7,7 @@ use Kompo\Core\KompoTarget;
 use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\ModelManager;
-use Kompo\Komponents\FormField;
+use Kompo\Komponents\Managers\FormField;
 use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\KomposerManager;
 

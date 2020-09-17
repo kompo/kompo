@@ -10,7 +10,7 @@ use Kompo\Core\KompoTarget;
 use Kompo\Core\Util;
 use Kompo\Database\EloquentField;
 use Kompo\Komponents\Field;
-use Kompo\Komponents\FormField;
+use Kompo\Komponents\Managers\FormField;
 use Kompo\Routing\RouteFinder;
 
 class Select extends Field

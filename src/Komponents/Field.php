@@ -11,7 +11,7 @@ use Kompo\Database\ModelManager;
 use Kompo\Form;
 use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Interactions\Traits\ForwardsInteraction;
-use Kompo\Komponents\FormField;
+use Kompo\Komponents\Managers\FormField;
 use Kompo\Komposers\KomposerManager;
 
 abstract class Field extends Komponent

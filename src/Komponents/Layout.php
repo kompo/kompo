@@ -2,7 +2,7 @@
 
 namespace Kompo\Komponents;
 
-use Kompo\Komponents\LayoutManager;
+use Kompo\Komponents\Managers\LayoutManager;
 
 abstract class Layout extends Komponent
 {

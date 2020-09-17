@@ -2,7 +2,7 @@
 
 namespace Kompo\Komponents\Traits;
 
-use Kompo\Komponents\LayoutManager;
+use Kompo\Komponents\Managers\LayoutManager;
 
 trait HasSubmenu
 {
