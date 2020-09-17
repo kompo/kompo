@@ -39,6 +39,22 @@ class SettingFieldValuesFromDbTest extends EnvironmentBoot
 	}
 
 	/** @test */
+	public function non_null_but_nullable_values_are_correctly_set()
+	{
+		$post = factory(Post::class, 1)->create([
+			'title' => '',
+			'integer' => 0
+		])->first();
+
+		$form = new _NullableButNonNullValuesForm($post->id);
+
+		$this->assertSame('', $form->komponents[0]->value);
+		$this->assertNotSame(null, $form->komponents[0]->value);
+		$this->assertSame('0', $form->komponents[1]->value);
+		$this->assertNotSame(null, $form->komponents[1]->value);
+	}
+
+	/** @test */
 	public function non_existing_attribute_returns_null()
 	{
 		$post = factory(Post::class, 1)->create()->first();

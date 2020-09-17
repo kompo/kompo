@@ -343,7 +343,7 @@ abstract class Field extends Komponent
      */
     public function setOutput($value, $key)
     {
-        if($value)
+        if(!is_null($value))
             $this->value($value); //to be overriden
     }
 

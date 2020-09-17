@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration {
 			$table->longText('content')->nullable();
 			$table->date('published_at')->nullable();
 			$table->tinyInteger('liked')->default(0);
+			$table->integer('integer')->nullable();
 			$table->text('image')->nullable();
 			$table->timestamps();
 		});
