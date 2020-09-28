@@ -62,20 +62,4 @@ class DatabaseQuery extends QueryOperations
         $this->query->orderBy($sort[0], count($sort) == 2 ? $sort[1] : 'ASC');
     }
 
-    public function executePagination()
-    {
-        $this->pagination = $this->query->paginate($this->komposer->perPage, ['*'], 'page', $this->komposer->currentPage());
-    }
-
-    public function reorderItems($order)
-    {
-        foreach($order as $v)
-        {
-            with(clone $this->query)->where($this->getKeyName(), $v['id'])->update([
-                $this->query->orderable => $v['order']
-            ]);
-        }
-    }
-
-
 }
