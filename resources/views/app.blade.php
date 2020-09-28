@@ -12,6 +12,7 @@
 
     $savedCloseTag = $_kompo->wrapperCloseTag(); //cuz by the time it gets there, things change
 ?>
+
 <head>
     @include('kompo::header')
 </head>
