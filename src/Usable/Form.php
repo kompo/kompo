@@ -140,7 +140,7 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Get the Form's post url - Override to set.
+     * Overriden method to set the Form's submit url.
      *
      * @return string
      */
