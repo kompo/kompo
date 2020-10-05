@@ -64,9 +64,9 @@ class Dispatcher
         $booter = $this->booter;
 
         if($this->type == 'Form'){
-            return $booter::bootForDisplay($this->komposerClass, $this->bootInfo['modelKey'], $this->bootInfo['store']);
+            return $booter::bootForDisplay($this->komposerClass, $this->bootInfo['modelKey'], $this->bootInfo['store'], $this->bootInfo['parameters']);
         }else{
-            return $booter::bootForDisplay($this->komposerClass, $this->bootInfo['store']);
+            return $booter::bootForDisplay($this->komposerClass, $this->bootInfo['store'], $this->bootInfo['parameters']);
         }
     }
 

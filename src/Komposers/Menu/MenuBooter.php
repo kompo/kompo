@@ -24,11 +24,11 @@ class MenuBooter
         return $menu;
     }
 
-	public static function bootForDisplay($menu, $store = [])
+	public static function bootForDisplay($menu, $store = [], $routeParams = null)
 	{
         $menu = static::instantiateUnbooted($menu);
         $menu->store($store);
-        $menu->parameter(RouteFinder::getRouteParameters());
+        $menu->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
         AuthorizationGuard::checkBoot($menu);
 

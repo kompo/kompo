@@ -34,11 +34,11 @@ class QueryBooter
         return $query;
     }
 
-	public static function bootForDisplay($query, $store = [])
+	public static function bootForDisplay($query, $store = [], $routeParams = null)
 	{
         $query = static::instantiateUnbooted($query);
         $query->store($store);
-        $query->parameter(RouteFinder::getRouteParameters());
+        $query->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
         AuthorizationGuard::checkBoot($query);
 

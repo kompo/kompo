@@ -33,7 +33,7 @@ class FormBooter
         return $form;
     }
 
-	public static function bootForDisplay($form, $modelKey = null, $store = [])
+	public static function bootForDisplay($form, $modelKey = null, $store = [], $routeParams = null)
 	{
         $form = static::instantiateUnbooted($form);
 
@@ -45,7 +45,7 @@ class FormBooter
         }
 
         $form->store($store);
-        $form->parameter(RouteFinder::getRouteParameters());
+        $form->parameter($routeParams ?: RouteFinder::getRouteParameters());
         $form->modelKey($modelKey);
         $form->model($form->model);
         
