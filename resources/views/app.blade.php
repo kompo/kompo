@@ -17,7 +17,7 @@
     @include('kompo::header')
 </head>
 
-<body>
+<body @isset($bodyClass) class="{{$bodyClass}}" @endif>
     <div id="vl-md" class="vlBlock vlHiddenLg"></div>
 
     {!! $_kompo->wrapperOpenTag(config('kompo.vue_app_id')) !!}
@@ -32,8 +32,7 @@
 
         @endif
 
-        <vl-alerts></vl-alerts>
-        <vl-modal name="vlDefaultModal"></vl-modal>
+        <vl-floating-elements></vl-floating-elements>
 
     {!! $savedCloseTag !!}
 
