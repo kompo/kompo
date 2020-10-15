@@ -4,6 +4,8 @@ namespace Kompo\Core;
 
 use Kompo\Card;
 use Kompo\Core\Util;
+use Kompo\Komponents\Layout;
+use Kompo\Rows;
 
 class CardGenerator
 {
@@ -40,6 +42,8 @@ class CardGenerator
         if(is_array($card)){
             $defaultCard = $komposer->card ?: Card::class;
             return $defaultCard::form($card);
+        }else if(!($card instanceOf Card) && !($card instanceOf Layout)){
+            return Rows::form($card);
         }else{
             return $card;
         }
