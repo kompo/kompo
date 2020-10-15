@@ -15,6 +15,7 @@ class Action
     use HasInteractions;
     use HasData;
     use Actions\AddAlertActions,
+        Actions\AddSlidingPanelActions,
         Actions\AxiosRequestActions, 
         Actions\AxiosRequestHttpActions,
         Actions\QueryActions, 
