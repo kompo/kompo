@@ -23,15 +23,14 @@ class CardGenerator
 
     protected static function getItemCard($item, $key, $komposer)
     {
-        $defaultItems = array_merge(
-            $komposer->orderable ? [
-                'id' => $item->{$komposer->keyName},
-                'order' => $item->{$komposer->orderable}
-            ] : []
-        );
-
         $card = static::getCardDefaultFallback($item, $key, $komposer);
-        $card->komponents = array_merge($defaultItems, $card->komponents);
+        
+        if($komposer->orderable)
+            $card->data([
+                'item_id' => $item->{$komposer->keyName},
+                'item_order' => $item->{$komposer->orderable}
+            ]);
+
         return $card;
     }
 
