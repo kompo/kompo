@@ -73,7 +73,8 @@ class QueryDisplayer
             'browseUrl' => RouteFinder::getKompoRoute()
         ]);
 
-        $komposer->noItemsFound = __($komposer->noItemsFound);
+        $komposer->noItemsFound = method_exists($komposer, 'noItemsFound') ? 
+            $komposer->noItemsFound() : __($komposer->noItemsFound);
 
         // $this->configureOrdering(); //TODO: on hold for now
 
