@@ -5,6 +5,7 @@ namespace Kompo;
 use Illuminate\Support\ServiceProvider;
 use Kompo\Http\Middleware\SetKompoLocaleMiddleware;
 use Kompo\Routing\Mixins\ExtendsRoutingTrait;
+use Illuminate\Contracts\Http\Kernel;
 
 class KompoServiceProvider extends ServiceProvider
 {
@@ -40,10 +41,16 @@ class KompoServiceProvider extends ServiceProvider
             ]);
         }
 
+        if(count(config('kompo.locales'))){
+            $kernel = $this->app->make(Kernel::class);
+
+            $kernel->appendMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);
+            //app('router')->pushMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);
+        }
 
         /** @var Router $router */
-        $router = $this->app['router'];
-        $router->pushMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);
+        /*$router = $this->app['router'];
+        $router->pushMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);*/
     }
 
     /**

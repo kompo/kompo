@@ -5,6 +5,7 @@ namespace Kompo\Interactions;
 use Kompo\Exceptions\NotAllowedInteractionException;
 use Kompo\Exceptions\NotApplicableInteractionException;
 use Kompo\Exceptions\NotFoundInteractionException;
+use Kompo\Flex;
 use Kompo\Input;
 use Kompo\Komponents\Field;
 use Kompo\Komponents\Trigger;
@@ -18,6 +19,7 @@ class Interaction
         Input::class => 'input',
         Field::class => 'change',
         Trigger::class => 'click',
+        Flex::class => 'click',
         Panel::class => 'load',
         Komposer::class => 'success',
         Action::class => 'success',
@@ -26,7 +28,7 @@ class Interaction
 
     protected static $allowedInteractions = [
         'load' => [Panel::class, Field::class],
-        'click' => [Trigger::class],
+        'click' => [Trigger::class, Flex::class],
         'emit' => [Komposer::class],
         //'focus' => [Field::class, Trigger::class],
         //'blur' => [Field::class, Trigger::class],

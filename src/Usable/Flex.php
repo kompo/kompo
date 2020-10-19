@@ -2,12 +2,15 @@
 
 namespace Kompo;
 
+use Kompo\Interactions\Traits\ForwardsInteraction;
+use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Komponents\Layout;
 use Kompo\Komponents\Traits\HasHref;
 use Kompo\Komponents\Traits\VerticalAlignmentTrait;
 
 class Flex extends Layout
 {
+    use HasInteractions, ForwardsInteraction;
     use VerticalAlignmentTrait;
     use HasHref;
 
