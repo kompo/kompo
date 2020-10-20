@@ -21,7 +21,7 @@ trait HasClasses
     public function class($classes = null)
     {
         if($classes){
-            $this->class = trim($classes);
+            $this->class = ($this->class() ? ($this->class().' ') : '').trim($classes);
             return $this;
         }else{
             return property_exists($this, 'class') ? $this->class : '';
@@ -41,7 +41,7 @@ trait HasClasses
     }
 
     /**
-     * Adds classes to the element.
+     * Adds classes to the element. TODO: replace with overwriteClass or smth...
      *
      * @param  string  $classes
      * @return mixed
