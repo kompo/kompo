@@ -27,7 +27,7 @@ trait HasSubmenu
         if( method_exists($component, 'getHash') && $component->getHash() && $component->href == 'javascript:void(0)')
             $component->href($this->href) //so that turbolinnks are added
                 ->addHash($component->getHash()) //to remove the need of repeating href for each child
-                ->addClass('vl-has-hash');
+                ->class('vl-has-hash');
 
         //if a link in the menu is active, then the parent is active (even if no href for the parent)
         if($component->data('active')) 

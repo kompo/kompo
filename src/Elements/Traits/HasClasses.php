@@ -46,13 +46,10 @@ trait HasClasses
      * @param  string  $classes
      * @return mixed
      */
-    public function addClass($classes)
+    public function replaceClass($classes)
     {
-        return $this->class(
-            $this->class() ? 
-                ($this->class().' '.trim($classes)) :
-                $classes
-        );
+        $this->class = trim($classes);
+        return $this;
     }
 
     /**
@@ -63,10 +60,10 @@ trait HasClasses
      */
     public function removeClass($classes)
     {
-        $currentClasses = explode(' ', $this->class);
+        $currentClasses = explode(' ', $this->class());
         $newClasses = explode(' ', $classes);
 
-        return $this->class(implode(' ', array_diff($currentClasses, $newClasses)));
+        return $this->replaceClass(implode(' ', array_diff($currentClasses, $newClasses)));
     }
 
     /**
