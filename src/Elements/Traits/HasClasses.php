@@ -9,7 +9,7 @@ trait HasClasses
      *
      * @var array
      */
-    public $class = '';
+    //public $class = ''; //Commented to allow use in traits without conflict
 
     /**
      * Sets the class attribute of the element.
@@ -24,7 +24,7 @@ trait HasClasses
             $this->class = trim($classes);
             return $this;
         }else{
-            return $this->class;
+            return property_exists($this, 'class') ? $this->class : '';
         }
     }
 
@@ -48,9 +48,10 @@ trait HasClasses
      */
     public function addClass($classes)
     {
-        return $this->class($this->class ? 
-            ($this->class.' '.trim($classes)) :
-            $classes
+        return $this->class(
+            $this->class() ? 
+                ($this->class().' '.trim($classes)) :
+                $classes
         );
     }
 
