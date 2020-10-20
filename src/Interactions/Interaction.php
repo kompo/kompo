@@ -12,6 +12,7 @@ use Kompo\Komponents\Trigger;
 use Kompo\Komposers\Komposer;
 use Kompo\Panel;
 use Kompo\Rows;
+use Kompo\TableRow;
 use RuntimeException;
 
 class Interaction
@@ -22,6 +23,7 @@ class Interaction
         Trigger::class => 'click',
         Flex::class => 'click',
         Rows::class => 'click',
+        TableRow::class => 'click',
         Panel::class => 'load',
         Komposer::class => 'success',
         Action::class => 'success',
@@ -30,7 +32,7 @@ class Interaction
 
     protected static $allowedInteractions = [
         'load' => [Panel::class, Field::class],
-        'click' => [Trigger::class, Flex::class, Rows::class],
+        'click' => [Trigger::class, Flex::class, Rows::class, TableRow::class],
         'emit' => [Komposer::class],
         //'focus' => [Field::class, Trigger::class],
         //'blur' => [Field::class, Trigger::class],
