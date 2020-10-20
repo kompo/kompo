@@ -20,5 +20,22 @@ trait FillModalActions
             'panelId' => $modalName
         ]);
     }
+
+    /**
+     * New method to document
+     *
+     * @param      <type>  $komposerClass  The komposer class
+     * @param      <type>  $ajaxPayload    The ajax payload
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public function editInModal($komposerClass, $ajaxPayload = null)
+    {
+        $this->applyToElement(function($element) use($komposerClass, $ajaxPayload) {
+            $element->getKomposer($komposerClass, $ajaxPayload);
+        });
+
+        return $this->prepareAction('insertModal');
+    }
     
 }
