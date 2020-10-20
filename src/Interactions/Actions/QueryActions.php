@@ -32,14 +32,14 @@ trait QueryActions
      */
     public function filter($operator = null)
     {
-        $this->applyToElement(function($element) use($operator) {
-            if(!$element instanceOf Field)
-                throw new NotFilterCapableException(class_basename($element));
+        $this->applyToElement(function($el) use($operator) {
+            if(!$el instanceOf Field)
+                throw new NotFilterCapableException(class_basename($el));
 
             if(!in_array($operator, self::$allowedOperators))
                 throw new FilterOperatorNotAllowedException($operator);
 
-            $element->data([ 'filterOperator' => $operator  ]);
+            $el->data([ 'filterOperator' => $operator  ]);
         });
 
         return $this->browse(null, 1); //filtering works for it's own query only
@@ -54,11 +54,11 @@ trait QueryActions
      */
     public function sort($sortOrders = '')
     {
-        $this->applyToElement(function($element) use($sortOrders) {
-            if($element instanceOf Field)
-                $element->ignoresModel()->doesNotFill();
+        $this->applyToElement(function($el) use($sortOrders) {
+            if($el instanceOf Field)
+                $el->ignoresModel()->doesNotFill();
 
-            $element->data([ 'sortsQuery' => $sortOrders ?: true ]);
+            $el->data([ 'sortsQuery' => $sortOrders ?: true ]);
         });
 
         return $this->prepareAction('sortQuery');

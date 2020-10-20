@@ -41,8 +41,8 @@ trait AxiosRequestActions
      */
     public function getKomponents($methodName, $ajaxPayload = null)
     {
-        $this->applyToElement(function($element) use($methodName) {
-            $element->data([ 'includes' => $methodName ]);
+        $this->applyToElement(function($el) use($methodName) {
+            $el->data([ 'includes' => $methodName ]);
         });
 
         return $this->selfHttpRequest('POST', 'include-komponents', $methodName, $ajaxPayload)
