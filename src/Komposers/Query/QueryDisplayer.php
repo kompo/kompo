@@ -76,7 +76,10 @@ class QueryDisplayer
         $komposer->noItemsFound = method_exists($komposer, 'noItemsFound') ? 
             $komposer->noItemsFound() : __($komposer->noItemsFound);
 
-        // $this->configureOrdering(); //TODO: on hold for now
+        if($komposer->orderable)
+            $komposer->data([
+                'orderingUrl' => RouteFinder::getKompoRoute()
+            ]);
 
         if(method_exists($komposer, 'headers'))
             $komposer->headers = collect($komposer->headers())->filter();

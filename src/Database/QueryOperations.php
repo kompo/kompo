@@ -15,6 +15,8 @@ abstract class QueryOperations
 
     abstract public function getPaginated();
 
+    abstract public function orderItems();
+
     /**
      * Constructs a Kompo\Database\QueryOperations object
      *

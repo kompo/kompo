@@ -2,9 +2,10 @@
 
 namespace Kompo\Database;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Kompo\Core\Util;
 use Kompo\Database\QueryOperations;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Kompo\Exceptions\NotOrderableQueryException;
 
 class CollectionQuery extends QueryOperations
 {
@@ -17,6 +18,11 @@ class CollectionQuery extends QueryOperations
     public function __construct($query, $komposer)
     {
         parent::__construct(Util::collect($query), $komposer);
+    }
+
+    public function orderItems()
+    {
+        throw new NotOrderableQueryException(); 
     }
 
     public function handleFilter($field)

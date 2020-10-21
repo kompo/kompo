@@ -39,6 +39,30 @@ class DatabaseQuery extends QueryOperations
         }
     }
 
+    public function orderItems()
+    {
+        collect(request('order'))->each(function($order){
+            $this->orderQuery()->where($this->modelKeyName(), $order['item_id'])->update([
+                $this->modelOrderColumn() => $order['item_order']
+            ]);
+        });
+    }
+
+    protected function orderQuery()
+    {
+        return $this->query;
+    }
+
+    protected function modelKeyName()
+    {
+        return 'id';
+    }
+
+    protected function modelOrderColumn()
+    {
+        return $this->komposer->orderable;
+    }
+
     public function handleSort($sort)
     {
         //clearing orderBy from query, should give the user the ability to do so or not

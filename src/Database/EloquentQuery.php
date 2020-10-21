@@ -117,9 +117,15 @@ class EloquentQuery extends DatabaseQuery
         });
     }
 
+    protected function orderQuery()
+    {
+        return $this->model;
+    }
 
-
-
+    protected function modelKeyName()
+    {
+        return $this->model->getKeyName();
+    }
 
     public function sortBy($sort)
     {

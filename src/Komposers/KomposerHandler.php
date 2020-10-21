@@ -12,6 +12,7 @@ use Kompo\Komposers\Form\FormManager;
 use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Komposers\KomposerManager;
 use Kompo\Komposers\Query\QueryDisplayer;
+use Kompo\Komposers\Query\QueryManager;
 use Kompo\Routing\Dispatcher;
 use Kompo\Select;
 
@@ -45,7 +46,7 @@ class KomposerHandler
             case 'browse-items':
                 return QueryDisplayer::browseCards($komposer);
 
-            case 'order':
+            case 'order-items':
                 return QueryManager::orderItems($komposer);
 
             case 'delete-item':
