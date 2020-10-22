@@ -18,7 +18,8 @@ trait KomposerActions
     {
         return $this->prepareAction('refreshKomposer', [
             'route' => RouteFinder::getKompoRoute('POST'),
-            'kompoid' => $komposerIds
+            'kompoid' => $komposerIds,
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage')
         ]);
     }
 }

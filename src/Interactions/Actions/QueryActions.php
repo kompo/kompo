@@ -61,7 +61,9 @@ trait QueryActions
             $el->data([ 'sortsQuery' => $sortOrders ?: true ]);
         });
 
-        return $this->prepareAction('sortQuery');
+        return $this->prepareAction('sortQuery', [
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage')
+        ]);
     }
 
 
@@ -78,7 +80,8 @@ trait QueryActions
     {
         return $this->prepareAction('browseQuery', [
             'page' => $page,
-            'kompoid' => $queryId
+            'kompoid' => $queryId,
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage')
         ]);
     }
 
