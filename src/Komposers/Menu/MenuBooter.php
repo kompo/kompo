@@ -5,6 +5,7 @@ namespace Kompo\Komposers\Menu;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
+use Kompo\Komposers\KomposerManager;
 use Kompo\Menu;
 use Kompo\Routing\RouteFinder;
 
@@ -35,6 +36,8 @@ class MenuBooter
 		$menu->komponents = collect($menu->komponents())->filter()->all();
 
 		KompoInfo::saveKomposer($menu);
+
+        KomposerManager::booted($menu);
 
 		return $menu;
 	}

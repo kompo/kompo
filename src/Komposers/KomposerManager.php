@@ -22,8 +22,19 @@ class KomposerManager
 
 		if(method_exists($komposer, 'created'))
 			$komposer->created();
+    }
 
-    	return $komposer;
+    /**
+     * A method that gets executed at the end of the display lifecycle.
+     * 
+     * @param Kompo\Komposers\Komposer $komposer
+     * 
+     * @return Komposer
+     */
+    public static function booted($komposer)
+    {
+        if(method_exists($komposer, 'booted'))
+            $komposer->booted();
     }
 
     /**

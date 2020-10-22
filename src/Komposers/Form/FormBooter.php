@@ -53,6 +53,8 @@ class FormBooter
 
         FormDisplayer::displayKomponents($form);
 
+        KomposerManager::booted($form);
+
 		return $form;
 	}
 

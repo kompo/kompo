@@ -6,6 +6,7 @@ use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
 use Kompo\Core\ValidationManager;
+use Kompo\Komposers\KomposerManager;
 use Kompo\Komposers\Query\QueryFilters;
 use Kompo\Query;
 use Kompo\Routing\RouteFinder;
@@ -46,7 +47,9 @@ class QueryBooter
 
 		QueryDisplayer::displayFiltersAndCards($query);
 
-        KompoInfo::saveKomposer($query); 
+        KompoInfo::saveKomposer($query);
+
+        KomposerManager::booted($query);
 
         return $query;
 	}
