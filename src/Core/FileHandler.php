@@ -126,14 +126,19 @@ class FileHandler
      */
     protected function mapToDB($file, $modelPath, $withId = false)
     {
-    	return array_merge([
-            $this->nameKey => $file->getClientOriginalName(),
-            $this->pathKey => 'storage/'.$this->getStoragePath($file, $modelPath),
-            $this->mime_typeKey => $file->getClientMimeType(),
-            $this->sizeKey => $file->getSize()
-        ], $withId ? [
-            $this->idKey => $file->hashName()
-        ] : []);
+    	return array_intersect_key( //array_intersect keeps only the columns specified in the config
+            
+            array_merge([
+                $this->nameKey => $file->getClientOriginalName(),
+                $this->pathKey => 'storage/'.$this->getStoragePath($file, $modelPath),
+                $this->mime_typeKey => $file->getClientMimeType(),
+                $this->sizeKey => $file->getSize()
+            ], $withId ? [
+                $this->idKey => $file->hashName()
+            ] : []),
+
+            $this->allKeys
+        );
     }
 
     /**
