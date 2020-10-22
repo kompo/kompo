@@ -4,5 +4,6 @@
     "Cancel": "Anular",
 	"Delete this item": "Eliminar?", 
     "No items found": "No se encontraron elementos.",
-    "warnBeforeClose": "Los cambios no guardados se perderán. ¿Seguro que quieres cerrar la ventana?"
+    "warnBeforeClose": "Los cambios no guardados se perderán. ¿Seguro que quieres cerrar la ventana?",
+    "sessionTimeoutMessage": "Esta página ha caducado por inactividad.\n¿Le gustaría actualizar la página?"
 }
