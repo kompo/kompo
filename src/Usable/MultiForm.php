@@ -8,13 +8,17 @@ use Illuminate\Support\Str;
 use Kompo\Core\KompoTarget;
 use Kompo\Core\RequestData;
 use Kompo\Core\ValidationManager;
+use Kompo\Database\Lineage;
 use Kompo\Komponents\Field;
+use Kompo\Komponents\Traits\HasAddLabel;
 use Kompo\Komposers\Form\FormBooter;
 use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Routing\RouteFinder;
 
 class MultiForm extends Field
 {
+    use HasAddLabel;
+
     public $vueComponent = 'MultiForm';
 
     public $komponents;
@@ -31,6 +35,8 @@ class MultiForm extends Field
     {
         parent::vlInitialize($name);
         $this->name = lcfirst(Str::camel($name));
+
+        $this->addLabel('Add a new item');
     }
 
     public function prepareForFront($komposer)
@@ -74,7 +80,7 @@ class MultiForm extends Field
 
     public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
-        collect(RequestData::get($requestName))->map(function($subrequest){
+        collect(RequestData::get($requestName))->each(function($subrequest) use($model, $requestName) {
 
             $form = FormBooter::bootForAction([
                 'kompoClass' => $this->formClass,
@@ -84,6 +90,14 @@ class MultiForm extends Field
             ]);
 
             //No Validation or Authorization step - it has already been done on the parent Form
+            if(Lineage::isOneToMany($model, $requestName)){
+                $relation = Lineage::findRelation($model, $requestName);
+                $form->model->{$relation->getForeignKeyName()} = $model->id;
+            }
+
+            //If all fields are null, don't create a relation for nothing
+            if(collect($subrequest)->filter()->count() == 0)
+                return;
 
             //Then we swap the requests for save
             $mainRequest = request();            
@@ -117,6 +131,13 @@ class MultiForm extends Field
         ],
             KompoTarget::getEncryptedArray($formClass)
         ));
+    }
+
+
+    public function asTable($headers = [])
+    {
+        $this->headers = $headers;
+        return $this;
     }
 
 }

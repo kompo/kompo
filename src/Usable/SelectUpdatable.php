@@ -3,11 +3,14 @@
 namespace Kompo;
 
 use Kompo\Core\KompoId;
+use Kompo\Komponents\Traits\HasAddLabel;
 use Kompo\Routing\RouteFinder;
 use Kompo\Select;
 
 class SelectUpdatable extends Select
 {
+    use HasAddLabel;
+    
     public $vueComponent = 'SelectUpdatable';
 
     protected function vlInitialize($label)
@@ -49,18 +52,6 @@ class SelectUpdatable extends Select
         return RouteFinder::setUpKomposerRoute($this, $formClassOrRoute, 'POST')->data([
             'ajaxPayload' => $ajaxPayload,
             'sessionTimeoutMessage' => __('sessionTimeoutMessage')
-        ]);
-    }
-
-    /**
-     * Specifies the label of the link that will load the form. Default is 'Add a new option'.
-     *
-     * @param string  $label  The label
-     */
-    public function addLabel($label)
-    {
-        return $this->data([
-            'updateOptionsLabel' => __($label)
         ]);
     }
     
