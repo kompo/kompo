@@ -25,3 +25,13 @@
 		{!! $vueComponent !!}
 	</div>
 @endsection
+
+@push('scripts')
+
+	@if($js)
+		<script>
+			{!! $js !!}
+		</script>
+	@endif
+
+@endpush

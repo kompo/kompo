@@ -65,6 +65,7 @@ class Router
                 'vueComponent' => $booter::renderVueComponent($komposer),
                 'containerClass' => property_exists($komposer, 'containerClass') ? $komposer->containerClass : 'container',
                 'metaTags' => $komposer->getMetaTags($komposer),
+                'js' => method_exists($komposer, 'js') ? $komposer->js() : null,
                 'layout' => $layout,
                 'section' => static::getLastSection($router)
             ]);

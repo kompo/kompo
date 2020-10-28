@@ -25,6 +25,7 @@ class Action
         Actions\FrontEndActions, 
         Actions\KomposerActions, 
         Actions\RedirectActions, 
+        Actions\RunJsActions, 
         Actions\SubmitFormActions;
 
     /**
