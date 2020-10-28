@@ -10,7 +10,8 @@ use Kompo\Komposers\KomposerManager;
 
 abstract class Komponent extends Element
 {
-    use Traits\HasHtmlAttributes;
+    use Traits\HasHtmlAttributes,
+        Traits\UsedInTables;
     /**
      * The component's label.
      *
