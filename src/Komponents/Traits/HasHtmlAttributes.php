@@ -38,4 +38,12 @@ trait HasHtmlAttributes {
         ]);
     }
 
+
+    public function balloon($label, $position = 'up')
+    {
+        return $this->attr([
+            'aria-label' => $label,
+            'data-balloon-pos' => $position
+        ]);
+    }
 }

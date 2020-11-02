@@ -20,7 +20,7 @@ trait HasClasses
      */
     public function class($classes = null)
     {
-        if($classes){
+        if($classes !== null){
             $this->class = ($this->class() ? ($this->class().' ') : '').trim($classes);
             return $this;
         }else{
