@@ -13,5 +13,7 @@ class Search extends Select
         $this->data([
 	        'searchInput' => true
 	    ]);
+
+	    $this->icon('icon-search');
     }
 }
