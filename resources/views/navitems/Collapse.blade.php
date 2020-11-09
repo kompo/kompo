@@ -1,30 +1,20 @@
-<?php 
-    $vlCollapseOpen = $component->data('expandByDefault') || 
-        ($component->data('expandIfActive') && $component->data('active') ); 
-?>
-<div 
-    @include('kompo::partials.IdStyle') 
-    class="vl-collapse vl-nav-item {{ $component->class() }} {{ $component->data('active') }}">
-    
-    <div class="vl-collapse-toggler {{ $vlCollapseOpen ? '' : 'vl-toggler-closed' }}" 
-        onclick="toggleMenu(this)">
+<vl-collapse class="vl-nav-item" :vkompo="{{ $component }}">
 
-        <a @include('kompo::partials.HrefTarget') >
+    <a @include('kompo::partials.HrefTarget') >
 
-            @include('kompo::partials.ItemContent', ['component' => $component])
-        
-        </a>
-        @if(count($component->komponents))
-        <div>
-            <i class="icon-down-dir"></i>
-        </div>
-        @endif
-    </div>
+        @include('kompo::partials.ItemContent', ['component' => $component])
     
-    <div class="vl-collapse-menu {{ $vlCollapseOpen ? '' : 'vl-menu-closed' }}">
+    </a>
+    @if(count($component->komponents))
+
+        <i class="icon-down-dir"></i>
+
+    @endif
+    
+    <template v-slot:komponents>
         
         @include('kompo::menus.komponents', [ 'komponents' => $component->komponents ])
     
-    </div>
+    </template>
 
-</div>
+</vl-collapse>

@@ -10,5 +10,6 @@ class Collapse extends Trigger
 {
 	use HasHref, HasSubmenu;
 
+	public $vueComponent = 'Collapse';
     public $bladeComponent = 'Collapse';
 }
