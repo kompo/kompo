@@ -767,3 +767,11 @@ if(! function_exists('_NavSearch'))
         return Kompo\NavSearch::form(...func_get_args());
     }
 }
+
+if(! function_exists('_SidebarToggler'))
+{
+    function _SidebarToggler()
+    {
+        return Kompo\SidebarToggler::form(...func_get_args());
+    }
+}

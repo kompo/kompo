@@ -21,8 +21,8 @@ class KompoLayout
     public function __construct($n, $l, $r, $f)
     {
     	$this->setMenu($n, 'navbar', 'vl-nav', 'nav');
-    	$this->setMenu($l, 'lsidebar', 'vl-sidebar-l', 'aside', true);
-    	$this->setMenu($r, 'rsidebar', 'vl-sidebar-r', 'aside', true);
+    	$this->setMenu($l, 'lsidebar', 'vl-sidebar-l', 'vl-aside', true);
+    	$this->setMenu($r, 'rsidebar', 'vl-sidebar-r', 'vl-aside', true);
     	$this->setMenu($f, 'footer', 'vl-footer', 'footer');
 
     	$this->hasAnyFixedMenus = count($this->isFixed) > 0;
@@ -174,7 +174,7 @@ class KompoLayout
 
     public function getOpenTag($key)
     {
-    	return '<'.$this->{$key}->data('menuTag').$this->getMenuHtmlAttributes($this->{$key}).'>'.
+    	return '<'.$this->{$key}->data('menuTag').$this->getMenuHtmlAttributes($key).'>'.
     		$this->getOpenContainer($this->{$key});
     }
 
@@ -195,11 +195,14 @@ class KompoLayout
 	    ];
     }
 
-	protected function getMenuHtmlAttributes($menu)
+	protected function getMenuHtmlAttributes($key)
 	{
+		$menu = $this->{$key};
+
 		return $this->getClassAttribute($menu).
 			$this->getIdAttribute($menu).
-			$this->getStyleAttribute($menu);
+			$this->getStyleAttribute($menu).
+			($this->isSidebar($menu) ? $this->getSidebarSideAttribute($key) : '');
 	}
 
 	protected function getClassAttribute($menu)
@@ -218,6 +221,11 @@ class KompoLayout
 		return $menu->style ? (' style="'.$menu->style.'"') : '';
 	}
 
+	protected function getSidebarSideAttribute($key)
+	{
+		return ' side="'.($key == 'rsidebar' ? 'right' : 'left').'"';
+	}
+
 	protected function getOpenContainer($menu)
 	{
 		return $this->hasContainer($menu) ? 
@@ -232,5 +240,10 @@ class KompoLayout
 	protected function hasContainer($menu)
 	{
 		return property_exists($menu, 'containerClass') ? $menu->containerClass : false;
+	}
+
+	protected function isSidebar($menu)
+	{
+		return strpos($menu->data('menuClass'), 'sidebar') > -1;
 	}
 }

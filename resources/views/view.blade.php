@@ -29,7 +29,7 @@
 @push('scripts')
 
 	@if($js)
-		<script>
+		<script class="komposer-script">
 			{!! $js !!}
 		</script>
 	@endif

@@ -67,5 +67,6 @@ class QueryFilters
         if($sort = request()->header('X-Kompo-Sort'))
             $query->query->handleSort($sort);
 
+        //dd($query->query->getQuery()->toSql(), $query->query->getQuery()->getBindings());
     }
 }

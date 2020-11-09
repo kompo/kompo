@@ -83,6 +83,7 @@ class DatabaseQuery extends QueryOperations
     public function attributeSort($sort)
     {
         $sort = explode(':', $sort);
+
         $this->query->orderBy($sort[0], count($sort) == 2 ? $sort[1] : 'ASC');
     }
 
