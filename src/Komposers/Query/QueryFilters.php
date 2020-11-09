@@ -3,6 +3,7 @@
 namespace Kompo\Komposers\Query;
 
 use Kompo\Core\AuthorizationGuard;
+use Kompo\Core\KompoInfo;
 use Kompo\Core\RequestData;
 use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\Form\FormSubmitter;
@@ -62,9 +63,8 @@ class QueryFilters
 
         });
 
-        //dd($query->query->getQuery()->toSql(), $query->query->getQuery()->getBindings());
-
-        if($sort = request()->header('X-Kompo-Sort'))
+        //When sorting and multiple queries are booted, we want to apply the sort on the Komposer from the request only
+        if(($sort = request()->header('X-Kompo-Sort')) && KompoInfo::isKomposer($query))
             $query->query->handleSort($sort);
 
         //dd($query->query->getQuery()->toSql(), $query->query->getQuery()->getBindings());

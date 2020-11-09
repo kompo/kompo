@@ -3,6 +3,7 @@
 namespace Kompo\Core;
 
 use Illuminate\Support\Facades\Crypt;
+use Kompo\Core\KompoId;
 use Kompo\Exceptions\AuthorizationUnavailableException;
 use Kompo\Exceptions\KompoBootInfoNotFoundException;
 
@@ -35,5 +36,10 @@ class KompoInfo extends KompoAjax
             throw new KompoBootInfoNotFoundException();
 
         return Crypt::decrypt($bootInfo);
+    }
+
+    public static function isKomposer($komposer)
+    {
+        return static::getKompo()[KompoId::$key] == KompoId::getFromElement($komposer);
     }
 }
