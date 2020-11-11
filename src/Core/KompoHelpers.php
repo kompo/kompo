@@ -576,6 +576,14 @@ if(! function_exists('_SelectLinks'))
     }
 }
 
+if(! function_exists('_SelectNative'))
+{
+    function _SelectNative()
+    {
+        return Kompo\SelectNative::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_SelectUpdatable'))
 {
     function _SelectUpdatable()
