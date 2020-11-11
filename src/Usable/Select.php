@@ -31,6 +31,17 @@ class Select extends Field
 
     protected $orderBy = [];
 
+    public function simple()
+    {
+        $this->vueComponent = 'SelectSimple';
+        return $this;
+    }
+    public function datalist()
+    {
+        $this->vueComponent = 'SelectDatalist';
+        return $this;
+    }
+
     protected function vlInitialize($label)
     {
         parent::vlInitialize($label);
