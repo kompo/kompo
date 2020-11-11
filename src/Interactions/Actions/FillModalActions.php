@@ -37,7 +37,7 @@ trait FillModalActions
                 ->get($route, $parameters, $ajaxPayload);
         });
 
-        return $this->prepareAction('insertModal');
+        return $this->prepareAction('modalInsert');
     }
     
 }
