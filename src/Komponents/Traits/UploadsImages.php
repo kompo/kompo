@@ -16,6 +16,16 @@ trait UploadsImages
     }
 
     /**
+     * Disable default preview functionality of image thumbnails in a modal.
+     *
+     * @return self
+     */
+    public function noPreview()
+    {
+        return $this->data(['thumbPreviewDisabled' => true]);
+    }
+
+    /**
      * Set a max width to resize image uploads or set to false to disable resizing.
      *
      * @param integer|boolean  $width  The width

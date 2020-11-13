@@ -17,7 +17,11 @@ class Input extends Field
     {
         parent::vlInitialize($label);
 
-        $this->inputType('text');
+        if(strtolower($label) == 'email'){
+            $this->inputType('email');
+        }else{
+            $this->inputType('text');
+        }
 
         $this->debounce();
     }
