@@ -54,8 +54,8 @@ class FormField
 
         return Util::collect($field->name)->map(function($requestName, $key) use($stage, $field, $komposer) {
 
-            if(!RequestData::has($requestName))
-                return;
+            /*if(!RequestData::has($requestName)) //Why is this even here? => Hidden fields...hmm
+                return;*/
 
             if(NameParser::isNested($requestName)){
                 if($stage == 'fillHasMorphOne')

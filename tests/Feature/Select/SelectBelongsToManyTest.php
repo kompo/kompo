@@ -8,19 +8,19 @@ class SelectBelongsToManyTest extends SelectEnvironmentBootManyTest
     /** @test */
     public function select_works_with_belongs_to_many_plain_crud()
     {
-    	$this->assert_crud_many_selects(_SelectBelongsToManyForm::class, 'belongsToManyPlain', 'belongs_to_many_plain', 0);
+    	$this->assert_crud_many_selects(_SelectBelongsToManyForm::class, 'belongsToManyPlain', 'belongs_to_many_plain');
     }
     
     /** @test */
     public function select_works_with_belongs_to_many_ordered_crud()
     {
-    	$this->assert_crud_many_selects(_SelectBelongsToManyForm::class, 'belongsToManyOrdered', 'belongs_to_many_ordered', 1);
+    	$this->assert_crud_many_selects(_SelectBelongsToManyForm::class, 'belongsToManyOrdered', 'belongs_to_many_ordered');
     }
     
     /** @test */
     public function select_works_with_belongs_to_many_filtered_crud()
     {
-    	$this->assert_crud_many_selects(_SelectBelongsToManyForm::class, 'belongsToManyFiltered', 'belongs_to_many_filtered', 2);
+    	$this->assert_crud_many_selects(_SelectBelongsToManyForm::class, 'belongsToManyFiltered', 'belongs_to_many_filtered');
     }
 
 

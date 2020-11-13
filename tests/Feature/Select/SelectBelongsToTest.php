@@ -9,19 +9,19 @@ class SelectBelongsToTest extends SelectEnvironmentBootOneTest
     /** @test */
     public function select_works_with_belongs_to_plain_crud()
     {
-    	$this->assert_crud_one_selects(_SelectBelongsToForm::class, 'belongsToPlain', 'belongs_to_plain', 0);
+    	$this->assert_crud_one_selects(_SelectBelongsToForm::class, 'belongsToPlain', 'belongs_to_plain');
     }
 
     /** @test */
     public function select_works_with_belongs_to_ordered_crud()
     {
-    	$this->assert_crud_one_selects(_SelectBelongsToForm::class, 'belongsToOrdered', 'belongs_to_ordered', 1);
+    	$this->assert_crud_one_selects(_SelectBelongsToForm::class, 'belongsToOrdered', 'belongs_to_ordered');
     }
     
     /** @test */
     public function select_works_with_belongs_to_filtered_crud()
     {
-    	$this->assert_crud_one_selects(_SelectBelongsToForm::class, 'belongsToFiltered', 'belongs_to_filtered', 2);
+    	$this->assert_crud_one_selects(_SelectBelongsToForm::class, 'belongsToFiltered', 'belongs_to_filtered');
     }
 
 

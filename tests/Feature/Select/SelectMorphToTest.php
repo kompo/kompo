@@ -9,19 +9,19 @@ class SelectMorphToTest extends SelectEnvironmentBootOneTest
     /** @test */
     public function select_works_with_morph_to_plain_crud()
     {
-    	$this->assert_crud_one_selects(_SelectMorphToForm::class, 'morphToPlain', 'morph_to_plain', 0);
+    	$this->assert_crud_one_selects(_SelectMorphToForm::class, 'morphToPlain', 'morph_to_plain');
     }
 
     /** @test */
     public function select_works_with_morph_to_ordered_crud()
     {
-    	$this->assert_crud_one_selects(_SelectMorphToForm::class, 'morphToOrdered', 'morph_to_ordered', 1);
+    	$this->assert_crud_one_selects(_SelectMorphToForm::class, 'morphToOrdered', 'morph_to_ordered');
     }
     
     /** @test */
     public function select_works_with_morph_to_filtered_crud()
     {
-    	$this->assert_crud_one_selects(_SelectMorphToForm::class, 'morphToFiltered', 'morph_to_filtered', 2);
+    	$this->assert_crud_one_selects(_SelectMorphToForm::class, 'morphToFiltered', 'morph_to_filtered');
     }
 
 

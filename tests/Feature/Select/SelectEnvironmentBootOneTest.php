@@ -10,15 +10,21 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
     abstract protected function assert_database_has_expected_row($user);
     abstract protected function assert_database_missing_expected_row($user);
 
+    protected $currentRelation;
 
-    protected function assert_crud_one_selects($form, $relation, $snaked, $index)
+    protected $currentForm;
+
+    protected function assert_crud_one_selects($form, $relation, $snaked)
     {   
+        $this->currentRelation = $relation;
+        $this->currentForm = $form;
+
         $type = substr($relation, -7) == 'Ordered' ? 'ordered' : (substr($relation, -8) == 'Filtered' ? 'filtered' : '');
 
         //Insert
         $user1 = User::first();
         $this->submit(
-            $form = new $form(), [
+            $form = $this->getForm(), [
                 $relation => $user1->id
             ]
         )->assertStatus(201)
@@ -31,13 +37,13 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
             $this->assertEquals(1, $user1->fresh()->order);
 
         //Reload
-        $form = new $form(1);
-        $this->assertEquals($user1->id, $form->komponents[$index]->value);
+        $form = $this->getForm(1);
+        $this->assertEquals($user1->id, $form->komponents[0]->value);
 
         //Update
         $user2 = factory(User::class)->create();
         $this->submit(
-            $form = new $form(1), [
+            $form = $this->getForm(1), [
                 $relation => $user2->id
             ]
         )->assertStatus(200)
@@ -50,12 +56,12 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
             $this->assertEquals(1, $user2->fresh()->order);
 
         //Reload
-        $form = new $form(1);
-        $this->assertEquals($user2->id, $form->komponents[$index]->value);
+        $form = $this->getForm(1);
+        $this->assertEquals($user2->id, $form->komponents[0]->value);
 
         //Remove
         $this->submit(
-            $form = new $form(1), [
+            $form = $this->getForm(1), [
                 $relation => null
             ]
         )->assertStatus(200)
@@ -67,8 +73,17 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
         $this->assertEquals(2, \DB::table('users')->count());
 
         //Reload
-        $form = new $form(1);
-        $this->assertNull($form->komponents[$index]->value);
+        $form = $this->getForm(1);
+        $this->assertNull($form->komponents[0]->value);
+    }
+
+    protected function getForm($id = null)
+    {
+        $form = $this->currentForm;
+
+        return new $form($id, [
+            'komponent' => $this->currentRelation
+        ]);
     }
 
 }
