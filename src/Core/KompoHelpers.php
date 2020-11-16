@@ -184,6 +184,14 @@ if(! function_exists('_Button'))
     }
 }
 
+if(! function_exists('_Calendar'))
+{
+    function _Calendar()
+    {
+        return Kompo\Calendar::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Checkbox'))
 {
     function _Checkbox()

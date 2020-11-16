@@ -15,5 +15,12 @@ class Img extends Block
     	
         parent::vlInitialize($label);
     }
+
+    public function bgCover()
+    {
+    	return $this->data([
+    		'backgroundCover' => true
+    	]);
+    }
     
 }
