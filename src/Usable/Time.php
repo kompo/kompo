@@ -2,6 +2,7 @@
 
 namespace Kompo;
 
+use Illuminate\Support\Carbon;
 use Kompo\Komponents\Field;
 
 class Time extends Field
@@ -51,20 +52,13 @@ class Time extends Field
     	return $this;
     }
 
-    public function value($value)
+    public function setOutput($value, $key)
     {
-        if(!$this->savedAsDateTime){
-            $this->value = $value;
-        }else{
-            if($this->validateDate($value, 'Y-m-d H:i:s')){
-                $this->value = date($this->getTimeFormat(), strtotime($value)); //get TIME from DATETIME
-            }
-            if($this->validateDate($value, $this->getTimeFormat())) {
-                $this->value = '1900-01-01 '.$value; //save as DATETIME in DB
-            }
-        }
+        if(!is_null($value))
+            $this->value(
+                $value instanceOf Carbon ? $value->format('H:i') : $value
+            );
     }
-
 
     private function validateDate($date, $format = 'Y-m-d')
 	{

@@ -62,7 +62,7 @@ class AuthorizationGuard
     protected static function checkMethodExists($komposer, $method)
     {
         if(!method_exists($komposer, $method))
-            throw new KomposerMethodNotFoundException($method);
+            throw new KomposerMethodNotFoundException($method, $komposer);
     }
 
     protected static function checkPreventSubmit($komposer)
