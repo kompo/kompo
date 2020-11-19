@@ -15,7 +15,10 @@ class CardGenerator
 
         $komposer->query->getCollection()->transform(function($item, $key) use($komposer){
 
-            return static::getItemCard($item, $key, $komposer);
+            return [
+                'attributes' => $item,
+                'render' => static::getItemCard($item, $key, $komposer)
+            ];
 
         });
     }

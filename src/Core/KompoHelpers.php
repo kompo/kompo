@@ -408,6 +408,14 @@ if(! function_exists('_Input'))
     }
 }
 
+if(! function_exists('_InputNumber'))
+{
+    function _InputNumber()
+    {
+        return Kompo\InputNumber::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Json'))
 {
     function _Json()

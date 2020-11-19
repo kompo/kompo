@@ -76,11 +76,14 @@ class RouteFinder
         
         $routeObject = static::getRouteByName($route);
 
+        return is_null( $routeObject ) ? url($route, $parameters) : route($route, $parameters);
+
+        /* To delete ? Payload addition for GET is now managed in JS
         return static::appendQueryString(
             is_null( $routeObject ) ? url($route, $parameters) : route($route, $parameters),
             $routeMethod,
             $payload
-        );
+        );*/
     }
 
     /**
@@ -110,11 +113,14 @@ class RouteFinder
      */
     public static function getKompoRoute($requestType = 'POST', $ajaxPayload = [])
     {
+        return url('_kompo');
+
+        /* To delete ? Payload addition for GET is now managed in JS
         return static::appendQueryString(
             url('_kompo'), 
             $requestType, 
             $ajaxPayload
-        );
+        );*/
     }
 
 
