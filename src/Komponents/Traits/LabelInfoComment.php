@@ -73,13 +73,25 @@ trait LabelInfoComment
     /**
      * Sets where the hint text's will show on hover. By default, it displays on top.
      *
-     * @param      string  $infoPlacement  Accepted values are top, bottom, left, right
+     * @param      string  $infoPlacement  Accepted values are up, down, left, right
      *
      * @return     self    ( description_of_the_return_value )
      */
     public function hintPlacement($infoPlacement)
     {
         return $this->data(['infoPlacement' => $infoPlacement]);
+    }
+
+    /**
+     * Sets the width of the hint text. By default, it's medium'.
+     *
+     * @param      string  $hintLength  Accepted values are small, medium, big, fit
+     *
+     * @return     self    ( description_of_the_return_value )
+     */
+    public function hintLength($hintLength)
+    {
+        return $this->data(['hintLength' => $hintLength]);
     }
 
 }
