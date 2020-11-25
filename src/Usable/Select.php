@@ -81,7 +81,7 @@ class Select extends Field
     }
 
     protected function setValueForFront()
-    {
+    {        
         $this->value = !$this->value ? null : (($key = $this->valueKeyName($this->value)) ? $this->value->{$key} : $this->value);
     }
 

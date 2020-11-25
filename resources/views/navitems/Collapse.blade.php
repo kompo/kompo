@@ -5,7 +5,7 @@
         @include('kompo::partials.ItemContent', ['component' => $component])
     
     </a>
-    @if(count($component->komponents))
+    @if(count($component->komponents) && !$component->data('noCaret'))
 
         <i class="icon-down-dir"></i>
 

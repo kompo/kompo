@@ -8,7 +8,9 @@
 	    @include('kompo::partials.ItemContent', [
 			'component' => $component
 			])
-	    &nbsp;<i class="icon-down"></i>
+	    @if(!$component->data('noCaret'))
+            &nbsp;<i class="icon-down"></i>
+        @endif
 	    
 	</a>
 

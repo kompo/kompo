@@ -78,4 +78,14 @@ trait HasSubmenu
         return $this->data(['expandIfActive' => true]);
     }
 
+    /**
+     * The collapsible menu will not have a caret
+     *
+     * @return     self
+     */
+    public function noCaret()
+    {
+        return $this->data(['noCaret' => true]);
+    }
+
 }
