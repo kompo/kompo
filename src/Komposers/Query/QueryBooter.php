@@ -35,7 +35,7 @@ class QueryBooter
         return $query;
     }
 
-	public static function bootForDisplay($query, $store = [], $routeParams = null)
+	public static function bootForDisplay($query, array $store = [], $routeParams = null)
 	{
         $query = static::instantiateUnbooted($query);
         $query->store($store);

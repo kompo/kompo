@@ -25,7 +25,7 @@ class MenuBooter
         return $menu;
     }
 
-	public static function bootForDisplay($menu, $store = [], $routeParams = null)
+	public static function bootForDisplay($menu, array $store = [], $routeParams = null)
 	{
         $menu = static::instantiateUnbooted($menu);
         $menu->store($store);
