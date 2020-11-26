@@ -149,8 +149,7 @@ class KomposerHandler
             (defined(get_class($record).'::DELETABLE_BY') && $record::DELETABLE_BY &&
                 optional(auth()->user())->hasRole($record::DELETABLE_BY))
             
-            /* Controversial...
-            || optional(auth()->user())->hasRole('super-admin')*/
+            || optional(auth()->user())->can('delete', $record)
         ){
             $record->delete();
             return 'deleted!';
