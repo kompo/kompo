@@ -156,7 +156,7 @@ abstract class Form extends Komposer
      */
     public function prepareForDisplay($komposer)
     {
-        ValidationManager::addRulesToKomposer($this->data('rules'), $komposer);
+        //ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); //commented because Forms in query filters were passing their rules upstream
     }
 
     /**
@@ -166,7 +166,7 @@ abstract class Form extends Komposer
      */
     public function prepareForAction($komposer)
     {
-        ValidationManager::addRulesToKomposer($this->data('rules'), $komposer);
+        //ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); //commented because Forms in query filters were passing their rules upstream
     }
 
 
