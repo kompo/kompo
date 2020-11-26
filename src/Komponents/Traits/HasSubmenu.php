@@ -49,16 +49,6 @@ trait HasSubmenu
     }
 
     /**
-     * The dropdown menu will align to the right instead of the default left alignment.
-     *
-     * @return     self 
-     */
-    public function alignRight()
-    {
-        return $this->data([ 'vl-dropdown-menu-right' => 'vl-dropdown-menu-right' ]);
-    }
-
-    /**
      * The collapsible menu will be opened on page load.
      *
      * @return     self 

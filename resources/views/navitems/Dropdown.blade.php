@@ -1,25 +1,19 @@
-<div class="vl-dropdown vl-nav-item {{ $component->class() }} {{ $component->data('active') }}"
-    @include('kompo::partials.IdStyle')>
+<vl-dropdown class="vl-nav-item" :vkompo="{{ $component }}">
     
-    <a @include('kompo::partials.HrefTarget')
-    	onclick="toggleMenu(this)"
-        class="flex items-center">
+    <a @include('kompo::partials.HrefTarget')>
 
-	    @include('kompo::partials.ItemContent', [
-			'component' => $component
-			])
-	    @if(!$component->data('noCaret'))
-            &nbsp;<i class="icon-down"></i>
-        @endif
+	    @include('kompo::partials.ItemContent', ['component' => $component])
 	    
 	</a>
 
-    <div class="vl-dropdown-menu {{ $component->data('vl-dropdown-menu-right') }} 
-    	 {{ ($component->data('expandByDefault') || 
-        ($component->data('expandIfActive') && $component->data('active') )) ? '' : 'vl-menu-closed' }}">
+    @if(!$component->data('noCaret'))
+        <i class="icon-down"></i>
+    @endif
+
+    <template v-slot:komponents>
         
         @include('kompo::menus.komponents', [ 'komponents' => $component->komponents ])
     
-    </div>
+    </template>
 
-</div>
+</vl-dropdown>

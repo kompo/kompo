@@ -10,5 +10,23 @@ class Dropdown extends Trigger
 {
 	use HasHref, HasSubmenu;
 
+	public $vueComponent = 'Dropdown';
     public $bladeComponent = 'Dropdown';
+
+    /**
+     * The dropdown menu will align to the right instead of the default left alignment.
+     *
+     * @return     self 
+     */
+    public function alignRight()
+    {
+        return $this->data([ 'dropdownPosition' => 'vlDropdownMenuRight' ]);
+    }
+
+    public function alignUpRight()
+    {
+    	return $this->data([
+    		'dropdownPosition' => 'vlDropdownMenuUpRight'
+    	]);
+    }
 }
