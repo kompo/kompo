@@ -123,7 +123,7 @@ abstract class Query extends Komposer
      *
      * @return self
      */
-	public function __construct($store = [], $dontBoot = false)
+	public function __construct(?array $store = [], $dontBoot = false)
 	{
         if(!$dontBoot)
             QueryBooter::bootForDisplay($this, $store);
