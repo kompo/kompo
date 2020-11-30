@@ -65,6 +65,20 @@ trait UploadsImages
     }
 
     /**
+     * TODO: document on website: confirm removal of image
+     *
+     * @param      <type>  $message  The message
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public function confirmDelete($message = null)
+    {
+        return $this->data([
+            'confirmDelete' => __($message) ?: __('Are you sure you want to remove this image?') 
+        ]);
+    }
+
+    /**
      * Does some common transformation on the $file object stored in DB.
      * (used for images)
      * @param  \Illuminate\Database\Eloquent\Model|Builder $file
