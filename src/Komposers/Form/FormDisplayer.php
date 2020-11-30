@@ -1,6 +1,7 @@
 <?php
 namespace Kompo\Komposers\Form;
 
+use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
 use Kompo\Core\ValidationManager;
 use Kompo\Komposers\KomposerManager;
@@ -15,6 +16,8 @@ class FormDisplayer extends FormBooter
         ValidationManager::addRulesToKomposer($form->rules(), $form); //for Front-end validations TODO:
 
         $form->komponents = KomposerManager::prepareKomponentsForDisplay($form, 'komponents', true);
+
+        KompoId::setForKomposer($form);
 
         KompoInfo::saveKomposer($form, ['modelKey' => $form->modelKey()]);
 

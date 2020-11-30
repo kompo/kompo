@@ -13,8 +13,6 @@ class KompoInfo extends KompoAjax
 
     public static function saveKomposer($komposer, $customAttributes = [])
     {
-        KompoId::setForKomposer($komposer);
-
         $bootInfo = array_merge(
             $customAttributes,
             KompoId::arrayFromElement($komposer),

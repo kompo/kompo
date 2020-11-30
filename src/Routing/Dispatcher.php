@@ -35,7 +35,7 @@ class Dispatcher
     public static function dispatchConnection()
     {
         if(KompoAction::is('refresh-self'))
-            return with(new static())->rebootKomposerForDisplay();
+            return static::rebootKomposerForDisplay();
 
         return KomposerHandler::performAction(static::bootKomposerForAction());
     }
@@ -59,14 +59,15 @@ class Dispatcher
         }
     }
 
-    public function rebootKomposerForDisplay() 
+    protected static function rebootKomposerForDisplay() 
     {
-        $booter = $this->booter;
+        $d = new static();
+        $booter = $d->booter;
 
-        if($this->type == 'Form'){
-            return $booter::bootForDisplay($this->komposerClass, $this->bootInfo['modelKey'], $this->bootInfo['store'], $this->bootInfo['parameters']);
+        if($d->type == 'Form'){
+            return $booter::bootForDisplay($d->komposerClass, $d->bootInfo['modelKey'], $d->bootInfo['store'], $d->bootInfo['parameters']);
         }else{
-            return $booter::bootForDisplay($this->komposerClass, $this->bootInfo['store'], $this->bootInfo['parameters']);
+            return $booter::bootForDisplay($d->komposerClass, $d->bootInfo['store'], $d->bootInfo['parameters']);
         }
     }
 

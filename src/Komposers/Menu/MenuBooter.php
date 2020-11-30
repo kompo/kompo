@@ -35,6 +35,8 @@ class MenuBooter
 
 		$menu->komponents = collect($menu->komponents())->filter()->all();
 
+        KompoId::setForKomposer($menu);
+
 		KompoInfo::saveKomposer($menu);
 
         KomposerManager::booted($menu);

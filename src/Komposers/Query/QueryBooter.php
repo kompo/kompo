@@ -47,6 +47,8 @@ class QueryBooter
 
 		QueryDisplayer::displayFiltersAndCards($query);
 
+        KompoId::setForKomposer($query);
+
         KompoInfo::saveKomposer($query);
 
         KomposerManager::booted($query);
