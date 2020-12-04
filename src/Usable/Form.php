@@ -114,6 +114,8 @@ abstract class Form extends Komposer
             'redirectMessage' => $this->redirectMessage,
             'refresh' => $this->refresh
         ]);
+        
+        if(Router::shouldNotBeBooted()) return; //request has not been handled yet
 
 		if(!$dontBoot)
         	FormBooter::bootForDisplay($this, $modelKey, $store);

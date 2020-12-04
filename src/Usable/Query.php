@@ -2,8 +2,9 @@
 
 namespace Kompo;
 
-use Kompo\Komposers\Query\QueryBooter;
 use Kompo\Komposers\Komposer;
+use Kompo\Komposers\Query\QueryBooter;
+use Kompo\Routing\Router;
 
 abstract class Query extends Komposer
 {
@@ -125,6 +126,8 @@ abstract class Query extends Komposer
      */
 	public function __construct(?array $store = [], $dontBoot = false)
 	{
+        if(Router::shouldNotBeBooted()) return; //request has not been handled yet
+
         if(!$dontBoot)
             QueryBooter::bootForDisplay($this, $store);
 	}

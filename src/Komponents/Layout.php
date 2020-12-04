@@ -19,7 +19,7 @@ abstract class Layout extends Komponent
      * @param mixed  ...$args  The layouts komponents
      */
     public function __construct(...$args)
-    {        
+    {
         $this->vlInitialize( class_basename($this) );
 
         $this->komponents = LayoutManager::collectFilteredKomponents($args, $this)->values()->all();

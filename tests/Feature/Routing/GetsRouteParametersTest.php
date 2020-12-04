@@ -10,7 +10,7 @@ class GetsRouteParametersTest extends EnvironmentBoot
     /** @test */
 	public function route_info_is_correctly_set_in_forms()
 	{
-		\Route::get('test/{param}/{opt?}', function() {	return new _RouteParametersForm(); });
+		\Route::get('test/{param}/{opt?}', _RouteParametersForm::class);
 
 		$r = $this->get('test/1'); //different routes below, different assertions
 
@@ -31,7 +31,7 @@ class GetsRouteParametersTest extends EnvironmentBoot
     /** @test */
 	public function route_info_is_correctly_set_in_querys()
 	{
-		\Route::post('test/{param}/{opt?}', function() {	return new _RouteParametersQuery(); });
+		\Route::post('test/{param}/{opt?}', _RouteParametersQuery::class);
 
 		$r = $this->post('test/1/2');
 
@@ -52,7 +52,7 @@ class GetsRouteParametersTest extends EnvironmentBoot
     /** @test */
 	public function route_info_is_correctly_set_in_menus()
 	{
-		\Route::put('test/{param}/{opt?}', function() {	return new _RouteParametersMenu(); });
+		\Route::put('test/{param}/{opt?}', _RouteParametersMenu::class);
 
 		$r = $this->put('test/hello%20world/');
 
