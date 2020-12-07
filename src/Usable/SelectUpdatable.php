@@ -35,7 +35,7 @@ class SelectUpdatable extends Select
     /**
      * Specifies which form to open in the modal. In the first parameter:
      * - You may either call a Form class directly. Ex: App\Http\Komposers\MyForm::class
-     * - Or call a Route::kompo() that points to the Form Class. Ex: route('my-form').
+     * - Or call a Route::get() that points to the Form Class. Ex: route('my-form').
      * After submit, the object will be added to the select options (and selected).
      *
      * @param string       $formClassOrRoute  The fully qualified form class or kompo route url. 

@@ -64,11 +64,30 @@ class Place extends Field
         return $this;
     }
 
+    /**
+     * Sets the starting center point of the map
+     *
+     * @param      <type>  $lat    The lat
+     * @param      <type>  $lng    The lng
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public function defaultCenter($lat, $lng, $zoom = 10)
+    {
+        return $this->data([
+            'defaultCenter' => [
+                'lat' => $lat,
+                'lng' => $lng,
+            ],
+            'defaultZoom' => $zoom
+        ]);
+    }
+
     public function getValueFromModel($model, $name)
     {
         return !$this->attributesToColumns ? ModelManager::getValueFromDb($model, $name) : collect($this->allKeys)->map(function($key) use ($model){
             return $model->{$key};
-        })->all();      
+        })->filter()->all();      
     }
 
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)
@@ -152,7 +171,7 @@ class Place extends Field
 	            $this->addressKey => $place['formatted_address'],
 	            $this->latKey => $place['geometry']['location']['lat'],
 	            $this->lngKey => $place['geometry']['location']['lng'],
-	            $this->external_idKey => $place['id']
+	            $this->external_idKey => $place['place_id']
 	        ]);
 	    }else{
 	    	return $place;
