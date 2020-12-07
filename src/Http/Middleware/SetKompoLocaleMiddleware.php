@@ -37,12 +37,12 @@ class SetKompoLocaleMiddleware
          * If cookie has locale, use it. Otherwise, fall back to the default from above.
          */
         $locale = Cookie::get('locale', $defaultLocale);
-        
+
         /*
          * We set the session locale (not the cookie). Cookie is only set when user chooses another language
          */
         session( ['kompo_locale' => $locale] );
-        //App::setlocale($locale); //TODO: is this necessary?
+        App::setlocale($locale); 
 
         //To delete - dead end. But code is useful...
         //Session::put('pass_to_script.translations', app('translator')->getLoader()->load($locale,'*','*') );
