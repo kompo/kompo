@@ -14,7 +14,6 @@ trait AjaxConfigurations
      */
     public function warnBeforeClose($message = null)
     {
-        //for EditLink -- to remove DRY
         return $this->data(['warnBeforeClose' => $message ? __($message) : __('warnBeforeClose')]);
     }
 

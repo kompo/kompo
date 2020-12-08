@@ -6,6 +6,8 @@ use Illuminate\Support\Str;
 use Kompo\Core\MetaAnalysis;
 use Kompo\Form;
 use Kompo\Komponents\Field;
+use Kompo\MultiForm;
+use Kompo\Tests\Utilities\_Form;
 
 class _AllFieldsValidationsForm extends Form
 {
@@ -14,6 +16,9 @@ class _AllFieldsValidationsForm extends Form
 	public function created()
 	{
 		$this->fields = collect(MetaAnalysis::getAllOfType(Field::class))->map(function($field){
+								if($field == MultiForm::class)
+									return (new $field(class_basename($field)))->formClass(_Form::class);
+
 								return new $field(class_basename($field));
 							});
 	}

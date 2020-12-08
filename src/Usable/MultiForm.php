@@ -9,6 +9,7 @@ use Kompo\Core\KompoTarget;
 use Kompo\Core\RequestData;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\Lineage;
+use Kompo\Exceptions\NoMultiFormClassException;
 use Kompo\Komponents\Field;
 use Kompo\Komponents\Traits\HasAddLabel;
 use Kompo\Komposers\Form\FormBooter;
@@ -39,54 +40,50 @@ class MultiForm extends Field
         $this->addLabel('Add a new item');
     }
 
-    public function prepareForFront($komposer)
-    {
-        $this->komponents = !$this->value ? 
-
-            [ $this->prepareChildForm(null) ] : 
-
-            $this->value->map(function($item){
-
-                return $this->prepareChildForm($item->getKey());
-
-            })->all();
-    }
-
-    protected function prepareChildForm($modelKey)
+    protected function prepareChildForm($parentForm, $model = null)
     {
         if(!($formClass  = $this->formClass))
-            return;
+            throw new NoMultiFormClassException($this->name);
 
-        $form = new $formClass($modelKey, $this->childStore);
-        $form->{static::$multiFormKey} = $modelKey;
-        return $form;
+        $childForm = new $formClass($model, $this->childStore);
+        $childForm->{static::$multiFormKey} = $model ? $model->getKey() : null;
+
+        //Pass rules upstream
+        ValidationManager::addRulesToKomposer(
+            
+            collect(ValidationManager::getRules($childForm))->flatMap(function($v, $k){
+
+                return [($this->name.'.*.'.$k) => $v];
+
+            })->all(), 
+
+            $parentForm
+        );
+
+        return $childForm;
     }
 
-    public function mounted($form)
+    public function mounted($parentForm)
     {
-        if(!($childForm = $this->prepareChildForm(null))) 
-            return;
+        $this->komponents = !$this->value ? [ $this->prepareChildForm($parentForm) ] : 
 
-        $rules = collect(ValidationManager::getRules($childForm))->flatMap(function($v, $k){
+            $this->value->map(function($item) use($parentForm) {
 
-            return [($this->name.'.*.'.$k) => $v];
+                return $this->prepareChildForm($parentForm, $item);
 
-        })->all();
-
-        ValidationManager::addRulesToKomposer($rules, $form);
+            })->all();      
     }
-
 
 
     public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
-        collect(RequestData::get($requestName))->each(function($subrequest) use($model, $requestName) {
+        collect(RequestData::get($requestName))->each(function($subrequest, $subKey) use($model, $requestName) {
 
             $form = FormBooter::bootForAction([
                 'kompoClass' => $this->formClass,
                 'store' => $this->childStore,
                 'parameters' => [], // is this feature needed?
-                'modelKey' => $subrequest[static::$multiFormKey] ?? null
+                'modelKey' => $subrequest[static::$multiFormKey] ?? ($this->value[$subKey] ?? null)
             ]);
 
             //No Validation or Authorization step - it has already been done on the parent Form
@@ -138,6 +135,18 @@ class MultiForm extends Field
     {
         $this->headers = $headers;
         return $this;
+    }
+
+    public function noAdding()
+    {
+        return $this->data([
+            'noAdding' => true
+        ]);
+    }
+
+    protected function isNotAdding()
+    {
+        return $this->data('noAdding');
     }
 
 }
