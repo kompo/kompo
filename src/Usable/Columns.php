@@ -3,11 +3,14 @@
 namespace Kompo;
 
 use Kompo\Elements\Traits\HasGutters;
+use Kompo\Interactions\Traits\ForwardsInteraction;
+use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Komponents\Layout;
 use Kompo\Komponents\Traits\VerticalAlignmentTrait;
 
 class Columns extends Layout
 {
+    use HasInteractions, ForwardsInteraction;
     use VerticalAlignmentTrait, HasGutters;
 
     public $vueComponent = 'Columns';
