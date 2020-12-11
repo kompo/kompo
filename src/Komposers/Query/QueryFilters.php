@@ -5,6 +5,7 @@ namespace Kompo\Komposers\Query;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\KompoInfo;
 use Kompo\Core\RequestData;
+use Kompo\Komponents\Managers\FormField;
 use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Komposers\KomposerManager;
@@ -57,8 +58,10 @@ class QueryFilters
     {
         KomposerManager::collectFields($query)->each(function($field) use($query) {
 
-            if(RequestData::get($field->name) || $field->value) //$field->value if default value set
-                
+            if(
+                (RequestData::get($field->name) || $field->value) //$field->value if default value set
+                && !FormField::getConfig($field, 'ignoresModel')
+            )
                 $query->query->handleFilter($field);
 
         });
