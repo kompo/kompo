@@ -92,8 +92,8 @@ class MultiForm extends Field
                 $form->model->{$relation->getForeignKeyName()} = $model->id;
             }
 
-            //If all fields are null, don't create a relation for nothing
-            if(collect($subrequest)->filter()->count() == 0)
+            //If all fields are null, don't create a relation for nothing, unless user configured it to do so
+            if(collect($subrequest)->filter()->count() == 0 && !$this->acceptsNullRelations())
                 return;
 
             //Then we swap the requests for save
@@ -144,9 +144,21 @@ class MultiForm extends Field
         ]);
     }
 
+    public function acceptNullRelations()
+    {
+        return $this->data([
+            'acceptNullRelations' => true
+        ]);
+    }
+
     protected function isNotAdding()
     {
         return $this->data('noAdding');
+    }
+
+    protected function acceptsNullRelations()
+    {
+        return $this->data('acceptNullRelations');
     }
 
 }

@@ -6,6 +6,13 @@ use Kompo\Komponents\Field;
 
 class Stripe extends Field
 {
+    /* TODO: rename
+     * https://stripe.com/docs/payments/integration-builder
+     * This is for custom checkout experience (build your own form)
+     * Uses laravel cashier 
+     * Uses payment intent creation from stripe
+     */
+
     public $vueComponent = 'Stripe';
 
     protected function vlInitialize($label)

@@ -224,6 +224,14 @@ if(! function_exists('_Columns'))
     }
 }
 
+if(! function_exists('_Counter'))
+{
+    function _Counter()
+    {
+        return Kompo\Counter::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Country'))
 {
     function _Country()
@@ -613,6 +621,14 @@ if(! function_exists('_Stripe'))
     function _Stripe()
     {
         return Kompo\Stripe::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_StripeButton'))
+{
+    function _StripeButton()
+    {
+        return Kompo\StripeButton::form(...func_get_args());
     }
 }
 
