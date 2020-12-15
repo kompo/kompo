@@ -90,7 +90,7 @@ abstract class Query extends Komposer
     public $leftPagination = false;
 
     /**
-     * The pagination links style.
+     * The pagination links style. Values: Links|Showing
      *
      * @var        string
      */

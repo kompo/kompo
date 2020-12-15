@@ -2,8 +2,9 @@
 
 namespace Kompo;
 
-use Kompo\Interactions\Traits\HasInteractions;
+use Kompo\Core\IconGenerator;
 use Kompo\Interactions\Traits\ForwardsInteraction;
+use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Komponents\Layout;
 
 class Panel extends Layout
@@ -27,6 +28,21 @@ class Panel extends Layout
     public function hidesOnLoad($hideId)
     {
         $this->data(['hidesOnLoad' => $hideId]);
+        return $this;
+    }
+
+    /**
+     * Adds a closing button.
+     *
+     * @param string|null  $label  The label of the close button
+     *
+     * @return self   
+     */
+    public function closable($label = null, $icon = 'icon-times')
+    {
+        $this->data([
+            'closable' => IconGenerator::toHtml($icon).' '.$label,
+        ]);
         return $this;
     }
 
