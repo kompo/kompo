@@ -94,13 +94,18 @@ abstract class Field extends Komponent
     /**
      * Sets the name for the field corresponding the attribute it will fill.
      *
-     * @param  string|array $name The name attribute of the field.
+     * @param string|array $name The name attribute of the field.
+     * @param null|bool $ignoresModel ref. ignoresToModel method
      * 
      * @return self
      */
-    public function name($name)
+    public function name($name, $ignoresModel = false)
     {
         $this->name = $name;
+
+        if($ignoresModel)
+            $this->ignoresModel();
+
         return $this;
     }
 
