@@ -44,7 +44,8 @@ class FormDisplayer extends FormBooter
             'submitUrl' => $options['submitTo'] ? RouteFinder::matchRoute($options['submitTo']) :
                     ($form->submitUrl() ? : 
                     ((method_exists($form, 'handle') || $form->model) ? RouteFinder::getKompoRoute() : null)),
-            'submitMethod' => $options['submitMethod']
+            'submitMethod' => $options['submitMethod'],
+            'validationErrorAlert' => __($options['validationErrorAlert']),
         ]);
 
         if($form->data('submitUrl') == RouteFinder::getKompoRoute())

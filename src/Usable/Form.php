@@ -62,6 +62,14 @@ abstract class Form extends Komposer
     protected $submitMethod = 'POST';
 
     /**
+     * Default alert error message after a validation error (422) (use as translation key if multi-language app).
+     * To deactivate, set to false, null or empty.
+     *
+     * @var null|string
+     */
+    protected $validationErrorAlert = 'Please correct the errors';
+
+    /**
      * Custom redirect route for quick use (for simple route with no parameters).
      *
      * @var string
@@ -110,6 +118,7 @@ abstract class Form extends Komposer
             'preventSubmit' => $this->preventSubmit,
             'submitTo' => $this->submitTo,
             'submitMethod' => $this->submitMethod,
+            'validationErrorAlert' => $this->validationErrorAlert,
             'redirectTo' => $this->redirectTo,
             'redirectMessage' => $this->redirectMessage,
             'refresh' => $this->refresh
