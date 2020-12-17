@@ -55,7 +55,9 @@ class FormSubmitter extends FormBooter
 
         static::loopOverFieldsFor('fillAfterSave', $form);
 
-        static::loopOverFieldsFor('fillHasMorphOne', $form);
+        static::loopOverFieldsFor('fillOneToOneBeforeSave', $form);
+
+        static::loopOverFieldsFor('fillOneToOneAfterSave', $form);
 
         static::completedHook($form);
 
@@ -136,7 +138,7 @@ class FormSubmitter extends FormBooter
                 
                 KomposerManager::removeField($komposer, $fieldKey);
                 
-                if($stage == 'fillHasMorphOne')
+                if($stage == 'fillOneToOneBeforeSave') //only beforeSave do we need this, relations are auto-saved
                     $hasMorphOneModels = array_unique(array_merge($hasMorphOneModels, $processed->toArray()));
             }
         }

@@ -60,7 +60,7 @@ class MultiFile extends File
         }
         
         //Has Many these files will be attached
-        if($uploadedFiles = request()->file($requestName)){
+        if($uploadedFiles = RequestData::file($requestName)){
 
             $relatedModel = Lineage::findOrFailRelated($model, $name);
 

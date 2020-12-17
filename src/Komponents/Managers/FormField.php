@@ -58,8 +58,20 @@ class FormField
                 return;*/
 
             if(NameParser::isNested($requestName)){
-                if($stage == 'fillHasMorphOne')
-                    return static::fillHasMorphOne($field, $requestName, $key, $komposer->model);
+                
+                list($model, $name, $relationName) = static::parseName($komposer->model, $requestName);
+
+                if(Lineage::fillsAfterSave($model, $name)){
+                    if($stage == 'fillOneToOneAfterSave'){
+                        static::fillAfterSave($field, $requestName, $key, $model, $name);
+                        return $relationName;
+                    }
+                }else{
+                    if($stage == 'fillOneToOneBeforeSave'){
+                        static::fillBeforeSave($field, $requestName, $key, $model, $name);
+                        return $relationName;
+                    }
+                }
             }else{
                 if(Lineage::fillsAfterSave($komposer->model, $requestName)){
                     if($stage == 'fillAfterSave')
@@ -120,31 +132,15 @@ class FormField
      * 
      * @return void
      */
-    public static function fillAfterSave($field, $requestName, $key, $model)
+    public static function fillAfterSave($field, $requestName, $key, $model, $name = null)
     {
-        $value = $field->setRelationFromRequest($requestName, $requestName, $model, $key);
+        $name = $name ?: $requestName;
 
-        ModelManager::saveAndLoadRelation($model, $requestName, $value, static::getConfig($field, 'extraAttributes'));
+        $value = $field->setRelationFromRequest($requestName, $name, $model, $key);
+
+        ModelManager::saveAndLoadRelation($model, $name, $value, static::getConfig($field, 'extraAttributes'));
         
         return true;
-    }
-
-    /**
-     * Gets the value from the request and parses it optionally (see methods overrides).
-     *
-     * @param Kompo\Komponents\Field             $field
-     * @param string                             $requestName
-     * @param Illuminate\Database\Eloquent\Model $mainModel
-     * 
-     * @return void
-     */
-    public static function fillHasMorphOne($field, $requestName, $key, $mainModel)
-    {
-        list($model, $name, $relationName) = static::parseName($mainModel, $requestName);
-
-        static::fillBeforeSave($field, $requestName, $key, $model, $name);
-        
-        return $relationName; //returning the nested model for save
     }
 
     /**
