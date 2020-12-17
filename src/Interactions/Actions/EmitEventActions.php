@@ -36,5 +36,15 @@ trait EmitEventActions
             'event' => $event
         ]);
     }
+
+    /**
+     * Closes a modal.
+     *
+     * @return self
+     */
+    public function closeModal()
+    {
+        return $this->emit('closeModal');
+    }
     
 }
