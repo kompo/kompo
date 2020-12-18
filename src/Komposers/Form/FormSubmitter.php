@@ -145,7 +145,6 @@ class FormSubmitter extends FormBooter
 
         foreach ($hasMorphOneModels as $nestedModel) {
             $komposer->model->{$nestedModel}()->save($komposer->model->{$nestedModel});
-            $komposer->model->load($nestedModel);
         }
     }
 }
