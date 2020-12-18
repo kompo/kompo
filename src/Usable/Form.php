@@ -102,7 +102,7 @@ abstract class Form extends Komposer
      *
      * @var boolean
      */
-    protected $refresh = false;
+    protected $refresh = false; //TODO: rename $refreshAfterSubmit which is clearer
 
 	/**
      * Constructs a Form
@@ -167,7 +167,7 @@ abstract class Form extends Komposer
      */
     public function prepareForDisplay($komposer)
     {
-        //ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); //commented because Forms in query filters were passing their rules upstream
+        ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); 
     }
 
     /**
@@ -177,7 +177,8 @@ abstract class Form extends Komposer
      */
     public function prepareForAction($komposer)
     {
-        //ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); //commented because Forms in query filters were passing their rules upstream
+        if($komposer instanceOf self) //Cuz in Query filters, Forms would pass their rules to browse & sort actions
+            ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); 
     }
 
 
