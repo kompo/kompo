@@ -128,7 +128,7 @@ class FormSubmitter extends FormBooter
 
     protected static function loopOverFieldsFor($stage, $komposer)
     {
-        $hasMorphOneModels = [];
+        $oneToOneRelations = [];
 
         foreach (KomposerManager::collectFields($komposer) as $fieldKey => $field) {
 
@@ -139,12 +139,13 @@ class FormSubmitter extends FormBooter
                 KomposerManager::removeField($komposer, $fieldKey);
                 
                 if($stage == 'fillOneToOneBeforeSave') //only beforeSave do we need this, relations are auto-saved
-                    $hasMorphOneModels = array_unique(array_merge($hasMorphOneModels, $processed->toArray()));
+                    $oneToOneRelations = array_unique(array_merge($oneToOneRelations, $processed->toArray()));
             }
         }
 
-        foreach ($hasMorphOneModels as $nestedModel) {
-            $komposer->model->{$nestedModel}()->save($komposer->model->{$nestedModel});
+        foreach ($oneToOneRelations as $relation) {
+            ModelManager::saveOneToOne($komposer->model, $relation);
+            //$komposer->model->{$relation}()->save($komposer->model->{$relation});
         }
     }
 }

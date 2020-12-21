@@ -84,11 +84,11 @@ class ModelManager
      * 
      * @return boolean
      */
-    public static function saveHasOne($mainModel, $hasOneModel)
+    public static function saveOneToOne($mainModel, $relation)
     {
-        static::setCreatedUpdatedBy($hasOneModel);
+        static::setCreatedUpdatedBy($mainModel->{$relation});
 
-        $mainModel->save($hasOneModel);
+        $mainModel->{$relation}()->save($mainModel->{$relation});
     }
 
     /**
