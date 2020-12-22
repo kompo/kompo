@@ -12,6 +12,9 @@ abstract class Komponent extends Element
 {
     use Traits\HasHtmlAttributes,
         Traits\UsedInTables;
+    
+    public $bladeComponent = 'Komponent';
+
     /**
      * The component's label.
      *
@@ -39,7 +42,8 @@ abstract class Komponent extends Element
     protected function vlInitialize($label)
     {
         KompoId::setForKomponent($this, $label);
-        $this->label = $label ? __($label) : '';
+
+        $this->label = is_null($label) ? '' : __($label);
     }
     
 	/**

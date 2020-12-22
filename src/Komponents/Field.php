@@ -19,9 +19,7 @@ abstract class Field extends Komponent
     use HasInteractions, ForwardsInteraction;
     use Traits\AjaxConfigurations,
         Traits\FormSubmitConfigurations,
-        Traits\LabelInfoComment; 
-
-    public $bladeComponent = 'Field';
+        Traits\LabelInfoComment;
 
     /**
      * The field's HTML attribute in the form (also the formData key).
