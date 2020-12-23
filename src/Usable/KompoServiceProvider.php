@@ -10,6 +10,11 @@ use Illuminate\Contracts\Http\Kernel;
 class KompoServiceProvider extends ServiceProvider
 {
     use ExtendsRoutingTrait;
+
+    protected $helpers = [
+        '/../Core/KompoHelpers.php',
+        '/../Core/HelperUtils.php',
+    ];
     
     /**
      * Bootstrap services.
@@ -28,8 +33,10 @@ class KompoServiceProvider extends ServiceProvider
 
         $this->extendRouting();
 
-        if (file_exists($file = __DIR__.'/../Core/KompoHelpers.php'))
-            require_once $file;
+        collect($this->helpers)->each(function($path){
+            if (file_exists($file = __DIR__.$path))
+                require_once $file;
+        });
 
 
         if ($this->app->runningInConsole()) {
