@@ -47,7 +47,6 @@ class EloquentQuery extends DatabaseQuery
         $this->query = $this->handleEloquentFilter($this->query, $this->model, $field->name, $operator, $value, $morphToModel);
 
         //dd($this->query->toSql(), $this->query->getBindings());
-        //parent::handleFilter($field);
     }
 
     /**

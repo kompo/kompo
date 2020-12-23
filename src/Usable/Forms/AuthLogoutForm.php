@@ -20,7 +20,7 @@ class AuthLogoutForm extends Form
 	public function komponents()
 	{
 		return [
-			Link::form('Logout')->class('vlColorInherit')->submit()
+			Link::form('Logout')->class('vlColorInherit px-4 py-2')->submit()
 		];
 	}
 
