@@ -9,11 +9,13 @@ class Router
     /**
      * Check to hold off booting the Komposer from it's constructor because the request has not been handled yet
      *
-     * @return     bool  ( description_of_the_return_value )
+     * @return     bool
      */
     public static function shouldNotBeBooted(): bool
     {
-        return request()->route() && !request()->hasSession();
+        return 
+            (request()->route() && !request()->hasSession()) ;
+            //|| app()->runningInConsole(); //TODO: a route:list does not work currently...
     }
 
     /**
