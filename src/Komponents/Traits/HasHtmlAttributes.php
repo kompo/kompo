@@ -34,7 +34,7 @@ trait HasHtmlAttributes {
     public function title($title)
     {
         return $this->attr([
-            'title' => $title
+            'title' => __($title)
         ]);
     }
 
@@ -42,7 +42,7 @@ trait HasHtmlAttributes {
     public function balloon($label, $position = 'up')
     {
         return $this->attr([
-            'aria-label' => $label,
+            'aria-label' => __($label),
             'data-balloon-pos' => $position
         ]);
     }
