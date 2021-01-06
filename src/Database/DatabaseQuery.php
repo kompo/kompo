@@ -41,10 +41,14 @@ class DatabaseQuery extends QueryOperations
 
     public function orderItems()
     {
-        collect(request('order'))->each(function($order){
-            $this->orderQuery()->where($this->modelKeyName(), $order['item_id'])->update([
-                $this->modelOrderColumn() => $order['item_order']
-            ]);
+        \DB::transaction(function (){
+
+            collect(request('order'))->each(function($order){
+                $this->orderQuery()->where($this->modelKeyName(), $order['item_id'])->update([
+                    $this->modelOrderColumn() => $order['item_order']
+                ]);
+            });
+            
         });
     }
 
