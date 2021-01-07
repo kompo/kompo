@@ -73,14 +73,14 @@ abstract class Query extends Komposer
      *
      * @var        boolean
      */
-    public $topPagination = true;
+    public $topPagination = false;
 
     /**
      * Whether to display pagination links below the cards.
      *
      * @var        boolean
      */
-    public $bottomPagination = false;
+    public $bottomPagination = true;
 
     /**
      * Whether to align pagination links to the left or to the right.
@@ -90,7 +90,7 @@ abstract class Query extends Komposer
     public $leftPagination = false;
 
     /**
-     * The pagination links style. Values: Links|Showing
+     * The pagination links style. Values: Links|Showing|Scroll
      *
      * @var        string
      */
@@ -108,7 +108,7 @@ abstract class Query extends Komposer
      *
      * @var        integer
      */
-    public $perPage = 50;
+    public $perPage = 15;
 
     /**
      * The model's namespace used for filters display.
