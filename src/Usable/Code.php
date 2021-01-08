@@ -6,7 +6,7 @@ use Kompo\Komponents\Block;
 
 class Code extends Block
 {
-    public $vueComponent = 'FormCode';
+    public $vueComponent = 'Code';
 
     /**
      * Sets the number of spaces taken by a tab in the &lt;code> HTML tag.

@@ -91,6 +91,9 @@ class QueryDisplayer
      */
     public static function prepareQuery($komposer)
     {
+        if(in_array($komposer->layout, ['CalendarMonth', 'Kanban']))
+            $komposer->perPage = 1000000; //Laravel limitation, besides nobody will ever visualize 1M items...
+
         $q = $komposer->query();
 
         if($q instanceOf LaravelModel || $q instanceOf LaravelEloquentBuilder  || $q instanceOf LaravelRelation){

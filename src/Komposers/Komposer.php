@@ -11,6 +11,13 @@ use Kompo\Routing\Router;
 abstract class Komposer extends Element
 {
     use HasInteractions, ForwardsInteraction;
+
+    /**
+     * The Vue component to render the Komposer as a child of another Komposer.
+     *
+     * @var string
+     */
+    public $vueComponent = 'Komposer';
     
     /**
      * The meta komponent's data for internal usage. Contains the store, route parameters, etc...

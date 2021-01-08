@@ -152,6 +152,14 @@ if(! function_exists('_Form'))
     }
 }
 
+if(! function_exists('_View'))
+{
+    function _View()
+    {
+        return Kompo\View::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Alert'))
 {
     function _Alert()

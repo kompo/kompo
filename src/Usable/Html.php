@@ -6,7 +6,7 @@ use Kompo\Komponents\Block;
 
 class Html extends Block
 {
-    public $vueComponent = 'FormHtml';
+    public $vueComponent = 'Html';
     public $bladeComponent = 'Html';
     
 }

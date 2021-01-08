@@ -13,9 +13,8 @@ class Router
      */
     public static function shouldNotBeBooted(): bool
     {
-        return 
-            (request()->route() && !request()->hasSession()) ;
-            //|| app()->runningInConsole(); //TODO: a route:list does not work currently...
+        return (request()->route() && !request()->hasSession())
+            || (app()->runningInConsole() && !app()->runningUnitTests());
     }
 
     /**

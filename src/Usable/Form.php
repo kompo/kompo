@@ -13,11 +13,11 @@ abstract class Form extends Komposer
 	use HasModel;
 
     /**
-     * The Vue component to render the Form.
+     * The Vue komposer tag.
      *
      * @var string
      */
-    public $vueComponent = 'FormForm';
+    public $vueKomposerTag = 'vl-form';
 
     /**
      * The Blade component to render the Form.

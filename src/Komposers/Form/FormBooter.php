@@ -98,7 +98,7 @@ class FormBooter
      */
     public static function renderVueComponent($form)
     {
-        return '<vl-form :vkompo="'.htmlspecialchars($form).'"></vl-form>';
+        return '<'.$form->vueKomposerTag.' :vkompo="'.htmlspecialchars($form).'"></'.$form->vueKomposerTag.'>';
     }
 
 

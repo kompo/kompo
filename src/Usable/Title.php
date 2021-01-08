@@ -6,5 +6,5 @@ use Kompo\Komponents\Block;
 
 class Title extends Block
 {
-    public $vueComponent = 'FormTitle';
+    public $vueComponent = 'Title';
 }

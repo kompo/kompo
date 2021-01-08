@@ -23,12 +23,11 @@ abstract class Query extends Komposer
     public $layout = 'Horizontal';
 
     /**
-     * The vue component to render the Query (inside a Form).
+     * The Vue komposer tag.
      *
-     * @var array
+     * @var string
      */
-    public $vueComponent = 'FormQuery';
-
+    public $vueKomposerTag = 'vl-query';
 
     /**
      * The Query results.
