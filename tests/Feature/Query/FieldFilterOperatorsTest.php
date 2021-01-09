@@ -35,7 +35,7 @@ class FieldFilterOperatorsTest extends EnvironmentBoot
 		}
 
 		foreach ($els as $key => $el) {
-			$this->assertEquals($ops[$key], $el->data('filterOperator'));
+			$this->assertEquals($ops[$key], $el->config('filterOperator'));
 		}
 	}
 

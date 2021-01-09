@@ -33,7 +33,7 @@ class SelectLinks extends Select
      */
     public function containerClass($class)
     {
-    	return $this->data([
+    	return $this->config([
     		'containerClass' => $class
     	]);
     }
@@ -47,7 +47,7 @@ class SelectLinks extends Select
      */
     public function optionClass($class)
     {
-    	return $this->data([
+    	return $this->config([
     		'optionClass' => $class
     	]);
     }
@@ -61,7 +61,7 @@ class SelectLinks extends Select
      */
     public function optionInnerClass($class)
     {
-    	return $this->data([
+    	return $this->config([
     		'optionInnerClass' => $class
     	]);
     }

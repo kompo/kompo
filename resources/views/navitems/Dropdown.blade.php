@@ -6,7 +6,7 @@
 	    
 	</a>
 
-    @if(!$component->data('noCaret'))
+    @if(!$component->config('noCaret'))
         <i class="icon-down"></i>
     @endif
 

@@ -27,7 +27,7 @@ class Panel extends Layout
      */
     public function hidesOnLoad($hideId)
     {
-        $this->data(['hidesOnLoad' => $hideId]);
+        $this->config(['hidesOnLoad' => $hideId]);
         return $this;
     }
 
@@ -40,7 +40,7 @@ class Panel extends Layout
      */
     public function closable($label = null, $icon = 'icon-times')
     {
-        $this->data([
+        $this->config([
             'closable' => IconGenerator::toHtml($icon).' '.$label,
         ]);
         return $this;

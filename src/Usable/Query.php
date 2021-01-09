@@ -32,12 +32,12 @@ abstract class Query extends Komposer
     /**
      * The Query results.
      */
-    public $query; //--> TODO: move to data
+    public $query;
     
     /**
      * The Query filter Komponents
      */
-    public $filters; //--> TODO: move to data
+    public $filters;
 
     /**
      * Make the query orderable with back-end support

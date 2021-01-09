@@ -11,7 +11,7 @@ trait FormSubmitConfigurations
      */
     public function dontSubmitOnEnter()
     {
-        return $this->data(['noSubmitOnEnter' => true]);
+        return $this->config(['noSubmitOnEnter' => true]);
     }
 
     /**
@@ -21,7 +21,7 @@ trait FormSubmitConfigurations
      */
     public function hideIndicators()
     {
-        return $this->data(['hideIndicators' => true]);
+        return $this->config(['hideIndicators' => true]);
     }
 
     /**
@@ -31,7 +31,7 @@ trait FormSubmitConfigurations
      */
     public function getFreshForm()
     {
-        return $this->keepModalOpen()->data([
+        return $this->keepModalOpen()->config([
             'getFreshForm' => true
         ]);
     }

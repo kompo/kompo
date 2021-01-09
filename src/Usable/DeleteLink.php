@@ -49,7 +49,7 @@ class DeleteLink extends Link
 	 */
 	public function deleteTitle($deleteTitle)
 	{
-		$this->data([
+		$this->config([
 			'deleteTitle' => __($deleteTitle)
 		]);
 		return $this;
@@ -65,7 +65,7 @@ class DeleteLink extends Link
 	 */
 	public function confirmMessage($confirmMessage)
 	{
-		$this->data([
+		$this->config([
 			'confirmMessage' => __($confirmMessage)
 		]);
 		return $this;
@@ -81,7 +81,7 @@ class DeleteLink extends Link
 	 */
 	public function cancelMessage($cancelMessage)
 	{
-		$this->data([
+		$this->config([
 			'cancelMessage' => __($cancelMessage)
 		]);
 		return $this;

@@ -14,7 +14,7 @@ class DateTime extends Date
     {
         parent::vlInitialize($label);
 
-        $this->data([
+        $this->config([
             'enableTime' => true
         ]);
     }

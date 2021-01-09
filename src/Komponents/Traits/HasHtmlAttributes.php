@@ -18,7 +18,7 @@ trait HasHtmlAttributes {
      */
     public function attr($attributes)
     {
-        return $this->data([
+        return $this->config([
             'attrs' => $attributes
         ]);
     }

@@ -18,7 +18,7 @@ trait FrontEndActions
     public function toggleId($id, $toggleOnLoad = true)
     {
         $this->applyToElement(function($el) use($id, $toggleOnLoad) {
-            $el->data([
+            $el->config([
                 'toggleId' => $id,
                 'toggleOnLoad' => $toggleOnLoad 
             ]);

@@ -45,7 +45,7 @@ trait HasHref {
      */
     public function href($route, $parameters = null)
     {
-        if(!$this->data('turboDisabled'))
+        if(!$this->config('turboDisabled'))
             $this->checkTurbo($route, $parameters);
 
         if (filter_var($route, FILTER_VALIDATE_URL) !== false || $route === 'javascript:void(0)') {
@@ -114,9 +114,9 @@ trait HasHref {
 	public function prepareClickable()
 	{
         if($this->href == \Request::getSchemeAndHttpHost()){
-            $this->data(['active' => \Request::url() == $this->href ? 'vlActive' : '' ]);
+            $this->config(['active' => \Request::url() == $this->href ? 'vlActive' : '' ]);
         }else{
-            $this->data(['active' => substr(\Request::url(), 0, strlen($this->href)) == $this->href ? 'vlActive' : '' ]);
+            $this->config(['active' => substr(\Request::url(), 0, strlen($this->href)) == $this->href ? 'vlActive' : '' ]);
         }
 	}
 
@@ -147,7 +147,7 @@ trait HasHref {
      */
     public function noTurbo()
     {
-        return $this->data([
+        return $this->config([
             'turboDisabled' => true
         ]);
     }

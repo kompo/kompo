@@ -51,6 +51,6 @@ trait HasStyles
      */
     public function inputStyle($style)
     {        
-        return $this->data(['inputStyle' => $style]);
+        return $this->config(['inputStyle' => $style]);
     }
 }

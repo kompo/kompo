@@ -179,7 +179,7 @@ abstract class Field extends Komponent
      */
     public function required($indicator = '*')
     {
-        $this->data(['required' => $indicator]);
+        $this->config(['required' => $indicator]);
         $this->rules('required');
         return $this;
     }
@@ -191,7 +191,7 @@ abstract class Field extends Komponent
      */
     public function readOnly()
     {
-        return $this->data(['readOnly' => true]);
+        return $this->config(['readOnly' => true]);
     }
 
     /**
@@ -201,7 +201,7 @@ abstract class Field extends Komponent
      */
     public function noAutocomplete()
     {
-        return $this->data(['noAutocomplete' => true]);
+        return $this->config(['noAutocomplete' => true]);
     }
     
     /**
@@ -245,7 +245,7 @@ abstract class Field extends Komponent
      */
     public function noInputWrapper()
     {
-    	return $this->data([
+    	return $this->config([
     		'noInputWrapper' => true
     	]);
     }
@@ -258,7 +258,7 @@ abstract class Field extends Komponent
      */
     public function noMargins()
     {
-        return $this->data(['noMargins' => true]);
+        return $this->config(['noMargins' => true]);
     }
 
     /**

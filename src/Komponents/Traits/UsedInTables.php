@@ -6,7 +6,7 @@ trait UsedInTables
 {
     public function tdClass($tdClass)
     {
-        return $this->data([
+        return $this->config([
             'tdClass' => $tdClass
         ]);
     }

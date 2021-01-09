@@ -95,7 +95,7 @@ abstract class Form extends Komposer
      *
      * @var array
      */
-    public $komponents = [];  //--> TODO: move to data
+    public $komponents = [];
     
     /**
      * If you wish to reload the form after submit/saving the model, set to true.
@@ -167,7 +167,7 @@ abstract class Form extends Komposer
      */
     public function prepareForDisplay($komposer)
     {
-        ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); 
+        ValidationManager::addRulesToKomposer($this->config('rules'), $komposer); 
     }
 
     /**
@@ -178,7 +178,7 @@ abstract class Form extends Komposer
     public function prepareForAction($komposer)
     {
         if($komposer instanceOf self) //Cuz in Query filters, Forms would pass their rules to browse & sort actions
-            ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); 
+            ValidationManager::addRulesToKomposer($this->config('rules'), $komposer); 
     }
 
 

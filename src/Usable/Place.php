@@ -74,7 +74,7 @@ class Place extends Field
      */
     public function defaultCenter($lat, $lng, $zoom = 10)
     {
-        return $this->data([
+        return $this->config([
             'defaultCenter' => [
                 'lat' => $lat,
                 'lng' => $lng,

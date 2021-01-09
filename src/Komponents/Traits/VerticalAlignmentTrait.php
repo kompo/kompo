@@ -11,7 +11,7 @@ trait VerticalAlignmentTrait {
      */
     public function centerVertically()
     {
-        $this->data(['alignClass' => 'vlAlignCenterMd']);
+        $this->config(['alignClass' => 'vlAlignCenterMd']);
         return $this;
     }
 
@@ -22,7 +22,7 @@ trait VerticalAlignmentTrait {
      */
     public function alignStart()
     {
-        $this->data(['alignClass' => 'vlAlignStart']);
+        $this->config(['alignClass' => 'vlAlignStart']);
         return $this;
     }
 
@@ -33,7 +33,7 @@ trait VerticalAlignmentTrait {
      */
     public function alignCenter()
     {
-        $this->data(['alignClass' => 'vlAlignCenter']);
+        $this->config(['alignClass' => 'vlAlignCenter']);
         return $this;
     }
 
@@ -44,7 +44,7 @@ trait VerticalAlignmentTrait {
      */
     public function alignEnd()
     {
-        $this->data(['alignClass' => 'vlAlignEnd']);
+        $this->config(['alignClass' => 'vlAlignEnd']);
         return $this;
     }
 
@@ -55,7 +55,7 @@ trait VerticalAlignmentTrait {
      */
     public function alignBaseline()
     {
-        $this->data(['alignClass' => 'vlAlignBaseline']);
+        $this->config(['alignClass' => 'vlAlignBaseline']);
         return $this;
     }
 
@@ -66,7 +66,7 @@ trait VerticalAlignmentTrait {
      */
     public function alignStretch()
     {
-        $this->data(['alignClass' => 'vlAlignStretch']);
+        $this->config(['alignClass' => 'vlAlignStretch']);
         return $this;
     }
     

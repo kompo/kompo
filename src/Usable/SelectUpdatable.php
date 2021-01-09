@@ -26,7 +26,7 @@ class SelectUpdatable extends Select
         $this->komponents[0]->vueComponent = 'Select';
         KompoId::appendToElement($this->komponents[0], '-select');
 
-        $this->data([
+        $this->config([
             'optionsKey' => $this->optionsKey,
             'optionsLabel' => $this->optionsLabel
         ]); //for updating value from options
@@ -49,7 +49,7 @@ class SelectUpdatable extends Select
     )
     {
         //it has to be POST... automatic payload contains id for reopening Form
-        return RouteFinder::setUpKomposerRoute($this, $formClassOrRoute, 'POST')->data([
+        return RouteFinder::setUpKomposerRoute($this, $formClassOrRoute, 'POST')->config([
             'ajaxPayload' => $ajaxPayload,
             'sessionTimeoutMessage' => __('sessionTimeoutMessage')
         ]);

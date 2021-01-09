@@ -18,7 +18,7 @@ trait SubmitFormActions
     public function submit($methodName = null)
     {
         $this->applyToElement(function($el) {
-            $el->data([
+            $el->config([
                 'submitsForm' => true
             ]);
         });

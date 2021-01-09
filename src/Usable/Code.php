@@ -17,7 +17,7 @@ class Code extends Block
      */
     public function tabSize($tabSize)
     {
-    	return $this->data([
+    	return $this->config([
     		'tabSize' => $tabSize
     	]);
     }

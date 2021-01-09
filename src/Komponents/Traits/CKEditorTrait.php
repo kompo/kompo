@@ -24,7 +24,7 @@ trait CKEditorTrait
      */
     public function toolbar($toolbar)
     {
-        $this->data([
+        $this->config([
             'toolbar' => $toolbar
         ]);
         return $this;
@@ -38,7 +38,7 @@ trait CKEditorTrait
      */
     public function appendToolbar($additionalToolbar)
     {
-        return $this->toolbar(array_merge($this->data('toolbar'), $additionalToolbar));
+        return $this->toolbar(array_merge($this->config('toolbar'), $additionalToolbar));
     }
 
     /**
@@ -49,7 +49,7 @@ trait CKEditorTrait
      */
     public function prependToolbar($additionalToolbar)
     {
-        return $this->toolbar(array_merge($additionalToolbar, $this->data('toolbar')));
+        return $this->toolbar(array_merge($additionalToolbar, $this->config('toolbar')));
     }
 
     /**
@@ -65,7 +65,7 @@ trait CKEditorTrait
      */
     public function addMention($marker, $feed, $minimumCharacters = 0, $icon = null, $itemName = 'name', $itemType = null)
     {
-        $mentions = $this->data('mentions') ?: [];
+        $mentions = $this->config('mentions') ?: [];
 
         array_push($mentions , [
             'marker' => $marker,
@@ -75,7 +75,7 @@ trait CKEditorTrait
             'itemType' => $itemType
         ]);
 
-        return $this->data([
+        return $this->config([
             'mentions' => $mentions
         ]);
     }

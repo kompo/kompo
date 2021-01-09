@@ -27,12 +27,12 @@ class Liste extends Input
 
     public function mounted($form)
     {
-        $this->data(['emptyValue' => $this->emptyValue()]);
+        $this->config(['emptyValue' => $this->emptyValue()]);
     }
 
     protected function emptyValue()
     {
-    	return [[$this->data('keyLabel') => '']];
+    	return [[$this->config('keyLabel') => '']];
     }
 
     public function value($value)
@@ -51,7 +51,7 @@ class Liste extends Input
      */
     public function keyLabel($keyLabel)
     {
-    	$this->data(['keyLabel' => $keyLabel]);
+    	$this->config(['keyLabel' => $keyLabel]);
 
     	return $this;
     }

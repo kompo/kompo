@@ -31,7 +31,7 @@ class FormDisplayer extends FormBooter
      */
     protected static function prepareSubmitRedirectRoutes($form)
     {
-        $form->data([
+        $form->config([
             'emitFormData' => $form->emitFormData
         ]);
 
@@ -40,7 +40,7 @@ class FormDisplayer extends FormBooter
         if($options['preventSubmit'])
             return;
 
-        $form->data([
+        $form->config([
             'submitUrl' => $options['submitTo'] ? RouteFinder::matchRoute($options['submitTo']) :
                     ($form->submitUrl() ? : 
                     ((method_exists($form, 'handle') || $form->model) ? RouteFinder::getKompoRoute() : null)),
@@ -48,13 +48,13 @@ class FormDisplayer extends FormBooter
             'validationErrorAlert' => __($options['validationErrorAlert']),
         ]);
 
-        if($form->data('submitUrl') == RouteFinder::getKompoRoute())
-            $form->data([
+        if($form->config('submitUrl') == RouteFinder::getKompoRoute())
+            $form->config([
                 'submitAction' => method_exists($form, 'handle') ? 'handle-submit' : 'eloquent-submit'
             ]);
 
         if($options['redirectTo'])
-            $form->data([
+            $form->config([
                 'redirectUrl' => RouteFinder::matchRoute($options['redirectTo']),
                 'redirectMessage' => __($options['redirectMessage'])
             ]);

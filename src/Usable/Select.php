@@ -34,20 +34,20 @@ class Select extends Field
     protected function vlInitialize($label)
     {
         parent::vlInitialize($label);
-        $this->data(['noOptionsFound' => __(self::NO_OPTIONS_FOUND)]);
+        $this->config(['noOptionsFound' => __(self::NO_OPTIONS_FOUND)]);
     }
 
     public function prepareForFront($komposer)
     {
         //Load options...
-        if($this->optionsKey && $this->optionsLabel && !$this->data('ajaxOptions'))
+        if($this->optionsKey && $this->optionsLabel && !$this->config('ajaxOptions'))
             $this->options( 
                 EloquentField::getRelatedCandidates($komposer->model, $this->name, FormField::getConfig($this, 'morphToModel')),
                 $this->optionsKey, 
                 $this->optionsLabel 
             );
 
-        if($this->data('ajaxOptions') && $this->value)
+        if($this->config('ajaxOptions') && $this->value)
             $this->retrieveOptionsFromValue($komposer);
 
         $this->setValueForFront();
@@ -66,7 +66,7 @@ class Select extends Field
             //User should fix by using the above scenarios. Should I throw error or not?? No for now: worst case, the query will be slow.
             $allOptions = DependencyResolver::callKomposerMethod(
                 $komposer, 
-                KompoTarget::getDecrypted($this->data('ajaxOptionsMethod')), 
+                KompoTarget::getDecrypted($this->config('ajaxOptionsMethod')), 
                 ['search' => '']
             )->all();
 
@@ -242,7 +242,7 @@ class Select extends Field
     {
         $this->retrieveMethod = $retrieveMethod ?: $this->inferOptionsMethod('retrieve', $retrieveMethod);
 
-        return RouteFinder::activateRoute($this)->data([
+        return RouteFinder::activateRoute($this)->config([
             'ajaxOptions' => true,
             'ajaxMinSearchLength' => $minSearchLength,
             'enterMoreCharacters' => __(self::ENTER_MORE_CHARACTERS, ['min' => $minSearchLength]),
@@ -285,7 +285,7 @@ class Select extends Field
     {
         $this->retrieveMethod = $searchMethod ?: $this->inferOptionsMethod('retrieve', $searchMethod);
 
-        return RouteFinder::activateRoute($this)->data([
+        return RouteFinder::activateRoute($this)->config([
             'ajaxOptions' => true,
             'ajaxOptionsFromField' => $otherFieldName,
             'ajaxOptionsMethod' => KompoTarget::getEncrypted($searchMethod ?: $this->inferOptionsMethod('search', $searchMethod)),

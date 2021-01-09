@@ -120,7 +120,7 @@ class MultiForm extends Field
         $this->formClass = $formClass;
         $this->childStore = $ajaxPayload ?: [];
 
-        return $this->data(array_merge([
+        return $this->config(array_merge([
             'route' => RouteFinder::getKompoRoute(),
             'routeMethod' => 'POST', //had to be POST to send ajaxPayload
             'ajaxPayload' => $ajaxPayload,
@@ -139,26 +139,26 @@ class MultiForm extends Field
 
     public function noAdding()
     {
-        return $this->data([
+        return $this->config([
             'noAdding' => true
         ]);
     }
 
     public function acceptNullRelations()
     {
-        return $this->data([
+        return $this->config([
             'acceptNullRelations' => true
         ]);
     }
 
     protected function isNotAdding()
     {
-        return $this->data('noAdding');
+        return $this->config('noAdding');
     }
 
     protected function acceptsNullRelations()
     {
-        return $this->data('acceptNullRelations');
+        return $this->config('acceptNullRelations');
     }
 
 }

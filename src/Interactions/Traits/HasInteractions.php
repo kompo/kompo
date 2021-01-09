@@ -117,7 +117,7 @@ trait HasInteractions
      */
     public function debounce($debounce = 500)
     {
-        return $this->data([
+        return $this->config([
             'debounce' => $debounce
         ]);
     }

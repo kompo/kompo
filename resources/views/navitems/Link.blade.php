@@ -1,6 +1,6 @@
 @if(count($component->interactions))
 
-	<vl-link class="vl-nav-item {{ $component->class() }} {{ $component->data('active') }}"
+	<vl-link class="vl-nav-item {{ $component->class() }} {{ $component->config('active') }}"
 		@include('kompo::partials.IdStyle')
 		:vkompo="{{ $component }}" >
 
@@ -12,7 +12,7 @@
 
 @else
 
-	<a class="vl-nav-item {{ $component->class() }} {{ $component->data('active') }}" 
+	<a class="vl-nav-item {{ $component->class() }} {{ $component->config('active') }}" 
 		@include('kompo::partials.IdStyle')
 		@include('kompo::partials.HrefTarget')>
 

@@ -5,7 +5,7 @@
 	@if($component->imageUrl)
 		<img src="{{ $component->imageUrl }}" 
 			style="width:{{ $component->imageWidth }};height:{{ $component->imageHeight }}" 
-			class="vlInlineBlock {{$component->data('imageClass')}}" alt="">
+			class="vlInlineBlock {{$component->config('imageClass')}}" alt="">
 	@endif
 
 	@include('kompo::partials.ItemContent', [

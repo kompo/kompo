@@ -2,7 +2,7 @@
 
 namespace Kompo\Interactions;
 
-use Kompo\Elements\Traits\HasData;
+use Kompo\Elements\Traits\HasConfig;
 use Kompo\Exceptions\NotFoundActionException;
 use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Komponents\Field;
@@ -13,7 +13,7 @@ use Kompo\Routing\RouteFinder;
 class Action
 {
     use HasInteractions;
-    use HasData;
+    use HasConfig;
     use Actions\AddAlertActions,
         Actions\AddSlidingPanelActions,
         Actions\AxiosRequestActions, 
@@ -67,16 +67,16 @@ class Action
      * { function_description }
      *
      * @param      <type>  $actionType  The action type
-     * @param      <type>  $data        The data
+     * @param      <type>  $config        The config
      *
      * @return     self
      */
-    protected function prepareAction($actionType, $data = null)
+    protected function prepareAction($actionType, $config = null)
     {
         $this->actionType = $actionType;
 
-        if($data)
-            $this->data($data);
+        if($config)
+            $this->config($config);
         
         return $this;
     }

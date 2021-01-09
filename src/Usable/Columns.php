@@ -41,7 +41,7 @@ class Columns extends Layout
      */
     public function breakpoint($breakpoint = null)
     {
-        $this->data(['breakpoint' => $breakpoint]);
+        $this->config(['breakpoint' => $breakpoint]);
         return $this;
     }
 

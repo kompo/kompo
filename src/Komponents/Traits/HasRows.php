@@ -13,7 +13,7 @@ trait HasRows
      */
     public function rows($rows =  3)
     {
-        return $this->data([
+        return $this->config([
             'rows' => $rows
         ]);
     }

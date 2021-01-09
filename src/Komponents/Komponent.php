@@ -63,8 +63,8 @@ abstract class Komponent extends Element
      */
     public function prepareForAction($komposer)
     {
-        if($this->data('includes') && KompoAction::is('eloquent-save'))
-            KomposerManager::prepareKomponentsForAction($komposer, $this->data('includes'), true);
+        if($this->config('includes') && KompoAction::is('eloquent-save'))
+            KomposerManager::prepareKomponentsForAction($komposer, $this->config('includes'), true);
     }
 
     /**
@@ -99,7 +99,7 @@ abstract class Komponent extends Element
      */
     public function iconNonStatic($iconString)
     {
-        $this->data(['icon' => IconGenerator::toHtml($iconString) ]);
+        $this->config(['icon' => IconGenerator::toHtml($iconString) ]);
         return $this;
     }
 
@@ -119,7 +119,7 @@ abstract class Komponent extends Element
      */
     public function rIconNonStatic($iconString)
     {
-        $this->data(['rIcon' => IconGenerator::toHtml($iconString) ]);
+        $this->config(['rIcon' => IconGenerator::toHtml($iconString) ]);
         return $this;
     }
 

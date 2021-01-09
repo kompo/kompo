@@ -8,8 +8,8 @@ abstract class Element
 {
     use Traits\HasId, 
         Traits\HasClasses, 
+        Traits\HasInternalConfig, 
         Traits\HasConfig, 
-        Traits\HasData, 
         Traits\HasStyles, 
         Traits\HasAnimation, 
         Traits\HasDuskSelector,

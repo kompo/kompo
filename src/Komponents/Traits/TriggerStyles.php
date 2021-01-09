@@ -11,7 +11,7 @@ trait TriggerStyles {
      */
     public function outlined()
     {
-        $this->data(['btnOutlined' => true]);
+        $this->config(['btnOutlined' => true]);
         $this->button();
         return $this;
     }
@@ -23,7 +23,7 @@ trait TriggerStyles {
      */
     public function plain()
     {
-        $this->data(['btnPlain' => true]);
+        $this->config(['btnPlain' => true]);
         return $this;
     }
 
@@ -34,7 +34,7 @@ trait TriggerStyles {
      */
     public function block()
     {
-        $this->data(['btnBlock' => true]);
+        $this->config(['btnBlock' => true]);
         return $this;
     }
 
@@ -45,7 +45,7 @@ trait TriggerStyles {
      */
     public function inline()
     {
-        $this->data(['btnInline' => true]);
+        $this->config(['btnInline' => true]);
         return $this;
     }
 
@@ -56,7 +56,7 @@ trait TriggerStyles {
      */
     public function button()
     {
-        $this->data(['btnStyle' => true]);
+        $this->config(['btnStyle' => true]);
         return $this;
     }
 
@@ -67,7 +67,7 @@ trait TriggerStyles {
      */
     public function secondary()
     {
-        $this->data(['secondary' => true]);
+        $this->config(['secondary' => true]);
         return $this;
     }
     

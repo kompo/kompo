@@ -18,7 +18,7 @@ class Img extends Block
 
     public function bgCover()
     {
-    	return $this->data([
+    	return $this->config([
     		'backgroundCover' => true
     	]);
     }

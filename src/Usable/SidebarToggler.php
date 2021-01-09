@@ -17,7 +17,7 @@ class SidebarToggler extends Trigger
  
 	public function toggleSidebar($side = 'left')
 	{
-		return $this->data([
+		return $this->config([
 			'toggleSidebar' => $side
 		]);
 	}    

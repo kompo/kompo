@@ -1,4 +1,4 @@
-@if($icon = $component->data('icon'))
+@if($icon = $component->config('icon'))
 	{!! $icon !!}&nbsp;
 @endif
 
@@ -8,6 +8,6 @@
 	</span>
 @endif
 
-@if($rIcon = $component->data('rIcon'))
+@if($rIcon = $component->config('rIcon'))
 	&nbsp;{!! $rIcon !!}
 @endif

@@ -14,7 +14,7 @@ trait HasAddLabel
      */
     public function addLabel(string $label, ?string $icon = 'icon-plus', string $class = '')
     {
-        return $this->data([
+        return $this->config([
             'addLabel' => IconGenerator::toHtml($icon).' '.__($label),
             'addLabelClass' => $class
         ]);

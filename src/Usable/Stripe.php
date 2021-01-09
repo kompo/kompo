@@ -24,13 +24,13 @@ class Stripe extends Field
 
     public function withIntent($intent)
     {
-    	$this->data(['intent' => $intent]);
+    	$this->config(['intent' => $intent]);
     	return $this;
     }
 
     public function withCardholder($label = 'Cardholder Name')
     {
-    	$this->data([
+    	$this->config([
     		'cardholderLabel' => __($label),
     		'cardholderError' => __('cardholderError')
     	]);
@@ -40,13 +40,13 @@ class Stripe extends Field
 
     public function fontSrc($fontSrc)
     {
-    	$this->data(['fontSrc' => $fontSrc]);
+    	$this->config(['fontSrc' => $fontSrc]);
     	return $this;
     }
 
     public function stripeStyles($styles)
     {
-    	$this->data(['styles' => $styles]);
+    	$this->config(['styles' => $styles]);
     	return $this;
     }
 }

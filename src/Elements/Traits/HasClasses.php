@@ -37,7 +37,7 @@ trait HasClasses
      */
     public function inputClass($classes)
     {        
-        return $this->data(['inputClass' => $classes]);
+        return $this->config(['inputClass' => $classes]);
     }
 
     /**
@@ -79,6 +79,6 @@ trait HasClasses
      */
     public function col($col)
     {
-        return $this->data(['col' => $col]);
+        return $this->config(['col' => $col]);
     }
 }

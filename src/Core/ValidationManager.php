@@ -52,8 +52,8 @@ class ValidationManager
      */
     public static function pushCleanRulesToKomposer($field, $komposer)
     {
-        if($field->data('rules'))
-            static::addRulesToKomposer($field->data('rules'), $komposer);
+        if($field->config('rules'))
+            static::addRulesToKomposer($field->config('rules'), $komposer);
 
         static::cleanNestedNameRules($field, $komposer);
     }
@@ -82,7 +82,7 @@ class ValidationManager
      */
     public static function getRules($element)
     {
-        return $element->data('rules') ?: [];
+        return $element->config('rules') ?: [];
     }
 
 
@@ -90,8 +90,8 @@ class ValidationManager
 
     private static function setRules($rules, $el)
     {
-        return $el->data([
-            'rules' => static::mergeRules($rules, $el->data('rules') ?: [])
+        return $el->config([
+            'rules' => static::mergeRules($rules, $el->config('rules') ?: [])
         ]);
     }
 
@@ -112,7 +112,7 @@ class ValidationManager
 
     private static function overwriteRules($rules, $el)
     {
-        return $el->data([
+        return $el->config([
             'rules' => $rules
         ]);
     }

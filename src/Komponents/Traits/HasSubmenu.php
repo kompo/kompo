@@ -30,8 +30,8 @@ trait HasSubmenu
                 ->class('vl-has-hash');
 
         //if a link in the menu is active, then the parent is active (even if no href for the parent)
-        if($component->data('active')) 
-            $this->data(['active' => 'vlActive']);
+        if($component->config('active')) 
+            $this->config(['active' => 'vlActive']);
     }
 
     public function submenu(...$args)
@@ -55,7 +55,7 @@ trait HasSubmenu
      */
     public function expandByDefault()
     {
-        return $this->data(['expandByDefault' => true]);
+        return $this->config(['expandByDefault' => true]);
     }
 
     /**
@@ -65,7 +65,7 @@ trait HasSubmenu
      */
     public function expandIfActive()
     {
-        return $this->data(['expandIfActive' => true]);
+        return $this->config(['expandIfActive' => true]);
     }
 
     /**
@@ -75,7 +75,7 @@ trait HasSubmenu
      */
     public function noCaret()
     {
-        return $this->data(['noCaret' => true]);
+        return $this->config(['noCaret' => true]);
     }
 
 }

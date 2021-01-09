@@ -37,7 +37,7 @@ abstract class QueryOperations
 
     protected function inferBestOperator($field)
     {
-        return $field->data('filterOperator') ?: (
+        return $field->config('filterOperator') ?: (
             (property_exists($field, 'multiple') && $field->multiple) ? 'IN' : ($field instanceOf Input ? 'LIKE' : '=')
         );
     }

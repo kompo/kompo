@@ -8,9 +8,9 @@ use Kompo\Routing\RouteFinder;
 
 trait AxiosRequestActions
 {
-    protected function prepareAxiosRequest($data)
+    protected function prepareAxiosRequest($config)
     {  
-        return $this->prepareAction('axiosRequest', array_merge($data, [
+        return $this->prepareAction('axiosRequest', array_merge($config, [
             'sessionTimeoutMessage' => __('sessionTimeoutMessage')
         ])); 
     }
@@ -42,11 +42,11 @@ trait AxiosRequestActions
     public function getKomponents($methodName, $ajaxPayload = null)
     {
         $this->applyToElement(function($el) use($methodName) {
-            $el->data([ 'includes' => $methodName ]);
+            $el->config([ 'includes' => $methodName ]);
         });
 
         return $this->selfHttpRequest('POST', 'include-komponents', $methodName, $ajaxPayload)
-            ->data([ 'included' => true ]); //to tell Panel to include rather than separate form
+            ->config([ 'included' => true ]); //to tell Panel to include rather than separate form
     }
 
     /**

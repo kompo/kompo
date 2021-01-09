@@ -8,12 +8,12 @@ abstract class KompoAjax
 
     public static function getFromElement($el)
     {
-        return $el->data( static::$key );
+        return $el->config( static::$key );
     }
 
     public static function setOnElement($el, $kompoData)
     {
-        return $el->data([ static::$key => $kompoData ]);
+        return $el->config([ static::$key => $kompoData ]);
     }
 
     public static function arrayFromElement($el)

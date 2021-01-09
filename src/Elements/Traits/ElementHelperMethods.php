@@ -18,7 +18,7 @@ trait ElementHelperMethods
      */
     public function displayNone()
     {
-        return $this->data(['displayNone' => true]);
+        return $this->config(['displayNone' => true]);
     }
 
 

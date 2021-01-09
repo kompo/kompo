@@ -51,7 +51,7 @@ class AddAlertInteractionsTest extends EnvironmentBoot
 		$this->assertEquals('addAlert', $interaction->action->actionType);
 
 		foreach (['message', 'icon', 'alertClass'] as $k => $v) {
-			$this->assertEquals($result[$k], $interaction->action->data['alert'][$v]);
+			$this->assertEquals($result[$k], $interaction->action->config['alert'][$v]);
 		}
 	}
 	
