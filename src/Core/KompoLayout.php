@@ -84,7 +84,7 @@ class KompoLayout
 
 	    $tag = $pm ? '<div' : '<main';
 
-	    $tag .= $appId ? ' id="'.$appId.'"': '';
+	    $tag .= $appId ? ' id="'.$appId.'" v-cloak': '';
 
 	    $overflow = !$appId ? '' : ($this->hasAnyFixedMenus ? 'vl100vh ' : 'vlMin100vh ');
 

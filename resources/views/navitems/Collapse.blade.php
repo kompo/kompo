@@ -1,4 +1,7 @@
-<vl-collapse class="vl-nav-item" :vkompo="{{ $component }}">
+<vl-collapse 
+    class="vl-nav-item vlCollapse {{ $component->class() }}" 
+    @include('kompo::partials.IdStyle')
+    :vkompo="{{ $component }}">
 
     <a @include('kompo::partials.HrefTarget') >
 

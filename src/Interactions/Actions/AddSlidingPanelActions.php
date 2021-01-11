@@ -2,8 +2,6 @@
 
 namespace Kompo\Interactions\Actions;
 
-use Kompo\Core\IconGenerator;
-
 trait AddSlidingPanelActions
 {
     /**

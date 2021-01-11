@@ -1,5 +1,5 @@
 @if($icon = $component->config('icon'))
-	{!! $icon !!}&nbsp;
+	{!! $icon !!}{!! $component->label ? '&nbsp;' : '' !!}
 @endif
 
 @if($component->label)
@@ -9,5 +9,5 @@
 @endif
 
 @if($rIcon = $component->config('rIcon'))
-	&nbsp;{!! $rIcon !!}
+	{!! $component->label ? '&nbsp;' : '' !!}{!! $rIcon !!}
 @endif

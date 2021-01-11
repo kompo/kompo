@@ -400,6 +400,14 @@ if(! function_exists('_Html'))
     }
 }
 
+if(! function_exists('_I'))
+{
+    function _I()
+    {
+        return Kompo\I::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Image'))
 {
     function _Image()
@@ -645,6 +653,14 @@ if(! function_exists('_SubmitButton'))
     function _SubmitButton()
     {
         return Kompo\SubmitButton::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_Svg'))
+{
+    function _Svg()
+    {
+        return Kompo\Svg::form(...func_get_args());
     }
 }
 

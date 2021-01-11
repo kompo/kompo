@@ -1,4 +1,7 @@
-<vl-dropdown class="vl-nav-item" :vkompo="{{ $component }}">
+<vl-dropdown 
+    class="vl-nav-item vlDropdown {{ $component->class() }}" 
+    @include('kompo::partials.IdStyle')
+    :vkompo="{{ $component }}">
     
     <a @include('kompo::partials.HrefTarget')>
 
