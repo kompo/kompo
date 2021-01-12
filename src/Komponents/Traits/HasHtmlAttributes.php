@@ -12,15 +12,19 @@ trait HasHtmlAttributes {
      * ])</php>
      * 
      *
-     * @param      array  $attributes     Associative array of attribute names and values.
+     * @param      array|string|null  $attributes     Associative array of attribute names and values.
      *
      * @return     self
      */
-    public function attr($attributes)
+    public function attr($attributes = null)
     {
-        return $this->config([
-            'attrs' => $attributes
-        ]);
+        if(is_array($attributes)){
+            return $this->config([
+                'attrs' => array_replace($this->attr() ?: [], $attributes)
+            ]);
+        }else{
+            return $attributes ? ($this->config['attrs'][$attributes] ?? null) : $this->config('attrs');
+        }        
     }
 
     /**
