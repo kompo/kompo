@@ -57,7 +57,7 @@ class Select extends Field
     {
         if($this->retrieveMethod && method_exists($komposer, $this->retrieveMethod)){
             $this->options(Util::collect($this->value)->mapWithKeys(function($optionKey) use($komposer){
-                return $komposer->{$this->retrieveMethod}($optionKey)->all();
+                return $komposer->{$this->retrieveMethod}($optionKey);
             }));
         }elseif($this->optionsKey && $this->optionsLabel){
             $this->options(Util::collect($this->value), $this->optionsKey, $this->optionsLabel);
