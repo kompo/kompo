@@ -21,7 +21,7 @@ trait AddAlertActions
     {
         return $this->prepareAction('addAlert', [
             'alert' => [
-                'message' => $message,                
+                'message' => __($message),                
                 'icon' => IconGenerator::toHtml($icon === true ? 'icon-check' : $icon),
                 'alertClass' => $alertClass
             ]

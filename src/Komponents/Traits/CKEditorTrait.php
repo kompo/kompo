@@ -2,6 +2,7 @@
 
 namespace Kompo\Komponents\Traits;
 
+use Kompo\Core\IconGenerator;
 use Kompo\Komponents\Field;
 
 trait CKEditorTrait
@@ -72,6 +73,7 @@ trait CKEditorTrait
             'feed' => $icon ? $this->mapMentions($feed, $marker, $icon, $itemName, $itemType) : $feed,
             'minimumCharacters' => $minimumCharacters,
             'iconClass' => $icon,
+            'iconHtml' => IconGenerator::toHtml($icon),
             'itemType' => $itemType
         ]);
 
