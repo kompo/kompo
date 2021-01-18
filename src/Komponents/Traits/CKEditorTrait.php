@@ -70,11 +70,15 @@ trait CKEditorTrait
 
         array_push($mentions , [
             'marker' => $marker,
-            'feed' => $icon ? $this->mapMentions($feed, $marker, $icon, $itemName, $itemType) : $feed,
             'minimumCharacters' => $minimumCharacters,
             'iconClass' => $icon,
             'iconHtml' => IconGenerator::toHtml($icon),
-            'itemType' => $itemType
+            'itemType' => $itemType,
+            'initialFeed' => !$icon ? $feed : $feed->map(
+
+                        fn($item) => static::mapMention($item, $marker, $icon, $itemName, $itemType)
+
+                    ),
         ]);
 
         return $this->config([
@@ -99,20 +103,15 @@ trait CKEditorTrait
         return ['|', 'undo', 'redo'];
     }
 
-
-
-    protected function mapMentions($items, $marker, $icon, $itemName = 'name', $itemType = null)
+    public static function mapMention($item, $marker, $icon, $itemName = 'name', $itemType = null)
     {
-        return $items->map(function($item) use ($marker, $icon, $itemName, $itemType) {
-
-            return [
-                'id' => $marker.$item->{$itemName}, 
-                'iconClass' => $icon,         //has to be a font icon (not svg)
-                'text' => $item->{$itemName}, //text is the key for the label
-                'itemType' => $itemType,
-                'itemId' => $item->id ?? null
-            ];
-        });
+        return [
+            'id' => $marker.$item->{$itemName}, 
+            'iconClass' => $icon,         //has to be a font icon (not svg)
+            'text' => $item->{$itemName}, //text is the key for the label
+            'itemType' => $itemType,
+            'itemId' => $item->id ?? null
+        ];
     }
     
 }
