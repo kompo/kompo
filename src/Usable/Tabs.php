@@ -8,4 +8,11 @@ class Tabs extends Layout
 {
     public $vueComponent = 'FormTabs';
 
+    public function activeTab($index = null)
+    {
+    	return $this->config([
+    		'activeTab' => $index ?: 0
+    	]);
+    }
+
 }

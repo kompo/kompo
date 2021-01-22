@@ -85,9 +85,11 @@ class Place extends Field
 
     public function getValueFromModel($model, $name)
     {
-        return !$this->attributesToColumns ? ModelManager::getValueFromDb($model, $name) : collect($this->allKeys)->map(function($key) use ($model){
-            return $model->{$key};
-        })->filter()->all();      
+        return !$this->attributesToColumns ? 
+            
+            ModelManager::getValueFromDb($model, $name) : 
+
+            collect($this->allKeys)->map(fn($key) => $model->{$key})->filter()->all();      
     }
 
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)
@@ -151,7 +153,7 @@ class Place extends Field
     {
     	$place = Util::decode($place);
 
-    	if($address_components = $place['address_components']){
+    	if($address_components = ($place['address_components'] ?? null)){
 	    	$result = [];
 	    	foreach ($address_components as $value) {
 	    		if(in_array('street_number', $value['types']))
@@ -174,7 +176,9 @@ class Place extends Field
 	            $this->external_idKey => $place['place_id']
 	        ]);
 	    }else{
-	    	return $place;
+            return collect($this->allKeys)->mapWithKeys(fn($dbKey, $internalKey) => [
+                $dbKey => $place[$internalKey]
+            ])->all();
 	    }
     }
 }
