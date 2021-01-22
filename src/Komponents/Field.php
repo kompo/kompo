@@ -130,7 +130,7 @@ abstract class Field extends Komponent
      */
     public function placeholder($placeholder)
     {
-        $this->placeholder = $placeholder;
+        $this->placeholder = __($placeholder);
         return $this;
     }
 
