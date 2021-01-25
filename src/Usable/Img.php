@@ -18,9 +18,8 @@ class Img extends Block
 
     public function bgCover()
     {
-    	return $this->config([
-    		'backgroundCover' => true
-    	]);
+        $this->vueComponent = 'ImgCover';
+    	return $this;
     }
     
 }

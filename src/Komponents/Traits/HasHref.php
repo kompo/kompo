@@ -45,8 +45,7 @@ trait HasHref {
      */
     public function href($route, $parameters = null)
     {
-        if(!$this->config('turboDisabled'))
-            $this->checkTurbo($route, $parameters);
+        $this->checkTurbo($route, $parameters);
 
         if (filter_var($route, FILTER_VALIDATE_URL) !== false || $route === 'javascript:void(0)') {
             $this->href = $route;
@@ -133,11 +132,14 @@ trait HasHref {
      */
     public function checkTurbo($route, $parameters = null)
     {
+        if($this->config('turboDisabled'))
+            return;
+
         if( 
             ($routeObject = RouteFinder::getRouteObject($route, $parameters)) && 
             (($routeObject->action['layout'] ?? '') === (request()->route()->action['layout'] ?? false ))
         )
-            $this->turbo = true;
+            $this->forceTurbo();
     }
 
     /**
@@ -150,6 +152,17 @@ trait HasHref {
         return $this->config([
             'turboDisabled' => true
         ]);
+    }
+
+    /** TODO: Document
+     * Force turbo for component href or redirect
+     *
+     * @var Boolean
+     */
+    public function forceTurbo()
+    {
+        $this->turbo = true;
+        return $this;
     }
 
 }

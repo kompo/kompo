@@ -172,7 +172,7 @@ class ModelManager
         foreach ($attributes as $key => $attribute) {
             $related->{$key} = $attribute;
         }
-        $test = $relation->save($related);
+        $relation->save($related);
     }
 
     protected static function saveMany($relation, $column, $arrayOfAttributes)

@@ -272,6 +272,14 @@ if(! function_exists('_DateTime'))
     }
 }
 
+if(! function_exists('_Div'))
+{
+    function _Div() : Kompo\Div
+    {
+        return Kompo\Div::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_EditableCKEditor'))
 {
     function _EditableCKEditor()

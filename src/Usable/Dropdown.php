@@ -29,4 +29,11 @@ class Dropdown extends Trigger
     		'dropdownPosition' => 'vlDropdownMenuUpRight'
     	]);
     }
+
+    public function openOnClick()
+    {
+        return $this->config([
+            'openOnClick' => true
+        ]);
+    }
 }
