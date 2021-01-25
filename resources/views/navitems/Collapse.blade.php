@@ -8,11 +8,6 @@
         @include('kompo::partials.ItemContent', ['component' => $component])
     
     </a>
-    @if(count($component->komponents) && !$component->config('noCaret'))
-
-        <i class="icon-down-dir"></i>
-
-    @endif
     
     <template v-slot:komponents>
         
