@@ -34,6 +34,8 @@ class DatabaseQuery extends QueryOperations
             return $q->where($columnName, 'LIKE', '%'.$value);
         }elseif($operator == 'BETWEEN'){
             return $q->whereBetween($columnName, $value);
+        }elseif($operator == 'NULL'){
+            return $q->whereNull($columnName);
         }else{
             return $q->where($columnName, $operator, $value);
         }

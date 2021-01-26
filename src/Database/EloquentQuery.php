@@ -76,6 +76,9 @@ class EloquentQuery extends DatabaseQuery
 
         $secondTerm = NameParser::secondTerm($recursiveName) ?: $model->getKeyName();
 
+        if($operator == 'NULL' && ($secondTerm == $model->getKeyName()))
+            return $q->doesntHave($firstTerm);
+
         return $q->whereHas($firstTerm, function($subquery) use($model, $secondTerm, $operator, $value){
 
             $this->handleEloquentFilter($subquery, $model, $secondTerm, $operator, $value);

@@ -19,7 +19,8 @@ trait QueryActions
         'STARTSWITH',
         'ENDSWITH',
         'BETWEEN',
-        'IN'
+        'IN',
+        'NULL',
     ];
 
     /**
