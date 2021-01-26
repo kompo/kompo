@@ -54,6 +54,16 @@ trait CKEditorTrait
     }
 
     /**
+     * TODO: document
+     */
+    public function focusOnLoad()
+    {
+        return $this->config([
+            'focusOnLoad' => true
+        ]);
+    }
+
+    /**
      * Adds the ability to tag/mention options in the editor by writing a character, with an optional Button trigger.
      *
      * @param string $marker
