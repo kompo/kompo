@@ -12,13 +12,4 @@ trait RunJsActions
         ]);
     }
 
-    //TODO: document
-    public function scrollTo($selector, $duration, $options = [])
-    {
-    	return $this->prepareAction('scrollTo', [
-    		'scrollSelector' => $selector,
-    		'scrollDuration' => $duration,
-    		'scrollOptions' => $options
-    	]);
-    }
 }

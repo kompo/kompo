@@ -76,6 +76,7 @@ class EloquentQuery extends DatabaseQuery
 
         $secondTerm = NameParser::secondTerm($recursiveName) ?: $model->getKeyName();
 
+        //TODO: write tests for NULL operator
         if($operator == 'NULL' && ($secondTerm == $model->getKeyName()))
             return $q->doesntHave($firstTerm);
 

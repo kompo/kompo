@@ -3,6 +3,7 @@
 namespace Kompo\Interactions\Actions;
 
 use Kompo\Core\KompoId;
+use Kompo\Routing\RouteFinder;
 
 trait FrontEndActions
 {
@@ -37,6 +38,33 @@ trait FrontEndActions
     public function hideSelf()
     {
         return $this->prepareAction('hideSelf');
+    }
+
+    //TODO: document
+    public function scrollTo($selector, $duration, $options = [])
+    {
+        return $this->prepareAction('scrollTo', [
+            'scrollSelector' => $selector,
+            'scrollDuration' => $duration,
+            'scrollOptions' => $options
+        ]);
+    }
+
+
+    //TODO: document
+    public function toggleClass($class)
+    {
+        return $this->prepareAction('toggleClass', [
+            'toggleClass' => $class
+        ]);
+    }
+
+    //TODO: document
+    public function setHistory($route, $parameters)
+    {
+        return $this->prepareAction('setHistory', [
+            'setHistory' => RouteFinder::guessRoute($route, $parameters)
+        ]);
     }
 
 }

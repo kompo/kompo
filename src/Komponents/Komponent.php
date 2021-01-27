@@ -11,7 +11,8 @@ use Kompo\Komposers\KomposerManager;
 abstract class Komponent extends Element
 {
     use Traits\HasHtmlAttributes,
-        Traits\UsedInTables;
+        Traits\UsedInTables,
+        Traits\DoesTurboRefresh;
     
     public $bladeComponent = 'Komponent';
 
