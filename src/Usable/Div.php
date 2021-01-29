@@ -12,6 +12,6 @@ class Div extends Layout
     use HasInteractions, ForwardsInteraction;
     use HasHref;
     
-    public $vueComponent = 'Rows';
-    public $bladeComponent = 'Rows';
+    public $vueComponent = 'Div';
+    public $bladeComponent = 'Div';
 }
