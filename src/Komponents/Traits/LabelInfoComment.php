@@ -42,7 +42,7 @@ trait LabelInfoComment
      */
     public function comment($comment)
     {
-        return $this->config(['comment' => $comment]);
+        return $this->config(['comment' => __($comment)]);
     }
 
     /**
@@ -55,7 +55,7 @@ trait LabelInfoComment
     public function hint($hint)
     {
         //TODO: info should be renamed hint() in the Front-end!!
-        return $this->config(['info' => $hint]);
+        return $this->config(['info' => __($hint)]);
     }
 
     /**
