@@ -147,4 +147,13 @@ trait AxiosRequestActions
     }
     
     
+
+    //TODO: document
+    public function setHistory($route, $parameters)
+    {
+        return $this->prepareAction('setHistory', [
+            'setHistory' => RouteFinder::guessRoute($route, $parameters)
+        ]);
+    }
+    
 }

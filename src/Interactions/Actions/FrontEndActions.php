@@ -60,11 +60,8 @@ trait FrontEndActions
     }
 
     //TODO: document
-    public function setHistory($route, $parameters)
+    public function removeSelf()
     {
-        return $this->prepareAction('setHistory', [
-            'setHistory' => RouteFinder::guessRoute($route, $parameters)
-        ]);
+        return $this->prepareAction('removeSelf');
     }
-
 }
