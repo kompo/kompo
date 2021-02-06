@@ -56,7 +56,7 @@ class Logo extends Trigger
      */
     public function imageClass($class)
     {
-        return $this->data([
+        return $this->config([
             'imageClass' => $class
         ]);
     }

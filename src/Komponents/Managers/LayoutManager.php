@@ -5,11 +5,12 @@ namespace Kompo\Komponents\Managers;
 use Illuminate\Support\Collection;
 use Kompo\Core\Util;
 use Kompo\Komponents\Layout;
+use Closure;
 
 class LayoutManager extends Layout
 {
 	public static function collectFilteredKomponents($args, $layout)
-	{
+	{        
 		if(static::argsIsString($args))
             return collect([]);
 
@@ -40,7 +41,7 @@ class LayoutManager extends Layout
 
 	private static function argsIsClosure($args)
 	{
-		return is_array($args) && count($args) == 1 && is_callable($args[0]);
+		return is_array($args) && count($args) == 1 && is_callable($args[0]) && $args[0] instanceOf Closure;
 	}
 
 	private static function wrapIfNotArray($args)

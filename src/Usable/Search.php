@@ -10,7 +10,7 @@ class Search extends Select
     {
         parent::vlInitialize($label);
 
-        $this->data([
+        $this->config([
 	        'searchInput' => true
 	    ]);
 

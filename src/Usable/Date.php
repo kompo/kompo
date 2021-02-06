@@ -31,7 +31,7 @@ class Date extends Field
      */
     public function dateFormat($dateFormat)
     {
-    	$this->data([
+    	$this->config([
             'altFormat' => $dateFormat
         ]);
     	return $this;
@@ -46,7 +46,7 @@ class Date extends Field
      */
     public function dateMode($mode)
     {
-        $this->data([
+        $this->config([
             'dateMode' => $mode
         ]);
         return $this;
@@ -56,7 +56,7 @@ class Date extends Field
 
     protected function setDbFormat()
     {
-        return $this->data([
+        return $this->config([
             'dateFormat' => $this->dbFormat
         ]);
     }

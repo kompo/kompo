@@ -14,10 +14,11 @@ trait FillPanelActions
      *
      * @return     self  
      */
-    public function inPanel($panelId)
+    public function inPanel($panelId, $included = null)
     {
         return $this->prepareAction('fillPanel', [
-            'panelId' => $panelId
+            'panelId' => $panelId,
+            'included' => $included
         ]);
     }
 

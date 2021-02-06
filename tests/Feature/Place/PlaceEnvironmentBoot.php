@@ -67,7 +67,7 @@ class PlaceEnvironmentBoot extends EnvironmentBoot
 		      "lng" => $faker->longitude
 		    ]
 		  ],
-		  "id" => $faker->uuid
+		  "place_id" => $faker->uuid
 		];
 	}
 
@@ -83,7 +83,7 @@ class PlaceEnvironmentBoot extends EnvironmentBoot
             $this->addressKey => $place['formatted_address'],
             $this->latKey => $place['geometry']['location']['lat'],
             $this->lngKey => $place['geometry']['location']['lng'],
-            $this->external_idKey => $place['id']
+            $this->external_idKey => $place['place_id']
 		];
 	}
 

@@ -2,6 +2,7 @@
 
 namespace Kompo;
 
+use Illuminate\Support\Carbon;
 use Kompo\Date;
 
 class DateTime extends Date
@@ -13,9 +14,20 @@ class DateTime extends Date
     {
         parent::vlInitialize($label);
 
-        $this->data([
+        $this->config([
             'enableTime' => true
         ]);
+    }
+
+    //If a 'datetime' cast is added to the model's attribute, 
+    //we should remove any reference to timezone before outputting
+    //Otherwise flatpickr changes it to a UTC date...
+    public function setOutput($value, $key)
+    {
+        if(!is_null($value)){
+        	$value = $value instanceOf Carbon ? $value->format('Y-m-d H:i') : $value;
+            $this->value($value);
+        }
     }
 
 }

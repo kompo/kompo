@@ -20,13 +20,20 @@ class Dropdown extends Trigger
      */
     public function alignRight()
     {
-        return $this->data([ 'dropdownPosition' => 'vlDropdownMenuRight' ]);
+        return $this->config([ 'dropdownPosition' => 'vlDropdownMenuRight' ]);
     }
 
     public function alignUpRight()
     {
-    	return $this->data([
+    	return $this->config([
     		'dropdownPosition' => 'vlDropdownMenuUpRight'
     	]);
+    }
+
+    public function openOnClick()
+    {
+        return $this->config([
+            'openOnClick' => true
+        ]);
     }
 }

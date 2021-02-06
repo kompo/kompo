@@ -2,38 +2,36 @@
 
 namespace Kompo;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model as LaravelModel;
-use Schema;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Model extends LaravelModel
 {
-    const CREATED_BY = 'created_by';
-    const UPDATED_BY = 'updated_by';
-
-    const DELETABLE_BY = null;
-
     public function save(array $options = [])
     {
-    	if(!$this->getKey() && static::CREATED_BY) //  && $this->hasColumn(static::CREATED_BY) ?? no for now
+    	if(defined(get_class($this).'::CREATED_BY') && !$this->getKey() && static::CREATED_BY && auth()->check())
         {
-    		$this->{static::CREATED_BY} = optional(auth()->user())->id;
+    		$this->{static::CREATED_BY} = auth()->user()->id;
         }
 
-        if(static::UPDATED_BY) //  && $this->hasColumn(static::UPDATED_BY) ?? no for now
+        if(defined(get_class($this).'::UPDATED_BY') && static::UPDATED_BY && auth()->check())
         {
-    	   $this->{static::UPDATED_BY} = optional(auth()->user())->id;
+    	   $this->{static::UPDATED_BY} = auth()->user()->id;
         }
 
     	parent::save($options);
     }
 
-    /*protected function hasColumn($column)
-    {
-        return in_array($column, Schema::connection($this->getConnectionName())->getColumnListing($this->getTable()));
-    }*/
 
-    public function deletable()
+    /* RELATIONS */
+    public function createdBy(): BelongsTo
     {
-    	return false;
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function updatedBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'updated_by');
     }
 }

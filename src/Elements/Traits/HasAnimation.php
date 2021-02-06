@@ -13,7 +13,7 @@ trait HasAnimation {
      */
     public function animate($animation, $mode = '')
     {
-        $this->data([
+        $this->config([
             'transition' => $animation,
             'transitionMode' => $mode
         ]);

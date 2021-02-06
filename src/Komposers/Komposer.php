@@ -5,10 +5,19 @@ namespace Kompo\Komposers;
 use Kompo\Elements\Element;
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
+use Kompo\Routing\Dispatcher;
+use Kompo\Routing\Router;
 
 abstract class Komposer extends Element
 {
     use HasInteractions, ForwardsInteraction;
+
+    /**
+     * The Vue component to render the Komposer as a child of another Komposer.
+     *
+     * @var string
+     */
+    public $vueComponent = 'Komposer';
     
     /**
      * The meta komponent's data for internal usage. Contains the store, route parameters, etc...
@@ -28,6 +37,34 @@ abstract class Komposer extends Element
      * @var array
      */
     protected $metaTags = [];
+
+    /**
+     * When a Komposer is called from a Route
+     *
+     * @return  mixed
+     */
+    public function __invoke()
+    {
+        $route = request()->route();
+        $dispatcher = new Dispatcher($route->action['controller']);
+
+        if($layout = Router::getMergedLayout($route)){
+
+            $komposer = $dispatcher->bootKomposerForDisplay();
+            $booter = $dispatcher->booter;
+
+            return view('kompo::view', [
+                'vueComponent' => $booter::renderVueComponent($komposer),
+                'containerClass' => property_exists($komposer, 'containerClass') ? $komposer->containerClass : 'container',
+                'metaTags' => $komposer->getMetaTags($komposer),
+                'js' => method_exists($komposer, 'js') ? $komposer->js() : null,
+                'layout' => $layout,
+                'section' => Router::getLastSection($route)
+            ]);
+        }else{
+            return $dispatcher->bootKomposerForDisplay();
+        }
+    }
 
 	/**
 	 * This method is fired at the very beginning of the booting process (even before created).

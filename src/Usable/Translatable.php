@@ -16,7 +16,7 @@ class Translatable extends Textarea
 
     	$this->locales = config('kompo.locales');
 
-        $this->data([
+        $this->config([
         	'locales' => $this->locales,
         	'currentLocale' => session('kompo_locale')
         ]);

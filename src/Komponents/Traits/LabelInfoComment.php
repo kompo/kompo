@@ -13,7 +13,7 @@ trait LabelInfoComment
      */
     public function noLabel()
     {
-        return $this->data([
+        return $this->config([
             'noLabel' => true
         ]);
     }
@@ -28,7 +28,7 @@ trait LabelInfoComment
      */
     public function labelClass($labelClass)
     {
-        return $this->data([
+        return $this->config([
             'labelClass' => $labelClass
         ]);
     }
@@ -42,7 +42,7 @@ trait LabelInfoComment
      */
     public function comment($comment)
     {
-        return $this->data(['comment' => $comment]);
+        return $this->config(['comment' => __($comment)]);
     }
 
     /**
@@ -55,7 +55,7 @@ trait LabelInfoComment
     public function hint($hint)
     {
         //TODO: info should be renamed hint() in the Front-end!!
-        return $this->data(['info' => $hint]);
+        return $this->config(['info' => __($hint)]);
     }
 
     /**
@@ -67,7 +67,7 @@ trait LabelInfoComment
      */
     public function hintIcon($iconClassOrHtml)
     {
-        return $this->data(['infoIcon' => IconGenerator::toHtml($iconClassOrHtml)]);
+        return $this->config(['infoIcon' => IconGenerator::toHtml($iconClassOrHtml)]);
     }
 
     /**
@@ -79,7 +79,7 @@ trait LabelInfoComment
      */
     public function hintPlacement($infoPlacement)
     {
-        return $this->data(['infoPlacement' => $infoPlacement]);
+        return $this->config(['infoPlacement' => $infoPlacement]);
     }
 
     /**
@@ -91,7 +91,7 @@ trait LabelInfoComment
      */
     public function hintLength($hintLength)
     {
-        return $this->data(['hintLength' => $hintLength]);
+        return $this->config(['hintLength' => $hintLength]);
     }
 
 }

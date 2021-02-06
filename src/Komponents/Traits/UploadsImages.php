@@ -12,7 +12,7 @@ trait UploadsImages
      */
     public function thumbHeight($height)
     {
-        return $this->data(['thumbHeight' => $height]);
+        return $this->config(['thumbHeight' => $height]);
     }
 
     /**
@@ -22,7 +22,7 @@ trait UploadsImages
      */
     public function noPreview()
     {
-        return $this->data(['thumbPreviewDisabled' => true]);
+        return $this->config(['thumbPreviewDisabled' => true]);
     }
 
     /**
@@ -73,7 +73,7 @@ trait UploadsImages
      */
     public function confirmDelete($message = null)
     {
-        return $this->data([
+        return $this->config([
             'confirmDelete' => __($message) ?: __('Are you sure you want to remove this image?') 
         ]);
     }

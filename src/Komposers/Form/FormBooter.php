@@ -18,11 +18,19 @@ class FormBooter
         $form = static::instantiateUnbooted($bootInfo['kompoClass']);
 
         KompoId::setForKomposer($form, $bootInfo);
+        
+        $modelKey = $bootInfo['modelKey'];
+        $model = $form->model;
+
+        if($modelKey instanceof Model){
+            $model = $modelKey; //made this so we can boot a model (with predefined attributes) with MultiForm for ex. 
+            $modelKey = $model->getKey();
+        }
 
         $form->store($bootInfo['store']);
         $form->parameter($bootInfo['parameters']);
-        $form->modelKey($bootInfo['modelKey']);
-        $form->model($form->model);
+        $form->modelKey($modelKey);
+        $form->model($model);
 
         AuthorizationGuard::checkBoot($form);
         
@@ -43,11 +51,18 @@ class FormBooter
             $modelKey = is_array($store) ? null : $store;
             $store = $newStore;
         }
+        
+        $model = $form->model;
+
+        if($modelKey instanceof Model){
+            $model = $modelKey; //made this so we can boot a model (with predefined attributes) with MultiForm for ex. 
+            $modelKey = $model->getKey();
+        }
 
         $form->store($store);
         $form->parameter($routeParams ?: RouteFinder::getRouteParameters());
         $form->modelKey($modelKey);
-        $form->model($form->model);
+        $form->model($model);
         
         AuthorizationGuard::checkBoot($form);
 
@@ -83,7 +98,7 @@ class FormBooter
      */
     public static function renderVueComponent($form)
     {
-        return '<vl-form :vkompo="'.htmlspecialchars($form).'"></vl-form>';
+        return '<'.$form->vueKomposerTag.' :vkompo="'.htmlspecialchars($form).'"></'.$form->vueKomposerTag.'>';
     }
 
 

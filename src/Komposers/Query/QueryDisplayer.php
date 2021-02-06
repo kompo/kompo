@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\Relation as LaravelRelation;
 use Illuminate\Database\Query\Builder as LaravelQueryBuilder;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\CardGenerator;
+use Kompo\Core\KompoTarget;
 use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\CollectionQuery;
@@ -69,20 +70,16 @@ class QueryDisplayer
      */
     protected static function prepareConfigurations($komposer)
     {
-        $komposer->data([
-            'browseUrl' => RouteFinder::getKompoRoute()
-        ]);
+        RouteFinder::activateRoute($komposer);
 
         $komposer->noItemsFound = method_exists($komposer, 'noItemsFound') ? 
             $komposer->noItemsFound() : __($komposer->noItemsFound);
 
-        if($komposer->orderable)
-            $komposer->data([
-                'orderingUrl' => RouteFinder::getKompoRoute()
-            ]);
-
         if(method_exists($komposer, 'headers'))
             $komposer->headers = collect($komposer->headers())->filter();
+
+        if($komposer->layout == 'Kanban')
+            KompoTarget::setOnElement($komposer, KompoTarget::getEncrypted('changeStatus'));
     }
 
     /**
@@ -94,6 +91,9 @@ class QueryDisplayer
      */
     public static function prepareQuery($komposer)
     {
+        if(in_array($komposer->layout, ['CalendarMonth', 'Kanban']))
+            $komposer->perPage = 1000000; //Laravel limitation, besides nobody will ever visualize 1M items...
+
         $q = $komposer->query();
 
         if($q instanceOf LaravelModel || $q instanceOf LaravelEloquentBuilder  || $q instanceOf LaravelRelation){

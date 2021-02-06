@@ -27,13 +27,13 @@ class Json extends Liste
      */
     public function valueLabel($valueLabel)
     {
-    	$this->data(['valueLabel' => $valueLabel]);
+    	$this->config(['valueLabel' => $valueLabel]);
 
     	return $this;
     }
 
     protected function emptyValue()
     {
-    	return [[$this->data('keyLabel') => '', $this->data('valueLabel') => '']];
+    	return [[$this->config('keyLabel') => '', $this->config('valueLabel') => '']];
     }
 }

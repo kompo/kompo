@@ -6,6 +6,13 @@ use Kompo\Komponents\Field;
 
 class Stripe extends Field
 {
+    /* TODO: rename
+     * https://stripe.com/docs/payments/integration-builder
+     * This is for custom checkout experience (build your own form)
+     * Uses laravel cashier 
+     * Uses payment intent creation from stripe
+     */
+
     public $vueComponent = 'Stripe';
 
     protected function vlInitialize($label)
@@ -17,13 +24,13 @@ class Stripe extends Field
 
     public function withIntent($intent)
     {
-    	$this->data(['intent' => $intent]);
+    	$this->config(['intent' => $intent]);
     	return $this;
     }
 
     public function withCardholder($label = 'Cardholder Name')
     {
-    	$this->data([
+    	$this->config([
     		'cardholderLabel' => __($label),
     		'cardholderError' => __('cardholderError')
     	]);
@@ -33,13 +40,13 @@ class Stripe extends Field
 
     public function fontSrc($fontSrc)
     {
-    	$this->data(['fontSrc' => $fontSrc]);
+    	$this->config(['fontSrc' => $fontSrc]);
     	return $this;
     }
 
     public function stripeStyles($styles)
     {
-    	$this->data(['styles' => $styles]);
+    	$this->config(['styles' => $styles]);
     	return $this;
     }
 }

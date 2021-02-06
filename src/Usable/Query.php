@@ -2,8 +2,9 @@
 
 namespace Kompo;
 
-use Kompo\Komposers\Query\QueryBooter;
 use Kompo\Komposers\Komposer;
+use Kompo\Komposers\Query\QueryBooter;
+use Kompo\Routing\Router;
 
 abstract class Query extends Komposer
 {
@@ -22,22 +23,21 @@ abstract class Query extends Komposer
     public $layout = 'Horizontal';
 
     /**
-     * The vue component to render the Query (inside a Form).
+     * The Vue komposer tag.
      *
-     * @var array
+     * @var string
      */
-    public $vueComponent = 'FormQuery';
-
+    public $vueKomposerTag = 'vl-query';
 
     /**
      * The Query results.
      */
-    public $query; //--> TODO: move to data
+    public $query;
     
     /**
      * The Query filter Komponents
      */
-    public $filters; //--> TODO: move to data
+    public $filters;
 
     /**
      * Make the query orderable with back-end support
@@ -72,14 +72,14 @@ abstract class Query extends Komposer
      *
      * @var        boolean
      */
-    public $topPagination = true;
+    public $topPagination = false;
 
     /**
      * Whether to display pagination links below the cards.
      *
      * @var        boolean
      */
-    public $bottomPagination = false;
+    public $bottomPagination = true;
 
     /**
      * Whether to align pagination links to the left or to the right.
@@ -89,7 +89,7 @@ abstract class Query extends Komposer
     public $leftPagination = false;
 
     /**
-     * The pagination links style.
+     * The pagination links style. Values: Links|Showing|Scroll
      *
      * @var        string
      */
@@ -107,7 +107,7 @@ abstract class Query extends Komposer
      *
      * @var        integer
      */
-    public $perPage = 50;
+    public $perPage = 15;
 
     /**
      * The model's namespace used for filters display.
@@ -125,6 +125,8 @@ abstract class Query extends Komposer
      */
 	public function __construct(?array $store = [], $dontBoot = false)
 	{
+        if(Router::shouldNotBeBooted()) return; //request has not been handled yet
+
         if(!$dontBoot)
             QueryBooter::bootForDisplay($this, $store);
 	}

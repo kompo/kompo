@@ -21,11 +21,8 @@
 
 @endif
 
-<!-- additional global custom scripts included if available -->
+<!-- global custom scripts included if available -->
 @includeIf('kompo.scripts')
-
-<!-- kompo internal scripts -->
-@include('kompo::layout-scripts')
 
 <!-- additional local custom stack of scripts -->
 @stack('scripts')

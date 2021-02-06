@@ -55,7 +55,9 @@ class FormSubmitter extends FormBooter
 
         static::loopOverFieldsFor('fillAfterSave', $form);
 
-        static::loopOverFieldsFor('fillHasMorphOne', $form);
+        static::loopOverFieldsFor('fillOneToOneBeforeSave', $form);
+
+        static::loopOverFieldsFor('fillOneToOneAfterSave', $form);
 
         static::completedHook($form);
 
@@ -126,7 +128,7 @@ class FormSubmitter extends FormBooter
 
     protected static function loopOverFieldsFor($stage, $komposer)
     {
-        $hasMorphOneModels = [];
+        $oneToOneRelations = [];
 
         foreach (KomposerManager::collectFields($komposer) as $fieldKey => $field) {
 
@@ -136,14 +138,14 @@ class FormSubmitter extends FormBooter
                 
                 KomposerManager::removeField($komposer, $fieldKey);
                 
-                if($stage == 'fillHasMorphOne')
-                    $hasMorphOneModels = array_unique(array_merge($hasMorphOneModels, $processed->toArray()));
+                if($stage == 'fillOneToOneBeforeSave') //only beforeSave do we need this, relations are auto-saved
+                    $oneToOneRelations = array_unique(array_merge($oneToOneRelations, $processed->toArray()));
             }
         }
 
-        foreach ($hasMorphOneModels as $nestedModel) {
-            $komposer->model->{$nestedModel}()->save($komposer->model->{$nestedModel});
-            $komposer->model->load($nestedModel);
+        foreach ($oneToOneRelations as $relation) {
+            ModelManager::saveOneToOne($komposer->model, $relation);
+            //$komposer->model->{$relation}()->save($komposer->model->{$relation});
         }
     }
 }

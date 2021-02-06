@@ -13,6 +13,11 @@ class RequestData
         return request()->__get($fieldName) ?: request()->__get(static::convert($fieldName)); //->input() does tranformations for dot notations...
     }
 
+    public static function file($fieldName)
+    {
+        return request()->file($fieldName) ?: request()->file(static::convert($fieldName));
+    }
+
     public static function has($fieldName)
     {
         return request()->has($fieldName) || request()->has(static::convert($fieldName));

@@ -34,6 +34,8 @@ class DatabaseQuery extends QueryOperations
             return $q->where($columnName, 'LIKE', '%'.$value);
         }elseif($operator == 'BETWEEN'){
             return $q->whereBetween($columnName, $value);
+        }elseif($operator == 'NULL'){
+            return $q->whereNull($columnName);
         }else{
             return $q->where($columnName, $operator, $value);
         }
@@ -41,10 +43,14 @@ class DatabaseQuery extends QueryOperations
 
     public function orderItems()
     {
-        collect(request('order'))->each(function($order){
-            $this->orderQuery()->where($this->modelKeyName(), $order['item_id'])->update([
-                $this->modelOrderColumn() => $order['item_order']
-            ]);
+        \DB::transaction(function (){
+
+            collect(request('order'))->each(function($order){
+                $this->orderQuery()->where($this->modelKeyName(), $order['item_id'])->update([
+                    $this->modelOrderColumn() => $order['item_order']
+                ]);
+            });
+            
         });
     }
 

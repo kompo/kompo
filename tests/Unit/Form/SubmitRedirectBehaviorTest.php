@@ -12,12 +12,12 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
 	{
 		$form = new _SubmitRedirectBehaviorForm();
 
-		$this->assertEquals(url('submit-test'), $form->data('submitUrl'));
-		$this->assertEquals('PUT', $form->data('submitMethod'));
-		$this->assertEquals(url('redirect-test'), $form->data('redirectUrl'));
-		$this->assertEquals('Redirecting message test...', $form->data('redirectMessage'));
+		$this->assertEquals(url('submit-test'), $form->config('submitUrl'));
+		$this->assertEquals('PUT', $form->config('submitMethod'));
+		$this->assertEquals(url('redirect-test'), $form->config('redirectUrl'));
+		$this->assertEquals('Redirecting message test...', $form->config('redirectMessage'));
 
-		$this->assertNull($form->data('submitAction'));
+		$this->assertNull($form->config('submitAction'));
 	}
 
 	/** @test */
@@ -25,12 +25,12 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
 	{
 		$form = new _SubmitHandleMethodForm();
 
-		$this->assertEquals($this->kompoRoute, $form->data('submitUrl'));
-		$this->assertEquals('POST', $form->data('submitMethod'));
-		$this->assertArrayNotHasKey('redirectUrl', $form->data());
-		$this->assertArrayNotHasKey('redirectMessage', $form->data());
+		$this->assertEquals($this->kompoRoute, $form->config('submitUrl'));
+		$this->assertEquals('POST', $form->config('submitMethod'));
+		$this->assertArrayNotHasKey('redirectUrl', $form->config());
+		$this->assertArrayNotHasKey('redirectMessage', $form->config());
 
-		$this->assertEquals('handle-submit', $form->data('submitAction'));
+		$this->assertEquals('handle-submit', $form->config('submitAction'));
 
 		$this->submit($form)
 			->assertStatus(200)
@@ -43,12 +43,12 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
 	{
 		$form = new _SubmitEloquentSaveForm();
 
-		$this->assertEquals($this->kompoRoute, $form->data('submitUrl'));
-		$this->assertEquals('POST', $form->data('submitMethod'));
-		$this->assertArrayNotHasKey('redirectUrl', $form->data());
-		$this->assertArrayNotHasKey('redirectMessage', $form->data());
+		$this->assertEquals($this->kompoRoute, $form->config('submitUrl'));
+		$this->assertEquals('POST', $form->config('submitMethod'));
+		$this->assertArrayNotHasKey('redirectUrl', $form->config());
+		$this->assertArrayNotHasKey('redirectMessage', $form->config());
 
-		$this->assertEquals('eloquent-submit', $form->data('submitAction'));
+		$this->assertEquals('eloquent-submit', $form->config('submitAction'));
 
 		$this->submit($form)
 			->assertStatus(201)
@@ -64,14 +64,14 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
 
 		$form = new _PreventSubmitForm();
 
-		$this->assertNull($form->data('submitUrl'));
-		$this->assertNull($form->data('submitMethod'));
-		$this->assertNull($form->data('redirectUrl'));
-		$this->assertNull($form->data('redirectMessage'));
+		$this->assertNull($form->config('submitUrl'));
+		$this->assertNull($form->config('submitMethod'));
+		$this->assertNull($form->config('redirectUrl'));
+		$this->assertNull($form->config('redirectMessage'));
 
-		$this->assertNull($form->data('submitAction'));
+		$this->assertNull($form->config('submitAction'));
 
-		$form->data(['submitAction' => 'handle-submit']); //hack to force test
+		$form->config(['submitAction' => 'handle-submit']); //hack to force test
 
 		$this->withoutExceptionHandling()->submit($form);
 	}

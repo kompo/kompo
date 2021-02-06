@@ -13,11 +13,11 @@ abstract class Form extends Komposer
 	use HasModel;
 
     /**
-     * The Vue component to render the Form.
+     * The Vue komposer tag.
      *
      * @var string
      */
-    public $vueComponent = 'FormForm';
+    public $vueKomposerTag = 'vl-form';
 
     /**
      * The Blade component to render the Form.
@@ -62,6 +62,14 @@ abstract class Form extends Komposer
     protected $submitMethod = 'POST';
 
     /**
+     * Default alert error message after a validation error (422) (use as translation key if multi-language app).
+     * To deactivate, set to false, null or empty.
+     *
+     * @var null|string
+     */
+    protected $validationErrorAlert = 'Please correct the errors';
+
+    /**
      * Custom redirect route for quick use (for simple route with no parameters).
      *
      * @var string
@@ -87,14 +95,14 @@ abstract class Form extends Komposer
      *
      * @var array
      */
-    public $komponents = [];  //--> TODO: move to data
+    public $komponents = [];
     
     /**
      * If you wish to reload the form after submit/saving the model, set to true.
      *
      * @var boolean
      */
-    protected $refresh = false;
+    protected $refresh = false; //TODO: rename $refreshAfterSubmit which is clearer
 
 	/**
      * Constructs a Form
@@ -110,10 +118,13 @@ abstract class Form extends Komposer
             'preventSubmit' => $this->preventSubmit,
             'submitTo' => $this->submitTo,
             'submitMethod' => $this->submitMethod,
+            'validationErrorAlert' => $this->validationErrorAlert,
             'redirectTo' => $this->redirectTo,
             'redirectMessage' => $this->redirectMessage,
             'refresh' => $this->refresh
         ]);
+        
+        if(Router::shouldNotBeBooted()) return; //request has not been handled yet
 
 		if(!$dontBoot)
         	FormBooter::bootForDisplay($this, $modelKey, $store);
@@ -156,7 +167,7 @@ abstract class Form extends Komposer
      */
     public function prepareForDisplay($komposer)
     {
-        //ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); //commented because Forms in query filters were passing their rules upstream
+        ValidationManager::addRulesToKomposer($this->config('rules'), $komposer); 
     }
 
     /**
@@ -166,7 +177,8 @@ abstract class Form extends Komposer
      */
     public function prepareForAction($komposer)
     {
-        //ValidationManager::addRulesToKomposer($this->data('rules'), $komposer); //commented because Forms in query filters were passing their rules upstream
+        if($komposer instanceOf self) //Cuz in Query filters, Forms would pass their rules to browse & sort actions
+            ValidationManager::addRulesToKomposer($this->config('rules'), $komposer); 
     }
 
 

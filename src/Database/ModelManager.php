@@ -84,11 +84,11 @@ class ModelManager
      * 
      * @return boolean
      */
-    public static function saveHasOne($mainModel, $hasOneModel)
+    public static function saveOneToOne($mainModel, $relation)
     {
-        static::setCreatedUpdatedBy($hasOneModel);
+        static::setCreatedUpdatedBy($mainModel->{$relation});
 
-        $mainModel->save($hasOneModel);
+        $mainModel->{$relation}()->save($mainModel->{$relation});
     }
 
     /**
@@ -172,7 +172,7 @@ class ModelManager
         foreach ($attributes as $key => $attribute) {
             $related->{$key} = $attribute;
         }
-        $test = $relation->save($related);
+        $relation->save($related);
     }
 
     protected static function saveMany($relation, $column, $arrayOfAttributes)

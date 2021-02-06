@@ -6,12 +6,12 @@ use Kompo\Routing\Router;
 
 class RouterMixin
 {
-    public function kompo()
+    /*public function kompo()
     {
         return function ($uri, $komposerClass) {
             return Router::registerRoute($this, $uri, $komposerClass);
         };
-    }
+    }*/
 
     public function layout()
     {

@@ -35,7 +35,7 @@ class RouteFinder
      */
     public static function activateRoute($kompo)
     {
-        return $kompo->data([
+        return $kompo->config([
             'kompoRoute' => static::getKompoRoute()
         ]);
     }
@@ -49,14 +49,14 @@ class RouteFinder
     public static function setUpKomposerRoute($komponent, $routeOrKomposer, $routeMethod = 'GET')
     {
         if(is_a($routeOrKomposer, Komposer::class, true))
-            return $komponent->data(array_merge([
+            return $komponent->config(array_merge([
                 'route' => RouteFinder::getKompoRoute(),
                 'routeMethod' => $routeMethod
             ],
                 KompoTarget::getEncryptedArray($routeOrKomposer)
             ));
 
-        return $komponent->data([
+        return $komponent->config([
             'route' => $routeOrKomposer,
             'routeMethod' => $routeMethod
         ]);

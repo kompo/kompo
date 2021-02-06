@@ -76,7 +76,7 @@ class BootAuthorizationTest extends EnvironmentBoot
 
 	private function assert_unauthorized_boot_action($objClass)
 	{
-		\Route::kompo('test-route', $objClass);
+		\Route::get('test-route', $objClass);
 
 		$this->expectException(AuthorizationException::class);
 		

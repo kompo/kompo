@@ -32,7 +32,7 @@ class KompoLayout
 	{
 		//Setting the default kompo class
 		if($menu)
-			$menu->data([
+			$menu->config([
 				'menuClass' => $menuClass,
 				'menuTag' => $menuTag,
 				'menuCollapse' => property_exists($menu, 'collapse') ? $menu->collapse : $menuCollapse
@@ -84,7 +84,7 @@ class KompoLayout
 
 	    $tag = $pm ? '<div' : '<main';
 
-	    $tag .= $appId ? ' id="'.$appId.'"': '';
+	    $tag .= $appId ? ' id="'.$appId.'" v-cloak': '';
 
 	    $overflow = !$appId ? '' : ($this->hasAnyFixedMenus ? 'vl100vh ' : 'vlMin100vh ');
 
@@ -160,7 +160,7 @@ class KompoLayout
 
 	public function collapse($key)
 	{
-		return $this->{$key}->data('menuCollapse');
+		return $this->{$key}->config('menuCollapse');
 	}
 
 	/********************************************
@@ -174,14 +174,14 @@ class KompoLayout
 
     public function getOpenTag($key)
     {
-    	return '<'.$this->{$key}->data('menuTag').$this->getMenuHtmlAttributes($key).'>'.
+    	return '<'.$this->{$key}->config('menuTag').$this->getMenuHtmlAttributes($key).'>'.
     		$this->getOpenContainer($this->{$key});
     }
 
     public function getCloseTag($key)
     {
     	$tag = $this->getCloseContainer($this->{$key}).
-    		'</'.$this->{$key}->data('menuTag').'>';
+    		'</'.$this->{$key}->config('menuTag').'>';
     	//$this->{$key} = false; //we remove the menu since it finished rendering
     	$this->notAvailable($key);
     	return $tag;
@@ -207,7 +207,7 @@ class KompoLayout
 
 	protected function getClassAttribute($menu)
 	{
-		return ' class="'.$menu->data('menuClass').
+		return ' class="'.$menu->config('menuClass').
 			($menu->class() ? (' '.$menu->class()) : '').'"';
 	}
 
@@ -229,7 +229,7 @@ class KompoLayout
 	protected function getOpenContainer($menu)
 	{
 		return $this->hasContainer($menu) ? 
-			('<div class="'.$menu->data('menuClass').' '.$menu->containerClass.'">') : '';
+			('<div class="'.$menu->config('menuClass').' '.$menu->containerClass.'">') : '';
 	}
 
 	protected function getCloseContainer($menu)
@@ -244,6 +244,6 @@ class KompoLayout
 
 	protected function isSidebar($menu)
 	{
-		return strpos($menu->data('menuClass'), 'sidebar') > -1;
+		return strpos($menu->config('menuClass'), 'sidebar') > -1;
 	}
 }

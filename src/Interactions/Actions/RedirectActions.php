@@ -16,6 +16,10 @@ trait RedirectActions
      */
     public function redirect($route = null, $parameters = null)
     {
+        $this->applyToElement(function($el) use($route, $parameters) {
+            $el->checkTurbo($route, $parameters);
+        });
+
         return $this->prepareAction('redirect', [
             'redirectUrl' => $route ? RouteFinder::guessRoute($route, $parameters) : true
         ]);

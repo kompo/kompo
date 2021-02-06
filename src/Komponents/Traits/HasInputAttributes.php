@@ -20,7 +20,7 @@ trait HasInputAttributes
     //For internal use
     public function inputType($type = 'text')
     {
-    	return $this->data([
+    	return $this->config([
     		'inputType' => $type
     	]);
     }
@@ -34,7 +34,7 @@ trait HasInputAttributes
      */
     public function maxlength($maxlength)
     {
-        $this->data([
+        $this->config([
             'inputMaxlength' => $maxlength
         ]);
         return $this;
@@ -49,7 +49,7 @@ trait HasInputAttributes
      */
     public function min($min)
     {
-    	$this->data([
+    	$this->config([
     		'inputMin' => $min
     	]);
     	return $this;
@@ -64,7 +64,7 @@ trait HasInputAttributes
      */
     public function max($max)
     {
-    	$this->data([
+    	$this->config([
     		'inputMax' => $max
     	]);
     	return $this;
@@ -79,7 +79,7 @@ trait HasInputAttributes
      */
     public function step($step)
     {
-    	$this->data([
+    	$this->config([
     		'inputStep' => $step
     	]);
     	return $this;
@@ -94,7 +94,7 @@ trait HasInputAttributes
      */
     public function pattern($pattern)
     {
-    	$this->data([
+    	$this->config([
     		'inputPattern' => $pattern
     	]);
     	return $this;

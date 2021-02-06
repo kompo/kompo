@@ -1,21 +1,10 @@
 <?php
 namespace Kompo\Tests\Feature\Routing;
 
-use Kompo\Exceptions\NotBootableFromRouteException;
 use Kompo\Tests\EnvironmentBoot;
 
 class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 {
-    /** @test */
-	public function boot_error_for_unbootable_komponent_from_route_as_view()
-	{
-		$this->prepareRoute('someFakeClassString');
-
-		$this->expectException(NotBootableFromRouteException::class);
-
-		$this->withoutExceptionHandling()->get('test/1');
-	}
-
     /** @test */
 	public function boot_form_from_route_as_view()
 	{
@@ -46,7 +35,7 @@ class KomposerRouteAsViewWithLayoutTest extends EnvironmentBoot
 	private function prepareRoute($komposerClass)
 	{
 		\Route::layout('kompo::app')->group(function() use($komposerClass) {
-			\Route::kompo('test/{id}', $komposerClass);
+			\Route::get('test/{id}', $komposerClass);
 		});
 	} 
 

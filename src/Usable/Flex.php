@@ -33,7 +33,7 @@ class Flex extends Layout
      */
     public function justifyStart()
     {
-        $this->data(['justifyClass' => '']);
+        $this->config(['justifyClass' => '']);
         return $this;
     }
 
@@ -45,7 +45,7 @@ class Flex extends Layout
      */
     public function justifyCenter()
     {
-        $this->data(['justifyClass' => 'vlJustifyCenter']);
+        $this->config(['justifyClass' => 'vlJustifyCenter']);
         return $this;
     }
 
@@ -57,7 +57,7 @@ class Flex extends Layout
      */
     public function justifyEnd()
     {
-        $this->data(['justifyClass' => 'vlJustifyEnd']);
+        $this->config(['justifyClass' => 'vlJustifyEnd']);
         return $this;
     }
 
@@ -69,7 +69,7 @@ class Flex extends Layout
      */
     public function justifyBetween()
     {
-        $this->data(['justifyClass' => 'vlJustifyBetween']);
+        $this->config(['justifyClass' => 'vlJustifyBetween']);
         return $this;
     }
 
@@ -81,7 +81,7 @@ class Flex extends Layout
      */
     public function justifyAround()
     {
-        $this->data(['justifyClass' => 'vlJustifyAround']);
+        $this->config(['justifyClass' => 'vlJustifyAround']);
         return $this;
     }
 }

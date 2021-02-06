@@ -51,6 +51,10 @@ class CollectionQuery extends QueryOperations
             $this->query = $this->query->filter(function($v, $k) use ($name, $value){
                 return $this->compareBetween($v, $value, $name);
             });
+        }elseif($operator == 'NULL'){
+            $this->query = $this->query->filter(function($v, $k) use ($name, $value){
+                return $this->compareNull($v, $value, $name);
+            });
         }else{
             $this->query = $this->query->filter(function($v, $k) use ($operator, $name, $value){
                 return $this->compareOperator($v, $value, $name, $operator);
@@ -121,6 +125,13 @@ class CollectionQuery extends QueryOperations
         $compareValue = $this->getComparingValue($comparing, $compareTo, $name);
         
         return substr($compareValue, -strlen($compareTo)) === $compareTo;
+    }
+
+    protected function compareNull($comparing, $compareTo, $name = null)
+    {
+        $compareValue = $this->getComparingValue($comparing, $compareTo, $name);
+        
+        return is_null($compareValue);
     }
 
     protected function getComparingValue($comparing, $compareTo, $name = null)

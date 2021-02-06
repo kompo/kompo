@@ -11,7 +11,11 @@ use Kompo\Komposers\KomposerManager;
 abstract class Komponent extends Element
 {
     use Traits\HasHtmlAttributes,
-        Traits\UsedInTables;
+        Traits\UsedInTables,
+        Traits\DoesTurboRefresh;
+    
+    public $bladeComponent = 'Komponent';
+
     /**
      * The component's label.
      *
@@ -39,7 +43,8 @@ abstract class Komponent extends Element
     protected function vlInitialize($label)
     {
         KompoId::setForKomponent($this, $label);
-        $this->label = $label ? __($label) : '';
+
+        $this->label = is_null($label) ? '' : __($label);
     }
     
 	/**
@@ -59,8 +64,8 @@ abstract class Komponent extends Element
      */
     public function prepareForAction($komposer)
     {
-        if($this->data('includes') && KompoAction::is('eloquent-save'))
-            KomposerManager::prepareKomponentsForAction($komposer, $this->data('includes'), true);
+        if($this->config('includes') && KompoAction::is('eloquent-save'))
+            KomposerManager::prepareKomponentsForAction($komposer, $this->config('includes'), true);
     }
 
     /**
@@ -95,7 +100,7 @@ abstract class Komponent extends Element
      */
     public function iconNonStatic($iconString)
     {
-        $this->data(['icon' => IconGenerator::toHtml($iconString) ]);
+        $this->config(['icon' => IconGenerator::toHtml($iconString) ]);
         return $this;
     }
 
@@ -115,7 +120,7 @@ abstract class Komponent extends Element
      */
     public function rIconNonStatic($iconString)
     {
-        $this->data(['rIcon' => IconGenerator::toHtml($iconString) ]);
+        $this->config(['rIcon' => IconGenerator::toHtml($iconString) ]);
         return $this;
     }
 

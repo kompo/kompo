@@ -3,10 +3,15 @@
 namespace Kompo;
 
 use Kompo\Komponents\Block;
+use Kompo\Komponents\Traits\OutputsHtml;
 
 class Html extends Block
 {
-    public $vueComponent = 'FormHtml';
+	use OutputsHtml;
+	
+    public $vueComponent = 'Html';
     public $bladeComponent = 'Html';
+
+    public $htmlTag = 'div';
     
 }

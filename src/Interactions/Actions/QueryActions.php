@@ -19,7 +19,8 @@ trait QueryActions
         'STARTSWITH',
         'ENDSWITH',
         'BETWEEN',
-        'IN'
+        'IN',
+        'NULL',
     ];
 
     /**
@@ -39,7 +40,7 @@ trait QueryActions
             if(!in_array($operator, self::$allowedOperators))
                 throw new FilterOperatorNotAllowedException($operator);
 
-            $el->data([ 'filterOperator' => $operator  ]);
+            $el->config([ 'filterOperator' => $operator  ]);
         });
 
         return $this->browse(null, 1); //filtering works for it's own query only
@@ -58,7 +59,7 @@ trait QueryActions
             if($el instanceOf Field)
                 $el->ignoresModel()->doesNotFill();
 
-            $el->data([ 'sortsQuery' => $sortOrders ?: true ]);
+            $el->config([ 'sortsQuery' => $sortOrders ?: true ]);
         });
 
         return $this->prepareAction('sortQuery', [

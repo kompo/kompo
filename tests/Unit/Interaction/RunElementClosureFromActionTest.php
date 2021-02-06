@@ -7,14 +7,14 @@ use Kompo\Tests\EnvironmentBoot;
 class RunElementClosureFromActionTest extends EnvironmentBoot
 {
 		/** @test */
-	public function element_receives_data_from_action()
+	public function element_receives_config_from_action()
 	{
 		$form = new _RunElementClosureFromActionForm();
 
-		$this->assertEquals('includeMethod', $form->komponents[0]->data('includes'));
-		$this->assertEquals('includeMethod', $form->komponents[1]->data('includes'));
-		$this->assertEquals('includeMethod', $form->komponents[2]->data('includes'));
-		$this->assertEquals('includeMethod', $form->komponents[3]->data('includes'));
+		$this->assertEquals('includeMethod', $form->komponents[0]->config('includes'));
+		$this->assertEquals('includeMethod', $form->komponents[1]->config('includes'));
+		$this->assertEquals('includeMethod', $form->komponents[2]->config('includes'));
+		$this->assertEquals('includeMethod', $form->komponents[3]->config('includes'));
 	}
 	
 	/** ------------------ PRIVATE --------------------------- */  

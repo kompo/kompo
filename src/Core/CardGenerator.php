@@ -29,7 +29,7 @@ class CardGenerator
         $card = static::getCardDefaultFallback($item, $key, $komposer);
         
         if($komposer->orderable)
-            $card->data([
+            $card->config([
                 'item_id' => $item->{$komposer->keyName},
                 'item_order' => $item->{$komposer->orderable}
             ]);

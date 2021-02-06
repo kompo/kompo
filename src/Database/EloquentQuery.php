@@ -39,9 +39,6 @@ class EloquentQuery extends DatabaseQuery
      */
     public function handleFilter($field)
     {
-        if(FormField::getConfig($field, 'ignoresModel'))
-            return;
-
         $value = $this->getFilterValueFromRequest($field->name);
         $operator = $this->inferBestOperator($field);
 
@@ -50,7 +47,6 @@ class EloquentQuery extends DatabaseQuery
         $this->query = $this->handleEloquentFilter($this->query, $this->model, $field->name, $operator, $value, $morphToModel);
 
         //dd($this->query->toSql(), $this->query->getBindings());
-        //parent::handleFilter($field);
     }
 
     /**
@@ -79,6 +75,10 @@ class EloquentQuery extends DatabaseQuery
         $model = $relation->getRelated();
 
         $secondTerm = NameParser::secondTerm($recursiveName) ?: $model->getKeyName();
+
+        //TODO: write tests for NULL operator
+        if($operator == 'NULL' && ($secondTerm == $model->getKeyName()))
+            return $q->doesntHave($firstTerm);
 
         return $q->whereHas($firstTerm, function($subquery) use($model, $secondTerm, $operator, $value){
 

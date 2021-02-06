@@ -13,22 +13,22 @@ class RouteMacroLayoutSectionTest extends EnvironmentBoot
 	{
 		\Route::group(['layout' => 'kompo::app'], function() {
 
-			\Route::kompo('test1', $this->_form); //yes
-			\Route::kompo('test2', $this->_form)->section('content'); //yes
-			\Route::kompo('test3', $this->_form)->section('inexistant-content'); //no
+			\Route::get('test1', $this->_form); //yes
+			\Route::get('test2', $this->_form)->section('content'); //yes
+			\Route::get('test3', $this->_form)->section('inexistant-content'); //no
 
 		});
 
 		\Route::group(['layout' => 'test::layouts', 'section' => 'content1'], function() {
 
-			\Route::kompo('test4', $this->_form); //yes
-			\Route::kompo('test5', $this->_form)->section('content1'); //yes
-			\Route::kompo('test6', $this->_form)->section('inexistant-content'); //no
+			\Route::get('test4', $this->_form); //yes
+			\Route::get('test5', $this->_form)->section('content1'); //yes
+			\Route::get('test6', $this->_form)->section('inexistant-content'); //no
 
 			\Route::group(['layout' => 'custom', 'section' => 'inexistant-content'], function() {
 
-				\Route::kompo('test7', $this->_form); //no
-				\Route::kompo('test8', $this->_form)->section('content2'); //yes
+				\Route::get('test7', $this->_form); //no
+				\Route::get('test8', $this->_form)->section('content2'); //yes
 
 			});
 		});
@@ -41,22 +41,22 @@ class RouteMacroLayoutSectionTest extends EnvironmentBoot
 	{
 		\Route::layout('kompo::app')->group(function() {
 
-			\Route::kompo('test1', $this->_form); //yes
-			\Route::kompo('test2', $this->_form)->section('content'); //yes
-			\Route::kompo('test3', $this->_form)->section('inexistant-content'); //no
+			\Route::get('test1', $this->_form); //yes
+			\Route::get('test2', $this->_form)->section('content'); //yes
+			\Route::get('test3', $this->_form)->section('inexistant-content'); //no
 
 		});
 
 		\Route::layout('test::layouts')->section('content1')->group(function() {
 
-			\Route::kompo('test4', $this->_form); //yes
-			\Route::kompo('test5', $this->_form)->section('content1'); //yes
-			\Route::kompo('test6', $this->_form)->section('inexistant-content'); //no
+			\Route::get('test4', $this->_form); //yes
+			\Route::get('test5', $this->_form)->section('content1'); //yes
+			\Route::get('test6', $this->_form)->section('inexistant-content'); //no
 
 			\Route::section('inexistant-content')->layout('custom')->group(function() {
 
-				\Route::kompo('test7', $this->_form); //no
-				\Route::kompo('test8', $this->_form)->section('content2'); //yes
+				\Route::get('test7', $this->_form); //no
+				\Route::get('test8', $this->_form)->section('content2'); //yes
 
 			});
 		});
@@ -69,7 +69,7 @@ class RouteMacroLayoutSectionTest extends EnvironmentBoot
 	{
 		$this->expectException(RouteLayoutIncorrectlySetException::class);
 
-		\Route::kompo('test9', $this->_form)->layout('test::layouts');
+		\Route::get('test9', $this->_form)->layout('test::layouts');
 	}
 
 	/** ------------------ PRIVATE --------------------------- */  

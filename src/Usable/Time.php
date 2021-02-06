@@ -19,7 +19,7 @@ class Time extends Field
 
         $this->timeFormat(config('kompo.default_time_format') ?: 'H:i');
 
-        $this->data([
+        $this->config([
             'enableTime' => true,
             'noCalendar' => true
         ]);
@@ -34,7 +34,7 @@ class Time extends Field
      */
     public function timeFormat($timeFormat = 'H:i')
     {
-    	$this->data([
+    	$this->config([
             'altFormat' => $timeFormat,
             'dateFormat' => $timeFormat,
         ]);
@@ -68,7 +68,7 @@ class Time extends Field
 
 	private function getTimeFormat()
 	{
-		return $this->data('altFormat') ?: 'H:i';
+		return $this->config('altFormat') ?: 'H:i';
 	}
 
 }

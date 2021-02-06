@@ -4,8 +4,8 @@ id="{{ $component->id }}"
 @if($component->style)
 style="{{ $component->style }}"
 @endif
-@if($component->data('attrs'))
-	@foreach($component->data('attrs') as $key => $value)
+@if($component->config('attrs'))
+	@foreach($component->config('attrs') as $key => $value)
 		{{$key}}="{{$value}}"
 	@endforeach
 @endif

@@ -2,8 +2,9 @@
 
 namespace Kompo;
 
-use Kompo\Komposers\Menu\MenuBooter;
 use Kompo\Komposers\Komposer;
+use Kompo\Komposers\Menu\MenuBooter;
+use Kompo\Routing\Router;
 
 abstract class Menu extends Komposer
 {
@@ -39,6 +40,8 @@ abstract class Menu extends Komposer
      */
 	public function __construct(?array $store = [], $dontBoot = false)
 	{
+        if(Router::shouldNotBeBooted()) return; //request has not been handled yet
+        
         if(!$dontBoot)
             MenuBooter::bootForDisplay($this, $store);
 	}

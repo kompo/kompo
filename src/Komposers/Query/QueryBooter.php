@@ -14,7 +14,7 @@ use Kompo\Routing\RouteFinder;
 class QueryBooter
 {
     public static function bootForAction($bootInfo)
-    {
+    {        
         $query = static::instantiateUnbooted($bootInfo['kompoClass']);
 
         KompoId::setForKomposer($query, $bootInfo);

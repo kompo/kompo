@@ -23,7 +23,7 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 
 		$this->assertCount(1, $interactions);
 		$this->assertEquals('input', $interactions[0]->interactionType);
-		$this->assertEquals(500, $el->data('debounce')); //check that debounce is set
+		$this->assertEquals(500, $el->config('debounce')); //check that debounce is set
 
 		//Fields
 		$el = Select::form()->submit();
@@ -31,7 +31,7 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 
 		$this->assertCount(1, $interactions);
 		$this->assertEquals('change', $interactions[0]->interactionType);
-		$this->assertNull($el->data('debounce')); //no debounce
+		$this->assertNull($el->config('debounce')); //no debounce
 
 		//Triggers
 		$el = Button::form()->submit();
@@ -39,7 +39,7 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 
 		$this->assertCount(1, $interactions);
 		$this->assertEquals('click', $interactions[0]->interactionType);
-		$this->assertNull($el->data('debounce')); //no debounce
+		$this->assertNull($el->config('debounce')); //no debounce
 
 		//Panel
 		$el = Panel::form()->submit();
@@ -47,7 +47,7 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 
 		$this->assertCount(1, $interactions);
 		$this->assertEquals('load', $interactions[0]->interactionType);
-		$this->assertNull($el->data('debounce')); //no debounce
+		$this->assertNull($el->config('debounce')); //no debounce
 
 		//Form
 		$el = _Form()->submit();
@@ -55,7 +55,7 @@ class InteractionsDeclarationTest extends EnvironmentBoot
 
 		$this->assertCount(1, $interactions);
 		$this->assertEquals('success', $interactions[0]->interactionType);
-		$this->assertNull($el->data('debounce')); //no debounce
+		$this->assertNull($el->config('debounce')); //no debounce
 	}
 
 	/** @test */

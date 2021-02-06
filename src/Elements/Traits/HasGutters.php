@@ -11,7 +11,7 @@ trait HasGutters
      */
     public function noGutters()
     {
-        $this->data(['guttersClass' => 'no-gutters']);
+        $this->config(['guttersClass' => 'no-gutters']);
         return $this;
     }
 }

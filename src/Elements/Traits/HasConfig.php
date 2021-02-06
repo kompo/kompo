@@ -2,57 +2,30 @@
 
 namespace Kompo\Elements\Traits;
 
-use Kompo\Komponents\Field;
-
-trait HasConfig
+trait HasConfig 
 {
+
     /**
-     * The meta komponent's data for internal usage. Contains the store, route parameters, etc...
+     * The element's public config array.
+     * Should never be overriden by inheritance.
      *
      * @var array
      */
-    protected $_kompo = [];
+    public $config = [];
 
     /**
-     * Assign or retrieve elements from the internal kompo config object.
+     * Pass additional config to the element that can be accessed from the Front-end in the `config` property of the object - especially useful if you wish to customize or add new features to the component.
      *
-     * @param  mixed  $data
+     * @param  array  $config Key/value associative array.
      * @return mixed
      */
-    public function _kompo($key, $data = null)
+    public function config($config = null)
     {
-        //ugly code to avoid adding polluting methods to the class
-
-        if(in_array($key, ['modelKey', 'currentPage'])){ //not arrays: set if not found
-
-            if($data === null){
-                return $this->_kompo[$key] ?? null;
-            }else{
-                $this->_kompo[$key] = $data;
-                return $this;
-            }
-
-        }elseif($key === 'fields'){ //storing field Komponents: push
-
-            if($data instanceOf Field){
-                array_push($this->_kompo[$key], $data);
-                return $this;
-            }elseif(is_integer($data)){
-                unset($this->_kompo[$key][$data]);
-                return $this;
-            }else{
-                return $this->_kompo[$key];
-            }
-
-        }else{ //not arrays: replace or add values if found
-
-            if(is_array($data)){
-                $this->_kompo[$key] = array_replace($this->_kompo[$key], $data);
-                return $this;
-            }else{
-                return $data === null ? $this->_kompo[$key] : ($this->_kompo[$key][$data] ?? null);
-            }
-
+        if(is_array($config)){
+            $this->config = array_replace($this->config, $config);
+            return $this;
+        }else{
+            return $config ? ($this->config[$config] ?? null) : $this->config;
         }
     }
 

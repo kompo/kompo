@@ -29,13 +29,6 @@ trait HasHref {
     public $target;
 
     /**
-     * Flag for loading an element like turbolinks
-     *
-     * @var Boolean
-     */
-    public $turbo = false;
-
-    /**
      * Sets the href attribute of a link.
      *
      * @param  string  $route The route name or uri.
@@ -45,8 +38,7 @@ trait HasHref {
      */
     public function href($route, $parameters = null)
     {
-        if(!$this->data('turboDisabled'))
-            $this->checkTurbo($route, $parameters);
+        $this->checkTurbo($route, $parameters);
 
         if (filter_var($route, FILTER_VALIDATE_URL) !== false || $route === 'javascript:void(0)') {
             $this->href = $route;
@@ -114,42 +106,15 @@ trait HasHref {
 	public function prepareClickable()
 	{
         if($this->href == \Request::getSchemeAndHttpHost()){
-            $this->data(['active' => \Request::url() == $this->href ? 'vlActive' : '' ]);
+            $this->config(['active' => \Request::url() == $this->href ? 'vlActive' : '' ]);
         }else{
-            $this->data(['active' => substr(\Request::url(), 0, strlen($this->href)) == $this->href ? 'vlActive' : '' ]);
+            $this->config(['active' => substr(\Request::url(), 0, strlen($this->href)) == $this->href ? 'vlActive' : '' ]);
         }
 	}
 
     public function hasRoute()
     {
         return $this->href != 'javascript:void(0)';
-    }
-
-    /**
-     * Verifies if the href link should be loaded like turbolinks (no full page reload)
-     * @param  string $route [description]
-     * @param  array $parameters      [description]
-     * @return void            
-     */
-    public function checkTurbo($route, $parameters = null)
-    {
-        if( 
-            ($routeObject = RouteFinder::getRouteObject($route, $parameters)) && 
-            (($routeObject->action['layout'] ?? '') === (request()->route()->action['layout'] ?? false ))
-        )
-            $this->turbo = true;
-    }
-
-    /**
-     * Flag for disabling turbo links
-     *
-     * @var Boolean
-     */
-    public function noTurbo()
-    {
-        return $this->data([
-            'turboDisabled' => true
-        ]);
     }
 
 }

@@ -2,14 +2,14 @@
 
 namespace Kompo\Interactions\Actions;
 
-use Kompo\Core\IconGenerator;
-
 trait RunJsActions
 {
+    //TODO: document
     public function run($jsFunction)
     {
         return $this->prepareAction('runJs', [
             'jsFunction' => $jsFunction
         ]);
     }
+
 }

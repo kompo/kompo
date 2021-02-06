@@ -152,6 +152,14 @@ if(! function_exists('_Form'))
     }
 }
 
+if(! function_exists('_View'))
+{
+    function _View()
+    {
+        return Kompo\View::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Alert'))
 {
     function _Alert()
@@ -224,6 +232,14 @@ if(! function_exists('_Columns'))
     }
 }
 
+if(! function_exists('_Counter'))
+{
+    function _Counter()
+    {
+        return Kompo\Counter::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_Country'))
 {
     function _Country()
@@ -253,6 +269,14 @@ if(! function_exists('_DateTime'))
     function _DateTime()
     {
         return Kompo\DateTime::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_Div'))
+{
+    function _Div() : Kompo\Div
+    {
+        return Kompo\Div::form(...func_get_args());
     }
 }
 
@@ -381,6 +405,14 @@ if(! function_exists('_Html'))
     function _Html()
     {
         return Kompo\Html::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_I'))
+{
+    function _I()
+    {
+        return Kompo\I::form(...func_get_args());
     }
 }
 
@@ -616,11 +648,27 @@ if(! function_exists('_Stripe'))
     }
 }
 
+if(! function_exists('_StripeButton'))
+{
+    function _StripeButton()
+    {
+        return Kompo\StripeButton::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_SubmitButton'))
 {
     function _SubmitButton()
     {
         return Kompo\SubmitButton::form(...func_get_args());
+    }
+}
+
+if(! function_exists('_Svg'))
+{
+    function _Svg()
+    {
+        return Kompo\Svg::form(...func_get_args());
     }
 }
 

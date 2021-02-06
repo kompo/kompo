@@ -19,9 +19,7 @@ abstract class Field extends Komponent
     use HasInteractions, ForwardsInteraction;
     use Traits\AjaxConfigurations,
         Traits\FormSubmitConfigurations,
-        Traits\LabelInfoComment; 
-
-    public $bladeComponent = 'Field';
+        Traits\LabelInfoComment;
 
     /**
      * The field's HTML attribute in the form (also the formData key).
@@ -94,13 +92,18 @@ abstract class Field extends Komponent
     /**
      * Sets the name for the field corresponding the attribute it will fill.
      *
-     * @param  string|array $name The name attribute of the field.
+     * @param string|array $name The name attribute of the field.
+     * @param null|bool $interactsWithModel ref. ignoresToModel method
      * 
      * @return self
      */
-    public function name($name)
+    public function name($name, $interactsWithModel = true)
     {
         $this->name = $name;
+
+        if(!$interactsWithModel)
+            $this->ignoresModel();
+
         return $this;
     }
 
@@ -127,7 +130,7 @@ abstract class Field extends Komponent
      */
     public function placeholder($placeholder)
     {
-        $this->placeholder = $placeholder;
+        $this->placeholder = __($placeholder);
         return $this;
     }
 
@@ -176,7 +179,7 @@ abstract class Field extends Komponent
      */
     public function required($indicator = '*')
     {
-        $this->data(['required' => $indicator]);
+        $this->config(['required' => $indicator]);
         $this->rules('required');
         return $this;
     }
@@ -188,7 +191,7 @@ abstract class Field extends Komponent
      */
     public function readOnly()
     {
-        return $this->data(['readOnly' => true]);
+        return $this->config(['readOnly' => true]);
     }
 
     /**
@@ -198,7 +201,7 @@ abstract class Field extends Komponent
      */
     public function noAutocomplete()
     {
-        return $this->data(['noAutocomplete' => true]);
+        return $this->config(['noAutocomplete' => true]);
     }
     
     /**
@@ -242,7 +245,7 @@ abstract class Field extends Komponent
      */
     public function noInputWrapper()
     {
-    	return $this->data([
+    	return $this->config([
     		'noInputWrapper' => true
     	]);
     }
@@ -255,7 +258,7 @@ abstract class Field extends Komponent
      */
     public function noMargins()
     {
-        return $this->data(['noMargins' => true]);
+        return $this->config(['noMargins' => true]);
     }
 
     /**

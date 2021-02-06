@@ -2,6 +2,7 @@
 
 namespace Kompo\Komponents\Traits;
 
+use Kompo\Core\IconGenerator;
 use Kompo\Komponents\Field;
 
 trait CKEditorTrait
@@ -24,7 +25,7 @@ trait CKEditorTrait
      */
     public function toolbar($toolbar)
     {
-        $this->data([
+        $this->config([
             'toolbar' => $toolbar
         ]);
         return $this;
@@ -38,7 +39,7 @@ trait CKEditorTrait
      */
     public function appendToolbar($additionalToolbar)
     {
-        return $this->toolbar(array_merge($this->data('toolbar'), $additionalToolbar));
+        return $this->toolbar(array_merge($this->config('toolbar'), $additionalToolbar));
     }
 
     /**
@@ -49,7 +50,17 @@ trait CKEditorTrait
      */
     public function prependToolbar($additionalToolbar)
     {
-        return $this->toolbar(array_merge($additionalToolbar, $this->data('toolbar')));
+        return $this->toolbar(array_merge($additionalToolbar, $this->config('toolbar')));
+    }
+
+    /**
+     * TODO: document
+     */
+    public function focusOnLoad()
+    {
+        return $this->config([
+            'focusOnLoad' => true
+        ]);
     }
 
     /**
@@ -65,17 +76,22 @@ trait CKEditorTrait
      */
     public function addMention($marker, $feed, $minimumCharacters = 0, $icon = null, $itemName = 'name', $itemType = null)
     {
-        $mentions = $this->data('mentions') ?: [];
+        $mentions = $this->config('mentions') ?: [];
 
         array_push($mentions , [
             'marker' => $marker,
-            'feed' => $icon ? $this->mapMentions($feed, $marker, $icon, $itemName, $itemType) : $feed,
             'minimumCharacters' => $minimumCharacters,
             'iconClass' => $icon,
-            'itemType' => $itemType
+            'iconHtml' => IconGenerator::toHtml($icon),
+            'itemType' => $itemType,
+            'initialFeed' => !$icon ? $feed : $feed->map(
+
+                        fn($item) => static::mapMention($item, $marker, $icon, $itemName, $itemType)
+
+                    ),
         ]);
 
-        return $this->data([
+        return $this->config([
             'mentions' => $mentions
         ]);
     }
@@ -97,20 +113,15 @@ trait CKEditorTrait
         return ['|', 'undo', 'redo'];
     }
 
-
-
-    protected function mapMentions($items, $marker, $icon, $itemName = 'name', $itemType = null)
+    public static function mapMention($item, $marker, $icon, $itemName = 'name', $itemType = null)
     {
-        return $items->map(function($item) use ($marker, $icon, $itemName, $itemType) {
-
-            return [
-                'id' => $marker.$item->{$itemName}, 
-                'iconClass' => $icon,         //has to be a font icon (not svg)
-                'text' => $item->{$itemName}, //text is the key for the label
-                'itemType' => $itemType,
-                'itemId' => $item->id ?? null
-            ];
-        });
+        return [
+            'id' => $marker.$item->{$itemName}, 
+            'iconClass' => $icon,         //has to be a font icon (not svg)
+            'text' => $item->{$itemName}, //text is the key for the label
+            'itemType' => $itemType,
+            'itemId' => $item->id ?? null
+        ];
     }
     
 }

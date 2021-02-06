@@ -8,8 +8,6 @@ return [
 
     'smart_readonly_fields' => false,
 
-    'hide_public_model_in_forms' => true, //TODO: hide model property before display and after submit response
-
 	'default_date_format' => 'Y-m-d',
 	'default_time_format' => 'H:i',
 	'default_datetime_format' => 'Y-m-d H:i',

@@ -12,15 +12,19 @@ trait HasHtmlAttributes {
      * ])</php>
      * 
      *
-     * @param      array  $attributes     Associative array of attribute names and values.
+     * @param      array|string|null  $attributes     Associative array of attribute names and values.
      *
      * @return     self
      */
-    public function attr($attributes)
+    public function attr($attributes = null)
     {
-        return $this->data([
-            'attrs' => $attributes
-        ]);
+        if(is_array($attributes)){
+            return $this->config([
+                'attrs' => array_replace($this->attr() ?: [], $attributes)
+            ]);
+        }else{
+            return $attributes ? ($this->config['attrs'][$attributes] ?? null) : $this->config('attrs');
+        }        
     }
 
     /**
@@ -34,7 +38,7 @@ trait HasHtmlAttributes {
     public function title($title)
     {
         return $this->attr([
-            'title' => $title
+            'title' => __($title)
         ]);
     }
 
@@ -42,7 +46,7 @@ trait HasHtmlAttributes {
     public function balloon($label, $position = 'up')
     {
         return $this->attr([
-            'aria-label' => $label,
+            'aria-label' => __($label),
             'data-balloon-pos' => $position
         ]);
     }

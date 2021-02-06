@@ -14,8 +14,7 @@ trait AjaxConfigurations
      */
     public function warnBeforeClose($message = null)
     {
-        //for EditLink -- to remove DRY
-        return $this->data(['warnBeforeClose' => $message ? __($message) : __('warnBeforeClose')]);
+        return $this->config(['warnBeforeClose' => $message ? __($message) : __('warnBeforeClose')]);
     }
 
 
@@ -26,7 +25,7 @@ trait AjaxConfigurations
      */
     public function revertsPanel()
     {
-        $this->data([ 'revertsPanel' => true ]);
+        $this->config([ 'revertsPanel' => true ]);
         return $this;
     }
 
@@ -37,7 +36,7 @@ trait AjaxConfigurations
      */
     public function revertsFormRow()
     {
-        $this->data([ 'revertsFormRow' => true ]);
+        $this->config([ 'revertsFormRow' => true ]);
         return $this;
     }
 
@@ -48,7 +47,7 @@ trait AjaxConfigurations
      */
     public function keepModalOpen()
     {
-        return $this->data(['keepModalOpen' => true]);
+        return $this->config(['keepModalOpen' => true]);
     }
 
 }

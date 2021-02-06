@@ -7,100 +7,41 @@ use Kompo\Routing\Dispatcher;
 class Router
 {
     /**
-     * Registers a Kompo route that loads a Komposer either in a view or as a JSON object.
+     * Check to hold off booting the Komposer from it's constructor because the request has not been handled yet
      *
-     * @param      <type>  $router         The router
-     * @param      <type>  $uri            The uri
-     * @param      <type>  $komposerClass  The komposer class
-     *
-     * @return     <type>  ( description_of_the_return_value )
+     * @return     bool
      */
-    public static function registerRoute($router, $uri, $komposerClass)
+    public static function shouldNotBeBooted(): bool
     {
-        return ($layout = static::getMergedLayout($router)) ? 
-            static::getViewInLayout($router, $uri, $komposerClass, $layout) :
-            static::getAsJson($router, $uri, $komposerClass);
+        return (request()->route() && !request()->hasSession())
+            || (app()->runningInConsole() && !app()->runningUnitTests());
     }
-
-    /*********************** PRIVATE ***********************/
-
-    /**
-     * Gets as json.
-     *
-     * @param      <type>  $router         The router
-     * @param      <type>  $uri            The uri
-     * @param      <type>  $komposerClass  The komposer class
-     *
-     * @return     <type>  As json.
-     */
-    private static function getAsJson($router, $uri, $komposerClass)
-    {
-        return $router->get($uri, function() use($komposerClass) {
-            return with(new Dispatcher($komposerClass))->bootKomposerForDisplay();
-        });
-    }
-
-    /**
-     * Gets the view in layout.
-     *
-     * @param      <type>  $router         The router
-     * @param      <type>  $uri            The uri
-     * @param      <type>  $komposerClass  The komposer class
-     * @param      <type>  $layout         The layout
-     *
-     * @return     <type>  The view in layout.
-     */
-    private static function getViewInLayout($router, $uri, $komposerClass, $layout)
-    {
-        //still need to add this
-        //$route->action['extends'] = $extends; //for smart turbolinks
-
-        return $router->get($uri, function () use ($layout, $router, $komposerClass) {
-
-            $dispatcher = new Dispatcher($komposerClass);
-            $komposer = $dispatcher->bootKomposerForDisplay();
-            $booter = $dispatcher->booter;
-
-            return view('kompo::view', [
-                'vueComponent' => $booter::renderVueComponent($komposer),
-                'containerClass' => property_exists($komposer, 'containerClass') ? $komposer->containerClass : 'container',
-                'metaTags' => $komposer->getMetaTags($komposer),
-                'js' => method_exists($komposer, 'js') ? $komposer->js() : null,
-                'layout' => $layout,
-                'section' => static::getLastSection($router)
-            ]);
-        });
-    }
-
-    /*********************** PRIVATE ^2 ***********************/
 
     /**
      * Gets the merged layout.
      *
-     * @param      <type>  $router  The router
+     * @param      <type>  $route  The route
      *
-     * @return     <type>  The merged layout.
+     * @return  string  The merged layout.
      */
-    private static function getMergedLayout($router)
+    public static function getMergedLayout($route): ?string
     {
-        $groupStack = $router->getGroupStack();
-        $lastLayouts = end($groupStack)['layout'] ?? false;
-        
-        return is_array($lastLayouts) ? implode('.', $lastLayouts) : $lastLayouts; //concatenate layout with '.'
+        $layout = $route->action['layout'] ?? null;
 
+        return is_array($layout) ? implode('.', $layout) : $layout;
     }
 
     /**
      * Gets the last section.
      *
-     * @param      <type>  $router  The router
+     * @param      <type>  $route  The route
      *
-     * @return     <type>  The last section.
+     * @return  string  The last section.
      */
-    private static function getLastSection($router)
+    public static function getLastSection($route): ?string
     {
-        $sections = $router->current()->getAction('section') ?? 'content';
+        $section = $route->action['section'] ?? 'content';
         
-        return is_array($sections) ? end($sections) : $sections; //get last section only
+        return is_array($section) ? end($section) : $section; //get last section only
     }
 }

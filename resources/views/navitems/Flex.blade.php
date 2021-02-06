@@ -1,4 +1,4 @@
-<div class="vlFlex {{ $component->data('justifyClass') }} {{ $component->data('alignClass') }} 
+<div class="vlFlex {{ $component->config('justifyClass') }} {{ $component->config('alignClass') }} 
 	{{ $component->class() }}"
 	@include('kompo::partials.IdStyle')>
 

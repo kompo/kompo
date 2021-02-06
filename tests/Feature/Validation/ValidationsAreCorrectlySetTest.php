@@ -9,7 +9,7 @@ class ValidationsAreCorrectlySetTest extends EnvironmentBoot
 	/** @test */
 	public function validations_are_correctly_set_in_forms()
 	{
-		$rules = (new _SetValidationsForm())->data('rules');
+		$rules = (new _SetValidationsForm())->config('rules');
 
 		$this->assertIsArray($rules);
 		$this->assertCount(7, $rules);

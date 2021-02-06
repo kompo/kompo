@@ -19,7 +19,7 @@ trait KompoTestRequestsTrait
 
     protected function submit($komposer, $data = [])
     {
-        return $this->kompoAction($komposer, $komposer->data('submitAction'), $data);
+        return $this->kompoAction($komposer, $komposer->config('submitAction'), $data);
     }
 
     protected function browse($komposer, $data = [], $sort = null, $page = null)
@@ -69,7 +69,7 @@ trait KompoTestRequestsTrait
     {
         return $this->withHeaders(
             KompoInfo::arrayFromElement($form)
-        )->json('POST', $form->data('submitUrl'), $data);
+        )->json('POST', $form->config('submitUrl'), $data);
     }
 
     /***** Dumper helpers ******/
