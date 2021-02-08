@@ -50,7 +50,7 @@ if (! function_exists('assetThumb')) {
 
 if(! function_exists('_Query'))
 {
-    function _Query()
+    function _Query(): \Kompo\Query
     {
         return Kompo\Query::form(...func_get_args());
     }
@@ -58,7 +58,7 @@ if(! function_exists('_Query'))
 
 if(! function_exists('_Card'))
 {
-    function _Card()
+    function _Card(): \Kompo\Card
     {
         return Kompo\Card::form(...func_get_args());
     }
@@ -66,7 +66,7 @@ if(! function_exists('_Card'))
 
 if(! function_exists('_IconText'))
 {
-    function _IconText()
+    function _IconText($label = ''): \Kompo\IconText
     {
         return Kompo\IconText::form(...func_get_args());
     }
@@ -74,7 +74,7 @@ if(! function_exists('_IconText'))
 
 if(! function_exists('_ImageCard'))
 {
-    function _ImageCard()
+    function _ImageCard($label = ''): \Kompo\ImageCard
     {
         return Kompo\ImageCard::form(...func_get_args());
     }
@@ -82,7 +82,7 @@ if(! function_exists('_ImageCard'))
 
 if(! function_exists('_ImageOverlay'))
 {
-    function _ImageOverlay()
+    function _ImageOverlay($label = ''): \Kompo\ImageOverlay
     {
         return Kompo\ImageOverlay::form(...func_get_args());
     }
@@ -90,7 +90,7 @@ if(! function_exists('_ImageOverlay'))
 
 if(! function_exists('_ImageRow'))
 {
-    function _ImageRow()
+    function _ImageRow($label = ''): \Kompo\ImageRow
     {
         return Kompo\ImageRow::form(...func_get_args());
     }
@@ -98,7 +98,7 @@ if(! function_exists('_ImageRow'))
 
 if(! function_exists('_TableRow'))
 {
-    function _TableRow()
+    function _TableRow($label = ''): \Kompo\TableRow
     {
         return Kompo\TableRow::form(...func_get_args());
     }
@@ -106,7 +106,7 @@ if(! function_exists('_TableRow'))
 
 if(! function_exists('_AddButton'))
 {
-    function _AddButton()
+    function _AddButton($label = ''): \Kompo\AddButton
     {
         return Kompo\AddButton::form(...func_get_args());
     }
@@ -114,7 +114,7 @@ if(! function_exists('_AddButton'))
 
 if(! function_exists('_AddLink'))
 {
-    function _AddLink()
+    function _AddLink($label = ''): \Kompo\AddLink
     {
         return Kompo\AddLink::form(...func_get_args());
     }
@@ -122,7 +122,7 @@ if(! function_exists('_AddLink'))
 
 if(! function_exists('_DeleteLink'))
 {
-    function _DeleteLink()
+    function _DeleteLink($label = ''): \Kompo\DeleteLink
     {
         return Kompo\DeleteLink::form(...func_get_args());
     }
@@ -130,7 +130,7 @@ if(! function_exists('_DeleteLink'))
 
 if(! function_exists('_EditButton'))
 {
-    function _EditButton()
+    function _EditButton($label = ''): \Kompo\EditButton
     {
         return Kompo\EditButton::form(...func_get_args());
     }
@@ -138,7 +138,7 @@ if(! function_exists('_EditButton'))
 
 if(! function_exists('_EditLink'))
 {
-    function _EditLink()
+    function _EditLink($label = ''): \Kompo\EditLink
     {
         return Kompo\EditLink::form(...func_get_args());
     }
@@ -146,7 +146,7 @@ if(! function_exists('_EditLink'))
 
 if(! function_exists('_Form'))
 {
-    function _Form()
+    function _Form($label = ''): \Kompo\Form
     {
         return Kompo\Form::form(...func_get_args());
     }
@@ -154,7 +154,7 @@ if(! function_exists('_Form'))
 
 if(! function_exists('_View'))
 {
-    function _View()
+    function _View($label = ''): \Kompo\View
     {
         return Kompo\View::form(...func_get_args());
     }
@@ -162,7 +162,7 @@ if(! function_exists('_View'))
 
 if(! function_exists('_Alert'))
 {
-    function _Alert()
+    function _Alert($label = ''): \Kompo\Alert
     {
         return Kompo\Alert::form(...func_get_args());
     }
@@ -170,7 +170,7 @@ if(! function_exists('_Alert'))
 
 if(! function_exists('_Badge'))
 {
-    function _Badge()
+    function _Badge($label = ''): \Kompo\Badge
     {
         return Kompo\Badge::form(...func_get_args());
     }
@@ -178,7 +178,7 @@ if(! function_exists('_Badge'))
 
 if(! function_exists('_Blade'))
 {
-    function _Blade()
+    function _Blade($label = ''): \Kompo\Blade
     {
         return Kompo\Blade::form(...func_get_args());
     }
@@ -186,7 +186,7 @@ if(! function_exists('_Blade'))
 
 if(! function_exists('_Button'))
 {
-    function _Button()
+    function _Button($label = ''): \Kompo\Button
     {
         return Kompo\Button::form(...func_get_args());
     }
@@ -194,7 +194,7 @@ if(! function_exists('_Button'))
 
 if(! function_exists('_Calendar'))
 {
-    function _Calendar()
+    function _Calendar($label = ''): \Kompo\Calendar
     {
         return Kompo\Calendar::form(...func_get_args());
     }
@@ -202,7 +202,7 @@ if(! function_exists('_Calendar'))
 
 if(! function_exists('_Checkbox'))
 {
-    function _Checkbox()
+    function _Checkbox($label = ''): \Kompo\Checkbox
     {
         return Kompo\Checkbox::form(...func_get_args());
     }
@@ -210,7 +210,7 @@ if(! function_exists('_Checkbox'))
 
 if(! function_exists('_CKEditor'))
 {
-    function _CKEditor()
+    function _CKEditor($label = ''): \Kompo\CKEditor
     {
         return Kompo\CKEditor::form(...func_get_args());
     }
@@ -218,7 +218,7 @@ if(! function_exists('_CKEditor'))
 
 if(! function_exists('_Code'))
 {
-    function _Code()
+    function _Code($label = ''): \Kompo\Code
     {
         return Kompo\Code::form(...func_get_args());
     }
@@ -226,7 +226,7 @@ if(! function_exists('_Code'))
 
 if(! function_exists('_Columns'))
 {
-    function _Columns()
+    function _Columns($label = ''): \Kompo\Columns
     {
         return Kompo\Columns::form(...func_get_args());
     }
@@ -234,7 +234,7 @@ if(! function_exists('_Columns'))
 
 if(! function_exists('_Counter'))
 {
-    function _Counter()
+    function _Counter($label = ''): \Kompo\Counter
     {
         return Kompo\Counter::form(...func_get_args());
     }
@@ -242,7 +242,7 @@ if(! function_exists('_Counter'))
 
 if(! function_exists('_Country'))
 {
-    function _Country()
+    function _Country($label = ''): \Kompo\Country
     {
         return Kompo\Country::form(...func_get_args());
     }
@@ -250,7 +250,7 @@ if(! function_exists('_Country'))
 
 if(! function_exists('_Date'))
 {
-    function _Date()
+    function _Date($label = ''): \Kompo\Date
     {
         return Kompo\Date::form(...func_get_args());
     }
@@ -258,7 +258,7 @@ if(! function_exists('_Date'))
 
 if(! function_exists('_DateRange'))
 {
-    function _DateRange()
+    function _DateRange($label = ''): \Kompo\DateRange
     {
         return Kompo\DateRange::form(...func_get_args());
     }
@@ -266,7 +266,7 @@ if(! function_exists('_DateRange'))
 
 if(! function_exists('_DateTime'))
 {
-    function _DateTime()
+    function _DateTime($label = ''): \Kompo\DateTime
     {
         return Kompo\DateTime::form(...func_get_args());
     }
@@ -274,7 +274,7 @@ if(! function_exists('_DateTime'))
 
 if(! function_exists('_Div'))
 {
-    function _Div() : Kompo\Div
+    function _Div($label = '') : Kompo\Div
     {
         return Kompo\Div::form(...func_get_args());
     }
@@ -282,7 +282,7 @@ if(! function_exists('_Div'))
 
 if(! function_exists('_EditableCKEditor'))
 {
-    function _EditableCKEditor()
+    function _EditableCKEditor($label = ''): \Kompo\EditableCKEditor
     {
         return Kompo\EditableCKEditor::form(...func_get_args());
     }
@@ -290,7 +290,7 @@ if(! function_exists('_EditableCKEditor'))
 
 if(! function_exists('_EditableTextarea'))
 {
-    function _EditableTextarea()
+    function _EditableTextarea($label = ''): \Kompo\EditableTextarea
     {
         return Kompo\EditableTextarea::form(...func_get_args());
     }
@@ -298,7 +298,7 @@ if(! function_exists('_EditableTextarea'))
 
 if(! function_exists('_File'))
 {
-    function _File()
+    function _File($label = ''): \Kompo\File
     {
         return Kompo\File::form(...func_get_args());
     }
@@ -306,7 +306,7 @@ if(! function_exists('_File'))
 
 if(! function_exists('_Flex'))
 {
-    function _Flex()
+    function _Flex($label = ''): \Kompo\Flex
     {
         return Kompo\Flex::form(...func_get_args());
     }
@@ -314,7 +314,7 @@ if(! function_exists('_Flex'))
 
 if(! function_exists('_FlexAround'))
 {
-    function _FlexAround()
+    function _FlexAround($label = ''): \Kompo\FlexAround
     {
         return Kompo\FlexAround::form(...func_get_args());
     }
@@ -322,7 +322,7 @@ if(! function_exists('_FlexAround'))
 
 if(! function_exists('_FlexBetween'))
 {
-    function _FlexBetween()
+    function _FlexBetween($label = ''): \Kompo\FlexBetween
     {
         return Kompo\FlexBetween::form(...func_get_args());
     }
@@ -330,7 +330,7 @@ if(! function_exists('_FlexBetween'))
 
 if(! function_exists('_FlexCenter'))
 {
-    function _FlexCenter()
+    function _FlexCenter($label = ''): \Kompo\FlexCenter
     {
         return Kompo\FlexCenter::form(...func_get_args());
     }
@@ -338,7 +338,7 @@ if(! function_exists('_FlexCenter'))
 
 if(! function_exists('_FlexEnd'))
 {
-    function _FlexEnd()
+    function _FlexEnd($label = ''): \Kompo\FlexEnd
     {
         return Kompo\FlexEnd::form(...func_get_args());
     }
@@ -346,7 +346,7 @@ if(! function_exists('_FlexEnd'))
 
 if(! function_exists('_H1'))
 {
-    function _H1()
+    function _H1($label = ''): \Kompo\H1
     {
         return Kompo\H1::form(...func_get_args());
     }
@@ -354,7 +354,7 @@ if(! function_exists('_H1'))
 
 if(! function_exists('_H2'))
 {
-    function _H2()
+    function _H2($label = ''): \Kompo\H2
     {
         return Kompo\H2::form(...func_get_args());
     }
@@ -362,7 +362,7 @@ if(! function_exists('_H2'))
 
 if(! function_exists('_H3'))
 {
-    function _H3()
+    function _H3($label = ''): \Kompo\H3
     {
         return Kompo\H3::form(...func_get_args());
     }
@@ -370,7 +370,7 @@ if(! function_exists('_H3'))
 
 if(! function_exists('_H4'))
 {
-    function _H4()
+    function _H4($label = ''): \Kompo\H4
     {
         return Kompo\H4::form(...func_get_args());
     }
@@ -378,7 +378,7 @@ if(! function_exists('_H4'))
 
 if(! function_exists('_H5'))
 {
-    function _H5()
+    function _H5($label = ''): \Kompo\H5
     {
         return Kompo\H5::form(...func_get_args());
     }
@@ -386,7 +386,7 @@ if(! function_exists('_H5'))
 
 if(! function_exists('_H6'))
 {
-    function _H6()
+    function _H6($label = ''): \Kompo\H6
     {
         return Kompo\H6::form(...func_get_args());
     }
@@ -394,7 +394,7 @@ if(! function_exists('_H6'))
 
 if(! function_exists('_Hidden'))
 {
-    function _Hidden()
+    function _Hidden($label = ''): \Kompo\Hidden
     {
         return Kompo\Hidden::form(...func_get_args());
     }
@@ -402,7 +402,7 @@ if(! function_exists('_Hidden'))
 
 if(! function_exists('_Html'))
 {
-    function _Html()
+    function _Html($label = ''): \Kompo\Html
     {
         return Kompo\Html::form(...func_get_args());
     }
@@ -410,7 +410,7 @@ if(! function_exists('_Html'))
 
 if(! function_exists('_I'))
 {
-    function _I()
+    function _I($label = ''): \Kompo\I
     {
         return Kompo\I::form(...func_get_args());
     }
@@ -418,7 +418,7 @@ if(! function_exists('_I'))
 
 if(! function_exists('_Image'))
 {
-    function _Image()
+    function _Image($label = ''): \Kompo\Image
     {
         return Kompo\Image::form(...func_get_args());
     }
@@ -426,7 +426,7 @@ if(! function_exists('_Image'))
 
 if(! function_exists('_Img'))
 {
-    function _Img()
+    function _Img($label = ''): \Kompo\Img
     {
         return Kompo\Img::form(...func_get_args());
     }
@@ -434,7 +434,8 @@ if(! function_exists('_Img'))
 
 if(! function_exists('_Input'))
 {
-    function _Input()
+
+    function _Input($label = ''): \Kompo\Input
     {
         return Kompo\Input::form(...func_get_args());
     }
@@ -442,7 +443,7 @@ if(! function_exists('_Input'))
 
 if(! function_exists('_InputNumber'))
 {
-    function _InputNumber()
+    function _InputNumber($label = ''): \Kompo\InputNumber
     {
         return Kompo\InputNumber::form(...func_get_args());
     }
@@ -450,7 +451,7 @@ if(! function_exists('_InputNumber'))
 
 if(! function_exists('_Json'))
 {
-    function _Json()
+    function _Json($label = ''): \Kompo\Json
     {
         return Kompo\Json::form(...func_get_args());
     }
@@ -458,7 +459,7 @@ if(! function_exists('_Json'))
 
 if(! function_exists('_Link'))
 {
-    function _Link()
+    function _Link($label = ''): \Kompo\Link
     {
         return Kompo\Link::form(...func_get_args());
     }
@@ -466,7 +467,7 @@ if(! function_exists('_Link'))
 
 if(! function_exists('_Liste'))
 {
-    function _Liste()
+    function _Liste($label = ''): \Kompo\Liste
     {
         return Kompo\Liste::form(...func_get_args());
     }
@@ -474,7 +475,7 @@ if(! function_exists('_Liste'))
 
 if(! function_exists('_ListeSelect'))
 {
-    function _ListeSelect()
+    function _ListeSelect($label = ''): \Kompo\ListeSelect
     {
         return Kompo\ListeSelect::form(...func_get_args());
     }
@@ -482,7 +483,7 @@ if(! function_exists('_ListeSelect'))
 
 if(! function_exists('_MultiFile'))
 {
-    function _MultiFile()
+    function _MultiFile($label = ''): \Kompo\MultiFile
     {
         return Kompo\MultiFile::form(...func_get_args());
     }
@@ -490,7 +491,7 @@ if(! function_exists('_MultiFile'))
 
 if(! function_exists('_MultiForm'))
 {
-    function _MultiForm()
+    function _MultiForm($label = ''): \Kompo\MultiForm
     {
         return Kompo\MultiForm::form(...func_get_args());
     }
@@ -498,7 +499,7 @@ if(! function_exists('_MultiForm'))
 
 if(! function_exists('_MultiImage'))
 {
-    function _MultiImage()
+    function _MultiImage($label = ''): \Kompo\MultiImage
     {
         return Kompo\MultiImage::form(...func_get_args());
     }
@@ -506,7 +507,7 @@ if(! function_exists('_MultiImage'))
 
 if(! function_exists('_MultiPlace'))
 {
-    function _MultiPlace()
+    function _MultiPlace($label = ''): \Kompo\MultiPlace
     {
         return Kompo\MultiPlace::form(...func_get_args());
     }
@@ -514,7 +515,7 @@ if(! function_exists('_MultiPlace'))
 
 if(! function_exists('_MultiSelect'))
 {
-    function _MultiSelect()
+    function _MultiSelect($label = ''): \Kompo\MultiSelect
     {
         return Kompo\MultiSelect::form(...func_get_args());
     }
@@ -522,7 +523,7 @@ if(! function_exists('_MultiSelect'))
 
 if(! function_exists('_Panel'))
 {
-    function _Panel()
+    function _Panel($label = ''): \Kompo\Panel
     {
         return Kompo\Panel::form(...func_get_args());
     }
@@ -530,7 +531,7 @@ if(! function_exists('_Panel'))
 
 if(! function_exists('_Panel1'))
 {
-    function _Panel1()
+    function _Panel1($label = ''): \Kompo\Panel1
     {
         return Kompo\Panel1::form(...func_get_args());
     }
@@ -538,7 +539,7 @@ if(! function_exists('_Panel1'))
 
 if(! function_exists('_Panel2'))
 {
-    function _Panel2()
+    function _Panel2($label = ''): \Kompo\Panel2
     {
         return Kompo\Panel2::form(...func_get_args());
     }
@@ -546,7 +547,7 @@ if(! function_exists('_Panel2'))
 
 if(! function_exists('_Panel3'))
 {
-    function _Panel3()
+    function _Panel3($label = ''): \Kompo\Panel3
     {
         return Kompo\Panel3::form(...func_get_args());
     }
@@ -554,7 +555,7 @@ if(! function_exists('_Panel3'))
 
 if(! function_exists('_Panel4'))
 {
-    function _Panel4()
+    function _Panel4($label = ''): \Kompo\Panel4
     {
         return Kompo\Panel4::form(...func_get_args());
     }
@@ -562,7 +563,7 @@ if(! function_exists('_Panel4'))
 
 if(! function_exists('_Panel5'))
 {
-    function _Panel5()
+    function _Panel5($label = ''): \Kompo\Panel5
     {
         return Kompo\Panel5::form(...func_get_args());
     }
@@ -570,7 +571,7 @@ if(! function_exists('_Panel5'))
 
 if(! function_exists('_Password'))
 {
-    function _Password()
+    function _Password($label = ''): \Kompo\Password
     {
         return Kompo\Password::form(...func_get_args());
     }
@@ -578,7 +579,7 @@ if(! function_exists('_Password'))
 
 if(! function_exists('_Place'))
 {
-    function _Place()
+    function _Place($label = ''): \Kompo\Place
     {
         return Kompo\Place::form(...func_get_args());
     }
@@ -586,7 +587,7 @@ if(! function_exists('_Place'))
 
 if(! function_exists('_Rows'))
 {
-    function _Rows()
+    function _Rows($label = ''): \Kompo\Rows
     {
         return Kompo\Rows::form(...func_get_args());
     }
@@ -594,7 +595,7 @@ if(! function_exists('_Rows'))
 
 if(! function_exists('_Search'))
 {
-    function _Search()
+    function _Search($label = ''): \Kompo\Search
     {
         return Kompo\Search::form(...func_get_args());
     }
@@ -602,7 +603,7 @@ if(! function_exists('_Search'))
 
 if(! function_exists('_Select'))
 {
-    function _Select()
+    function _Select($label = ''): \Kompo\Select
     {
         return Kompo\Select::form(...func_get_args());
     }
@@ -610,7 +611,7 @@ if(! function_exists('_Select'))
 
 if(! function_exists('_SelectButtons'))
 {
-    function _SelectButtons()
+    function _SelectButtons($label = ''): \Kompo\SelectButtons
     {
         return Kompo\SelectButtons::form(...func_get_args());
     }
@@ -618,7 +619,7 @@ if(! function_exists('_SelectButtons'))
 
 if(! function_exists('_SelectLinks'))
 {
-    function _SelectLinks()
+    function _SelectLinks($label = ''): \Kompo\SelectLinks
     {
         return Kompo\SelectLinks::form(...func_get_args());
     }
@@ -626,7 +627,7 @@ if(! function_exists('_SelectLinks'))
 
 if(! function_exists('_SelectNative'))
 {
-    function _SelectNative()
+    function _SelectNative(): \Kompo\SelectNative
     {
         return Kompo\SelectNative::form(...func_get_args());
     }
@@ -634,7 +635,7 @@ if(! function_exists('_SelectNative'))
 
 if(! function_exists('_SelectUpdatable'))
 {
-    function _SelectUpdatable()
+    function _SelectUpdatable(): \Kompo\SelectUpdatable
     {
         return Kompo\SelectUpdatable::form(...func_get_args());
     }
@@ -642,7 +643,7 @@ if(! function_exists('_SelectUpdatable'))
 
 if(! function_exists('_Stripe'))
 {
-    function _Stripe()
+    function _Stripe(): \Kompo\Stripe
     {
         return Kompo\Stripe::form(...func_get_args());
     }
@@ -650,7 +651,7 @@ if(! function_exists('_Stripe'))
 
 if(! function_exists('_StripeButton'))
 {
-    function _StripeButton()
+    function _StripeButton(): \Kompo\StripeButton
     {
         return Kompo\StripeButton::form(...func_get_args());
     }
@@ -658,7 +659,7 @@ if(! function_exists('_StripeButton'))
 
 if(! function_exists('_SubmitButton'))
 {
-    function _SubmitButton()
+    function _SubmitButton(): \Kompo\SubmitButton
     {
         return Kompo\SubmitButton::form(...func_get_args());
     }
@@ -666,7 +667,7 @@ if(! function_exists('_SubmitButton'))
 
 if(! function_exists('_Svg'))
 {
-    function _Svg()
+    function _Svg(): \Kompo\Svg
     {
         return Kompo\Svg::form(...func_get_args());
     }
@@ -674,7 +675,7 @@ if(! function_exists('_Svg'))
 
 if(! function_exists('_Table'))
 {
-    function _Table()
+    function _Table(): \Kompo\Table
     {
         return Kompo\Table::form(...func_get_args());
     }
@@ -682,7 +683,7 @@ if(! function_exists('_Table'))
 
 if(! function_exists('_Tab'))
 {
-    function _Tab()
+    function _Tab(): \Kompo\Tab
     {
         return Kompo\Tab::form(...func_get_args());
     }
@@ -690,7 +691,7 @@ if(! function_exists('_Tab'))
 
 if(! function_exists('_Tabs'))
 {
-    function _Tabs()
+    function _Tabs(): \Kompo\Tabs
     {
         return Kompo\Tabs::form(...func_get_args());
     }
@@ -698,7 +699,7 @@ if(! function_exists('_Tabs'))
 
 if(! function_exists('_Textarea'))
 {
-    function _Textarea()
+    function _Textarea($label = ''): \Kompo\Textarea
     {
         return Kompo\Textarea::form(...func_get_args());
     }
@@ -706,7 +707,7 @@ if(! function_exists('_Textarea'))
 
 if(! function_exists('_Th'))
 {
-    function _Th()
+    function _Th($label = ''): \Kompo\Th
     {
         return Kompo\Th::form(...func_get_args());
     }
@@ -714,7 +715,7 @@ if(! function_exists('_Th'))
 
 if(! function_exists('_Time'))
 {
-    function _Time()
+    function _Time($label = ''): \Kompo\Time
     {
         return Kompo\Time::form(...func_get_args());
     }
@@ -722,7 +723,7 @@ if(! function_exists('_Time'))
 
 if(! function_exists('_Title'))
 {
-    function _Title()
+    function _Title($label = ''): \Kompo\Title
     {
         return Kompo\Title::form(...func_get_args());
     }
@@ -730,7 +731,7 @@ if(! function_exists('_Title'))
 
 if(! function_exists('_Toggle'))
 {
-    function _Toggle()
+    function _Toggle($label = ''): \Kompo\Toggle
     {
         return Kompo\Toggle::form(...func_get_args());
     }
@@ -738,7 +739,7 @@ if(! function_exists('_Toggle'))
 
 if(! function_exists('_ToggleInput'))
 {
-    function _ToggleInput()
+    function _ToggleInput($label = ''): \Kompo\ToggleInput
     {
         return Kompo\ToggleInput::form(...func_get_args());
     }
@@ -746,7 +747,7 @@ if(! function_exists('_ToggleInput'))
 
 if(! function_exists('_Toolbar'))
 {
-    function _Toolbar()
+    function _Toolbar($label = ''): \Kompo\Toolbar
     {
         return Kompo\Toolbar::form(...func_get_args());
     }
@@ -754,7 +755,7 @@ if(! function_exists('_Toolbar'))
 
 if(! function_exists('_Translatable'))
 {
-    function _Translatable()
+    function _Translatable($label = ''): \Kompo\Translatable
     {
         return Kompo\Translatable::form(...func_get_args());
     }
@@ -762,7 +763,7 @@ if(! function_exists('_Translatable'))
 
 if(! function_exists('_TranslatableEditor'))
 {
-    function _TranslatableEditor()
+    function _TranslatableEditor($label = ''): \Kompo\TranslatableEditor
     {
         return Kompo\TranslatableEditor::form(...func_get_args());
     }
@@ -770,7 +771,7 @@ if(! function_exists('_TranslatableEditor'))
 
 if(! function_exists('_Trix'))
 {
-    function _Trix()
+    function _Trix($label = ''): \Kompo\Trix
     {
         return Kompo\Trix::form(...func_get_args());
     }
@@ -778,7 +779,7 @@ if(! function_exists('_Trix'))
 
 if(! function_exists('_Menu'))
 {
-    function _Menu()
+    function _Menu($label = ''): \Kompo\Menu
     {
         return Kompo\Menu::form(...func_get_args());
     }
@@ -786,7 +787,7 @@ if(! function_exists('_Menu'))
 
 if(! function_exists('_AuthMenu'))
 {
-    function _AuthMenu()
+    function _AuthMenu($label = ''): \Kompo\AuthMenu
     {
         return Kompo\AuthMenu::form(...func_get_args());
     }
@@ -794,7 +795,7 @@ if(! function_exists('_AuthMenu'))
 
 if(! function_exists('_Collapse'))
 {
-    function _Collapse()
+    function _Collapse($label = ''): \Kompo\Collapse
     {
         return Kompo\Collapse::form(...func_get_args());
     }
@@ -802,7 +803,7 @@ if(! function_exists('_Collapse'))
 
 if(! function_exists('_CollapseOnMobile'))
 {
-    function _CollapseOnMobile()
+    function _CollapseOnMobile($label = ''): \Kompo\CollapseOnMobile
     {
         return Kompo\CollapseOnMobile::form(...func_get_args());
     }
@@ -810,7 +811,7 @@ if(! function_exists('_CollapseOnMobile'))
 
 if(! function_exists('_Dropdown'))
 {
-    function _Dropdown()
+    function _Dropdown($label = ''): \Kompo\Dropdown
     {
         return Kompo\Dropdown::form(...func_get_args());
     }
@@ -818,7 +819,7 @@ if(! function_exists('_Dropdown'))
 
 if(! function_exists('_Locales'))
 {
-    function _Locales()
+    function _Locales($label = ''): \Kompo\Locales
     {
         return Kompo\Locales::form(...func_get_args());
     }
@@ -826,7 +827,7 @@ if(! function_exists('_Locales'))
 
 if(! function_exists('_Logo'))
 {
-    function _Logo()
+    function _Logo($label = ''): \Kompo\Logo
     {
         return Kompo\Logo::form(...func_get_args());
     }
@@ -834,7 +835,7 @@ if(! function_exists('_Logo'))
 
 if(! function_exists('_NavSearch'))
 {
-    function _NavSearch()
+    function _NavSearch($label = ''): \Kompo\NavSearch
     {
         return Kompo\NavSearch::form(...func_get_args());
     }
@@ -842,7 +843,7 @@ if(! function_exists('_NavSearch'))
 
 if(! function_exists('_SidebarToggler'))
 {
-    function _SidebarToggler()
+    function _SidebarToggler($label = ''): \Kompo\SidebarToggler
     {
         return Kompo\SidebarToggler::form(...func_get_args());
     }

@@ -38,7 +38,7 @@ abstract class Element
      * ! Works for Komposers too - because ... handles variable # of arguments.
      *
      * @param  mixed $arguments
-     * @return void
+     * @return self
      */
     public static function form(...$arguments)
     {
