@@ -72,7 +72,9 @@ class DependencyResolver
      */
     protected static function transformDependency(ReflectionParameter $parameter, $parameters)
     {
-        $class = $parameter->getClass();
+        $class = $parameter->getType() && !$parameter->getType()->isBuiltin()
+           ? new ReflectionClass($parameter->getType()->getName())
+           : null;
 
         // If the parameter has a type-hinted class, we will check to see if it is already in
         // the list of parameters. If it is we will just skip it as it is probably a model
