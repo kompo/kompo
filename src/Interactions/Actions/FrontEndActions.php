@@ -41,12 +41,13 @@ trait FrontEndActions
     }
 
     //TODO: document
-    public function scrollTo($selector, $duration, $options = [])
+    public function scrollTo($selector, $duration, $options = [], $timeoutDuration = 500)
     {
         return $this->prepareAction('scrollTo', [
             'scrollSelector' => $selector,
             'scrollDuration' => $duration,
-            'scrollOptions' => $options
+            'scrollOptions' => $options,
+            'timeoutDuration' => $timeoutDuration,
         ]);
     }
 
