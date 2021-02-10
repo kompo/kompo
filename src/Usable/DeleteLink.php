@@ -31,7 +31,9 @@ class DeleteLink extends Link
 
 			'deleteKey' => $deleteItem instanceOf Model ? $deleteItem->getKey() : ($deleteItem->id ?? null)
 
-		])->emitDirect('deleted');
+		])
+		->emitDirect('deleted')
+		->removeSelf();
 	}
 
 	public static function byKeyStatic($deleteItem)
