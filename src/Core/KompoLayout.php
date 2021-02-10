@@ -2,6 +2,7 @@
 
 namespace Kompo\Core;
 
+use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
 
 class KompoLayout
@@ -189,7 +190,8 @@ class KompoLayout
 
     public function getKomponentsArray($key)
     {
-    	return [ 
+    	return [
+    		'kompoid' => KompoId::getFromElement($this->{$key}),
 	    	'kompoinfo' => KompoInfo::getFromElement($this->{$key}),
 	    	'komponents' => $this->{$key}->komponents 
 	    ];
