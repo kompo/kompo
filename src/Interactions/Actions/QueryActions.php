@@ -72,7 +72,7 @@ trait QueryActions
      * Reload the cards of one or many Query(ies). If $queryId is left blank, it will browse cards of it's parent query.
      * Otherwise, you may set a string or an array of query ids to refresh.
      *
-     * @param string|null   $queryId  The target Query Id or
+     * @param array|string|null   $queryId  The target Query Id or
      * @param integer|null  $page     The page
      *
      * @return self
