@@ -88,7 +88,7 @@ trait CKEditorTrait
 
                         fn($item) => static::mapMention($item, $marker, $icon, $itemName, $itemType)
 
-                    ),
+                    )->toArray(),
         ]);
 
         return $this->config([
