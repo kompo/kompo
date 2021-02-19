@@ -60,7 +60,7 @@ class PlaceEnvironmentBoot extends EnvironmentBoot
 		      "types" => ["postal_code"]
 		    ]
 		  ],
-		  "formatted_address" => $address ?: $faker->streetAddress,
+		  "name" => $address ?: $faker->streetAddress,
 		  "geometry" =>[
 		    "location" => [
 		      "lat" => $faker->latitude,
@@ -80,7 +80,7 @@ class PlaceEnvironmentBoot extends EnvironmentBoot
             $this->stateKey => $place['address_components'][4]["long_name"],//skip 1 for administrative_area_level_2
             $this->countryKey => $place['address_components'][5]["long_name"],
             $this->postal_codeKey => $place['address_components'][6]["long_name"],
-            $this->addressKey => $place['formatted_address'],
+            $this->addressKey => $place['name'],
             $this->latKey => $place['geometry']['location']['lat'],
             $this->lngKey => $place['geometry']['location']['lng'],
             $this->external_idKey => $place['place_id']

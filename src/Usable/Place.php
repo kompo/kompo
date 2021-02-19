@@ -26,17 +26,17 @@ class Place extends Field
      */
     protected $attributesToColumns = false;
 
-    protected $allKeys;
-    protected $addressKey;
-    protected $street_numberKey;
-    protected $streetKey;
-    protected $cityKey;
-    protected $stateKey;
-    protected $countryKey;
-    protected $postal_codeKey;
-    protected $latKey;
-    protected $lngKey;
-    protected $external_idKey;
+    protected static $allKeys;
+    protected static $addressKey;
+    protected static $street_numberKey;
+    protected static $streetKey;
+    protected static $cityKey;
+    protected static $stateKey;
+    protected static $countryKey;
+    protected static $postal_codeKey;
+    protected static $latKey;
+    protected static $lngKey;
+    protected static $external_idKey;
 
     /**
      * Assign the config columns
@@ -47,8 +47,9 @@ class Place extends Field
     {
         parent::vlInitialize($label);
 
-        collect($this->allKeys = config('kompo.places_attributes'))->each(function($column, $key){
-            $this->{$key.'Key'} = $column;
+        collect(static::$allKeys = config('kompo.places_attributes'))->each(function($column, $key){
+            $internalKeyName = $key.'Key';
+            static::$$internalKeyName = $column;
         });
     }
 
@@ -89,7 +90,7 @@ class Place extends Field
             
             ModelManager::getValueFromDb($model, $name) : 
 
-            collect($this->allKeys)->map(fn($key) => $model->{$key})->filter()->all();      
+            collect(static::$allKeys)->map(fn($key) => $model->{$key})->filter()->all();      
     }
 
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)
@@ -98,7 +99,7 @@ class Place extends Field
 
         if($newPlace = RequestData::get($requestName)){
 
-        	$newPlace = $this->placeToDB($newPlace[0]);
+        	$newPlace = static::placeToDB($newPlace[0]);
 
         	if(!$this->attributesToColumns)
                 return $newPlace;
@@ -114,7 +115,7 @@ class Place extends Field
                 return null;
 
             if($oldPlace->exists)
-                collect($this->allKeys)->each(function($key){
+                collect(static::$allKeys)->each(function($key){
                     FormField::setExtraAttributes($this, [$key => null]);
                 });
 
@@ -128,10 +129,10 @@ class Place extends Field
 
         if($place = RequestData::get($requestName)){
 
-        	$place = $this->placeToDB($place[0]);
+        	$place = static::placeToDB($place[0]);
 
         	if($oldPlace){
-        		if($oldPlace->{$this->external_idKey} == $place[$this->external_idKey]){
+        		if($oldPlace->{static::$external_idKey} == $place[static::$external_idKey]){
         			return null;
         		}else{
         			$oldPlace->delete();
@@ -149,7 +150,7 @@ class Place extends Field
         }
     }
 
-    protected function placeToDB($place)
+    public static function placeToDB($place)
     {
     	$place = Util::decode($place);
 
@@ -157,26 +158,27 @@ class Place extends Field
 	    	$result = [];
 	    	foreach ($address_components as $value) {
 	    		if(in_array('street_number', $value['types']))
-	    			$result[$this->street_numberKey] = $value['long_name'];
+	    			$result[static::$street_numberKey] = $value['long_name'];
 	    		if(in_array('route', $value['types']))
-	    			$result[$this->streetKey] = $value['long_name'];
+	    			$result[static::$streetKey] = $value['long_name'];
 	    		if(in_array('locality', $value['types']))
-	    			$result[$this->cityKey] = $value['long_name'];
+	    			$result[static::$cityKey] = $value['long_name'];
 	    		if(in_array('administrative_area_level_1', $value['types']))
-	    			$result[$this->stateKey] = $value['long_name'];
+	    			$result[static::$stateKey] = $value['long_name'];
 	    		if(in_array('country', $value['types']))
-	    			$result[$this->countryKey] = $value['long_name'];
+	    			$result[static::$countryKey] = $value['long_name'];
 	    		if(in_array('postal_code', $value['types']))
-	    			$result[$this->postal_codeKey] = $value['long_name'];
+	    			$result[static::$postal_codeKey] = $value['long_name'];
 	    	}
 	        return array_merge($result, [
-	            $this->addressKey => $place['formatted_address'],
-	            $this->latKey => $place['geometry']['location']['lat'],
-	            $this->lngKey => $place['geometry']['location']['lng'],
-	            $this->external_idKey => $place['place_id']
+	            //static::$addressKey => $place['formatted_address'],
+                static::$addressKey => $place['name'],
+	            static::$latKey => $place['geometry']['location']['lat'],
+	            static::$lngKey => $place['geometry']['location']['lng'],
+	            static::$external_idKey => $place['place_id']
 	        ]);
 	    }else{
-            return collect($this->allKeys)->mapWithKeys(fn($dbKey, $internalKey) => [
+            return collect(static::$allKeys)->mapWithKeys(fn($dbKey, $internalKey) => [
                 $dbKey => $place[$internalKey]
             ])->all();
 	    }
