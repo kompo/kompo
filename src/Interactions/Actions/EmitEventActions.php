@@ -30,10 +30,11 @@ trait EmitEventActions
      *
      * @return self  
      */
-    public function emitDirect($event)
+    public function emitDirect($event, $data = null)
     {
         return $this->prepareAction('emitDirect', [
-            'event' => $event
+            'event' => $event,
+            'emitPayload' => $data
         ]);
     }
 

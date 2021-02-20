@@ -61,6 +61,14 @@ trait FrontEndActions
     }
 
     //TODO: document
+    public function activeClass($class)
+    {
+        return $this->emitDirect('activate', [
+            'activeClass' => $class
+        ]);
+    }
+
+    //TODO: document
     public function removeSelf()
     {
         return $this->prepareAction('removeSelf');
