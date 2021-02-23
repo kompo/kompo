@@ -116,11 +116,6 @@ abstract class Query extends Komposer
      */
     public $model;
 
-    /**
-     * @var string[] array('EchoChannelName' => 'MessageClassNameWithoutNamespace')
-     */
-    public $pusherRefresh = array();
-
 	/**
      * Constructs a Query
      * 

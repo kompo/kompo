@@ -39,6 +39,13 @@ abstract class Komposer extends Element
     protected $metaTags = [];
 
     /**
+     * Specifications for pusher messages. An associate array where the key is the channel name and the value is a string or array of fully qualified Message classes.
+     *
+     * @var string[] array('EchoChannelName' => [MessageClass1::class, MessageClassName2::class])
+     */
+    public $pusherRefresh;
+
+    /**
      * When a Komposer is called from a Route
      *
      * @return  mixed

@@ -227,7 +227,7 @@ abstract class Form extends Komposer
         )
             unset($this->model);
 
-        return json_encode($this);
+        return parent::__toString();
     }
 
 }

@@ -22,6 +22,8 @@ class KomposerManager
 
 		if(method_exists($komposer, 'created'))
 			$komposer->created();
+
+        static::preparePusherForFront($komposer);
     }
 
     /**
@@ -32,7 +34,7 @@ class KomposerManager
      * @return Komposer
      */
     public static function booted($komposer)
-    {
+    {        
         if(method_exists($komposer, 'booted'))
             $komposer->booted();
     }
@@ -134,5 +136,18 @@ class KomposerManager
                 $force
             )
         );
+    }
+
+    protected static function preparePusherForFront($komposer)
+    {
+        collect($komposer->pusherRefresh)->each(function($messages, $key) use($komposer) {
+
+            $komposer->pusherRefresh[$key] = Util::collect($messages)->map(function($message){
+
+                return class_basename($message);
+
+            })->toArray();
+
+        });
     }
 }
