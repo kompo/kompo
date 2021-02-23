@@ -408,6 +408,14 @@ if(! function_exists('_Html'))
     }
 }
 
+if(! function_exists('_HtmlField'))
+{
+    function _HtmlField($label = ''): \Kompo\HtmlField
+    {
+        return Kompo\HtmlField::form(...func_get_args());
+    }
+}
+
 if(! function_exists('_I'))
 {
     function _I($label = ''): \Kompo\I
