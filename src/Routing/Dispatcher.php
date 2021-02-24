@@ -10,6 +10,9 @@ use Kompo\Komposers\KomposerHandler;
 use Kompo\Menu;
 use Kompo\Query;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as RequestFacade;
+
 class Dispatcher
 {
     protected $komposerClass;
@@ -34,6 +37,12 @@ class Dispatcher
     
     public static function dispatchConnection()
     {
+        if(KompoAction::is('refresh-many'))
+            return static::refreshManyKomposers();
+
+        if(KompoAction::is('browse-many'))
+            return static::browseManyQueries();
+
         if(KompoAction::is('refresh-self'))
             return static::rebootKomposerForDisplay();
 
@@ -69,6 +78,44 @@ class Dispatcher
         }else{
             return $booter::bootForDisplay($d->komposerClass, $d->bootInfo['store'], $d->bootInfo['parameters']);
         }
+    }
+
+    protected static function refreshManyKomposers() 
+    {
+        return static::runManyRequests('refresh-self');
+    }
+
+    protected static function browseManyQueries() 
+    {
+        return static::runManyRequests('browse-items', [
+            'X-Kompo-Page' => 'page',
+            'X-Kompo-Sort' => 'sort',
+        ]);
+    }
+
+    protected static function runManyRequests($baseAction, $additionalHeaders = [])
+    {
+        $responses = [];
+
+        foreach (request()->all() as $sub) {
+
+            $subrequest = clone request();
+            
+            $subrequest->replace($sub['data'] ?? []);
+
+            $subrequest->headers->set(KompoInfo::$key, $sub['kompoinfo']);
+            $subrequest->headers->set(KompoAction::$key, $baseAction);
+
+            foreach ($additionalHeaders as $key => $requestKey) {
+                $subrequest->headers->set($key, $sub[$requestKey]);
+            }
+
+            RequestFacade::swap($subrequest);
+
+            $responses[$sub['kompoid']] = static::dispatchConnection();
+        }
+
+        return $responses;
     }
 
     public static function getKomposerType($komposerClass)

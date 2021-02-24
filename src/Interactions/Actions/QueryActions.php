@@ -5,6 +5,7 @@ namespace Kompo\Interactions\Actions;
 use Kompo\Exceptions\FilterOperatorNotAllowedException;
 use Kompo\Exceptions\NotFilterCapableException;
 use Kompo\Komponents\Field;
+use Kompo\Routing\RouteFinder;
 
 trait QueryActions
 {
@@ -80,6 +81,7 @@ trait QueryActions
     public function browse($queryId = null, $page = null)
     {
         return $this->prepareAction('browseQuery', [
+            'route' => RouteFinder::getKompoRoute('POST'),
             'page' => $page,
             'kompoid' => $queryId,
             'sessionTimeoutMessage' => __('sessionTimeoutMessage')
