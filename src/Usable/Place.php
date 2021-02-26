@@ -90,7 +90,7 @@ class Place extends Field
             
             ModelManager::getValueFromDb($model, $name) : 
 
-            collect(static::$allKeys)->map(fn($key) => $model->{$key})->filter()->all();      
+            collect(static::$allKeys)->map(fn($key) => $model->{$key})->all();      
     }
 
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)

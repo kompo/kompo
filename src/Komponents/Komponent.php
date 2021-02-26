@@ -76,7 +76,7 @@ abstract class Komponent extends Element
      */
     public function labelNonStatic($label)
     {
-        $this->label = $label;
+        $this->label = __($label);
         return $this;
     }
 
