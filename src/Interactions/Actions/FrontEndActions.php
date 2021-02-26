@@ -61,11 +61,25 @@ trait FrontEndActions
     }
 
     //TODO: document
-    public function activeClass($class)
+    public function addClass($class)
     {
-        return $this->emitDirect('activate', [
-            'activeClass' => $class
+        return $this->prepareAction('addClass', [
+            'addClass' => $class
         ]);
+    }
+
+    //TODO: document
+    public function removeClass($class)
+    {
+        return $this->prepareAction('removeClass', [
+            'removeClass' => $class
+        ]);
+    }
+
+    //TODO: document
+    public function activate()
+    {
+        return $this->emitDirect('activate');
     }
 
     //TODO: document
