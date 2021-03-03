@@ -15,10 +15,27 @@ class SidebarToggler extends Trigger
 		$this->toggleSidebar();
 	}
  
+ 	//TODO : DOCUMENT
 	public function toggleSidebar($side = 'left')
 	{
 		return $this->config([
 			'toggleSidebar' => $side
 		]);
 	}    
+ 
+ 	//TODO : DOCUMENT
+	public function toggleOnHover()
+	{
+		return $this->config([
+			'toggleOnHover' => true
+		]);
+	}    
+ 
+ 	//TODO : DOCUMENT
+	public function openClass($openClass)
+	{
+		return $this->config([
+			'openClass' => $openClass
+		]);
+	}  
 }
