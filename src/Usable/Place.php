@@ -2,6 +2,7 @@
 
 namespace Kompo;
 
+use Illuminate\Support\Arr;
 use Kompo\Core\RequestData;
 use Kompo\Core\Util;
 use Kompo\Database\ModelManager;
@@ -83,6 +84,25 @@ class Place extends Field
             'defaultZoom' => $zoom
         ]);
     }
+
+    //TODO document
+    public function noDefaultUi()
+    {
+        return $this->config(['noDefaultUi' => true]);
+    }
+    //TODO document
+    //You have to add this in your js
+    //window.GoogleMapsStyle = require('kompo-googlemaps/styles/silver').default
+    public function customMapStyle()
+    {
+        return $this->config(['customMapStyle' => true]);
+    }
+    //TODO document
+    public function addMarkers($markers)
+    {
+        return $this->config(['addMarkers' => Arr::wrap($markers)]);
+    }
+
 
     public function getValueFromModel($model, $name)
     {

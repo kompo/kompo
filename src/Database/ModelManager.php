@@ -84,11 +84,23 @@ class ModelManager
      * 
      * @return boolean
      */
-    public static function saveOneToOne($mainModel, $relation)
+    public static function saveOneToOneOrDelete($mainModel, $relation, $names)
     {
-        static::setCreatedUpdatedBy($mainModel->{$relation});
+        $nonEmptyAttributes = collect($names)->filter(
+            fn($name) => $mainModel->{$relation}->{$name}
+        )->count();
 
-        $mainModel->{$relation}()->save($mainModel->{$relation});
+        if($nonEmptyAttributes){
+
+            static::setCreatedUpdatedBy($mainModel->{$relation});
+
+            $mainModel->{$relation}()->save($mainModel->{$relation});
+
+        }else{
+
+            $mainModel->{$relation}->delete();
+
+        }
     }
 
     /**

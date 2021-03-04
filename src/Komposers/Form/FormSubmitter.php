@@ -138,13 +138,21 @@ class FormSubmitter extends FormBooter
                 
                 KomposerManager::removeField($komposer, $fieldKey);
                 
-                if($stage == 'fillOneToOneBeforeSave') //only beforeSave do we need this, relations are auto-saved
-                    $oneToOneRelations = array_unique(array_merge($oneToOneRelations, $processed->toArray()));
+                if($stage == 'fillOneToOneBeforeSave') //only here do we need this, relations are auto-saved
+                    //$oneToOneRelations = array_unique(array_merge($oneToOneRelations, $processed->toArray()));
+                    foreach ($processed as $specs){
+                        $oneToOneRelations[] = $specs;
+                    }
             }
         }
 
-        foreach ($oneToOneRelations as $relation) {
-            ModelManager::saveOneToOne($komposer->model, $relation);
+        if(!count($oneToOneRelations))
+            return;
+            
+        $oneToOneRelations = collect($oneToOneRelations)->groupBy('relation');
+
+        foreach ($oneToOneRelations as $relation => $names) {
+            ModelManager::saveOneToOneOrDelete($komposer->model, $relation, $names->pluck('name'));
             //$komposer->model->{$relation}()->save($komposer->model->{$relation});
         }
     }

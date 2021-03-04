@@ -64,12 +64,12 @@ class FormField
                 if(Lineage::fillsAfterSave($model, $name)){
                     if($stage == 'fillOneToOneAfterSave'){
                         static::fillAfterSave($field, $requestName, $key, $model, $name);
-                        return $relationName;
+                        return ['relation' => $relationName, 'name' => $name];
                     }
                 }else{
                     if($stage == 'fillOneToOneBeforeSave'){
                         static::fillBeforeSave($field, $requestName, $key, $model, $name);
-                        return $relationName;
+                        return ['relation' => $relationName, 'name' => $name];
                     }
                 }
             }else{
