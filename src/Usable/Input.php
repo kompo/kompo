@@ -30,4 +30,13 @@ class Input extends Field
     {
         $this->onEnter->submit();
     }
+
+
+    //TODO: document
+    public function clearable()
+    {
+        return $this->config([
+            'clearable' => true,
+        ]);
+    }
 }
