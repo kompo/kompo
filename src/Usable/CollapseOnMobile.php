@@ -17,7 +17,7 @@ class CollapseOnMobile extends Trigger
 
     /**
      * Allows us to include a list of komponents in the left side of the navbar part that collapses on mobile. For example:
-     * <php>CollapseOnMobile::leftMenu(.
+     * <php>CollapseOnMobile::leftMenu(
      * Link::form('Link 1'),
      * Link::form('Link 2')
      * )</php>
@@ -35,7 +35,7 @@ class CollapseOnMobile extends Trigger
 
     /**
      * Allows us to include a list of komponents in the right side of the navbar part that collapses on mobile. For example:
-     * <php>CollapseOnMobile::rightMenu(.
+     * <php>CollapseOnMobile::rightMenu(
      * Link::form('Link 1'),
      * Link::form('Link 2')
      * )</php>
