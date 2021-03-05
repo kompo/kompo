@@ -7,22 +7,21 @@ use Kompo\Select;
 use Kompo\Tests\Models\Obj;
 
 class _SelectAsQueryFilterQuery extends Query
-{	
+{
     public function query()
-	{
-		return new Obj();
-	}
+    {
+        return new Obj();
+    }
 
-	public function top()
-	{
-		return [
-			Select::form()->name('belongsToPlain')
-				->optionsFrom('id', 'name'),
-			Select::form()->name('belongsToPlain.posts')
-				->optionsFrom('id', 'title'),
-			Select::form()->name('belongsToPlain.posts.tags')
-				->optionsFrom('id', 'name')
-		];
-	}
-
+    public function top()
+    {
+        return [
+            Select::form()->name('belongsToPlain')
+                ->optionsFrom('id', 'name'),
+            Select::form()->name('belongsToPlain.posts')
+                ->optionsFrom('id', 'title'),
+            Select::form()->name('belongsToPlain.posts.tags')
+                ->optionsFrom('id', 'name'),
+        ];
+    }
 }

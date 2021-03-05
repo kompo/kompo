@@ -6,10 +6,10 @@ use Kompo\Query;
 
 class _RouteParametersQuery extends Query
 {
-	use _RouteParametersCommonTrait;
+    use _RouteParametersCommonTrait;
 
-	public function created()
-	{
-		$this->commonCreated();
-	}
+    public function created()
+    {
+        $this->commonCreated();
+    }
 }

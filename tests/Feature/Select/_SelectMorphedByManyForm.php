@@ -9,16 +9,16 @@ use Kompo\Tests\Utilities\SwitchableFormTrait;
 
 class _SelectMorphedByManyForm extends Form
 {
-	use SwitchableFormTrait;
+    use SwitchableFormTrait;
 
-	public $model = Obj::class;
+    public $model = Obj::class;
 
-	public function komponents()
-	{
-		return $this->filter([
-			MultiSelect::form('A')->name('morphedByManyPlain'),
-			MultiSelect::form('A')->name('morphedByManyOrdered'),
-			MultiSelect::form('A')->name('morphedByManyFiltered')->extraAttributes(['order' => 1])
-		]);
-	}
+    public function komponents()
+    {
+        return $this->filter([
+            MultiSelect::form('A')->name('morphedByManyPlain'),
+            MultiSelect::form('A')->name('morphedByManyOrdered'),
+            MultiSelect::form('A')->name('morphedByManyFiltered')->extraAttributes(['order' => 1]),
+        ]);
+    }
 }

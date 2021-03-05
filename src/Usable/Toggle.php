@@ -7,7 +7,7 @@ use Kompo\Komponents\Traits\HasBooleanValue;
 
 class Toggle extends Field
 {
-	use HasBooleanValue;
+    use HasBooleanValue;
 
     public $vueComponent = 'Toggle';
 }

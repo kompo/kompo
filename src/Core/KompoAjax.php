@@ -8,18 +8,18 @@ abstract class KompoAjax
 
     public static function getFromElement($el)
     {
-        return $el->config( static::$key );
+        return $el->config(static::$key);
     }
 
     public static function setOnElement($el, $kompoData)
     {
-        return $el->config([ static::$key => $kompoData ]);
+        return $el->config([static::$key => $kompoData]);
     }
 
     public static function arrayFromElement($el)
     {
         return [
-            static::$key => static::getFromElement($el)
+            static::$key => static::getFromElement($el),
         ];
     }
 
@@ -33,13 +33,13 @@ abstract class KompoAjax
     public static function headerArray($data)
     {
         return [
-            static::$key => $data
+            static::$key => $data,
         ];
     }
 
     public static function is($action)
     {
-        return is_array($action) ? 
+        return is_array($action) ?
 
             in_array(static::header(), $action) :
 

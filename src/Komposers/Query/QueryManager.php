@@ -8,14 +8,14 @@ use Kompo\Core\ValidationManager;
 class QueryManager
 {
     /**
-     * For ordering items
+     * For ordering items.
      *
-     * @param Kompo\Query  $query
+     * @param Kompo\Query $query
      *
      * @return Illuminate\...\Paginator
      */
     public static function orderItems($query)
-    {        
+    {
         AuthorizationGuard::mainGate($query, 'ordering');
 
         ValidationManager::validateRequest($query);
@@ -24,5 +24,4 @@ class QueryManager
 
         return $query->query->orderItems();
     }
-    
 }

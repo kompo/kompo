@@ -8,13 +8,12 @@ use Kompo\Tests\Models\KompoModel;
 
 class _AssigningCreatedUpdatedByForm extends Form
 {
-	public $model = KompoModel::class;
+    public $model = KompoModel::class;
 
-	public function komponents()
-	{
-		return [
-			Input::form('Name')
-		];
-	}
-
+    public function komponents()
+    {
+        return [
+            Input::form('Name'),
+        ];
+    }
 }

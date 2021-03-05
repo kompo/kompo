@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kompo\Elements\Traits;
 
@@ -12,15 +12,17 @@ trait HasStyles
     public $style = '';
 
     /**
-     * Adds one or more ";"-separated styles to the element. 
+     * Adds one or more ";"-separated styles to the element.
      *
-     * @param  string  $styles
+     * @param string $styles
+     *
      * @return mixed
      */
     public function addStyle($styles)
     {
-        return $this->style($this->style ?
-            ($this->style.';'.trim($styles)) : 
+        return $this->style(
+            $this->style ?
+            ($this->style.';'.trim($styles)) :
             $styles
         );
     }
@@ -29,15 +31,17 @@ trait HasStyles
      * Sets the style attribute of the element.
      * For multiple styles, use a ";" separated string.
      *
-     * @param  string  $styles The CSS style attribute.
+     * @param string $styles The CSS style attribute.
+     *
      * @return mixed
      */
     public function style($styles = null)
     {
-        if($styles){            
+        if ($styles) {
             $this->style = trim($styles);
+
             return $this;
-        }else{
+        } else {
             return $this->style;
         }
     }
@@ -46,11 +50,12 @@ trait HasStyles
      * Sets the style attribute for the input element of the field.
      * For multiple styles, use a ";" separated string.
      *
-     * @param  string  $style The CSS style attribute.
+     * @param string $style The CSS style attribute.
+     *
      * @return mixed
      */
     public function inputStyle($style)
-    {        
+    {
         return $this->config(['inputStyle' => $style]);
     }
 }

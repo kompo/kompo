@@ -2,6 +2,8 @@
 
 namespace Kompo\Routing;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as RequestFacade;
 use Kompo\Core\KompoAction;
 use Kompo\Core\KompoInfo;
 use Kompo\Exceptions\NotBootableFromRouteException;
@@ -9,9 +11,6 @@ use Kompo\Form;
 use Kompo\Komposers\KomposerHandler;
 use Kompo\Menu;
 use Kompo\Query;
-
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Request as RequestFacade;
 
 class Dispatcher
 {
@@ -25,8 +24,9 @@ class Dispatcher
 
     public function __construct($komposerClass = null)
     {
-        if(!$komposerClass)
+        if (!$komposerClass) {
             $this->bootInfo = KompoInfo::getKompo();
+        }
 
         $this->komposerClass = $komposerClass ?: $this->bootInfo['kompoClass'];
 
@@ -34,17 +34,20 @@ class Dispatcher
 
         $this->booter = 'Kompo\\Komposers\\'.$this->type.'\\'.$this->type.'Booter';
     }
-    
+
     public static function dispatchConnection()
     {
-        if(KompoAction::is('refresh-many'))
+        if (KompoAction::is('refresh-many')) {
             return static::refreshManyKomposers();
+        }
 
-        if(KompoAction::is('browse-many'))
+        if (KompoAction::is('browse-many')) {
             return static::browseManyQueries();
+        }
 
-        if(KompoAction::is('refresh-self'))
+        if (KompoAction::is('refresh-self')) {
             return static::rebootKomposerForDisplay();
+        }
 
         return KomposerHandler::performAction(static::bootKomposerForAction());
     }
@@ -57,35 +60,35 @@ class Dispatcher
         return $booter::bootForAction($dispatcher->bootInfo);
     }
 
-    public function bootKomposerForDisplay() 
+    public function bootKomposerForDisplay()
     {
         $booter = $this->booter;
 
-        if($this->type == 'Form'){
+        if ($this->type == 'Form') {
             return $booter::bootForDisplay($this->komposerClass, request('id'), request()->except('id'));
-        }else{
+        } else {
             return $booter::bootForDisplay($this->komposerClass, request()->all());
         }
     }
 
-    protected static function rebootKomposerForDisplay() 
+    protected static function rebootKomposerForDisplay()
     {
         $d = new static();
         $booter = $d->booter;
 
-        if($d->type == 'Form'){
+        if ($d->type == 'Form') {
             return $booter::bootForDisplay($d->komposerClass, $d->bootInfo['modelKey'], $d->bootInfo['store'], $d->bootInfo['parameters']);
-        }else{
+        } else {
             return $booter::bootForDisplay($d->komposerClass, $d->bootInfo['store'], $d->bootInfo['parameters']);
         }
     }
 
-    protected static function refreshManyKomposers() 
+    protected static function refreshManyKomposers()
     {
         return static::runManyRequests('refresh-self');
     }
 
-    protected static function browseManyQueries() 
+    protected static function browseManyQueries()
     {
         return static::runManyRequests('browse-items', [
             'X-Kompo-Page' => 'page',
@@ -98,9 +101,8 @@ class Dispatcher
         $responses = [];
 
         foreach (request()->all() as $sub) {
-
             $subrequest = clone request();
-            
+
             $subrequest->replace($sub['data'] ?? []);
 
             $subrequest->headers->set(KompoInfo::$key, $sub['kompoinfo']);
@@ -120,13 +122,14 @@ class Dispatcher
 
     public static function getKomposerType($komposerClass)
     {
-        if(is_a($komposerClass, Form::class, true)){
+        if (is_a($komposerClass, Form::class, true)) {
             return 'Form';
-        }elseif (is_a($komposerClass, Query::class, true)) {
+        } elseif (is_a($komposerClass, Query::class, true)) {
             return 'Query';
-        }elseif (is_a($komposerClass, Menu::class, true)) {
+        } elseif (is_a($komposerClass, Menu::class, true)) {
             return 'Menu';
         }
+
         throw new NotBootableFromRouteException($komposerClass);
     }
 }

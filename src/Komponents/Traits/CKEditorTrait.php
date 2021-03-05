@@ -1,9 +1,8 @@
-<?php 
+<?php
 
 namespace Kompo\Komponents\Traits;
 
 use Kompo\Core\IconGenerator;
-use Kompo\Komponents\Field;
 
 trait CKEditorTrait
 {
@@ -18,23 +17,26 @@ trait CKEditorTrait
 
     /**
      * Sets the available toolbar buttons. Check out <a target="_blank" href="https://ckeditor.com/docs/ckeditor5"><u>CKEditor's docs</u></a> for more options. For example:
-     * <php>->toolbar([ 'bold', 'italic', 'underline'])</php>
+     * <php>->toolbar([ 'bold', 'italic', 'underline'])</php>.
      *
      * @param array $toolbar An array of the toolbar buttons.
+     *
      * @return self
      */
     public function toolbar($toolbar)
     {
         $this->config([
-            'toolbar' => $toolbar
+            'toolbar' => $toolbar,
         ]);
+
         return $this;
     }
 
     /**
      * Appends new buttons at the end of the current toolbar.
      *
-     * @param      array  $additionalToolbar  An array of the toolbar buttons.
+     * @param array $additionalToolbar An array of the toolbar buttons.
+     *
      * @return self
      */
     public function appendToolbar($additionalToolbar)
@@ -45,7 +47,8 @@ trait CKEditorTrait
     /**
      * Prepends new buttons at the beginning of the current toolbar.
      *
-     * @param      array  $additionalToolbar  An array of the toolbar buttons.
+     * @param array $additionalToolbar An array of the toolbar buttons.
+     *
      * @return self
      */
     public function prependToolbar($additionalToolbar)
@@ -54,23 +57,23 @@ trait CKEditorTrait
     }
 
     /**
-     * TODO: document
+     * TODO: document.
      */
     public function focusOnLoad()
     {
         return $this->config([
-            'focusOnLoad' => true
+            'focusOnLoad' => true,
         ]);
     }
 
     /**
      * Adds the ability to tag/mention options in the editor by writing a character, with an optional Button trigger.
      *
-     * @param string $marker
-     * @param array|string $feed An array of options or a string method name if AJAX
-     * @param integer $minimumCharacters 
-     * @param string|null $icon The icon for the mention
-     * @param string|null $itemName The name attribute for the mention
+     * @param string       $marker
+     * @param array|string $feed              An array of options or a string method name if AJAX
+     * @param int          $minimumCharacters
+     * @param string|null  $icon              The icon for the mention
+     * @param string|null  $itemName          The name attribute for the mention
      *
      * @return self
      */
@@ -78,24 +81,21 @@ trait CKEditorTrait
     {
         $mentions = $this->config('mentions') ?: [];
 
-        array_push($mentions , [
-            'marker' => $marker,
+        array_push($mentions, [
+            'marker'            => $marker,
             'minimumCharacters' => $minimumCharacters,
-            'iconClass' => $icon,
-            'iconHtml' => IconGenerator::toHtml($icon),
-            'itemType' => $itemType,
-            'initialFeed' => !$icon ? $feed : $feed->map(
-
-                        fn($item) => static::mapMention($item, $marker, $icon, $itemName, $itemType)
-
-                    )->toArray(),
+            'iconClass'         => $icon,
+            'iconHtml'          => IconGenerator::toHtml($icon),
+            'itemType'          => $itemType,
+            'initialFeed'       => !$icon ? $feed : $feed->map(
+                fn ($item)      => static::mapMention($item, $marker, $icon, $itemName, $itemType)
+            )->toArray(),
         ]);
 
         return $this->config([
-            'mentions' => $mentions
+            'mentions' => $mentions,
         ]);
     }
-
 
     /* PRIVATE METHODS - DEFAULT TOOLBARS */
     private function formatToolbar(): array
@@ -116,12 +116,11 @@ trait CKEditorTrait
     public static function mapMention($item, $marker, $icon, $itemName = 'name', $itemType = null)
     {
         return [
-            'id' => $marker.$item->{$itemName}, 
+            'id'        => $marker.$item->{$itemName},
             'iconClass' => $icon,         //has to be a font icon (not svg)
-            'text' => $item->{$itemName}, //text is the key for the label
-            'itemType' => $itemType,
-            'itemId' => $item->id ?? null
+            'text'      => $item->{$itemName}, //text is the key for the label
+            'itemType'  => $itemType,
+            'itemId'    => $item->id ?? null,
         ];
     }
-    
 }

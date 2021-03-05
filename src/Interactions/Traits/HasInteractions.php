@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kompo\Interactions\Traits;
 
@@ -15,21 +15,22 @@ trait HasInteractions
     public $interactions = [];
 
     protected static $proxies = [
-        'onClick', 'onChange', 'onFocus', 'onBlur', 'onInput', 'onEnter', 
-        'onSuccess', 'onError', 'onEmit'
+        'onClick', 'onChange', 'onFocus', 'onBlur', 'onInput', 'onEnter',
+        'onSuccess', 'onError', 'onEmit',
     ];
 
     /**
-    * Dynamically access collection proxies.
-    *
-    * @param  string  $key
-    * @return mixed
-    *
-    * @throws \Exception
-    */
+     * Dynamically access collection proxies.
+     *
+     * @param string $key
+     *
+     * @throws \Exception
+     *
+     * @return mixed
+     */
     public function __get($key)
     {
-        if (! in_array($key, static::$proxies)) {
+        if (!in_array($key, static::$proxies)) {
             throw new Exception("Property [{$key}] does not exist on this class.");
         }
 
@@ -39,23 +40,24 @@ trait HasInteractions
 
     /**
      * Adds an interaction (trigger) to the element.
-     * 
-     * @param  string|array  $interactions
-     * @param  mixed  $parameters
+     *
+     * @param string|array $interactions
+     * @param mixed        $parameters
      *
      * @return mixed
      */
     public function on($interactions, $closure)
     {
-        if(!is_string($interactions) && !is_array($interactions))
+        if (!is_string($interactions) && !is_array($interactions)) {
             throw new NotAcceptableInteractionException($interactions);
+        }
 
-        collect( (array) $interactions )->each(function($interaction) use($closure) {
-
+        collect((array) $interactions)->each(function ($interaction) use ($closure) {
             Interaction::checkIfAcceptable($this, $interaction);
-            
-            if($closure instanceof Closure && is_callable($closure))
+
+            if ($closure instanceof Closure && is_callable($closure)) {
                 return ActionGroup::appendFromClosure($this, $interaction, $closure, $this->getInitialElement());
+            }
 
             throw new NotAcceptableInteractionClosureException($closure);
         });
@@ -114,17 +116,16 @@ trait HasInteractions
     }
 
     /**
-     * Sets the debounce interval for an action. Otherwise, it is defaulted to 500ms
+     * Sets the debounce interval for an action. Otherwise, it is defaulted to 500ms.
      *
-     * @param integer|null $debounce The number of milliseconds between requests.
+     * @param int|null $debounce The number of milliseconds between requests.
      *
-     * @return     self 
+     * @return self
      */
     public function debounce($debounce = 500)
     {
         return $this->config([
-            'debounce' => $debounce
+            'debounce' => $debounce,
         ]);
     }
-
 }

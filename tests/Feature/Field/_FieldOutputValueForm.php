@@ -8,16 +8,15 @@ use Kompo\Tests\Models\Post;
 
 class _FieldOutputValueForm extends Form
 {
-	public $model = Post::class;
+    public $model = Post::class;
 
-	public function komponents()
-	{
-		return [
-			Input::form()->name('title')->value('post-title'),
-			Input::form()->name('obj.title')->value('obj-title'),
-			Input::form()->name('content')->default('default-content'),
-			Input::form()->name('obj.tag')->default('default-tag')
-		];
-	}
-
+    public function komponents()
+    {
+        return [
+            Input::form()->name('title')->value('post-title'),
+            Input::form()->name('obj.title')->value('obj-title'),
+            Input::form()->name('content')->default('default-content'),
+            Input::form()->name('obj.tag')->default('default-tag'),
+        ];
+    }
 }

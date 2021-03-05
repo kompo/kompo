@@ -10,8 +10,8 @@ class Tab extends Layout
 
     public function disabled()
     {
-    	return $this->config([
-    		'tabDisabled' => true
-    	]);
+        return $this->config([
+            'tabDisabled' => true,
+        ]);
     }
 }

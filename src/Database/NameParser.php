@@ -24,7 +24,7 @@ class NameParser
     public static function secondTerm($name)
     {
         $limitedExplode = static::explode($name, 2);
+
         return count($limitedExplode) == 2 ? $limitedExplode[1] : null;
     }
-
 }

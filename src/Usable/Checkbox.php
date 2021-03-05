@@ -7,7 +7,7 @@ use Kompo\Komponents\Traits\HasBooleanValue;
 
 class Checkbox extends Field
 {
-	use HasBooleanValue;
+    use HasBooleanValue;
 
     public $vueComponent = 'Checkbox';
 }

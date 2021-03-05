@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kompo\Komponents\Traits;
 
@@ -27,13 +27,12 @@ trait FormSubmitConfigurations
     /**
      * Reloads a new empty Form. Useful when chained after a submit() to add another item.
      *
-     * @return     self   
+     * @return self
      */
     public function getFreshForm()
     {
         return $this->keepModalOpen()->config([
-            'getFreshForm' => true
+            'getFreshForm' => true,
         ]);
     }
-
 }

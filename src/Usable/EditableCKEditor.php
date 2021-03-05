@@ -2,8 +2,6 @@
 
 namespace Kompo;
 
-use Kompo\CKEditor;
-
 class EditableCKEditor extends CKEditor
 {
     public $vueComponent = 'EditableCKEditor';
@@ -14,5 +12,4 @@ class EditableCKEditor extends CKEditor
 
         $this->noLabel();
     }
-
 }

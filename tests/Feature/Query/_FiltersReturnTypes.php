@@ -2,38 +2,38 @@
 
 namespace Kompo\Tests\Feature\Query;
 
-use Kompo\Query;
 use Kompo\Columns;
+use Kompo\Query;
 
 class _FiltersReturnTypes extends Query
 {
-	//Array
+    //Array
     public function top()
-	{
-		return [
-			Columns::form(),
-			null
-		];
-	}
+    {
+        return [
+            Columns::form(),
+            null,
+        ];
+    }
 
-	//Collection
+    //Collection
     public function right()
-	{
-		return collect([
-			Columns::form(),
-			null
-		]);
-	}
+    {
+        return collect([
+            Columns::form(),
+            null,
+        ]);
+    }
 
-	//One component
+    //One component
     public function bottom()
-	{
-		return Columns::form();
-	}
+    {
+        return Columns::form();
+    }
 
-	//null
-	public function left()
-	{
-		return null;
-	}
+    //null
+    public function left()
+    {
+        return null;
+    }
 }

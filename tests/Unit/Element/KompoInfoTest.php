@@ -5,30 +5,28 @@ namespace Kompo\Tests\Unit\Element;
 use Illuminate\Support\Facades\Crypt;
 use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
-use Kompo\Input;
 use Kompo\Tests\EnvironmentBoot;
 
 class KompoInfoTest extends EnvironmentBoot
 {
-	/** @test */
-	public function kompo_info_is_correctly_created_on_komposers()
-	{
-		$form = new _SetElementIdForm();
+    /** @test */
+    public function kompo_info_is_correctly_created_on_komposers()
+    {
+        $form = new _SetElementIdForm();
 
-		$bootInfo = Crypt::decrypt(KompoInfo::getFromElement($form));
-		$this->assertNotNull($bootInfo);
-		$this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass'] );
+        $bootInfo = Crypt::decrypt(KompoInfo::getFromElement($form));
+        $this->assertNotNull($bootInfo);
+        $this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass']);
 
-		$form = new _SetElementIdForm();
-		$bootInfo2 = Crypt::decrypt(KompoInfo::getFromElement($form));
-		$this->assertNotNull($bootInfo2);
-		$this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass'] );
+        $form = new _SetElementIdForm();
+        $bootInfo2 = Crypt::decrypt(KompoInfo::getFromElement($form));
+        $this->assertNotNull($bootInfo2);
+        $this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass']);
 
-		foreach($bootInfo as $key => $value)
-        {
-        	if($key !== KompoId::$key)
-            	$this->assertEquals($value, $bootInfo2[$key]);
-        }		
-	}
-
+        foreach ($bootInfo as $key => $value) {
+            if ($key !== KompoId::$key) {
+                $this->assertEquals($value, $bootInfo2[$key]);
+            }
+        }
+    }
 }

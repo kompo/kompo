@@ -6,24 +6,23 @@ use Kompo\Routing\RouteFinder;
 
 trait AxiosRequestHttpActions
 {
-
     public function routeHttpRequest($routeMethod, $route, $parameters = null, $payload = null)
     {
         return $this->prepareAxiosRequest([
-            'route' => RouteFinder::guessRoute($route, $parameters, $payload, $routeMethod),
+            'route'       => RouteFinder::guessRoute($route, $parameters, $payload, $routeMethod),
             'routeMethod' => $routeMethod,
-            'ajaxPayload' => $payload
+            'ajaxPayload' => $payload,
         ]);
     }
 
     /**
      * Performs a GET request to a route in your application.
      *
-     * @param      string      $route        The route name or uri.
-     * @param      array|null  $parameters   The route parameters (optional).
-     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
+     * @param string     $route       The route name or uri.
+     * @param array|null $parameters  The route parameters (optional).
+     * @param array|null $ajaxPayload Additional custom data to add to the request (optional).
      *
-     * @return     self   
+     * @return self
      */
     public function get($route, $parameters = null, $ajaxPayload = null)
     {
@@ -33,11 +32,11 @@ trait AxiosRequestHttpActions
     /**
      * Performs a POST request to a route in your application.
      *
-     * @param      string  $route    The route name or uri.
-     * @param      array|null  $parameters   The route parameters (optional).
-     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
+     * @param string     $route       The route name or uri.
+     * @param array|null $parameters  The route parameters (optional).
+     * @param array|null $ajaxPayload Additional custom data to add to the request (optional).
      *
-     * @return     self   
+     * @return self
      */
     public function post($route, $parameters = null, $ajaxPayload = null)
     {
@@ -47,11 +46,11 @@ trait AxiosRequestHttpActions
     /**
      * Performs a PUT request to a route in your application.
      *
-     * @param      string  $route    The route name or uri.
-     * @param      array|null  $parameters   The route parameters (optional).
-     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
+     * @param string     $route       The route name or uri.
+     * @param array|null $parameters  The route parameters (optional).
+     * @param array|null $ajaxPayload Additional custom data to add to the request (optional).
      *
-     * @return     self   
+     * @return self
      */
     public function put($route, $parameters = null, $ajaxPayload = null)
     {
@@ -61,15 +60,14 @@ trait AxiosRequestHttpActions
     /**
      * Performs a DELETE request to a route in your application.
      *
-     * @param      string  $route    The route name or uri.
-     * @param      array|null  $parameters   The route parameters (optional).
-     * @param      array|null  $ajaxPayload  Additional custom data to add to the request (optional).
+     * @param string     $route       The route name or uri.
+     * @param array|null $parameters  The route parameters (optional).
+     * @param array|null $ajaxPayload Additional custom data to add to the request (optional).
      *
-     * @return     self   
+     * @return self
      */
     public function delete($route, $parameters = null, $ajaxPayload = null)
     {
         return $this->routeHttpRequest('DELETE', $route, $parameters, $ajaxPayload);
     }
-    
 }

@@ -3,8 +3,6 @@
 namespace Kompo\Core;
 
 use Illuminate\Support\Facades\Crypt;
-use Kompo\Core\KompoId;
-use Kompo\Exceptions\AuthorizationUnavailableException;
 use Kompo\Exceptions\KompoBootInfoNotFoundException;
 
 class KompoInfo extends KompoAjax
@@ -18,20 +16,21 @@ class KompoInfo extends KompoAjax
             KompoId::arrayFromElement($komposer),
             [
                 'kompoClass' => get_class($komposer),
-                'store' => $komposer->store(),
+                'store'      => $komposer->store(),
                 'parameters' => $komposer->parameter(),
                 //'uri' => optional(request()->route())->uri(),
                 //'method' => optional(request()->route())->methods()[0]
             ]
         );
 
-        static::setOnElement( $komposer, Crypt::encrypt($bootInfo));
+        static::setOnElement($komposer, Crypt::encrypt($bootInfo));
     }
 
     public static function getKompo()
     {
-        if(! ($bootInfo = static::header()))
+        if (!($bootInfo = static::header())) {
             throw new KompoBootInfoNotFoundException();
+        }
 
         return Crypt::decrypt($bootInfo);
     }

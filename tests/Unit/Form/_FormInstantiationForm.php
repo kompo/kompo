@@ -7,15 +7,15 @@ use Kompo\Tests\Models\Obj;
 
 class _FormInstantiationForm extends Form
 {
-	public $model = Obj::class;
+    public $model = Obj::class;
 
-	public $modelId;
+    public $modelId;
 
-	public $store;
+    public $store;
 
-	public function created()
-	{
-		$this->modelId = $this->model->id;
-		$this->store = $this->store();
-	}
+    public function created()
+    {
+        $this->modelId = $this->model->id;
+        $this->store = $this->store();
+    }
 }

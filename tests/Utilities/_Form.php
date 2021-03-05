@@ -6,5 +6,4 @@ use Kompo\Form;
 
 class _Form extends Form
 {
-
 }

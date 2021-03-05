@@ -2,16 +2,14 @@
 
 namespace Kompo;
 
-use Kompo\Input;
-
 class Liste extends Input
-{	
+{
     public $vueComponent = 'Liste';
 
     /**
      * Adds a cast to array to the attribute if no cast is present.
      *
-     * @var boolean
+     * @var bool
      */
     protected $castsToArray = true;
 
@@ -32,12 +30,13 @@ class Liste extends Input
 
     protected function emptyValue()
     {
-    	return [[$this->config('keyLabel') => '']];
+        return [[$this->config('keyLabel') => '']];
     }
 
     public function value($value)
     {
-        $this->value = is_string($value) ? json_decode($value, true) :  $value;
+        $this->value = is_string($value) ? json_decode($value, true) : $value;
+
         return $this;
     }
 
@@ -45,15 +44,14 @@ class Liste extends Input
      * Sets the key label for the JSON string that will be encoded in the DB.
      * The default is 'key'.
      *
-     * @param      string  $keyLabel  The key label for the json Object.
+     * @param string $keyLabel The key label for the json Object.
      *
-     * @return self  
+     * @return self
      */
     public function keyLabel($keyLabel)
     {
-    	$this->config(['keyLabel' => $keyLabel]);
+        $this->config(['keyLabel' => $keyLabel]);
 
-    	return $this;
+        return $this;
     }
-
 }

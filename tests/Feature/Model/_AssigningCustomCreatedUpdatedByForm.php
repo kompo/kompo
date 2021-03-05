@@ -8,13 +8,12 @@ use Kompo\Tests\Models\KompoModelCustom;
 
 class _AssigningCustomCreatedUpdatedByForm extends Form
 {
-	public $model = KompoModelCustom::class;
+    public $model = KompoModelCustom::class;
 
-	public function komponents()
-	{
-		return [
-			Input::form('Name')
-		];
-	}
-
+    public function komponents()
+    {
+        return [
+            Input::form('Name'),
+        ];
+    }
 }

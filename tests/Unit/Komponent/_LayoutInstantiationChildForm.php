@@ -8,14 +8,14 @@ use Kompo\Input;
 
 class _LayoutInstantiationChildForm extends Form
 {
-	public function komponents()
-	{
-		return [
-			Columns::form(
-				Input::form()->id('B'),
-				null,
-				Input::form()->id('C')
-			)
-		];
-	}
+    public function komponents()
+    {
+        return [
+            Columns::form(
+                Input::form()->id('B'),
+                null,
+                Input::form()->id('C')
+            ),
+        ];
+    }
 }

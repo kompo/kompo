@@ -2,81 +2,87 @@
 
 namespace Kompo\Routing;
 
+use Illuminate\Support\Arr;
 use Kompo\Core\KompoTarget;
 use Kompo\Exceptions\EmptyRouteException;
 use Kompo\Komposers\Komposer;
-use Illuminate\Support\Arr;
 
 class RouteFinder
 {
     /**
      * Guesses the desired route and method from the parameters.
      *
-     * @param  string  $route
-     * @param  mixed  $parameters
+     * @param string $route
+     * @param mixed  $parameters
+     *
      * @return mixed
      */
     public static function matchRoute($route, $parameters = null)
     {
-        if(!$route)
+        if (!$route) {
             throw new EmptyRouteException();
+        }
 
-        return is_null( static::getRouteByName($route) ) ? 
-                    url($route, $parameters) : 
+        return is_null(static::getRouteByName($route)) ?
+                    url($route, $parameters) :
                     route($route, $parameters);
     }
 
     /**
      * Adds the main kompo route point to the komponent.
      *
-     * @param mixed $kompo  A kompo object
+     * @param mixed $kompo A kompo object
      *
      * @return self
      */
     public static function activateRoute($kompo)
     {
         return $kompo->config([
-            'kompoRoute' => static::getKompoRoute()
+            'kompoRoute' => static::getKompoRoute(),
         ]);
     }
 
     /**
-     * { function_description }
+     * { function_description }.
      *
-     * @param <type>  $komponent        The komponent
-     * @param string  $routeOrKomposer  The route or komposer class
+     * @param <type> $komponent       The komponent
+     * @param string $routeOrKomposer The route or komposer class
      */
     public static function setUpKomposerRoute($komponent, $routeOrKomposer, $routeMethod = 'GET')
     {
-        if(is_a($routeOrKomposer, Komposer::class, true))
-            return $komponent->config(array_merge([
-                'route' => RouteFinder::getKompoRoute(),
-                'routeMethod' => $routeMethod
-            ],
+        if (is_a($routeOrKomposer, Komposer::class, true)) {
+            return $komponent->config(array_merge(
+                [
+                    'route'       => RouteFinder::getKompoRoute(),
+                    'routeMethod' => $routeMethod,
+                ],
                 KompoTarget::getEncryptedArray($routeOrKomposer)
             ));
+        }
 
         return $komponent->config([
-            'route' => $routeOrKomposer,
-            'routeMethod' => $routeMethod
+            'route'       => $routeOrKomposer,
+            'routeMethod' => $routeMethod,
         ]);
     }
 
     /**
      * Guesses the desired route and method from the parameters.
      *
-     * @param  string  $route
-     * @param  mixed  $parameters
+     * @param string $route
+     * @param mixed  $parameters
+     *
      * @return mixed
      */
     public static function guessRoute($route, $parameters = null, $payload = null, $routeMethod = null)
     {
-        if(!$route)
+        if (!$route) {
             throw new EmptyRouteException();
-        
+        }
+
         $routeObject = static::getRouteByName($route);
 
-        return is_null( $routeObject ) ? url($route, $parameters) : route($route, $parameters);
+        return is_null($routeObject) ? url($route, $parameters) : route($route, $parameters);
 
         /* To delete ? Payload addition for GET is now managed in JS
         return static::appendQueryString(
@@ -89,22 +95,19 @@ class RouteFinder
     /**
      * Gets the route object.
      *
-     * @param      <type>  $route       The route
-     * @param      <type>  $parameters  The parameters
+     * @param <type> $route      The route
+     * @param <type> $parameters The parameters
      *
-     * @return     <type>  The route object.
+     * @return <type> The route object.
      */
     public static function getRouteObject($route, $parameters = null)
     {
         $routeObject = static::getRouteByName($route);
 
-        return is_null($routeObject) ? collect(\Route::getRoutes())->first(function($r) use($route, $parameters){
+        return is_null($routeObject) ? collect(\Route::getRoutes())->first(function ($r) use ($route, $parameters) {
             return $r->matches(request()->create(url($route, $parameters)));
         }) : $routeObject;
     }
-
-
-
 
     /**
      * The default route that handles Kompo requests.
@@ -117,17 +120,16 @@ class RouteFinder
 
         /* To delete ? Payload addition for GET is now managed in JS
         return static::appendQueryString(
-            url('_kompo'), 
-            $requestType, 
+            url('_kompo'),
+            $requestType,
             $ajaxPayload
         );*/
     }
 
-
     /**
-     * Returns thr current route's parameters
+     * Returns thr current route's parameters.
      *
-     * @return     <type>  The route parameters.
+     * @return <type> The route parameters.
      */
     public static function getRouteParameters()
     {
@@ -143,18 +145,17 @@ class RouteFinder
     /**
      * Gets the route by name.
      *
-     * @param      <type>  $route  The route
+     * @param <type> $route The route
      *
-     * @return     <type>  The route by name.
+     * @return <type> The route by name.
      */
     protected static function getRouteByName($route)
     {
         return \Route::getRoutes()->getByName($route);
     }
 
-
     protected static function appendQueryString($url, $method = null, $payload = null)
     {
-        return $url.(($method == 'GET' && count($payload ?: []) ) ? ('?'.Arr::query($payload)) : '');
+        return $url.(($method == 'GET' && count($payload ?: [])) ? ('?'.Arr::query($payload)) : '');
     }
 }

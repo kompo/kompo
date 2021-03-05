@@ -1,17 +1,19 @@
-<?php 
+<?php
+
 namespace Kompo\Komponents\Traits;
 
-trait VerticalAlignmentTrait {
-
+trait VerticalAlignmentTrait
+{
     /**
-     * Centers the content vertically in the columns on md screens only. 
-     * <u>Note</u> This is the default setting, no need to set it initially. 
+     * Centers the content vertically in the columns on md screens only.
+     * <u>Note</u> This is the default setting, no need to set it initially.
      *
-     * @return self  
+     * @return self
      */
     public function centerVertically()
     {
         $this->config(['alignClass' => 'vlAlignCenterMd']);
+
         return $this;
     }
 
@@ -23,6 +25,7 @@ trait VerticalAlignmentTrait {
     public function alignStart()
     {
         $this->config(['alignClass' => 'vlAlignStart']);
+
         return $this;
     }
 
@@ -34,17 +37,19 @@ trait VerticalAlignmentTrait {
     public function alignCenter()
     {
         $this->config(['alignClass' => 'vlAlignCenter']);
+
         return $this;
     }
 
     /**
      * Aligns the items vertically to the bottom.
      *
-     * @return self 
+     * @return self
      */
     public function alignEnd()
     {
         $this->config(['alignClass' => 'vlAlignEnd']);
+
         return $this;
     }
 
@@ -56,6 +61,7 @@ trait VerticalAlignmentTrait {
     public function alignBaseline()
     {
         $this->config(['alignClass' => 'vlAlignBaseline']);
+
         return $this;
     }
 
@@ -67,7 +73,7 @@ trait VerticalAlignmentTrait {
     public function alignStretch()
     {
         $this->config(['alignClass' => 'vlAlignStretch']);
+
         return $this;
     }
-    
 }

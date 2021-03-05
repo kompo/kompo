@@ -11,15 +11,14 @@ class Code extends Block
     /**
      * Sets the number of spaces taken by a tab in the &lt;code> HTML tag.
      *
-     * @param integer  $tabSize  The tab size in spaces. By default, it is 4.
+     * @param int $tabSize The tab size in spaces. By default, it is 4.
      *
      * @return self
      */
     public function tabSize($tabSize)
     {
-    	return $this->config([
-    		'tabSize' => $tabSize
-    	]);
+        return $this->config([
+            'tabSize' => $tabSize,
+        ]);
     }
-    
 }

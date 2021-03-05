@@ -7,9 +7,9 @@ use Illuminate\Routing\Router;
 
 trait ExtendsRoutingTrait
 {
-	protected function extendRouting()
-	{
-        Route::mixin(new RouteMixin);
-        Router::mixin(new RouterMixin); 
-	}
+    protected function extendRouting()
+    {
+        Route::mixin(new RouteMixin());
+        Router::mixin(new RouterMixin());
+    }
 }

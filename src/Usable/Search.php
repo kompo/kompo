@@ -2,8 +2,6 @@
 
 namespace Kompo;
 
-use Kompo\Select;
-
 class Search extends Select
 {
     protected function vlInitialize($label)
@@ -11,9 +9,9 @@ class Search extends Select
         parent::vlInitialize($label);
 
         $this->config([
-	        'searchInput' => true
-	    ]);
+            'searchInput' => true,
+        ]);
 
-	    $this->icon('icon-search');
+        $this->icon('icon-search');
     }
 }

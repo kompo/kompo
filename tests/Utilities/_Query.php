@@ -6,5 +6,4 @@ use Kompo\Query;
 
 class _Query extends Query
 {
-
 }

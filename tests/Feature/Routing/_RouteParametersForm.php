@@ -8,20 +8,20 @@ use Kompo\Tests\Models\Post;
 
 class _RouteParametersForm extends Form
 {
-	use _RouteParametersCommonTrait;
+    use _RouteParametersCommonTrait;
 
-	public $model = Post::class; //otherwise modelKey is not set
+    public $model = Post::class; //otherwise modelKey is not set
 
-	public $modelKey; //Had to expose it to see it in a route response
+    public $modelKey; //Had to expose it to see it in a route response
 
-	public function created()
-	{
-		$this->modelKey = $this->modelKey();
-		$this->commonCreated();
-	}
+    public function created()
+    {
+        $this->modelKey = $this->modelKey();
+        $this->commonCreated();
+    }
 
-	public function komponents()
-	{
-		return Input::form('Form-is-rendered');
-	}
+    public function komponents()
+    {
+        return Input::form('Form-is-rendered');
+    }
 }

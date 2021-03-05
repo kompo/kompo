@@ -1,22 +1,21 @@
-<?php 
+<?php
 
 namespace Kompo\Komponents\Traits;
 
-trait AjaxConfigurations 
+trait AjaxConfigurations
 {
-
     /**
      * Shows a warning message that the user needs to confirm before closing the editing modal.
-     * If message is left empty, it defaults to "Any unsaved changes will be lost. Are you sure you want to close this window?". 
-     * 
-     * @param  string|null $message 
+     * If message is left empty, it defaults to "Any unsaved changes will be lost. Are you sure you want to close this window?".
+     *
+     * @param string|null $message
+     *
      * @return self
      */
     public function warnBeforeClose($message = null)
     {
         return $this->config(['warnBeforeClose' => $message ? __($message) : __('warnBeforeClose')]);
     }
-
 
     /**
      * Cancels or reverts the closest parent Panel (hides it and shows previous state).
@@ -25,7 +24,8 @@ trait AjaxConfigurations
      */
     public function revertsPanel()
     {
-        $this->config([ 'revertsPanel' => true ]);
+        $this->config(['revertsPanel' => true]);
+
         return $this;
     }
 
@@ -36,7 +36,8 @@ trait AjaxConfigurations
      */
     public function revertsFormRow()
     {
-        $this->config([ 'revertsFormRow' => true ]);
+        $this->config(['revertsFormRow' => true]);
+
         return $this;
     }
 
@@ -49,5 +50,4 @@ trait AjaxConfigurations
     {
         return $this->config(['keepModalOpen' => true]);
     }
-
 }

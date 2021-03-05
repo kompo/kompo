@@ -1,57 +1,61 @@
-<?php 
+<?php
 
 namespace Kompo\Komponents\Traits;
 
 use Kompo\Routing\RouteFinder;
 
-trait DoesTurboRefresh {
-
+trait DoesTurboRefresh
+{
     /**
-     * Flag for loading an element like turbolinks
+     * Flag for loading an element like turbolinks.
      *
-     * @var Boolean
+     * @var bool
      */
     public $turbo = false;
 
     /**
-     * Verifies if the href link should be loaded like turbolinks (no full page reload)
-     * @param  string $route [description]
-     * @param  array $parameters      [description]
-     * @return void            
+     * Verifies if the href link should be loaded like turbolinks (no full page reload).
+     *
+     * @param string $route      [description]
+     * @param array  $parameters [description]
+     *
+     * @return void
      */
     public function checkTurbo($route, $parameters = null)
     {
-        if($this->config('turboDisabled'))
+        if ($this->config('turboDisabled')) {
             return;
+        }
 
-        if( 
-            ($routeObject = RouteFinder::getRouteObject($route, $parameters)) && 
-            (($routeObject->action['layout'] ?? '') === (request()->route()->action['layout'] ?? false ))
-        )
+        if (
+            ($routeObject = RouteFinder::getRouteObject($route, $parameters)) &&
+            (($routeObject->action['layout'] ?? '') === (request()->route()->action['layout'] ?? false))
+        ) {
             $this->forceTurbo();
+        }
     }
 
     /**
-     * Flag for disabling turbo links
+     * Flag for disabling turbo links.
      *
-     * @var Boolean
+     * @var bool
      */
     public function noTurbo()
     {
         return $this->config([
-            'turboDisabled' => true
+            'turboDisabled' => true,
         ]);
     }
 
     /** TODO: Document
-     * Force turbo for component href or redirect
+     * Force turbo for component href or redirect.
      *
-     * @var Boolean
+     * @var bool
      */
     public function forceTurbo()
     {
         $this->turbo = true;
+
         return $this;
     }
-
 }

@@ -7,19 +7,17 @@ use Kompo\Input;
 
 class _IncludesOrKomponentsForm extends Form
 {
-	public function komponents()
-	{
-		return [
-			Input::form('Title')->getKomponents('newKompos')
-		];
-	}
+    public function komponents()
+    {
+        return [
+            Input::form('Title')->getKomponents('newKompos'),
+        ];
+    }
 
-
-	public function newkompos()
-	{
-		return [
-			Input::form('Content')
-		];
-	}
-
+    public function newkompos()
+    {
+        return [
+            Input::form('Content'),
+        ];
+    }
 }

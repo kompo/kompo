@@ -5,7 +5,6 @@ namespace Kompo\Komposers\Form;
 use Illuminate\Database\Eloquent\Model;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\KompoId;
-use Kompo\Core\KompoInfo;
 use Kompo\Core\ValidationManager;
 use Kompo\Form;
 use Kompo\Komposers\KomposerManager;
@@ -14,16 +13,16 @@ use Kompo\Routing\RouteFinder;
 class FormBooter
 {
     public static function bootForAction($bootInfo)
-    {        
+    {
         $form = static::instantiateUnbooted($bootInfo['kompoClass']);
 
         KompoId::setForKomposer($form, $bootInfo);
-        
+
         $modelKey = $bootInfo['modelKey'];
         $model = $form->model;
 
-        if($modelKey instanceof Model){
-            $model = $modelKey; //made this so we can boot a model (with predefined attributes) with MultiForm for ex. 
+        if ($modelKey instanceof Model) {
+            $model = $modelKey; //made this so we can boot a model (with predefined attributes) with MultiForm for ex.
             $modelKey = $model->getKey();
         }
 
@@ -33,29 +32,28 @@ class FormBooter
         $form->model($model);
 
         AuthorizationGuard::checkBoot($form);
-        
+
         ValidationManager::addRulesToKomposer($form->rules(), $form);
-        
+
         KomposerManager::prepareKomponentsForAction($form, 'komponents', true); //mainly to retrieve rules from fields
 
         return $form;
     }
 
-	public static function bootForDisplay($form, $modelKey = null, $store = [], $routeParams = null)
-	{
+    public static function bootForDisplay($form, $modelKey = null, $store = [], $routeParams = null)
+    {
         $form = static::instantiateUnbooted($form);
 
-        if(is_array($modelKey)) //Allow permutation of arguments
-        {
+        if (is_array($modelKey)) { //Allow permutation of arguments
             $newStore = $modelKey;
             $modelKey = is_array($store) ? null : $store;
             $store = $newStore;
         }
-        
+
         $model = $form->model;
 
-        if($modelKey instanceof Model){
-            $model = $modelKey; //made this so we can boot a model (with predefined attributes) with MultiForm for ex. 
+        if ($modelKey instanceof Model) {
+            $model = $modelKey; //made this so we can boot a model (with predefined attributes) with MultiForm for ex.
             $modelKey = $model->getKey();
         }
 
@@ -63,27 +61,29 @@ class FormBooter
         $form->parameter($routeParams ?: RouteFinder::getRouteParameters());
         $form->modelKey($modelKey);
         $form->model($model);
-        
+
         AuthorizationGuard::checkBoot($form);
 
         FormDisplayer::displayKomponents($form);
 
         KomposerManager::booted($form);
 
-		return $form;
-	}
+        return $form;
+    }
 
     /**
      * Initialize or find the model (if komposer linked to a model).
      *
-     * @param Kompo\Komposer\Komposer $komposer
+     * @param Kompo\Komposer\Komposer                 $komposer
      * @param Illuminate\Database\Eloquent\Model|null $model
+     *
      * @return void
      */
     public static function setModel($komposer, $model = null)
     {
-        if(is_null($model))
+        if (is_null($model)) {
             return;
+        }
 
         $komposer->model = $model instanceof Model ? $model : $model::findOrNew($komposer->modelKey());
         $komposer->modelKey($komposer->model()->getKey()); //set if it wasn't (ex: dynamic model set in created() phase)
@@ -101,17 +101,15 @@ class FormBooter
         return '<'.$form->vueKomposerTag.' :vkompo="'.htmlspecialchars($form).'"></'.$form->vueKomposerTag.'>';
     }
 
-
     /**
      * Returns an unbooted Form if called with it's class string.
      *
-     * @param mixed $class  The class or object
+     * @param mixed $class The class or object
      *
-     * @return 
+     * @return
      */
     protected static function instantiateUnbooted($class)
     {
-        return $class instanceOf Form ? $class : new $class(null, null, true);
+        return $class instanceof Form ? $class : new $class(null, null, true);
     }
-
 }

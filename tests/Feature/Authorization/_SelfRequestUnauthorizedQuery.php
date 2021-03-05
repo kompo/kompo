@@ -6,8 +6,8 @@ use Kompo\Query;
 
 class _SelfRequestUnauthorizedQuery extends Query
 {
-	public function authorize()
-	{
-		return false;
-	}
+    public function authorize()
+    {
+        return false;
+    }
 }

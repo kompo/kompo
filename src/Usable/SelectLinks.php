@@ -3,12 +3,11 @@
 namespace Kompo;
 
 use Kompo\Elements\Traits\HasGutters;
-use Kompo\Select;
 
 class SelectLinks extends Select
 {
     use HasGutters;
-    
+
     public $vueComponent = 'SelectButtons';
 
     protected function vlInitialize($label)
@@ -25,44 +24,44 @@ class SelectLinks extends Select
     }
 
     /**
-     * Add a class to the container
+     * Add a class to the container.
      *
-     * @param      string  $class  The class
+     * @param string $class The class
      *
      * @return self
      */
     public function containerClass($class)
     {
-    	return $this->config([
-    		'containerClass' => $class
-    	]);
+        return $this->config([
+            'containerClass' => $class,
+        ]);
     }
 
     /**
-     * Add a class to the option
+     * Add a class to the option.
      *
-     * @param      string  $class  The class
+     * @param string $class The class
      *
      * @return self
      */
     public function optionClass($class)
     {
-    	return $this->config([
-    		'optionClass' => $class
-    	]);
+        return $this->config([
+            'optionClass' => $class,
+        ]);
     }
 
     /**
-     * Add a class to the contents of the option
+     * Add a class to the contents of the option.
      *
-     * @param      string  $class  The class
+     * @param string $class The class
      *
      * @return self
      */
     public function optionInnerClass($class)
     {
-    	return $this->config([
-    		'optionInnerClass' => $class
-    	]);
+        return $this->config([
+            'optionInnerClass' => $class,
+        ]);
     }
 }

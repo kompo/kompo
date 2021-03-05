@@ -10,7 +10,8 @@ use Kompo\Routing\Router;
 
 abstract class Komposer extends Element
 {
-    use HasInteractions, ForwardsInteraction;
+    use HasInteractions;
+    use ForwardsInteraction;
 
     /**
      * The Vue component to render the Komposer as a child of another Komposer.
@@ -18,7 +19,7 @@ abstract class Komposer extends Element
      * @var string
      */
     public $vueComponent = 'Komposer';
-    
+
     /**
      * The meta komponent's data for internal usage. Contains the store, route parameters, etc...
      *
@@ -26,9 +27,9 @@ abstract class Komposer extends Element
      */
     protected $_kompo = [
         'parameters' => [],
-        'store' => [],
-        'fields' => [],
-        'options' => []
+        'store'      => [],
+        'fields'     => [],
+        'options'    => [],
     ];
 
     /**
@@ -46,43 +47,42 @@ abstract class Komposer extends Element
     public $pusherRefresh;
 
     /**
-     * When a Komposer is called from a Route
+     * When a Komposer is called from a Route.
      *
-     * @return  mixed
+     * @return mixed
      */
     public function __invoke()
     {
         $route = request()->route();
         $dispatcher = new Dispatcher($route->action['controller']);
 
-        if($layout = Router::getMergedLayout($route)){
-
+        if ($layout = Router::getMergedLayout($route)) {
             $komposer = $dispatcher->bootKomposerForDisplay();
             $booter = $dispatcher->booter;
 
             return view('kompo::view', [
-                'vueComponent' => $booter::renderVueComponent($komposer),
+                'vueComponent'   => $booter::renderVueComponent($komposer),
                 'containerClass' => property_exists($komposer, 'containerClass') ? $komposer->containerClass : 'container',
-                'metaTags' => $komposer->getMetaTags($komposer),
-                'js' => method_exists($komposer, 'js') ? $komposer->js() : null,
-                'layout' => $layout,
-                'section' => Router::getLastSection($route)
+                'metaTags'       => $komposer->getMetaTags($komposer),
+                'js'             => method_exists($komposer, 'js') ? $komposer->js() : null,
+                'layout'         => $layout,
+                'section'        => Router::getLastSection($route),
             ]);
-        }else{
+        } else {
             return $dispatcher->bootKomposerForDisplay();
         }
     }
 
-	/**
-	 * This method is fired at the very beginning of the booting process (even before created).
-	 * Handles booting authorization logic.
-	 *
-	 * @return boolean Is booting the Komposer authorized or not?
-	 */
-	public function authorizeBoot()
-	{
-		return true;
-	}
+    /**
+     * This method is fired at the very beginning of the booting process (even before created).
+     * Handles booting authorization logic.
+     *
+     * @return bool Is booting the Komposer authorized or not?
+     */
+    public function authorizeBoot()
+    {
+        return true;
+    }
 
     /**
      * Gets the failed authorization message, if defined.
@@ -97,7 +97,8 @@ abstract class Komposer extends Element
     /**
      * Assign additional session data to the komposer. Or retrieve it if parameter is a string key.
      *
-     * @param  mixed  $data
+     * @param mixed $data
+     *
      * @return mixed
      */
     public function store($data = null)
@@ -108,7 +109,8 @@ abstract class Komposer extends Element
     /**
      * Gets the route's parameter or the one persisted in the session.
      *
-     * @param  string|array|null  $parameter
+     * @param string|array|null $parameter
+     *
      * @return mixed
      */
     public function parameter($data = null)
@@ -123,7 +125,6 @@ abstract class Komposer extends Element
      */
     public function prepareForDisplay($komposer)
     {
-
     }
 
     /**
@@ -133,7 +134,6 @@ abstract class Komposer extends Element
      */
     public function prepareForAction($komposer)
     {
-
     }
 
     /**
@@ -146,5 +146,4 @@ abstract class Komposer extends Element
     {
         return ($this->metaTags && count($this->metaTags)) ? $this->metaTags : null;
     }
-    
 }

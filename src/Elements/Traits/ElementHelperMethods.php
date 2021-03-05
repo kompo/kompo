@@ -1,18 +1,15 @@
-<?php 
+<?php
 
 namespace Kompo\Elements\Traits;
 
-trait ElementHelperMethods 
+trait ElementHelperMethods
 {
     /*************************************************************************
     ** It is OK if these methods are overriden in Komposer classes... ********
     *************************************************************************/
 
-
-
-
     /**
-     * Hides the field or element on the Front-end with Vue's v-if. 
+     * Hides the field or element on the Front-end with Vue's v-if.
      *
      * @return self
      */
@@ -20,6 +17,4 @@ trait ElementHelperMethods
     {
         return $this->config(['displayNone' => true]);
     }
-
-
 }

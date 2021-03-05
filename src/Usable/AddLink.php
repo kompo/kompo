@@ -3,26 +3,25 @@
 namespace Kompo;
 
 use Kompo\Komponents\Traits\ModalLinks;
-use Kompo\Link;
 
 class AddLink extends Link
 {
-	use ModalLinks;
+    use ModalLinks;
 
     public $vueComponent = 'EditLink';
     public $linkTag = 'vlLink';
 
-	protected function vlInitialize($label)
+    protected function vlInitialize($label)
     {
-    	parent::vlInitialize($label);
+        parent::vlInitialize($label);
 
         $this->setDefaultSuccessAction();
 
         $this->setDefaultIcon();
-	}
+    }
 
-	protected function setDefaultIcon()
-	{
-		$this->icon('icon-plus');
-	}
+    protected function setDefaultIcon()
+    {
+        $this->icon('icon-plus');
+    }
 }

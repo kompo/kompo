@@ -8,12 +8,12 @@ use Kompo\Menu;
 
 class _SubMenuInstantiationMenu extends Menu
 {
-	public function komponents()
-	{
-		return Collapse::form()->submenu(
-			Input::form()->id('A'),
-			new _SubMenuInstantiationChildMenu(),
-			null //to test filtering out
-		);
-	}
+    public function komponents()
+    {
+        return Collapse::form()->submenu(
+            Input::form()->id('A'),
+            new _SubMenuInstantiationChildMenu(),
+            null //to test filtering out
+        );
+    }
 }

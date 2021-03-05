@@ -2,38 +2,34 @@
 
 namespace Kompo\Interactions\Actions;
 
-use Kompo\Core\KompoId;
-use Kompo\Routing\RouteFinder;
-
 trait FrontEndActions
 {
-
     /**
      * Toggles another item identified by the $id. By default, the target item is hidden on load.
      *
-     * @param string        $id             The id of the element to be toggled.
-     * @param boolean|null  $toggleOnLoad   Whether the item should be toggled on inital load. Default is true.
+     * @param string    $id           The id of the element to be toggled.
+     * @param bool|null $toggleOnLoad Whether the item should be toggled on inital load. Default is true.
      *
-     * @return self 
+     * @return self
      */
     public function toggleId($id, $toggleOnLoad = true)
     {
-        $this->applyToElement(function($el) use($id, $toggleOnLoad) {
+        $this->applyToElement(function ($el) use ($id, $toggleOnLoad) {
             $el->config([
-                'toggleId' => $id,
-                'toggleOnLoad' => $toggleOnLoad 
+                'toggleId'     => $id,
+                'toggleOnLoad' => $toggleOnLoad,
             ]);
         });
 
         return $this->prepareAction('toggleElement', [
-            'toggleId' => $id
+            'toggleId' => $id,
         ]);
     }
 
     /**
      * The Komponent will hide itself after an interaction.
      *
-     * @return self 
+     * @return self
      */
     public function hideSelf()
     {
@@ -44,19 +40,18 @@ trait FrontEndActions
     public function scrollTo($selector, $duration, $options = [], $timeoutDuration = 500)
     {
         return $this->prepareAction('scrollTo', [
-            'scrollSelector' => $selector,
-            'scrollDuration' => $duration,
-            'scrollOptions' => $options,
+            'scrollSelector'  => $selector,
+            'scrollDuration'  => $duration,
+            'scrollOptions'   => $options,
             'timeoutDuration' => $timeoutDuration,
         ]);
     }
-
 
     //TODO: document
     public function toggleClass($class)
     {
         return $this->prepareAction('toggleClass', [
-            'toggleClass' => $class
+            'toggleClass' => $class,
         ]);
     }
 
@@ -64,7 +59,7 @@ trait FrontEndActions
     public function addClass($class)
     {
         return $this->prepareAction('addClass', [
-            'addClass' => $class
+            'addClass' => $class,
         ]);
     }
 
@@ -72,7 +67,7 @@ trait FrontEndActions
     public function removeClass($class)
     {
         return $this->prepareAction('removeClass', [
-            'removeClass' => $class
+            'removeClass' => $class,
         ]);
     }
 

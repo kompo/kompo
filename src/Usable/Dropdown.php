@@ -8,32 +8,33 @@ use Kompo\Komponents\Trigger;
 
 class Dropdown extends Trigger
 {
-	use HasHref, HasSubmenu;
+    use HasHref;
+    use HasSubmenu;
 
-	public $vueComponent = 'Dropdown';
+    public $vueComponent = 'Dropdown';
     public $bladeComponent = 'Dropdown';
 
     /**
      * The dropdown menu will align to the right instead of the default left alignment.
      *
-     * @return     self 
+     * @return self
      */
     public function alignRight()
     {
-        return $this->config([ 'dropdownPosition' => 'vlDropdownMenuRight' ]);
+        return $this->config(['dropdownPosition' => 'vlDropdownMenuRight']);
     }
 
     public function alignUpRight()
     {
-    	return $this->config([
-    		'dropdownPosition' => 'vlDropdownMenuUpRight'
-    	]);
+        return $this->config([
+            'dropdownPosition' => 'vlDropdownMenuUpRight',
+        ]);
     }
 
     public function openOnClick()
     {
         return $this->config([
-            'openOnClick' => true
+            'openOnClick' => true,
         ]);
     }
 }

@@ -2,15 +2,13 @@
 
 namespace Kompo;
 
-use Kompo\EditLink;
-
 class EditButton extends EditLink
 {
     public $linkTag = 'vlButton';
-    
-	protected function vlInitialize($label)
+
+    protected function vlInitialize($label)
     {
-    	parent::vlInitialize($label);
-		$this->outlined();
-	}
+        parent::vlInitialize($label);
+        $this->outlined();
+    }
 }

@@ -10,7 +10,8 @@ use Kompo\Komponents\Traits\VerticalAlignmentTrait;
 
 class Flex extends Layout
 {
-    use HasInteractions, ForwardsInteraction;
+    use HasInteractions;
+    use ForwardsInteraction;
     use VerticalAlignmentTrait;
     use HasHref;
 
@@ -29,59 +30,60 @@ class Flex extends Layout
     /**
      * Justify the content of the columns to the start.
      *
-     * @return self 
+     * @return self
      */
     public function justifyStart()
     {
         $this->config(['justifyClass' => '']);
+
         return $this;
     }
-
 
     /**
      * Justify the content of the columns to the center.
      *
-     * @return self 
+     * @return self
      */
     public function justifyCenter()
     {
         $this->config(['justifyClass' => 'vlJustifyCenter']);
+
         return $this;
     }
-
 
     /**
      * Justify the content of the columns to the end.
      *
-     * @return self 
+     * @return self
      */
     public function justifyEnd()
     {
         $this->config(['justifyClass' => 'vlJustifyEnd']);
+
         return $this;
     }
-
 
     /**
      * Justify the content of the columns with space between.
      *
-     * @return self 
+     * @return self
      */
     public function justifyBetween()
     {
         $this->config(['justifyClass' => 'vlJustifyBetween']);
+
         return $this;
     }
-
 
     /**
      * Justify the content of the columns with space around.
      *
-     * @return self 
+     * @return self
      */
     public function justifyAround()
     {
         $this->config(['justifyClass' => 'vlJustifyAround']);
+
         return $this;
     }
 }

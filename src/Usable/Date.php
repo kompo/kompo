@@ -18,46 +18,47 @@ class Date extends Field
         $this->icon('icon-calendar');
 
         $this->setDbFormat();
-        
+
         $this->dateFormat($this->configDateFormat());
     }
 
     /**
      * Sets a FlatPickr accepted alt format. By default, it's 'Y-m-d'.
      *
-     * @param      string  $dateFormat  The date format
+     * @param string $dateFormat The date format
      *
-     * @return self   
+     * @return self
      */
     public function dateFormat($dateFormat)
     {
-    	$this->config([
-            'altFormat' => $dateFormat
+        $this->config([
+            'altFormat' => $dateFormat,
         ]);
-    	return $this;
+
+        return $this;
     }
 
     /**
-     * Sets the mode of the FlatPickr instance. 
+     * Sets the mode of the FlatPickr instance.
      *
-     * @param string  $dateMode  The date mode, ex: 'range'
+     * @param string $dateMode The date mode, ex: 'range'
      *
-     * @return self   
+     * @return self
      */
     public function dateMode($mode)
     {
         $this->config([
-            'dateMode' => $mode
+            'dateMode' => $mode,
         ]);
+
         return $this;
     }
 
     /** PROTECTED ***/
-
     protected function setDbFormat()
     {
         return $this->config([
-            'dateFormat' => $this->dbFormat
+            'dateFormat' => $this->dbFormat,
         ]);
     }
 
@@ -65,5 +66,4 @@ class Date extends Field
     {
         return config('kompo.'.$this->configFormatKey) ?: $this->dbFormat;
     }
-
 }

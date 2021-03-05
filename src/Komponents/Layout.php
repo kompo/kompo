@@ -16,11 +16,11 @@ abstract class Layout extends Komponent
     /**
      * Constructs a new Layout instance.
      *
-     * @param mixed  ...$args  The layouts komponents
+     * @param mixed ...$args The layouts komponents
      */
     public function __construct(...$args)
     {
-        $this->vlInitialize( class_basename($this) );
+        $this->vlInitialize(class_basename($this));
 
         $this->komponents = LayoutManager::collectFilteredKomponents($args, $this)->values()->all();
     }
@@ -52,16 +52,13 @@ abstract class Layout extends Komponent
      */
     protected function prepareFor($methodName, $komposer)
     {
-        collect($this->komponents)->each(function($komponent) use($methodName, $komposer) {
-
+        collect($this->komponents)->each(function ($komponent) use ($methodName, $komposer) {
             $komponent->{$methodName}($komposer);
 
             $komponent->mountedHook($komposer);
 
             //To UNCOMMENT
             //$this->prepareHashAndActiveState($komponent); //added this to extend Flex becoming a Menuitem
-
         });
     }
-    
 }

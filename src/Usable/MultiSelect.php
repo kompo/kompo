@@ -2,24 +2,22 @@
 
 namespace Kompo;
 
-use Kompo\Select;
-use Kompo\Core\Util;
-
 use Illuminate\Database\Eloquent\Collection;
+use Kompo\Core\Util;
 
 class MultiSelect extends Select
 {
     /**
      * Adds a cast to array to the attribute if no cast is present.
      *
-     * @var boolean
+     * @var bool
      */
     protected $castsToArray = true;
 
     /**
      * Has multiple values.
      *
-     * @var        boolean
+     * @var bool
      */
     public $multiple = true;
 
@@ -34,12 +32,12 @@ class MultiSelect extends Select
     /**
      * Returns the primary key of the plucked values.
      *
-     * @param Collection  $value
+     * @param Collection $value
      *
      * @return string|null
      */
     protected function valueKeyName($value)
     {
-        return $this->optionsKey ?: ($value instanceOf Collection ? $value[0]->getKeyName() : null);
+        return $this->optionsKey ?: ($value instanceof Collection ? $value[0]->getKeyName() : null);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Kompo\Interactions;
 
-use Kompo\Interactions\Action;
 use Kompo\Interactions\Traits\HasInteractions;
 
 class ChainedAction
@@ -12,7 +11,7 @@ class ChainedAction
     public $element;
 
     public $action;
-    
+
     public function __construct($element, $methodName, $parameters)
     {
         $this->element = $element;
@@ -30,8 +29,9 @@ class ChainedAction
     /**
      * Handle dynamic static method calls into the class.
      *
-     * @param  string  $methodName
-     * @param  array  $parameters
+     * @param string $methodName
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($methodName, $parameters)
@@ -40,5 +40,4 @@ class ChainedAction
 
         return $this;
     }
-    
 }

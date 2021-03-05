@@ -4,7 +4,6 @@ namespace Kompo\Tests\Feature\Field;
 
 use Kompo\Exceptions\NotOneToOneRelationException;
 use Kompo\Tests\EnvironmentBoot;
-use Kompo\Tests\Models\Obj;
 use Kompo\Tests\Models\Post;
 use Kompo\Tests\Models\Tag;
 
@@ -114,3 +113,4 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 	}
 	
 }
+

@@ -30,15 +30,18 @@ class MakeForm extends GeneratorCommand
     /**
      * Replace the class name for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
+     *
      * @return string
      */
     protected function replaceClass($stub, $name)
     {
         $stub = parent::replaceClass($stub, $name);
+
         return str_replace('DummyClass', $this->argument('name'), $stub);
     }
+
     /**
      * Get the stub file for the generator.
      *
@@ -46,18 +49,21 @@ class MakeForm extends GeneratorCommand
      */
     protected function getStub()
     {
-        return  __DIR__ . '/stubs/kompo-'.($this->option('demo') ? 'demo-' : '').'form.stub';
+        return  __DIR__.'/stubs/kompo-'.($this->option('demo') ? 'demo-' : '').'form.stub';
     }
+
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Http\Komposers';
+        return $rootNamespace.'\Http\Komposers';
     }
+
     /**
      * Get the console command arguments.
      *
@@ -73,8 +79,7 @@ class MakeForm extends GeneratorCommand
     protected function getOptions()
     {
         return [
-            ['demo', InputOption::VALUE_NONE, 'Copy the Kompo Demo Form for first render in quick installation']
+            ['demo', InputOption::VALUE_NONE, 'Copy the Kompo Demo Form for first render in quick installation'],
         ];
     }
-
 }

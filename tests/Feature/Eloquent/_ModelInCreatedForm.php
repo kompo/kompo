@@ -7,10 +7,10 @@ use Kompo\Tests\Models\Post;
 
 class _ModelInCreatedForm extends Form
 {
-	public function created()
-	{
-		$post = Post::findOrNew($this->modelKey());
+    public function created()
+    {
+        $post = Post::findOrNew($this->modelKey());
 
-		$this->model($post);
-	}
+        $this->model($post);
+    }
 }

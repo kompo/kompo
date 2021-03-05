@@ -7,10 +7,7 @@ use Kompo\Core\DependencyResolver;
 use Kompo\Core\KompoAction;
 use Kompo\Core\KompoTarget;
 use Kompo\Exceptions\NotFoundKompoActionException;
-use Kompo\Komposers\Form\FormDisplayer;
-use Kompo\Komposers\Form\FormManager;
 use Kompo\Komposers\Form\FormSubmitter;
-use Kompo\Komposers\KomposerManager;
 use Kompo\Komposers\Query\QueryDisplayer;
 use Kompo\Komposers\Query\QueryManager;
 use Kompo\Routing\Dispatcher;
@@ -20,8 +17,7 @@ class KomposerHandler
 {
     public static function performAction($komposer)
     {
-        switch(KompoAction::header())
-        {
+        switch (KompoAction::header()) {
             case 'eloquent-submit':
                 return FormSubmitter::eloquentSave($komposer);
 
@@ -56,15 +52,14 @@ class KomposerHandler
         throw new NotFoundKompoActionException(get_class($komposer));
     }
 
-
     /**
      * Gets the matched select options for Querys or Forms.
      *
-     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
+     * @param Kompo\Komposers\Komposer $komposer The parent komposer
      *
-     * @throws     KomposerMethodNotFoundException  (description)
+     * @throws KomposerMethodNotFoundException (description)
      *
-     * @return     <type>                       The matched select options.
+     * @return <type> The matched select options.
      */
     public static function selfAjaxMethod($komposer)
     {
@@ -73,23 +68,22 @@ class KomposerHandler
         return DependencyResolver::callKomposerMethod($komposer, KompoTarget::getDecrypted(), request()->all());
     }
 
-
     /**
      * Gets the matched select options for Querys or Forms.
      *
-     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
+     * @param Kompo\Komposers\Komposer $komposer The parent komposer
      *
-     * @throws     KomposerMethodNotFoundException  (description)
+     * @throws KomposerMethodNotFoundException (description)
      *
-     * @return     <type>                       The matched select options.
+     * @return <type> The matched select options.
      */
     public static function getMatchedSelectOptions($komposer)
     {
         AuthorizationGuard::mainGate($komposer, 'search-options');
-        
+
         return Select::transformOptions(
             DependencyResolver::callKomposerMethod($komposer, KompoTarget::getDecrypted(), [
-                'search' => request('search')
+                'search' => request('search'),
             ])
         );
     }
@@ -97,7 +91,7 @@ class KomposerHandler
     /**
      * Gets the komponents from the back-end to be included in the parent Komposer.
      *
-     * @param      <type>  $komposer  The komposer
+     * @param <type> $komposer The komposer
      */
     protected static function getIncludedKomponents($komposer)
     {
@@ -107,34 +101,37 @@ class KomposerHandler
     /**
      * Gets the form or query class from komponent and returns it booted.
      *
-     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
+     * @param Kompo\Komposers\Komposer $komposer The parent komposer
      *
      * @return Kompo\Komposers\Komposer
      */
     protected static function getKomposerFromKomponent($komposer)
     {
         $komposerClass = KompoTarget::getDecrypted();
+
         return with(new Dispatcher($komposerClass))->bootKomposerForDisplay();
     }
 
     /**
      * Returns a Blade view.
      *
-     * @param Kompo\Komposers\Komposer $komposer  The parent komposer
+     * @param Kompo\Komposers\Komposer $komposer The parent komposer
      *
      * @return Kompo\Komposers\Komposer
      */
     protected static function returnBladeView($komposer)
     {
         $viewPath = KompoTarget::getDecrypted();
+
         return view($viewPath, request()->all());
     }
 
     /**
-     * Deletes a database record
-     * 
-     * @param  string|integer $id [Object's key]
-     * @return \Illuminate\Http\Response     [redirects back to current page]
+     * Deletes a database record.
+     *
+     * @param string|int $id [Object's key]
+     *
+     * @return \Illuminate\Http\Response [redirects back to current page]
      */
     public static function deleteRecord($komposer)
     {
@@ -143,19 +140,19 @@ class KomposerHandler
         //$record = $komposer->model->newInstance()->findOrFail($deleteKey);
         $record = $model::findOrFail(request('deleteKey'));
 
-        if( 
-            (method_exists($record, 'deletable') && $record->deletable()) 
-            || 
+        if (
+            (method_exists($record, 'deletable') && $record->deletable())
+            ||
             (defined(get_class($record).'::DELETABLE_BY') && $record::DELETABLE_BY &&
                 optional(auth()->user())->hasRole($record::DELETABLE_BY))
-            
+
             || optional(auth()->user())->can('delete', $record)
-        ){
+        ) {
             $record->delete();
+
             return 'deleted!';
         }
 
         return abort(403, __('Sorry, you are not authorized to delete this item.'));
     }
-
 }

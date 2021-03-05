@@ -8,8 +8,9 @@ use Kompo\Komponents\Trigger;
 
 class Collapse extends Trigger
 {
-	use HasHref, HasSubmenu;
+    use HasHref;
+    use HasSubmenu;
 
-	public $vueComponent = 'Collapse';
+    public $vueComponent = 'Collapse';
     public $bladeComponent = 'Collapse';
 }

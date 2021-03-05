@@ -7,7 +7,7 @@ use Kompo\Tests\Models\Obj;
 
 class _QueryEloquentModelProperty extends Query
 {
-	use _EloquentFiltersTrait;
+    use _EloquentFiltersTrait;
 
-	public $model = Obj::class;
+    public $model = Obj::class;
 }

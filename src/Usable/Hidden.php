@@ -5,14 +5,14 @@ namespace Kompo;
 use Kompo\Komponents\Field;
 
 class Hidden extends Field
-{	
+{
     public $vueComponent = 'Hidden';
 
     public $showHidden = false;
 
     protected function vlInitialize($label)
     {
-    	parent::vlInitialize($label);
+        parent::vlInitialize($label);
 
         $this->name = $label; //not snakecase...
     }
@@ -20,7 +20,8 @@ class Hidden extends Field
     // Show for Form Demo Builder Purposes
     public function show()
     {
-    	$this->showHidden = true;
-    	return $this;
+        $this->showHidden = true;
+
+        return $this;
     }
 }

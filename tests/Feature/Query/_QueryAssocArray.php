@@ -6,12 +6,12 @@ use Kompo\Query;
 
 class _QueryAssocArray extends Query
 {
-	use _CollectionFiltersTrait;
+    use _CollectionFiltersTrait;
 
     public function query()
-	{
-		return collect($this->baseData)->mapWithKeys(function($val){
-			return [$val => $val];
-		});
-	}
+    {
+        return collect($this->baseData)->mapWithKeys(function ($val) {
+            return [$val => $val];
+        });
+    }
 }

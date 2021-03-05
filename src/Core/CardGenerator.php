@@ -1,9 +1,8 @@
-<?php 
+<?php
 
 namespace Kompo\Core;
 
 use Kompo\Card;
-use Kompo\Core\Util;
 use Kompo\Komponents\Layout;
 use Kompo\Rows;
 
@@ -13,26 +12,24 @@ class CardGenerator
     {
         $komposer->query = $komposer->query->getPaginated();
 
-        $komposer->query->getCollection()->transform(function($item, $key) use($komposer){
-
+        $komposer->query->getCollection()->transform(function ($item, $key) use ($komposer) {
             return [
                 'attributes' => $item,
-                'render' => static::getItemCard($item, $key, $komposer)
+                'render'     => static::getItemCard($item, $key, $komposer),
             ];
-
         });
     }
-
 
     protected static function getItemCard($item, $key, $komposer)
     {
         $card = static::getCardDefaultFallback($item, $key, $komposer);
-        
-        if($komposer->orderable)
+
+        if ($komposer->orderable) {
             $card->config([
-                'item_id' => $item->{$komposer->keyName},
-                'item_order' => $item->{$komposer->orderable}
+                'item_id'    => $item->{$komposer->keyName},
+                'item_order' => $item->{$komposer->orderable},
             ]);
+        }
 
         return $card;
     }
@@ -41,12 +38,13 @@ class CardGenerator
     {
         $card = method_exists($komposer, 'card') ? $komposer->card($item, $key) : [];
 
-        if(is_array($card)){
+        if (is_array($card)) {
             $defaultCard = $komposer->card ?: Card::class;
+
             return $defaultCard::form($card);
-        }else if(!($card instanceOf Card) && !($card instanceOf Layout)){
+        } elseif (!($card instanceof Card) && !($card instanceof Layout)) {
             return Rows::form($card);
-        }else{
+        } else {
             return $card;
         }
     }

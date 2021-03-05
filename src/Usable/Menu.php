@@ -18,33 +18,36 @@ abstract class Menu extends Komposer
     /**
      * If the menu fixed or scrollable?
      *
-     * @var boolean
+     * @var bool
      */
     public $fixed;
 
     /**
-     * The order of display of menus, integer between [1-4]. 
+     * The order of display of menus, integer between [1-4].
      * For example, a primary left sidebar would need $order = 1
      * If left blank, the default order is: Navbar > LeftSidebar > RightSidebar > Footer.
      *
-     * @var integer
+     * @var int
      */
     public $order;
 
-	/**
-     * Constructs a Menu
-     * 
+    /**
+     * Constructs a Menu.
+     *
      * @param null|array $store (optional) Additional data passed to the komponent.
      *
      * @return self
      */
-	public function __construct(?array $store = [], $dontBoot = false)
-	{
-        if(Router::shouldNotBeBooted()) return; //request has not been handled yet
-        
-        if(!$dontBoot)
+    public function __construct(?array $store = [], $dontBoot = false)
+    {
+        if (Router::shouldNotBeBooted()) {
+            return;
+        } //request has not been handled yet
+
+        if (!$dontBoot) {
             MenuBooter::bootForDisplay($this, $store);
-	}
+        }
+    }
 
     /**
      * Get the Komponents displayed in the form.
@@ -75,5 +78,4 @@ abstract class Menu extends Komposer
     {
         return MenuBooter::renderVueComponent(new static($store));
     }
-
 }

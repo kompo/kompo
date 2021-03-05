@@ -11,7 +11,7 @@ class KompoTarget extends KompoAjax
     public static function getEncryptedArray($methodOrClass)
     {
         return [
-            static::$key => static::getEncrypted($methodOrClass)
+            static::$key => static::getEncrypted($methodOrClass),
         ];
     }
 
@@ -22,11 +22,13 @@ class KompoTarget extends KompoAjax
 
     public static function getDecrypted($target = null)
     {
-        if($target)
+        if ($target) {
             return Crypt::decryptString($target);
+        }
 
-        if($headerTarget = static::header())
+        if ($headerTarget = static::header()) {
             return Crypt::decryptString($headerTarget);
+        }
 
         //else return null
     }

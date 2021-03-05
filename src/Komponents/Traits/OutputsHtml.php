@@ -1,16 +1,16 @@
-<?php 
+<?php
 
 namespace Kompo\Komponents\Traits;
 
-trait OutputsHtml {
-
+trait OutputsHtml
+{
     public function __toHtml()
     {
         return '<'.$this->htmlTag.
             ($this->class() ? (' class="'.$this->class().'"') : '').
             ($this->style() ? (' style="'.$this->style().'"') : '').
             collect($this->config('attrs'))->map(
-                fn($attrVal, $attrKey) => ' '.$attrKey.'="'.$attrVal.'"'
+                fn ($attrVal, $attrKey) => ' '.$attrKey.'="'.$attrVal.'"'
             )->implode('').
         '>'.$this->label.'</'.$this->htmlTag.'>';
     }

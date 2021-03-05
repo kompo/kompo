@@ -1,8 +1,8 @@
-<?php 
+<?php
 
-use Kompo\Tests\Utilities\_Query;
 use Kompo\Tests\Utilities\_Form;
 use Kompo\Tests\Utilities\_Menu;
+use Kompo\Tests\Utilities\_Query;
 
 function _Query($store = [])
 {
