@@ -22,6 +22,7 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 
 		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
 
+		//Removing one attribute of obj and changing postTag attribute
 		$postTitle = 'post-title2';
 		$objTitle = 'obj-title2';
 		$objTag = null;
@@ -31,9 +32,20 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 
 		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
 
+		//Removing other attribute of obj and deleting postTag
 		$postTitle = null;
 		$objTitle = null;
 		$objTag = 'obj-tag2';
+		$postTagTitle = null;
+
+		$this->submit_status_and_json_assertions(new _FieldNameOneToOneParsingForm(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
+
+		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
+
+		//Deleting both attributes of obj
+		$postTitle = 'smth';
+		$objTitle = null;
+		$objTag = null;
 		$postTagTitle = null;
 
 		$this->submit_status_and_json_assertions(new _FieldNameOneToOneParsingForm(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
@@ -80,10 +92,19 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 	{
 		$this->assertEquals(1, \DB::table('posts')->count());
 		$this->assertDatabaseHas('posts', ['id' => 1,'title' => $postTitle]);
-		$this->assertEquals(1, \DB::table('objs')->count());
-		$this->assertDatabaseHas('objs', ['id' => 1,'title' => $objTitle, 'tag' => $objTag]);
-		$this->assertEquals(1, \DB::table('post_tag')->count());
-		$this->assertDatabaseHas('post_tag', ['id' => 1,'title' => $postTagTitle]);
+		if($objTitle || $objTag){
+			$this->assertEquals(1, \DB::table('objs')->count());
+			$this->assertDatabaseHas('objs', ['id' => 1,'title' => $objTitle, 'tag' => $objTag]);
+		}else{
+			$this->assertEquals(0, \DB::table('objs')->count());			
+		}
+
+		if($postTagTitle){
+			$this->assertEquals(1, \DB::table('post_tag')->count());
+			$this->assertDatabaseHas('post_tag', ['id' => 1,'title' => $postTagTitle]);
+		}else{
+			$this->assertEquals(0, \DB::table('post_tag')->count());		
+		}
 
 		$form = new _FieldNameOneToOneParsingForm(1);
 
