@@ -6,8 +6,8 @@ use Kompo\Form;
 
 class _BootUnauthorizedForm extends Form
 {
-	public function authorizeBoot()
-	{
-		return false;
-	}
+    public function authorizeBoot()
+    {
+        return false;
+    }
 }

@@ -5,32 +5,28 @@ namespace Kompo\Interactions;
 use Kompo\Elements\Traits\HasConfig;
 use Kompo\Exceptions\NotFoundActionException;
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Trigger;
-use Kompo\Panel;
-use Kompo\Routing\RouteFinder;
 
 class Action
 {
     use HasInteractions;
     use HasConfig;
-    use Actions\AddAlertActions,
-        Actions\AddSlidingPanelActions,
-        Actions\AxiosRequestActions, 
-        Actions\AxiosRequestHttpActions,
-        Actions\QueryActions, 
-        Actions\EmitEventActions,
-        Actions\FillPanelActions, 
-        Actions\FillModalActions, 
-        Actions\FrontEndActions, 
-        Actions\KomposerActions, 
-        Actions\RedirectActions, 
-        Actions\RunJsActions, 
-        Actions\SubmitFormActions;
+    use Actions\AddAlertActions;
+    use Actions\AddSlidingPanelActions;
+    use Actions\AxiosRequestActions;
+    use Actions\AxiosRequestHttpActions;
+    use Actions\QueryActions;
+    use Actions\EmitEventActions;
+    use Actions\FillPanelActions;
+    use Actions\FillModalActions;
+    use Actions\FrontEndActions;
+    use Actions\KomposerActions;
+    use Actions\RedirectActions;
+    use Actions\RunJsActions;
+    use Actions\SubmitFormActions;
 
     /**
      * The type of action that will be run.
-     * 
+     *
      * @var string
      */
     public $actionType;
@@ -38,59 +34,64 @@ class Action
     /**
      * Information to send back to the element.
      *
-     * @var        array
+     * @var array
      */
     protected $elementClosure;
 
     /**
      * Constructs a new Action instance.
      *
-     * @param      <type>  $element     The element
-     * @param      <type>  $methodName  The method name
-     * @param      array   $parameters  The parameters
+     * @param <type> $element    The element
+     * @param <type> $methodName The method name
+     * @param array  $parameters The parameters
      */
     public function __construct($element = null, $methodName = null, $parameters = [])
     {
-        if(!$element || !$methodName)
+        if (!$element || !$methodName) {
             return;
+        }
 
-        if(!method_exists($this, $methodName))
+        if (!method_exists($this, $methodName)) {
             throw new NotFoundActionException($methodName);
+        }
 
         $this->{$methodName}(...$parameters);
 
-        if($this->elementClosure)
+        if ($this->elementClosure) {
             call_user_func($this->elementClosure, $element);
+        }
     }
 
     /**
-     * { function_description }
+     * { function_description }.
      *
-     * @param      <type>  $actionType  The action type
-     * @param      <type>  $config        The config
+     * @param <type> $actionType The action type
+     * @param <type> $config     The config
      *
-     * @return     self
+     * @return self
      */
     protected function prepareAction($actionType, $config = null)
     {
         $this->actionType = $actionType;
 
-        if($config)
+        if ($config) {
             $this->config($config);
-        
+        }
+
         return $this;
     }
 
     /**
-     * { function_description }
+     * { function_description }.
      *
-     * @param      <type>  $closure  The closure
+     * @param <type> $closure The closure
      *
-     * @return     self
+     * @return self
      */
     protected function applyToElement($closure)
     {
         $this->elementClosure = $closure;
-        return $this; 
+
+        return $this;
     }
 }

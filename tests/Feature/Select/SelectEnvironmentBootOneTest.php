@@ -8,6 +8,7 @@ use Kompo\Tests\Models\User;
 abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
 {
     abstract protected function assert_database_has_expected_row($user);
+
     abstract protected function assert_database_missing_expected_row($user);
 
     protected $currentRelation;
@@ -15,7 +16,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
     protected $currentForm;
 
     protected function assert_crud_one_selects($form, $relation, $snaked)
-    {   
+    {
         $this->currentRelation = $relation;
         $this->currentForm = $form;
 
@@ -24,17 +25,19 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
         //Insert
         $user1 = User::first();
         $this->submit(
-            $form = $this->getForm(), [
-                $relation => $user1->id
+            $form = $this->getForm(),
+            [
+                $relation => $user1->id,
             ]
         )->assertStatus(201)
         ->assertJson([
-            $snaked => array_merge($user1->toArray(), ['order' => $type == 'filtered' ? 1 : null])
+            $snaked => array_merge($user1->toArray(), ['order' => $type == 'filtered' ? 1 : null]),
         ]);
 
         $this->assert_database_has_expected_row($user1);
-        if($type == 'filtered')
+        if ($type == 'filtered') {
             $this->assertEquals(1, $user1->fresh()->order);
+        }
 
         //Reload
         $form = $this->getForm(1);
@@ -43,17 +46,19 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
         //Update
         $user2 = factory(User::class)->create();
         $this->submit(
-            $form = $this->getForm(1), [
-                $relation => $user2->id
+            $form = $this->getForm(1),
+            [
+                $relation => $user2->id,
             ]
         )->assertStatus(200)
         ->assertJson([
-            $snaked => array_merge($user2->toArray(), ['order' => $type == 'filtered' ? 1 : null])
+            $snaked => array_merge($user2->toArray(), ['order' => $type == 'filtered' ? 1 : null]),
         ]);
 
         $this->assert_database_has_expected_row($user2);
-        if($type == 'filtered')
+        if ($type == 'filtered') {
             $this->assertEquals(1, $user2->fresh()->order);
+        }
 
         //Reload
         $form = $this->getForm(1);
@@ -61,12 +66,13 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
 
         //Remove
         $this->submit(
-            $form = $this->getForm(1), [
-                $relation => null
+            $form = $this->getForm(1),
+            [
+                $relation => null,
             ]
         )->assertStatus(200)
         ->assertJson([
-            $snaked => null
+            $snaked => null,
         ]);
 
         $this->assert_database_missing_expected_row($user2);
@@ -82,8 +88,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
         $form = $this->currentForm;
 
         return new $form($id, [
-            'komponent' => $this->currentRelation
+            'komponent' => $this->currentRelation,
         ]);
     }
-
 }

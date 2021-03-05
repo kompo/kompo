@@ -25,23 +25,25 @@ trait QueryActions
     ];
 
     /**
-     * Filters a Query `onChange` for a Field or `onInput` for a text Input field by default. 
-     * If these default triggers do not suit you, use another one, for example: <php>->onBlur->filter('>=')</php>
+     * Filters a Query `onChange` for a Field or `onInput` for a text Input field by default.
+     * If these default triggers do not suit you, use another one, for example: <php>->onBlur->filter('>=')</php>.
      *
      * @param string|null $operator Pick one of these supported operators `=`, `>`, `<`, `>=`, `<=`, `LIKE`, `STARTSWITH`, `ENDSWITH`, `BETWEEN`, `IN`.<br>Or keep blank to fallback to the field's default operator.
      *
-     * @return     self
+     * @return self
      */
     public function filter($operator = null)
     {
-        $this->applyToElement(function($el) use($operator) {
-            if(!$el instanceOf Field)
+        $this->applyToElement(function ($el) use ($operator) {
+            if (!$el instanceof Field) {
                 throw new NotFilterCapableException(class_basename($el));
+            }
 
-            if(!in_array($operator, self::$allowedOperators))
+            if (!in_array($operator, self::$allowedOperators)) {
                 throw new FilterOperatorNotAllowedException($operator);
+            }
 
-            $el->config([ 'filterOperator' => $operator  ]);
+            $el->config(['filterOperator' => $operator]);
         });
 
         return $this->browse(null, 1); //filtering works for it's own query only
@@ -50,50 +52,47 @@ trait QueryActions
     /**
      * Triggers a sort event of the query. The parameter is a pipe separated string of column:direction. Example: updated_at:DESC|last_name|first_name:ASC.
      *
-     * @param string|null  $sortOrders  If field, the value will determine the sort. If trigger (link or th), we need to add a pipe serapated string of column:direction for ordering.
+     * @param string|null $sortOrders If field, the value will determine the sort. If trigger (link or th), we need to add a pipe serapated string of column:direction for ordering.
      *
-     * @return self  
+     * @return self
      */
     public function sort($sortOrders = '')
     {
-        $this->applyToElement(function($el) use($sortOrders) {
-            if($el instanceOf Field)
+        $this->applyToElement(function ($el) use ($sortOrders) {
+            if ($el instanceof Field) {
                 $el->ignoresModel()->doesNotFill();
+            }
 
-            $el->config([ 'sortsQuery' => $sortOrders ?: true ]);
+            $el->config(['sortsQuery' => $sortOrders ?: true]);
         });
 
         return $this->prepareAction('sortQuery', [
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage')
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
         ]);
     }
-
 
     /**
      * Reload the cards of one or many Query(ies). If $queryId is left blank, it will browse cards of it's parent query.
      * Otherwise, you may set a string or an array of query ids to refresh.
      *
-     * @param array|string|null   $queryId  The target Query Id or
-     * @param integer|null  $page     The page
+     * @param array|string|null $queryId The target Query Id or
+     * @param int|null          $page    The page
      *
      * @return self
      */
     public function browse($queryId = null, $page = null)
     {
         return $this->prepareAction('browseQuery', [
-            'route' => RouteFinder::getKompoRoute('POST'),
-            'page' => $page,
-            'kompoid' => $queryId,
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage')
+            'route'                 => RouteFinder::getKompoRoute('POST'),
+            'page'                  => $page,
+            'kompoid'               => $queryId,
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
         ]);
     }
-
-
 
     /* For tests */
     public static function getAllowedOperators()
     {
         return static::$allowedOperators;
     }
-    
 }

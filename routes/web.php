@@ -3,7 +3,7 @@
 use Kompo\Http\Controllers\DispatchController;
 use Kompo\Http\Controllers\LocaleController;
 
-Route::middleware('web')->group(function() {
+Route::middleware('web')->group(function () {
     Route::get('_kompo', DispatchController::class)->name('_kompo');
     Route::post('_kompo', DispatchController::class)->name('_kompo.post');
     Route::put('_kompo', DispatchController::class)->name('_kompo.put');

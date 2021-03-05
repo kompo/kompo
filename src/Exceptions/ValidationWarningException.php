@@ -2,15 +2,16 @@
 
 namespace Kompo\Exceptions;
 
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class ValidationWarningException extends ValidationException
 {
     /**
      * The status code to use for the response.
-     * Retry with status code taken from: https://www.restapitutorial.com/httpstatuscodes.html
+     * Retry with status code taken from: https://www.restapitutorial.com/httpstatuscodes.html.
+     *
      * @var int
      */
     public $status = 449;
@@ -23,5 +24,4 @@ class ValidationWarningException extends ValidationException
         //$this->errorBag = $errorBag;
         $this->validator = Validator::make([], []);
     }
-    
 }

@@ -6,8 +6,8 @@ use Kompo\Query;
 
 class _BootUnauthorizedQuery extends Query
 {
-	public function authorizeBoot()
-	{
-		return false;
-	}
+    public function authorizeBoot()
+    {
+        return false;
+    }
 }

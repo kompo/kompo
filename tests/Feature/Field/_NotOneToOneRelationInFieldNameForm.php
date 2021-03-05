@@ -8,13 +8,12 @@ use Kompo\Tests\Models\Post;
 
 class _NotOneToOneRelationInFieldNameForm extends Form
 {
-	public $model = Post::class;
+    public $model = Post::class;
 
-	public function komponents()
-	{
-		return [
-			Select::form('Tags')->name('tags.name'), //not OneToOne
-		];
-	}
-
+    public function komponents()
+    {
+        return [
+            Select::form('Tags')->name('tags.name'), //not OneToOne
+        ];
+    }
 }

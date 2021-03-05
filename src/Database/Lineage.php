@@ -2,16 +2,14 @@
 
 namespace Kompo\Database;
 
-use RuntimeException;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\Relation;
+use RuntimeException;
 
 class Lineage
 {
@@ -20,26 +18,27 @@ class Lineage
      *
      * @param Illuminate\Database\Eloquent\Model $model
      * @param string                             $relationName
-     * 
+     *
      * @return Eloquent\Relationship|null
      */
     public static function findRelation($model, $relationName)
     {
-        return (method_exists($model, $relationName)  && (($relation = $model->{$relationName}()) instanceOf Relation)) ? $relation : null;
+        return (method_exists($model, $relationName) && (($relation = $model->{$relationName}()) instanceof Relation)) ? $relation : null;
     }
 
     /**
      * Get the model's eloquent relation or fail if not found.
      *
      * @param Illuminate\Database\Eloquent\Model $model
-     * @param  string $relation
-     * 
+     * @param string                             $relation
+     *
      * @return Eloquent\Relationship|null
      */
     public static function findOrFailRelation($model, $relation)
     {
-        if(!($relation = static::findRelation($model, $relation)))
+        if (!($relation = static::findRelation($model, $relation))) {
             throw new RuntimeException("The relation {$relation} was not found on Model {$model}");
+        }
 
         return $relation;
     }
@@ -48,8 +47,8 @@ class Lineage
      * Gets a related instance for a specific relation.
      *
      * @param Illuminate\Database\Eloquent\Model $model
-     * @param string $relationName
-     * 
+     * @param string                             $relationName
+     *
      * @return Eloquent\Relationship|null
      */
     public static function findOrFailRelated($model, $relationName)
@@ -77,26 +76,25 @@ class Lineage
      *
      * @param Illuminate\Database\Eloquent\Model $model
      * @param string                             $relationName
-     * 
-     * @return Boolean
+     *
+     * @return bool
      */
     public static function isOneToOne($model, $relationName)
     {
         $relation = static::findRelation($model, $relationName);
+
         return $relation instanceof BelongsTo || $relation instanceof HasOne || $relation instanceof MorphOne;
     }
 
     public static function isOneToMany($model, $relationName)
     {
         $relation = static::findRelation($model, $relationName);
+
         return $relation instanceof HasMany || $relation instanceof MorphMany;
     }
-
-
 
     public static function fillsAfterSave($mainModel, $requestName)
     {
         return ($relation = static::findRelation($mainModel, $requestName)) && !($relation instanceof BelongsTo); //morphTo is a belongsTo
     }
 }
-

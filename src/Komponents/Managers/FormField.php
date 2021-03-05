@@ -14,19 +14,19 @@ class FormField
 {
     /**
      * Gets a value from the DB to set to the field value.
-     * 
-     * @param Kompo\Komponents\Field    $field
+     *
+     * @param Kompo\Komponents\Field             $field
      * @param Illuminate\Database\Eloquent\Model $model
      *
      * @return mixed
      */
     public static function retrieveValueFromModel($field, $model)
     {
-        if(!$model || static::getConfig($field, 'ignoresModel'))
+        if (!$model || static::getConfig($field, 'ignoresModel')) {
             return;
+        }
 
-        Util::collect($field->name)->each(function($name, $key) use($field, $model) {
-
+        Util::collect($field->name)->each(function ($name, $key) use ($field, $model) {
             list($model, $name) = static::parseName($model, $name);
 
             $value = $field->getValueFromModel($model, $name);
@@ -34,64 +34,66 @@ class FormField
             $value = $field->shouldCastToArray($model, $name) ? Util::decode($value) : $value;
 
             $field->setOutput($value, $key);
-
-        });      
+        });
     }
 
     /**
      * Returns the stage during which the model should be filled.
      *
-     * @param string                    $stage
-     * @param Kompo\Komponents\Field    $field
-     * @param Kompo\Komposers\Komposer  $komposer
+     * @param string                   $stage
+     * @param Kompo\Komponents\Field   $field
+     * @param Kompo\Komposers\Komposer $komposer
      *
-     * @return Boolean
+     * @return bool
      */
     public static function fillDuringStage($stage, $field, $komposer)
     {
-        if(static::checkDoesNotFill($field, $komposer))
+        if (static::checkDoesNotFill($field, $komposer)) {
             return;
+        }
 
-        return Util::collect($field->name)->map(function($requestName, $key) use($stage, $field, $komposer) {
+        return Util::collect($field->name)->map(function ($requestName, $key) use ($stage, $field, $komposer) {
 
             /*if(!RequestData::has($requestName)) //Why is this even here? => Hidden fields...hmm
                 return;*/
 
-            if(NameParser::isNested($requestName)){
-                
+            if (NameParser::isNested($requestName)) {
                 list($model, $name, $relationName) = static::parseName($komposer->model, $requestName);
 
-                if(Lineage::fillsAfterSave($model, $name)){
-                    if($stage == 'fillOneToOneAfterSave'){
+                if (Lineage::fillsAfterSave($model, $name)) {
+                    if ($stage == 'fillOneToOneAfterSave') {
                         static::fillAfterSave($field, $requestName, $key, $model, $name);
+
                         return ['relation' => $relationName, 'name' => $name];
                     }
-                }else{
-                    if($stage == 'fillOneToOneBeforeSave'){
+                } else {
+                    if ($stage == 'fillOneToOneBeforeSave') {
                         static::fillBeforeSave($field, $requestName, $key, $model, $name);
+
                         return ['relation' => $relationName, 'name' => $name];
                     }
                 }
-            }else{
-                if(Lineage::fillsAfterSave($komposer->model, $requestName)){
-                    if($stage == 'fillAfterSave')
+            } else {
+                if (Lineage::fillsAfterSave($komposer->model, $requestName)) {
+                    if ($stage == 'fillAfterSave') {
                         return static::fillAfterSave($field, $requestName, $key, $komposer->model);
-                }else{
-                    if($stage == 'fillBeforeSave')
+                    }
+                } else {
+                    if ($stage == 'fillBeforeSave') {
                         return static::fillBeforeSave($field, $requestName, $key, $komposer->model);
+                    }
                 }
             }
-
         })->filter();
     }
 
     /**
-     * Checks if the field does not fill or is readonly
-     * 
-     * @param Kompo\Komponents\Field    $field
-     * @param Kompo\Komposers\Komposer  $komposer
+     * Checks if the field does not fill or is readonly.
      *
-     * @return     Boolean  
+     * @param Kompo\Komponents\Field   $field
+     * @param Kompo\Komposers\Komposer $komposer
+     *
+     * @return bool
      */
     public static function checkDoesNotFill($field, $komposer)
     {
@@ -106,15 +108,16 @@ class FormField
      * @param Kompo\Komponents\Field             $field
      * @param string                             $requestName
      * @param Illuminate\Database\Eloquent\Model $model
-     * 
+     *
      * @return void
      */
     public static function fillBeforeSave($field, $requestName, $key, $model, $name = null)
     {
         $name = $name ?: $requestName;
 
-        if(LaravelApp::isVersion7orHigher() && $field->shouldCastToArray($model, $name))
+        if (LaravelApp::isVersion7orHigher() && $field->shouldCastToArray($model, $name)) {
             $model->mergeCasts([$name => 'array']);
+        }
 
         $value = $field->setAttributeFromRequest($requestName, $name, $model, $key);
 
@@ -129,7 +132,7 @@ class FormField
      * @param Kompo\Komponents\Field             $field
      * @param string                             $requestName
      * @param Illuminate\Database\Eloquent\Model $model
-     * 
+     *
      * @return void
      */
     public static function fillAfterSave($field, $requestName, $key, $model, $name = null)
@@ -139,7 +142,7 @@ class FormField
         $value = $field->setRelationFromRequest($requestName, $name, $model, $key);
 
         ModelManager::saveAndLoadRelation($model, $name, $value, static::getConfig($field, 'extraAttributes'));
-        
+
         return true;
     }
 
@@ -147,10 +150,10 @@ class FormField
      * Gets the appropriate model and it's attribute from the field's name.
      * Its goal is to handle nested One to One relations with dot notation.
      *
-     * @param  Illuminate\Database\Eloquent\Model $model
-     * @param  string  $requestName
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param string                             $requestName
      *
-     * @throws \Kompo\Exceptions\NotOneToOneRelationException  (description)
+     * @throws \Kompo\Exceptions\NotOneToOneRelationException (description)
      *
      * @return array
      */
@@ -158,23 +161,26 @@ class FormField
     {
         $relationName = null;
 
-        if(!NameParser::isNested($requestName))
+        if (!NameParser::isNested($requestName)) {
             return [
-                $model, 
-                $requestName, 
-                $relationName
+                $model,
+                $requestName,
+                $relationName,
             ];
+        }
 
-        if(!Lineage::isOneToOne($model, $relationName = NameParser::firstTerm($requestName)))
+        if (!Lineage::isOneToOne($model, $relationName = NameParser::firstTerm($requestName))) {
             throw new NotOneToOneRelationException($requestName, $relationName);
+        }
 
-        if(!$model->{$relationName})
+        if (!$model->{$relationName}) {
             $model->setRelation($relationName, $model->{$relationName}()->getRelated()->newInstance());
+        }
 
         return [
-            $model->{$relationName}, 
-            NameParser::secondTerm($requestName), 
-            $relationName
+            $model->{$relationName},
+            NameParser::secondTerm($requestName),
+            $relationName,
         ];
     }
 
@@ -192,10 +198,10 @@ class FormField
     /**
      * Gets the eloquent configuration of the field.
      *
-     * @param Kompo\Komponents\Field $field       The field
-     * @param string                 $configKey   The desired configuration key.
+     * @param Kompo\Komponents\Field $field     The field
+     * @param string                 $configKey The desired configuration key.
      *
-     * @return  mixed
+     * @return mixed
      */
     public static function getConfig($field, $configKey)
     {
@@ -205,15 +211,14 @@ class FormField
     /**
      * Sets the eloquent configuration of the field.
      *
-     * @param Kompo\Komponents\Field $field        The field
-     * @param string                 $configKey    The desired configuration key.
-     * @param mixed                  $configValue  The desired configuration value.
+     * @param Kompo\Komponents\Field $field       The field
+     * @param string                 $configKey   The desired configuration key.
+     * @param mixed                  $configValue The desired configuration value.
      *
-     * @return  self
+     * @return self
      */
     public static function setConfig($field, $configKey, $configValue)
     {
         return $field->_kompo('eloquent', [$configKey => $configValue]);
     }
-    
 }

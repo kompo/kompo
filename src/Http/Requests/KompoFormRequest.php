@@ -37,5 +37,4 @@ class KompoFormRequest extends FormRequest
     {
         return ValidationManager::getRules($this->komposer);
     }
-
 }

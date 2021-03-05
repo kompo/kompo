@@ -9,15 +9,15 @@ use Kompo\Tests\Models\Obj;
 
 class _FilesStoredAsSingleColumnForm extends Form
 {
-	public $model = Obj::class;
+    public $model = Obj::class;
 
-	public function komponents()
-	{
-		return [
-			File::form('A')->name('file'),
-			File::form('A')->name('file_cast'),
-			MultiFile::form('A')->name('files'),
-			MultiFile::form('A')->name('files_cast')
-		];
-	}
+    public function komponents()
+    {
+        return [
+            File::form('A')->name('file'),
+            File::form('A')->name('file_cast'),
+            MultiFile::form('A')->name('files'),
+            MultiFile::form('A')->name('files_cast'),
+        ];
+    }
 }

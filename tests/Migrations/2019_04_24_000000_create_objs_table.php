@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateObjsTable extends Migration
 {
@@ -55,8 +55,7 @@ class CreateObjsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('file_obj', function(Blueprint $table)
-        {
+        Schema::create('file_obj', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('model_id')->unsigned()->nullable();
             $table->string('model_type')->nullable();

@@ -11,18 +11,17 @@ use Kompo\Tests\Models\Post;
 
 class _SettingFieldValuesFromDbForm extends Form
 {
-	public $model = Post::class;
+    public $model = Post::class;
 
-	public function komponents()
-	{
-		return [
-			Columns::form(
-				Input::form('Title'),
-				Date::form('Published At')
-			),
-			Select::form('Tags'),
-			Input::form('Author')->name('author.name')
-		];
-	}
-
+    public function komponents()
+    {
+        return [
+            Columns::form(
+                Input::form('Title'),
+                Date::form('Published At')
+            ),
+            Select::form('Tags'),
+            Input::form('Author')->name('author.name'),
+        ];
+    }
 }

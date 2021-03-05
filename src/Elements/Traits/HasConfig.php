@@ -1,10 +1,9 @@
-<?php 
+<?php
 
 namespace Kompo\Elements\Traits;
 
-trait HasConfig 
+trait HasConfig
 {
-
     /**
      * The element's public config array.
      * Should never be overriden by inheritance.
@@ -16,17 +15,18 @@ trait HasConfig
     /**
      * Pass additional config to the element that can be accessed from the Front-end in the `config` property of the object - especially useful if you wish to customize or add new features to the component.
      *
-     * @param  array  $config Key/value associative array.
+     * @param array $config Key/value associative array.
+     *
      * @return mixed
      */
     public function config($config = null)
     {
-        if(is_array($config)){
+        if (is_array($config)) {
             $this->config = array_replace($this->config, $config);
+
             return $this;
-        }else{
+        } else {
             return $config ? ($this->config[$config] ?? null) : $this->config;
         }
     }
-
 }

@@ -8,12 +8,12 @@ use Kompo\Input;
 
 class _LayoutInstantiationForm extends Form
 {
-	public function komponents()
-	{
-		return Columns::form(
-			Input::form()->id('A'),
-			new _LayoutInstantiationChildForm(),
-			null //to test filtering out
-		);
-	}
+    public function komponents()
+    {
+        return Columns::form(
+            Input::form()->id('A'),
+            new _LayoutInstantiationChildForm(),
+            null //to test filtering out
+        );
+    }
 }

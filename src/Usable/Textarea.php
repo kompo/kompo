@@ -8,7 +8,7 @@ use Kompo\Komponents\Traits\HasRows;
 class Textarea extends Field
 {
     use HasRows;
-    
+
     public $vueComponent = 'Textarea';
 
     protected function vlInitialize($label)
@@ -17,5 +17,4 @@ class Textarea extends Field
 
         $this->rows(3);
     }
-
 }

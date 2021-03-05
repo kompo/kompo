@@ -2,8 +2,6 @@
 
 namespace Kompo;
 
-use Kompo\SelectLinks;
-
 class SelectButtons extends SelectLinks
 {
     protected function vlInitialize($label)

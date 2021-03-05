@@ -7,9 +7,9 @@ use Kompo\Komponents\Traits\HasInputAttributes;
 
 class Input extends Field
 {
-	use HasInputAttributes;
-	
-	public $vueComponent = 'Input';
+    use HasInputAttributes;
+
+    public $vueComponent = 'Input';
 
     public $vuetifyComponent = 'text-field';
 
@@ -17,9 +17,9 @@ class Input extends Field
     {
         parent::vlInitialize($label);
 
-        if(strtolower($label) == 'email'){
+        if (strtolower($label) == 'email') {
             $this->inputType('email');
-        }else{
+        } else {
             $this->inputType('text');
         }
 
@@ -30,7 +30,6 @@ class Input extends Field
     {
         $this->onEnter->submit();
     }
-
 
     //TODO: document
     public function clearable()

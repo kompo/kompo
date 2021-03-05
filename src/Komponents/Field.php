@@ -3,23 +3,24 @@
 namespace Kompo\Komponents;
 
 use Illuminate\Support\Str;
-use Kompo\Query;
 use Kompo\Core\RequestData;
 use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\ModelManager;
 use Kompo\Form;
-use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Interactions\Traits\ForwardsInteraction;
+use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Komponents\Managers\FormField;
 use Kompo\Komposers\KomposerManager;
+use Kompo\Query;
 
 abstract class Field extends Komponent
 {
-    use HasInteractions, ForwardsInteraction;
-    use Traits\AjaxConfigurations,
-        Traits\FormSubmitConfigurations,
-        Traits\LabelInfoComment;
+    use HasInteractions;
+    use ForwardsInteraction;
+    use Traits\AjaxConfigurations;
+    use Traits\FormSubmitConfigurations;
+    use Traits\LabelInfoComment;
 
     /**
      * The field's HTML attribute in the form (also the formData key).
@@ -27,7 +28,7 @@ abstract class Field extends Komponent
      * @var string
      */
     public $name;
-    
+
     /**
      * The field's value.
      *
@@ -49,7 +50,6 @@ abstract class Field extends Komponent
      */
     protected $slug = false;
 
-
     /**
      * The field's config for internal usage. Contains submit handling configs, field relation to model, etc...
      *
@@ -57,17 +57,18 @@ abstract class Field extends Komponent
      */
     protected $_kompo = [
         'eloquent' => [
-            'ignoresModel' => false, //@var bool   Doesn't interact with model on display or submit.
-            'doesNotFill' => false,  //@var bool   Gets the model's value on display but does not on submit.
+            'ignoresModel'    => false, //@var bool   Doesn't interact with model on display or submit.
+            'doesNotFill'     => false,  //@var bool   Gets the model's value on display but does not on submit.
             'extraAttributes' => [], //@var array  Additional attributes (key/value constants) to save in DB
-            'morphToModel' => null   //@var string When a morphTo relationship is referenced in the field, we need to specify a Model class.
-        ]
+            'morphToModel'    => null,   //@var string When a morphTo relationship is referenced in the field, we need to specify a Model class.
+        ],
     ];
 
     /**
      * Initializes a Field component.
      *
-     * @param  string $label
+     * @param string $label
+     *
      * @return void
      */
     protected function vlInitialize($label)
@@ -75,13 +76,13 @@ abstract class Field extends Komponent
         parent::vlInitialize($label);
 
         $this->name = Str::snake($label); //not $this->label because it could be already translated
-
     }
 
     /**
      * Appends <a href="https://laravel.com/docs/master/validation#available-validation-rules" target="_blank">Laravel input validation rules</a> for the field.
      *
-     * @param  string|array $rules A | separated string of validation rules or Array of rules.
+     * @param string|array $rules A | separated string of validation rules or Array of rules.
+     *
      * @return self
      */
     public function rules($rules)
@@ -92,65 +93,72 @@ abstract class Field extends Komponent
     /**
      * Sets the name for the field corresponding the attribute it will fill.
      *
-     * @param string|array $name The name attribute of the field.
-     * @param null|bool $interactsWithModel ref. ignoresToModel method
-     * 
+     * @param string|array $name               The name attribute of the field.
+     * @param null|bool    $interactsWithModel ref. ignoresToModel method
+     *
      * @return self
      */
     public function name($name, $interactsWithModel = true)
     {
         $this->name = $name;
 
-        if(!$interactsWithModel)
+        if (!$interactsWithModel) {
             $this->ignoresModel();
+        }
 
         return $this;
     }
 
     /**
-     * Sets the value of the field for the output (display) phase. 
+     * Sets the value of the field for the output (display) phase.
      * <u>Note</u>: if the Form is connected to an Eloquent Model, the DB value takes precedence.
      *
-     * @param  string|array $value The value to be set.
-     * 
+     * @param string|array $value The value to be set.
+     *
      * @return self
      */
     public function value($value)
     {
         $this->value = $value;
+
         return $this;
     }
 
     /**
-     * Sets the placeholder of this field. 
+     * Sets the placeholder of this field.
      * By default, the fields have no placeholder.
      *
-     * @param  string $placeholder The placeholder for the field.
+     * @param string $placeholder The placeholder for the field.
+     *
      * @return self
      */
     public function placeholder($placeholder)
     {
         $this->placeholder = __($placeholder);
+
         return $this;
     }
 
     /**
      * Sets a default value to the field. Applies if the value is empty.
      *
-     * @param  string $defaultValue The default value
+     * @param string $defaultValue The default value
+     *
      * @return self
      */
     public function default($defaultValue)
     {
-        if($this->pristine())
+        if ($this->pristine()) {
             $this->value($defaultValue);
+        }
+
         return $this;
     }
 
     /**
      * Determines if the field has a value or is pristine.
      *
-     * @return Boolean
+     * @return bool
      */
     public function pristine()
     {
@@ -158,21 +166,23 @@ abstract class Field extends Komponent
     }
 
     /**
-     * Adds a slug in the table from this field. For example, this will populate the `title` column with the field's value and the `slug` column with it's corresponding slug. 
-     * <php>Input::form('Title')->sluggable('slug')</php>
+     * Adds a slug in the table from this field. For example, this will populate the `title` column with the field's value and the `slug` column with it's corresponding slug.
+     * <php>Input::form('Title')->sluggable('slug')</php>.
      *
-     * @param  string|null $slugColumn The name of the column that contains the slug
+     * @param string|null $slugColumn The name of the column that contains the slug
+     *
      * @return self
      */
     public function sluggable($slugColumn = 'slug')
     {
         $this->slug = $slugColumn;
+
         return $this;
     }
 
     /**
      * Sets a required (&#42;) indicator and adds a required validation rule to the field.
-     * 
+     *
      * @param string|null The required indicator Html. The default is (&#42;).
      *
      * @return self
@@ -181,6 +191,7 @@ abstract class Field extends Komponent
     {
         $this->config(['required' => $indicator]);
         $this->rules('required');
+
         return $this;
     }
 
@@ -203,20 +214,21 @@ abstract class Field extends Komponent
     {
         return $this->config(['noAutocomplete' => true]);
     }
-    
+
     /**
      * This specifies extra attributes (constant columns/values) to add to the model.
      *
-     * @param      array  $attributes  Constant columns/values pairs (associative array).
+     * @param array $attributes Constant columns/values pairs (associative array).
      *
-     * @return self  
+     * @return self
      */
     public function extraAttributes($attributes = [])
     {
         FormField::setExtraAttributes($this, $attributes);
+
         return $this;
     }
-    
+
     /**
      * Removes a specific field from the database interaction process.
      *
@@ -237,24 +249,23 @@ abstract class Field extends Komponent
         return FormField::setConfig($this, 'doesNotFill', true);
     }
 
-
     /**
      * Internally used to disable the default Vue input wrapper in fields.
      *
-     * @return  self
+     * @return self
      */
     public function noInputWrapper()
     {
-    	return $this->config([
-    		'noInputWrapper' => true
-    	]);
+        return $this->config([
+            'noInputWrapper' => true,
+        ]);
     }
 
     /**
-     * Removes the default margin applied to fields. 
+     * Removes the default margin applied to fields.
      * To disable ALL the fields in a form, use the $noMargins property on the Form.
      *
-     * @return     self
+     * @return self
      */
     public function noMargins()
     {
@@ -263,40 +274,43 @@ abstract class Field extends Komponent
 
     /**
      * Passes Form attributes to the component and sets it's value if it is a Field.
-     * 
-     * @param Kompo\Komposers\Komposer  $komposer
+     *
+     * @param Kompo\Komposers\Komposer $komposer
      *
      * @return void
      */
     public function prepareForDisplay($komposer)
     {
-        if(property_exists($komposer, 'noMargins') && $komposer->noMargins)
+        if (property_exists($komposer, 'noMargins') && $komposer->noMargins) {
             $this->noMargins();
+        }
 
         ValidationManager::pushCleanRulesToKomposer($this, $komposer);
 
         $this->checkSetReadonly($komposer);
 
-        if($komposer instanceOf Form)
+        if ($komposer instanceof Form) {
             FormField::retrieveValueFromModel($this, $komposer->model);
+        }
 
-        if($komposer instanceOf Query)
-            KomposerManager::pushField($komposer, $this); //when the filters have a value on display
+        if ($komposer instanceof Query) {
+            KomposerManager::pushField($komposer, $this);
+        } //when the filters have a value on display
 
         $this->prepareForFront($komposer);
     }
 
     /**
      * Passes Form attributes to the component and sets it's value if it is a Field.
-     * 
-     * @param Kompo\Komposers\Komposer  $komposer
+     *
+     * @param Kompo\Komposers\Komposer $komposer
      *
      * @return void
      */
     public function prepareForAction($komposer)
     {
         KomposerManager::pushField($komposer, $this);
-        
+
         parent::prepareForAction($komposer);
 
         ValidationManager::pushCleanRulesToKomposer($this, $komposer);
@@ -305,21 +319,19 @@ abstract class Field extends Komponent
     /**
      * Checks authorization and sets a readonly field if necessary.
      *
-     * @param Kompo\Komposers\Komposer  $komposer
-     * 
+     * @param Kompo\Komposers\Komposer $komposer
+     *
      * @return void
      */
     public function checkSetReadonly($komposer)
     {
-        if(config('kompo.smart_readonly_fields') && method_exists($komposer, 'authorize')){
-
+        if (config('kompo.smart_readonly_fields') && method_exists($komposer, 'authorize')) {
             $authorize = $komposer->authorize();
 
-            Util::collect($this->name)->each(function($name) use($authorize) {
-            
-                if(!$authorize || (is_array($authorize) && !in_array($name, $authorize)))
+            Util::collect($this->name)->each(function ($name) use ($authorize) {
+                if (!$authorize || (is_array($authorize) && !in_array($name, $authorize))) {
                     $this->readOnly();
-
+                }
             });
         }
     }
@@ -327,33 +339,36 @@ abstract class Field extends Komponent
     /**
      * Sets the field value before persisting in DB.
      *
-     * @param  string|array $value
+     * @param string|array $value
+     *
      * @return void
      */
     public function setInput($value, $key)
     {
         $this->value($value);
-        return $this->value; 
+
+        return $this->value;
     }
 
     /**
      * Sets the field value before preparing for Front.
      *
      * @param mixed $value
-     * @param integer $key
-     * 
+     * @param int   $key
+     *
      * @return void
      */
     public function setOutput($value, $key)
     {
-        if(!is_null($value))
-            $this->value($value); //to be overriden
+        if (!is_null($value)) {
+            $this->value($value);
+        } //to be overriden
     }
 
     /**
-     * Performing operations necessary for Field display on the Front-End
+     * Performing operations necessary for Field display on the Front-End.
      *
-     * @param Kompo\Komposers\Komposer  $komposer
+     * @param Kompo\Komposers\Komposer $komposer
      */
     public function prepareForFront($komposer)
     {
@@ -363,8 +378,8 @@ abstract class Field extends Komponent
     /**
      * Gets the value from model.
      *
-     * @param      <type>  $model  The model
-     * @param      <type>  $name   The name
+     * @param <type> $model The model
+     * @param <type> $name  The name
      */
     public function getValueFromModel($model, $name)
     {
@@ -377,7 +392,7 @@ abstract class Field extends Komponent
      * @param string                             $requestName
      * @param string                             $name
      * @param Illuminate\Database\Eloquent\Model $model
-     * @param integer|null                       $key
+     * @param int|null                           $key
      */
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)
     {
@@ -390,7 +405,7 @@ abstract class Field extends Komponent
      * @param string                             $requestName
      * @param string                             $name
      * @param Illuminate\Database\Eloquent\Model $model
-     * @param integer|null                       $key
+     * @param int|null                           $key
      */
     public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
@@ -398,18 +413,17 @@ abstract class Field extends Komponent
     }
 
     /**
-     * Checks if the field deals with array value
+     * Checks if the field deals with array value.
      *
      * @param Illuminate\Database\Eloquent\Model $model
      * @param string                             $name
-     * 
-     * @return     Boolean  
+     *
+     * @return bool
      */
     public function shouldCastToArray($model, $name)
     {
-        return !$model->hasCast($name) && 
-            (property_exists($this, 'castsToArray') && $this->castsToArray) && 
+        return !$model->hasCast($name) &&
+            (property_exists($this, 'castsToArray') && $this->castsToArray) &&
             (!property_exists($this, 'attributesToColumns') || (property_exists($this, 'attributesToColumns') && !$this->attributesToColumns));
     }
-    
 }

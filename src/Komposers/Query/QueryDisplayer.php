@@ -22,12 +22,12 @@ class QueryDisplayer
     /**
      * For initial display: Prepares the query, the query, filters and cards.
      *
-     * @param Kompo\Query  $query
+     * @param Kompo\Query $query
      *
      * @return Kompo\Query
      */
     public static function displayFiltersAndCards($query)
-    {        
+    {
         static::prepareConfigurations($query);
 
         static::prepareQuery($query);
@@ -42,14 +42,14 @@ class QueryDisplayer
     }
 
     /**
-     * For browsing: Filters, Sorts, Paginates Cards
+     * For browsing: Filters, Sorts, Paginates Cards.
      *
-     * @param Kompo\Query  $query
+     * @param Kompo\Query $query
      *
      * @return Illuminate\...\Paginator
      */
     public static function browseCards($query)
-    {        
+    {
         AuthorizationGuard::mainGate($query, 'browsing');
 
         ValidationManager::validateRequest($query);
@@ -63,8 +63,8 @@ class QueryDisplayer
 
     /**
      * Initialize the browsing, ordering and optionnally set the headers of a table query.
-     * 
-     * @param Kompo\Query  $query
+     *
+     * @param Kompo\Query $query
      *
      * @return void
      */
@@ -72,53 +72,47 @@ class QueryDisplayer
     {
         RouteFinder::activateRoute($komposer);
 
-        $komposer->noItemsFound = method_exists($komposer, 'noItemsFound') ? 
+        $komposer->noItemsFound = method_exists($komposer, 'noItemsFound') ?
             $komposer->noItemsFound() : __($komposer->noItemsFound);
 
-        if(method_exists($komposer, 'headers'))
+        if (method_exists($komposer, 'headers')) {
             $komposer->headers = collect($komposer->headers())->filter();
+        }
 
-        if($komposer->layout == 'Kanban')
+        if ($komposer->layout == 'Kanban') {
             KompoTarget::setOnElement($komposer, KompoTarget::getEncrypted('changeStatus'));
+        }
     }
 
     /**
      * Prepare the underlying query that will fetch the komposer cards.
-     * 
-     * @param Kompo\Query  $komposer
+     *
+     * @param Kompo\Query $komposer
      *
      * @return void
      */
     public static function prepareQuery($komposer)
     {
-        if(in_array($komposer->layout, ['CalendarMonth', 'Kanban']))
-            $komposer->perPage = 1000000; //Laravel limitation, besides nobody will ever visualize 1M items...
+        if (in_array($komposer->layout, ['CalendarMonth', 'Kanban'])) {
+            $komposer->perPage = 1000000;
+        } //Laravel limitation, besides nobody will ever visualize 1M items...
 
         $q = $komposer->query();
 
-        if($q instanceOf LaravelModel || $q instanceOf LaravelEloquentBuilder  || $q instanceOf LaravelRelation){
-
+        if ($q instanceof LaravelModel || $q instanceof LaravelEloquentBuilder || $q instanceof LaravelRelation) {
             $komposer->model = $q->getModel();
 
             $komposer->keyName = $komposer->model->getKeyName();
 
             $komposer->query = new EloquentQuery($q, $komposer);
-
-        }elseif($q instanceOf LaravelQueryBuilder){
-
+        } elseif ($q instanceof LaravelQueryBuilder) {
             $komposer->keyName = $komposer->keyName; //TODO: try to guess table primarykey
-            
+
             $komposer->query = new DatabaseQuery($q, $komposer);
-            
-        }elseif(Util::isCollection($q) || is_array($q) || $q === null){
-
+        } elseif (Util::isCollection($q) || is_array($q) || $q === null) {
             $komposer->query = new CollectionQuery($q, $komposer);
-
-        }else{
-        
+        } else {
             throw new BadQueryDefinitionException(class_basename($komposer));
-
         }
     }
-
 }

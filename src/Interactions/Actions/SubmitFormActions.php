@@ -11,22 +11,21 @@ trait SubmitFormActions
      * On click for Buttons/Links.
      * On change for fields (after blur).
      *
-     * @param  string  $methodName    The class's method name that will handle the submit.
-     * 
+     * @param string $methodName The class's method name that will handle the submit.
+     *
      * @return self
      */
     public function submit($methodName = null)
     {
-        $this->applyToElement(function($el) {
+        $this->applyToElement(function ($el) {
             $el->config([
-                'submitsForm' => true
+                'submitsForm' => true,
             ]);
         });
 
         return $this->prepareAction('submitForm', [
-            'kompoMethod' => $methodName ? KompoTarget::getEncrypted($methodName) : null,
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage')
+            'kompoMethod'           => $methodName ? KompoTarget::getEncrypted($methodName) : null,
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
         ]);
     }
-    
 }

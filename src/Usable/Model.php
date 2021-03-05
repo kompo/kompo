@@ -10,19 +10,16 @@ class Model extends LaravelModel
 {
     public function save(array $options = [])
     {
-    	if(defined(get_class($this).'::CREATED_BY') && !$this->getKey() && static::CREATED_BY && auth()->check())
-        {
-    		$this->{static::CREATED_BY} = auth()->user()->id;
+        if (defined(get_class($this).'::CREATED_BY') && !$this->getKey() && static::CREATED_BY && auth()->check()) {
+            $this->{static::CREATED_BY} = auth()->user()->id;
         }
 
-        if(defined(get_class($this).'::UPDATED_BY') && static::UPDATED_BY && auth()->check())
-        {
-    	   $this->{static::UPDATED_BY} = auth()->user()->id;
+        if (defined(get_class($this).'::UPDATED_BY') && static::UPDATED_BY && auth()->check()) {
+            $this->{static::UPDATED_BY} = auth()->user()->id;
         }
 
-    	parent::save($options);
+        parent::save($options);
     }
-
 
     /* RELATIONS */
     public function createdBy(): BelongsTo

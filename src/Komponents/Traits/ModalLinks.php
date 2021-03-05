@@ -1,11 +1,11 @@
-<?php 
+<?php
 
 namespace Kompo\Komponents\Traits;
 
 use Kompo\Interactions\Action;
 use Kompo\Interactions\Interaction;
 
-trait ModalLinks 
+trait ModalLinks
 {
     public $defaultSuccessInteraction;
 

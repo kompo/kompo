@@ -10,8 +10,10 @@ use Kompo\Komponents\Traits\VerticalAlignmentTrait;
 
 class Columns extends Layout
 {
-    use HasInteractions, ForwardsInteraction;
-    use VerticalAlignmentTrait, HasGutters;
+    use HasInteractions;
+    use ForwardsInteraction;
+    use VerticalAlignmentTrait;
+    use HasGutters;
 
     public $vueComponent = 'Columns';
 
@@ -35,14 +37,14 @@ class Columns extends Layout
     /**
      * The columns will re-arrange at that specific breakpoint. The default breakpoint is 'md'.
      *
-     * @param      string  $breakpoint  A breakpoint value: 'xs', 'sm', 'md', 'lg', 'xl'.
+     * @param string $breakpoint A breakpoint value: 'xs', 'sm', 'md', 'lg', 'xl'.
      *
-     * @return self   
+     * @return self
      */
     public function breakpoint($breakpoint = null)
     {
         $this->config(['breakpoint' => $breakpoint]);
+
         return $this;
     }
-
 }

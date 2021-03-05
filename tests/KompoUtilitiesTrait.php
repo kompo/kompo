@@ -8,10 +8,8 @@ trait KompoUtilitiesTrait
     {
         $array = is_array($array) ? $array : $array->toArray();
         $subset = is_array($subset) ? $subset : $subset->toArray();
-        foreach($subset as $key => $value)
-        {
+        foreach ($subset as $key => $value) {
             $this->assertEquals($value, $array[$key]);
         }
     }
-
 }

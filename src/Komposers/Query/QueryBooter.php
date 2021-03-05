@@ -7,36 +7,35 @@ use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
 use Kompo\Core\ValidationManager;
 use Kompo\Komposers\KomposerManager;
-use Kompo\Komposers\Query\QueryFilters;
 use Kompo\Query;
 use Kompo\Routing\RouteFinder;
 
 class QueryBooter
 {
     public static function bootForAction($bootInfo)
-    {        
+    {
         $query = static::instantiateUnbooted($bootInfo['kompoClass']);
 
         KompoId::setForKomposer($query, $bootInfo);
 
         $query->store($bootInfo['store']);
         $query->parameter($bootInfo['parameters']);
-        
+
         $query->currentPage(request()->header('X-Kompo-Page'));
-        
+
         AuthorizationGuard::checkBoot($query);
 
-        QueryDisplayer::prepareQuery($query); //setting-up model (like in forms) mainly for 'delete-item' action. 
+        QueryDisplayer::prepareQuery($query); //setting-up model (like in forms) mainly for 'delete-item' action.
 
-        ValidationManager::addRulesToKomposer($query->rules(), $query); 
-        
+        ValidationManager::addRulesToKomposer($query->rules(), $query);
+
         QueryFilters::prepareFiltersForAction($query);
 
         return $query;
     }
 
-	public static function bootForDisplay($query, array $store = [], $routeParams = null)
-	{
+    public static function bootForDisplay($query, array $store = [], $routeParams = null)
+    {
         $query = static::instantiateUnbooted($query);
         $query->store($store);
         $query->parameter($routeParams ?: RouteFinder::getRouteParameters());
@@ -45,7 +44,7 @@ class QueryBooter
 
         ValidationManager::addRulesToKomposer($query->rules(), $query); //for Front-end validations TODO:
 
-		QueryDisplayer::displayFiltersAndCards($query);
+        QueryDisplayer::displayFiltersAndCards($query);
 
         KompoId::setForKomposer($query);
 
@@ -54,7 +53,7 @@ class QueryBooter
         KomposerManager::booted($query);
 
         return $query;
-	}
+    }
 
     /**
      * Shortcut method to render a Query into it's Vue component.
@@ -66,16 +65,15 @@ class QueryBooter
         return '<vl-query :vkompo="'.htmlspecialchars($query).'"></vl-query>';
     }
 
-	/**
+    /**
      * Returns an unbooted Query if called with it's class string.
      *
-     * @param mixed $class  The class or object
+     * @param mixed $class The class or object
      *
-     * @return 
+     * @return
      */
-	protected static function instantiateUnbooted($class)
-	{
-		return $class instanceOf Query ? $class : new $class(null, true);
-	}
-
+    protected static function instantiateUnbooted($class)
+    {
+        return $class instanceof Query ? $class : new $class(null, true);
+    }
 }

@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 namespace Kompo\Komponents\Traits;
 
 trait UploadsImages
@@ -6,7 +7,7 @@ trait UploadsImages
     /**
      * Sets the Image Field thumbnails CSS height. This is independant from the back-end thumbnail resizing.
      *
-     * @param     string   $height  The height in rem, px, %...
+     * @param string $height The height in rem, px, %...
      *
      * @return self
      */
@@ -28,13 +29,14 @@ trait UploadsImages
     /**
      * Set a max width to resize image uploads or set to false to disable resizing.
      *
-     * @param integer|boolean  $width  The width
+     * @param int|bool $width The width
      *
      * @return self
      */
     public function resize($width = 2000)
     {
         $this->fileHandler->optimizeForWeb = $width;
+
         return $this;
     }
 
@@ -46,47 +48,52 @@ trait UploadsImages
     public function noResize()
     {
         $this->fileHandler->optimizeForWeb = false;
+
         return $this;
     }
 
     /**
-     * To also add a thumbnail of the image, you may chain this method. 
+     * To also add a thumbnail of the image, you may chain this method.
      * The thumbnail will be stored in the same folder as the main image and will have '_thumb' appended to it's filename.
      * There's also a kompo helper `assetThumb()` available to easily display it. It works exactly the same as Laravel's `asset()` helper function except it targets the filename with '_thumb'.
      *
-     * @param integer|boolean $thumbWidth  The width in px of the thumbnail. Default is 300px
-     * 
+     * @param int|bool $thumbWidth The width in px of the thumbnail. Default is 300px
+     *
      * @return self
      */
     public function withThumbnail($thumbWidth = 300)
     {
         $this->fileHandler->withThumbnail = $thumbWidth;
+
         return $this;
     }
 
     /**
-     * TODO: document on website: confirm removal of image
+     * TODO: document on website: confirm removal of image.
      *
-     * @param      <type>  $message  The message
+     * @param <type> $message The message
      *
-     * @return     <type>  ( description_of_the_return_value )
+     * @return <type> ( description_of_the_return_value )
      */
     public function confirmDelete($message = null)
     {
         return $this->config([
-            'confirmDelete' => __($message) ?: __('Are you sure you want to remove this image?') 
+            'confirmDelete' => __($message) ?: __('Are you sure you want to remove this image?'),
         ]);
     }
 
     /**
      * Does some common transformation on the $file object stored in DB.
-     * (used for images)
-     * @param  \Illuminate\Database\Eloquent\Model|Builder $file
+     * (used for images).
+     *
+     * @param \Illuminate\Database\Eloquent\Model|Builder $file
+     *
      * @return \Illuminate\Database\Eloquent\Model|Builder
      */
     protected function transformFromDB($file)
     {
         $file['src'] = asset($file['path']);
+
         return $file;
     }
 
@@ -101,7 +108,8 @@ trait UploadsImages
     /**
      * Validates the uploaded file is an image.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param \Illuminate\Http\Request $request
+     *
      * @return mixed
      */
     public function validate($request)
@@ -111,5 +119,4 @@ trait UploadsImages
             $this->name.'.*' => 'image'
         ]);*/
     }
-
 }

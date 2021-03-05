@@ -7,52 +7,48 @@ use Kompo\Tests\EnvironmentBoot;
 
 class AddAlertInteractionsTest extends EnvironmentBoot
 {
+    /** @test */
+    public function higher_order_success_error_alert()
+    {
+        $al1 = ['success message', '<i class="success-icon"></i>', 'successClass'];
+        $al2 = ['error message', '<i class="error-icon"></i>', 'errorClass'];
 
-	/** @test */
-	public function higher_order_success_error_alert()
-	{
-		$al1 = ['success message', '<i class="success-icon"></i>', 'successClass'];
-		$al2 = ['error message', '<i class="error-icon"></i>', 'errorClass'];
+        $nested = SubmitButton::form()
+            ->onSuccess->alert($al1[0], $al1[1], $al1[2])
+            ->onError->alert($al2[0], $al2[1], $al2[2])
+            ->interactions[0]->action->interactions;
 
-		$nested = SubmitButton::form()
-			->onSuccess->alert($al1[0], $al1[1], $al1[2])
-			->onError->alert($al2[0], $al2[1], $al2[2])
-			->interactions[0]->action->interactions;
+        $this->assertCount(2, $nested);
 
-		$this->assertCount(2, $nested);
+        $this->assert_alert_is_well_set_on_button($al1, 'success', $nested[0]);
+        $this->assert_alert_is_well_set_on_button($al2, 'error', $nested[1]);
+    }
 
-		$this->assert_alert_is_well_set_on_button($al1, 'success', $nested[0]);
-		$this->assert_alert_is_well_set_on_button($al2, 'error', $nested[1]);
-	}
+    /** @test */
+    public function higher_order_implied_success_error_alert()
+    {
+        $al1 = ['success message', '<i class="success-icon"></i>', 'successClass'];
+        $al2 = ['error message', '<i class="error-icon"></i>', 'errorClass'];
 
+        $nested = SubmitButton::form()
+            ->alert($al1[0], $al1[1], $al1[2]) //onSuccess not explicit
+            ->onError->alert($al2[0], $al2[1], $al2[2])
+            ->interactions[0]->action->interactions;
 
-	/** @test */
-	public function higher_order_implied_success_error_alert()
-	{
-		$al1 = ['success message', '<i class="success-icon"></i>', 'successClass'];
-		$al2 = ['error message', '<i class="error-icon"></i>', 'errorClass'];
+        $this->assertCount(2, $nested);
 
-		$nested = SubmitButton::form()
-			->alert($al1[0], $al1[1], $al1[2]) //onSuccess not explicit
-			->onError->alert($al2[0], $al2[1], $al2[2])
-			->interactions[0]->action->interactions;
+        $this->assert_alert_is_well_set_on_button($al1, 'success', $nested[0]);
+        $this->assert_alert_is_well_set_on_button($al2, 'error', $nested[1]);
+    }
 
-		$this->assertCount(2, $nested);
+    /** ------------------ PRIVATE --------------------------- */
+    private function assert_alert_is_well_set_on_button($result, $interactionType, $interaction)
+    {
+        $this->assertEquals($interactionType, $interaction->interactionType);
+        $this->assertEquals('addAlert', $interaction->action->actionType);
 
-		$this->assert_alert_is_well_set_on_button($al1, 'success', $nested[0]);
-		$this->assert_alert_is_well_set_on_button($al2, 'error', $nested[1]);
-	}
-	
-	/** ------------------ PRIVATE --------------------------- */  
-
-	private function assert_alert_is_well_set_on_button($result, $interactionType, $interaction)
-	{
-		$this->assertEquals($interactionType, $interaction->interactionType);
-		$this->assertEquals('addAlert', $interaction->action->actionType);
-
-		foreach (['message', 'icon', 'alertClass'] as $k => $v) {
-			$this->assertEquals($result[$k], $interaction->action->config['alert'][$v]);
-		}
-	}
-	
+        foreach (['message', 'icon', 'alertClass'] as $k => $v) {
+            $this->assertEquals($result[$k], $interaction->action->config['alert'][$v]);
+        }
+    }
 }

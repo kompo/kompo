@@ -2,14 +2,12 @@
 
 namespace Kompo\Routing;
 
-use Kompo\Routing\Dispatcher;
-
 class Router
 {
     /**
-     * Check to hold off booting the Komposer from it's constructor because the request has not been handled yet
+     * Check to hold off booting the Komposer from it's constructor because the request has not been handled yet.
      *
-     * @return     bool
+     * @return bool
      */
     public static function shouldNotBeBooted(): bool
     {
@@ -20,9 +18,9 @@ class Router
     /**
      * Gets the merged layout.
      *
-     * @param      <type>  $route  The route
+     * @param <type> $route The route
      *
-     * @return  string  The merged layout.
+     * @return string The merged layout.
      */
     public static function getMergedLayout($route): ?string
     {
@@ -34,14 +32,14 @@ class Router
     /**
      * Gets the last section.
      *
-     * @param      <type>  $route  The route
+     * @param <type> $route The route
      *
-     * @return  string  The last section.
+     * @return string The last section.
      */
     public static function getLastSection($route): ?string
     {
         $section = $route->action['section'] ?? 'content';
-        
+
         return is_array($section) ? end($section) : $section; //get last section only
     }
 }

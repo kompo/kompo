@@ -7,7 +7,7 @@ use Kompo\Tests\Models\Post;
 
 class _FormRefreshForm extends Form
 {
-	protected $refresh = true;
+    protected $refresh = true;
 
-	public $model = Post::class;
+    public $model = Post::class;
 }

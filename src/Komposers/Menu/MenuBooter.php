@@ -25,24 +25,24 @@ class MenuBooter
         return $menu;
     }
 
-	public static function bootForDisplay($menu, array $store = [], $routeParams = null)
-	{
+    public static function bootForDisplay($menu, array $store = [], $routeParams = null)
+    {
         $menu = static::instantiateUnbooted($menu);
         $menu->store($store);
         $menu->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
         AuthorizationGuard::checkBoot($menu);
 
-		$menu->komponents = collect($menu->komponents())->filter()->all();
+        $menu->komponents = collect($menu->komponents())->filter()->all();
 
         KompoId::setForKomposer($menu);
 
-		KompoInfo::saveKomposer($menu);
+        KompoInfo::saveKomposer($menu);
 
         KomposerManager::booted($menu);
 
-		return $menu;
-	}
+        return $menu;
+    }
 
     /**
      * Shortcut method to render a Menu into it's Vue component.
@@ -54,16 +54,15 @@ class MenuBooter
         return '<vl-menu :vkompo="'.htmlspecialchars($menu).'"></vl-menu>';
     }
 
-	/**
+    /**
      * Returns an unbooted Menu if called with it's class string.
      *
-     * @param mixed $class  The class or object
+     * @param mixed $class The class or object
      *
-     * @return 
+     * @return
      */
-	protected static function instantiateUnbooted($class)
-	{
-		return $class instanceOf Menu ? $class : new $class(null, true);
-	}
-
+    protected static function instantiateUnbooted($class)
+    {
+        return $class instanceof Menu ? $class : new $class(null, true);
+    }
 }

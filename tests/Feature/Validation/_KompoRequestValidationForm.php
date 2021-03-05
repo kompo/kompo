@@ -7,19 +7,19 @@ use Kompo\Input;
 
 class _KompoRequestValidationForm extends Form
 {
-	public $submitTo = 'submit-route';
+    public $submitTo = 'submit-route';
 
-	public function komponents()
-	{
-		return [
-			Input::form()->name('name')
-		];
-	}
+    public function komponents()
+    {
+        return [
+            Input::form()->name('name'),
+        ];
+    }
 
-	public function rules()
-	{
-		return [
-			'name' => 'required'
-		];
-	}
+    public function rules()
+    {
+        return [
+            'name' => 'required',
+        ];
+    }
 }

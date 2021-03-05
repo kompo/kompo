@@ -10,19 +10,19 @@ use Kompo\Tests\Utilities\SwitchableFormTrait;
 
 class _PlacesStoredAsMorphOneMorphManyForm extends Form
 {
-	use SwitchableFormTrait;
+    use SwitchableFormTrait;
 
-	public $model = Obj::class;
+    public $model = Obj::class;
 
-	public function komponents()
-	{
-		return $this->filter([
-			Place::form('A')->name('morphOnePlain2'),
-			Place::form('A')->name('morphOneOrdered2'),
-			Place::form('A')->name('morphOneFiltered2')->extraAttributes(['order' => 1]),
-			MultiPlace::form('A')->name('morphManyPlain2'),
-			MultiPlace::form('A')->name('morphManyOrdered2'),
-			MultiPlace::form('A')->name('morphManyFiltered2')->extraAttributes(['order' => 1])
-		]);
-	}
+    public function komponents()
+    {
+        return $this->filter([
+            Place::form('A')->name('morphOnePlain2'),
+            Place::form('A')->name('morphOneOrdered2'),
+            Place::form('A')->name('morphOneFiltered2')->extraAttributes(['order' => 1]),
+            MultiPlace::form('A')->name('morphManyPlain2'),
+            MultiPlace::form('A')->name('morphManyOrdered2'),
+            MultiPlace::form('A')->name('morphManyFiltered2')->extraAttributes(['order' => 1]),
+        ]);
+    }
 }

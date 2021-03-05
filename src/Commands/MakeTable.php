@@ -30,13 +30,15 @@ class MakeTable extends GeneratorCommand
     /**
      * Replace the class name for the given stub.
      *
-     * @param  string  $stub
-     * @param  string  $name
+     * @param string $stub
+     * @param string $name
+     *
      * @return string
      */
     protected function replaceClass($stub, $name)
     {
         $stub = parent::replaceClass($stub, $name);
+
         return str_replace('{name}', $this->argument('name'), $stub);
     }
 
@@ -47,18 +49,21 @@ class MakeTable extends GeneratorCommand
      */
     protected function getStub()
     {
-        return  __DIR__ . '/stubs/kompo-table.stub';
+        return  __DIR__.'/stubs/kompo-table.stub';
     }
+
     /**
      * Get the default namespace for the class.
      *
-     * @param  string  $rootNamespace
+     * @param string $rootNamespace
+     *
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Http\Komposers';
+        return $rootNamespace.'\Http\Komposers';
     }
+
     /**
      * Get the console command arguments.
      *
@@ -67,8 +72,7 @@ class MakeTable extends GeneratorCommand
     protected function getArguments()
     {
         return [
-            ['name', InputArgument::REQUIRED, 'The class name of the Table.']
+            ['name', InputArgument::REQUIRED, 'The class name of the Table.'],
         ];
     }
-
 }

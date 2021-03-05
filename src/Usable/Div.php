@@ -9,9 +9,10 @@ use Kompo\Komponents\Traits\HasHref;
 
 class Div extends Layout
 {
-    use HasInteractions, ForwardsInteraction;
+    use HasInteractions;
+    use ForwardsInteraction;
     use HasHref;
-    
+
     public $vueComponent = 'Div';
     public $bladeComponent = 'Div';
 }

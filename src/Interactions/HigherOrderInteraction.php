@@ -17,17 +17,15 @@ class HigherOrderInteraction
     /**
      * Handle dynamic static method calls into the class.
      *
-     * @param  string  $methodName
-     * @param  array  $parameters
+     * @param string $methodName
+     * @param array  $parameters
+     *
      * @return mixed
      */
     public function __call($methodName, $parameters)
     {
-        return $this->element->{$this->onInteraction}(function($e) use($methodName, $parameters){
+        return $this->element->{$this->onInteraction}(function ($e) use ($methodName, $parameters) {
             $e->{$methodName}(...$parameters);
         });
     }
-
-
-    
 }

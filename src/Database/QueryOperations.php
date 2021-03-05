@@ -6,28 +6,29 @@ use Kompo\Core\RequestData;
 use Kompo\Input;
 
 abstract class QueryOperations
-{    
+{
     protected $query;
 
     protected $komposer;
 
-	abstract public function handleFilter($field);
+    abstract public function handleFilter($field);
 
     abstract public function getPaginated();
 
     abstract public function orderItems();
 
     /**
-     * Constructs a Kompo\Database\QueryOperations object
+     * Constructs a Kompo\Database\QueryOperations object.
      *
-     * @param  array $komponents
+     * @param array $komponents
+     *
      * @return void
      */
     public function __construct($query, $komposer)
     {
-    	$this->query = $query;
+        $this->query = $query;
 
-    	$this->komposer = $komposer;
+        $this->komposer = $komposer;
     }
 
     public function getQuery()
@@ -38,7 +39,7 @@ abstract class QueryOperations
     protected function inferBestOperator($field)
     {
         return $field->config('filterOperator') ?: (
-            (property_exists($field, 'multiple') && $field->multiple) ? 'IN' : ($field instanceOf Input ? 'LIKE' : '=')
+            (property_exists($field, 'multiple') && $field->multiple) ? 'IN' : ($field instanceof Input ? 'LIKE' : '=')
         );
     }
 
@@ -46,6 +47,4 @@ abstract class QueryOperations
     {
         return RequestData::get($name);
     }
-
-
 }

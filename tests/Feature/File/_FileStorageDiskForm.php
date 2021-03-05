@@ -8,14 +8,14 @@ use Kompo\Tests\Models\File as FileModel;
 
 class _FileStorageDiskForm extends Form
 {
-	public $model = FileModel::class;
+    public $model = FileModel::class;
 
-	public function komponents()
-	{
-		return [
-			
-			File::form('File')->name('path')->disk('my-disk')
+    public function komponents()
+    {
+        return [
 
-		];
-	}
+            File::form('File')->name('path')->disk('my-disk'),
+
+        ];
+    }
 }

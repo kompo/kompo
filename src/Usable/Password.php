@@ -3,7 +3,6 @@
 namespace Kompo;
 
 use Illuminate\Support\Facades\Hash;
-use Kompo\Input;
 
 class Password extends Input
 {
@@ -16,13 +15,13 @@ class Password extends Input
 
     public function setOutput($value, $key)
     {
-    	$this->value = ''; //empty string on output (display phase)
-    	return $this;
+        $this->value = ''; //empty string on output (display phase)
+
+        return $this;
     }
 
     public function setInput($value, $key)
     {
         return Hash::make($value);
     }
-
 }

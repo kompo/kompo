@@ -9,9 +9,10 @@ use Kompo\Komponents\Traits\HasHref;
 
 class Rows extends Layout
 {
-    use HasInteractions, ForwardsInteraction;
+    use HasInteractions;
+    use ForwardsInteraction;
     use HasHref;
-    
+
     public $vueComponent = 'Rows';
     public $bladeComponent = 'Rows';
 }

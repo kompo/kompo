@@ -2,11 +2,9 @@
 
 namespace Kompo;
 
-use Kompo\Liste;
-
 class ListeSelect extends Liste
-{	
-	//Should be called SelectList
+{
+    //Should be called SelectList
 
     public $vueComponent = 'ListeSelect';
 

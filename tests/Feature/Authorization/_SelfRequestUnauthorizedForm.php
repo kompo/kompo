@@ -6,8 +6,8 @@ use Kompo\Form;
 
 class _SelfRequestUnauthorizedForm extends Form
 {
-	public function authorize()
-	{
-		return false;
-	}
+    public function authorize()
+    {
+        return false;
+    }
 }

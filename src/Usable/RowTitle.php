@@ -1,10 +1,8 @@
 <?php
-namespace Kompo;
 
-use Kompo\Card;
+namespace Kompo;
 
 class RowTitle extends Card
 {
     public $vueComponent = 'RowTitle';
-
 }

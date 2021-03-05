@@ -7,5 +7,5 @@ use Kompo\Tests\Models\Obj;
 
 class _SubmitEloquentSaveForm extends Form
 {
-	public $model = Obj::class;
+    public $model = Obj::class;
 }

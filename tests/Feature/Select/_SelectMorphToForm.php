@@ -10,19 +10,19 @@ use Kompo\Tests\Utilities\SwitchableFormTrait;
 
 class _SelectMorphToForm extends Form
 {
-	use SwitchableFormTrait;
+    use SwitchableFormTrait;
 
-	public $model = Obj::class;
+    public $model = Obj::class;
 
-	public function komponents()
-	{
-		return $this->filter([
-			Select::form('A')->name('morphToPlain')
-				->optionsFrom('id', 'name', User::class), //MorphTo model can either be specified with the 3rd param of optionsFrom().
-			Select::form('A')->name('morphToOrdered')
-				->morphToModel(User::class),              //MorphTo model can either be specified with morphToModel().
-			Select::form('A')->name('morphToFiltered')
-				->morphToModel(User::class)->extraAttributes(['order' => 1])
-		]);
-	}
+    public function komponents()
+    {
+        return $this->filter([
+            Select::form('A')->name('morphToPlain')
+                ->optionsFrom('id', 'name', User::class), //MorphTo model can either be specified with the 3rd param of optionsFrom().
+            Select::form('A')->name('morphToOrdered')
+                ->morphToModel(User::class),              //MorphTo model can either be specified with morphToModel().
+            Select::form('A')->name('morphToFiltered')
+                ->morphToModel(User::class)->extraAttributes(['order' => 1]),
+        ]);
+    }
 }

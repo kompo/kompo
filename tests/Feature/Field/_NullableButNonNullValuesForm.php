@@ -7,14 +7,13 @@ use Kompo\Tests\Models\Post;
 
 class _NullableButNonNullValuesForm extends Form
 {
-	public $model = Post::class;
+    public $model = Post::class;
 
-	public function komponents()
-	{
-		return [
-			_Input('Title')->name('title'),
-			_Input('Integer')->name('integer'),
-		];
-	}
-
+    public function komponents()
+    {
+        return [
+            _Input('Title')->name('title'),
+            _Input('Integer')->name('integer'),
+        ];
+    }
 }

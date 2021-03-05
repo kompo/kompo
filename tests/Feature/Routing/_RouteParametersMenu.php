@@ -6,10 +6,10 @@ use Kompo\Menu;
 
 class _RouteParametersMenu extends Menu
 {
-	use _RouteParametersCommonTrait;
+    use _RouteParametersCommonTrait;
 
-	public function created()
-	{
-		$this->commonCreated();
-	}
+    public function created()
+    {
+        $this->commonCreated();
+    }
 }

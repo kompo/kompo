@@ -2,8 +2,6 @@
 
 namespace Kompo;
 
-use Kompo\Liste;
-
 class Json extends Liste
 {
     public $vueComponent = 'Json';
@@ -21,19 +19,19 @@ class Json extends Liste
      * Sets the value label for the JSON string that will be encoded in the DB.
      * The default is 'value'.
      *
-     * @param      string  $valueLabel  The value label for the json Object.
+     * @param string $valueLabel The value label for the json Object.
      *
-     * @return self  
+     * @return self
      */
     public function valueLabel($valueLabel)
     {
-    	$this->config(['valueLabel' => $valueLabel]);
+        $this->config(['valueLabel' => $valueLabel]);
 
-    	return $this;
+        return $this;
     }
 
     protected function emptyValue()
     {
-    	return [[$this->config('keyLabel') => '', $this->config('valueLabel') => '']];
+        return [[$this->config('keyLabel') => '', $this->config('valueLabel') => '']];
     }
 }

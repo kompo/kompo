@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kompo\Komponents\Traits;
 
@@ -15,23 +15,23 @@ trait HasSubmenu
 
     protected function prepareMenu($args)
     {
-        return LayoutManager::collectFilteredKomponents($args, $this)->each(function($component) { 
-
+        return LayoutManager::collectFilteredKomponents($args, $this)->each(function ($component) {
             $this->prepareHashAndActiveState($component);
-
         })->values()->all();
     }
 
     public function prepareHashAndActiveState($component)
     {
-        if( method_exists($component, 'getHash') && $component->getHash() && $component->href == 'javascript:void(0)')
+        if (method_exists($component, 'getHash') && $component->getHash() && $component->href == 'javascript:void(0)') {
             $component->href($this->href) //so that turbolinnks are added
                 ->addHash($component->getHash()) //to remove the need of repeating href for each child
                 ->class('vl-has-hash');
+        }
 
         //if a link in the menu is active, then the parent is active (even if no href for the parent)
-        if($component->config('active')) 
+        if ($component->config('active')) {
             $this->config(['active' => 'vlActive']);
+        }
     }
 
     public function submenu(...$args)
@@ -44,14 +44,14 @@ trait HasSubmenu
     public function prependMenu($args)
     {
         $this->komponents = $this->prepareMenu(array_merge(func_get_args(), $this->komponents));
-        
+
         return $this;
     }
 
     /**
      * The collapsible menu will be opened on page load.
      *
-     * @return     self 
+     * @return self
      */
     public function expandByDefault()
     {
@@ -61,7 +61,7 @@ trait HasSubmenu
     /**
      * The collapsible menu will open if the user is on one of the pages in it's submenu.
      *
-     * @return     self
+     * @return self
      */
     public function expandIfActive()
     {
@@ -69,13 +69,12 @@ trait HasSubmenu
     }
 
     /**
-     * The collapsible menu will not have a caret
+     * The collapsible menu will not have a caret.
      *
-     * @return     self
+     * @return self
      */
     public function noCaret()
     {
         return $this->config(['noCaret' => true]);
     }
-
 }

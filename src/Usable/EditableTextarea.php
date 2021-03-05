@@ -2,8 +2,6 @@
 
 namespace Kompo;
 
-use Kompo\Textarea;
-
 class EditableTextarea extends Textarea
 {
     public $vueComponent = 'EditableTextarea';
@@ -14,5 +12,4 @@ class EditableTextarea extends Textarea
 
         $this->noLabel();
     }
-
 }

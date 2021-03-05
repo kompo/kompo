@@ -24,7 +24,7 @@ trait KompoTestRequestsTrait
 
     protected function browse($komposer, $data = [], $sort = null, $page = null)
     {
-        return $this->kompoAction($komposer, 'browse-items', $data, [ 
+        return $this->kompoAction($komposer, 'browse-items', $data, [
             'X-Kompo-Page' => $page,
             'X-Kompo-Sort' => $sort,
         ]);
@@ -58,7 +58,7 @@ trait KompoTestRequestsTrait
     protected function kompoAction($komposer, $action, $data, $headers = [], $method = 'POST')
     {
         return $this->withHeaders(array_merge(
-            $headers,  
+            $headers,
             KompoInfo::arrayFromElement($komposer),
             KompoAction::headerArray($action)
         ))
@@ -118,5 +118,4 @@ trait KompoTestRequestsTrait
     {
         dd($this->withoutExceptionHandling()->submitToRoute($komposer, $route, $data)->dump());
     }
-
 }

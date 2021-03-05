@@ -1,15 +1,14 @@
-<?php 
+<?php
 
 namespace Kompo\Komposers\Form;
-
-use Kompo\Komposers\Form\FormBooter;
 
 trait HasModel
 {
     /**
      * Assigns the record key or id to the Form.
      *
-     * @param  mixed  $modelKey (optional) The record's key or id in the DB table.
+     * @param mixed $modelKey (optional) The record's key or id in the DB table.
+     *
      * @return mixed
      */
     public function modelKey($modelKey = null)
@@ -26,5 +25,4 @@ trait HasModel
     {
         return $model ? FormBooter::setModel($this, $model) : $this->model;
     }
-
 }

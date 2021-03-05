@@ -8,15 +8,15 @@ use Kompo\Tests\Models\Post;
 
 class _DateRangeValueFromModelForm extends Form
 {
-	public $model = Post::class;
+    public $model = Post::class;
 
-	public function komponents()
-	{
-		return [
-			DateRange::form('DateRange')->name([
-				'created_at', //just for simulation
-				'updated_at' //just for simulation
-			])
-		];
-	}
+    public function komponents()
+    {
+        return [
+            DateRange::form('DateRange')->name([
+                'created_at', //just for simulation
+                'updated_at', //just for simulation
+            ]),
+        ];
+    }
 }

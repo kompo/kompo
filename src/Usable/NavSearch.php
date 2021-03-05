@@ -2,8 +2,6 @@
 
 namespace Kompo;
 
-use Kompo\Search;
-
 class NavSearch extends Search
 {
     public $bladeComponent = 'NavSearch';
@@ -14,5 +12,4 @@ class NavSearch extends Search
 
         $this->noLabel()->placeholder($label)->noMargins();
     }
-
 }

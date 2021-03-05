@@ -8,10 +8,9 @@ use Kompo\Komponents\Trigger;
 
 class Link extends Trigger
 {
-	use HasHref;
-	use TriggerStyles;
+    use HasHref;
+    use TriggerStyles;
 
     public $vueComponent = 'Link';
     public $bladeComponent = 'Link';
-    
 }

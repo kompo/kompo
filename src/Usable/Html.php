@@ -7,11 +7,10 @@ use Kompo\Komponents\Traits\OutputsHtml;
 
 class Html extends Block
 {
-	use OutputsHtml;
-	
+    use OutputsHtml;
+
     public $vueComponent = 'Html';
     public $bladeComponent = 'Html';
 
     public $htmlTag = 'div';
-    
 }

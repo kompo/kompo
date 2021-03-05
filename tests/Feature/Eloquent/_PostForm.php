@@ -7,5 +7,5 @@ use Kompo\Tests\Models\Post;
 
 class _PostForm extends Form
 {
-	public $model = Post::class;
+    public $model = Post::class;
 }

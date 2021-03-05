@@ -10,9 +10,8 @@ class Tabs extends Layout
 
     public function activeTab($index = null)
     {
-    	return $this->config([
-    		'activeTab' => $index ?: 0
-    	]);
+        return $this->config([
+            'activeTab' => $index ?: 0,
+        ]);
     }
-
 }

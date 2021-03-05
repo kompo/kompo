@@ -12,7 +12,7 @@ class MultiFile extends File
     /**
      * Flag indicating multiple files are allowed.
      *
-     * @var boolean
+     * @var bool
      */
     public $multiple = true;
 
@@ -20,12 +20,11 @@ class MultiFile extends File
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
-        $value = collect(RequestData::get($requestName))->map(function($file) use($model, $name){
+        $value = collect(RequestData::get($requestName))->map(function ($file) use ($model, $name) {
+            return $file instanceof UploadedFile ?
 
-            return $file instanceOf UploadedFile ? 
-                
-                $this->fileHandler->fileToDB($file, $model, $name, true) : 
-                
+                $this->fileHandler->fileToDB($file, $model, $name, true) :
+
                 $this->convertBackToDb($file);
         });
 
@@ -38,38 +37,27 @@ class MultiFile extends File
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
-        if($oldFiles && $oldFiles->count()){
-
-            $keepIds = collect(RequestData::get($requestName))->map(function($file) use($model){ 
-
-                return json_decode($file)->{$model->getKeyName()} ?? null; 
-
+        if ($oldFiles && $oldFiles->count()) {
+            $keepIds = collect(RequestData::get($requestName))->map(function ($file) use ($model) {
+                return json_decode($file)->{$model->getKeyName()} ?? null;
             })->all();
 
-            $oldFiles->filter(function($file) use($keepIds, $model) { 
-
-                return !in_array($file->{$model->getKeyName()} ?? '', $keepIds); 
-
-            })->each(function($file) {
-
+            $oldFiles->filter(function ($file) use ($keepIds, $model) {
+                return !in_array($file->{$model->getKeyName()} ?? '', $keepIds);
+            })->each(function ($file) {
                 $this->fileHandler->unlinkFileIfExists($file);
 
                 $file->delete(); //No detach, onDelete('cascade') should give the choice.
-
             });
         }
-        
-        //Has Many these files will be attached
-        if($uploadedFiles = RequestData::file($requestName)){
 
+        //Has Many these files will be attached
+        if ($uploadedFiles = RequestData::file($requestName)) {
             $relatedModel = Lineage::findOrFailRelated($model, $name);
 
-            return collect($uploadedFiles)->map(function($file) use($relatedModel){
-
+            return collect($uploadedFiles)->map(function ($file) use ($relatedModel) {
                 return $this->fileHandler->fileToDB($file, $relatedModel);
-
             });
         }
     }
-
 }

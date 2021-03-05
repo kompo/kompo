@@ -8,8 +8,7 @@ trait RunJsActions
     public function run($jsFunction)
     {
         return $this->prepareAction('runJs', [
-            'jsFunction' => $jsFunction
+            'jsFunction' => $jsFunction,
         ]);
     }
-
 }

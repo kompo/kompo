@@ -7,8 +7,8 @@ use Kompo\Komponents\Traits\OutputsHtml;
 
 class I extends Block
 {
-	use OutputsHtml;
-	
+    use OutputsHtml;
+
     public $vueComponent = 'I';
 
     public $htmlTag = 'i';

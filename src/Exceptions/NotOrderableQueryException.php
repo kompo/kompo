@@ -6,8 +6,8 @@ use LogicException;
 
 class NotOrderableQueryException extends LogicException
 {
-	public function __construct()
+    public function __construct()
     {
-        parent::__construct("The given query is not orderable since it is not coming from a Database.");
+        parent::__construct('The given query is not orderable since it is not coming from a Database.');
     }
 }

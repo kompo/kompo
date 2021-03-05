@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 namespace Kompo\Komponents\Traits;
 
 use Kompo\Core\IconGenerator;
 
-trait LabelInfoComment 
+trait LabelInfoComment
 {
     /**
      * This will remove the label.
@@ -14,7 +14,7 @@ trait LabelInfoComment
     public function noLabel()
     {
         return $this->config([
-            'noLabel' => true
+            'noLabel' => true,
         ]);
     }
 
@@ -23,22 +23,22 @@ trait LabelInfoComment
      * For multiple classes, use a space-separated string.
      *
      * @param string $labelClass The label's space separated class attribute.
-     * 
+     *
      * @return self
      */
     public function labelClass($labelClass)
     {
         return $this->config([
-            'labelClass' => $labelClass
+            'labelClass' => $labelClass,
         ]);
     }
 
     /**
      * Adds a comment below the field. This is additional information to complement the label of the input.
      *
-     * @param      string  $comment  The comment. Can be an HTML string too.
+     * @param string $comment The comment. Can be an HTML string too.
      *
-     * @return     self   
+     * @return self
      */
     public function comment($comment)
     {
@@ -48,9 +48,9 @@ trait LabelInfoComment
     /**
      * Adds a help text next to the label that appears on hover. By default, a question mark icon is used.
      *
-     * @param      string  $hint   The information text that displays on hover.
+     * @param string $hint The information text that displays on hover.
      *
-     * @return     self
+     * @return self
      */
     public function hint($hint)
     {
@@ -60,9 +60,9 @@ trait LabelInfoComment
 
     /**
      * Sets the hint text's icon or class icon. By default, it is the built-in question mark icon.
-     * 
-     * @param  string $iconClassOrHtml This is the icon HTML or class in &lt;i class="...">&lt;/i>
-     * 
+     *
+     * @param string $iconClassOrHtml This is the icon HTML or class in &lt;i class="...">&lt;/i>
+     *
      * @return self
      */
     public function hintIcon($iconClassOrHtml)
@@ -73,9 +73,9 @@ trait LabelInfoComment
     /**
      * Sets where the hint text's will show on hover. By default, it displays on top.
      *
-     * @param      string  $infoPlacement  Accepted values are up, down, left, right
+     * @param string $infoPlacement Accepted values are up, down, left, right
      *
-     * @return     self    ( description_of_the_return_value )
+     * @return self ( description_of_the_return_value )
      */
     public function hintPlacement($infoPlacement)
     {
@@ -85,13 +85,12 @@ trait LabelInfoComment
     /**
      * Sets the width of the hint text. By default, it's medium'.
      *
-     * @param      string  $hintLength  Accepted values are small, medium, big, fit
+     * @param string $hintLength Accepted values are small, medium, big, fit
      *
-     * @return     self    ( description_of_the_return_value )
+     * @return self ( description_of_the_return_value )
      */
     public function hintLength($hintLength)
     {
         return $this->config(['hintLength' => $hintLength]);
     }
-
 }

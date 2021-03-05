@@ -21,54 +21,57 @@ class Time extends Field
 
         $this->config([
             'enableTime' => true,
-            'noCalendar' => true
+            'noCalendar' => true,
         ]);
     }
 
     /**
      * Sets a FlatPickr accepted time format. By default, it's 'H:i'.
      *
-     * @param      string  $timeFormat  The time format.
+     * @param string $timeFormat The time format.
      *
-     * @return self   
+     * @return self
      */
     public function timeFormat($timeFormat = 'H:i')
     {
-    	$this->config([
-            'altFormat' => $timeFormat,
+        $this->config([
+            'altFormat'  => $timeFormat,
             'dateFormat' => $timeFormat,
         ]);
-    	return $this;
+
+        return $this;
     }
 
     /**
      * If your DB column is a DATETIME, use this method to convert it to that type.
      *
-     * @return self 
+     * @return self
      */
     public function savedAsDateTime()
     {
-    	$this->savedAsDateTime = true;
-    	return $this;
+        $this->savedAsDateTime = true;
+
+        return $this;
     }
 
     public function setOutput($value, $key)
     {
-        if(!is_null($value))
+        if (!is_null($value)) {
             $this->value(
-                $value instanceOf Carbon ? $value->format('H:i') : $value
+                $value instanceof Carbon ? $value->format('H:i') : $value
             );
+        }
     }
 
     private function validateDate($date, $format = 'Y-m-d')
-	{
-	    $d = \DateTime::createFromFormat($format, $date);
-	    return $d && $d->format($format) === $date;
-	}
+    {
+        $d = \DateTime::createFromFormat($format, $date);
 
-	private function getTimeFormat()
-	{
-		return $this->config('altFormat') ?: 'H:i';
-	}
+        return $d && $d->format($format) === $date;
+    }
 
+    private function getTimeFormat()
+    {
+        return $this->config('altFormat') ?: 'H:i';
+    }
 }

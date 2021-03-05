@@ -1,14 +1,13 @@
 <?php
+
 namespace Kompo\Komposers\Form;
 
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\DependencyResolver;
 use Kompo\Core\KompoTarget;
-use Kompo\Core\Util;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\ModelManager;
 use Kompo\Komponents\Managers\FormField;
-use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\KomposerManager;
 
 class FormSubmitter extends FormBooter
@@ -18,7 +17,7 @@ class FormSubmitter extends FormBooter
         AuthorizationGuard::mainGate($form, 'submit');
 
         ValidationManager::validateRequest($form);
-    } 
+    }
 
     public static function callCustomHandle($form)
     {
@@ -36,8 +35,8 @@ class FormSubmitter extends FormBooter
 
     /**
      * Save an Eloquent model.
-     * 
-     * @param  Kompo\Form  $form
+     *
+     * @param Kompo\Form $form
      *
      * @return void
      */
@@ -64,91 +63,95 @@ class FormSubmitter extends FormBooter
         return static::returnResponseHook($form);
     }
 
-
     /**
      * A method that gets executed before the model has been saved.
-     * 
-     * @param  Kompo\Form  $form
-     * 
+     *
+     * @param Kompo\Form $form
+     *
      * @return void
      */
     protected static function beforeSaveHook($form)
     {
-        if(method_exists($form, 'beforeSave'))
+        if (method_exists($form, 'beforeSave')) {
             $form->beforeSave();
+        }
     }
 
     /**
      * A method that gets executed after the model has been saved (before relationships).
-     * 
-     * @param  Kompo\Form  $form
-     * 
+     *
+     * @param Kompo\Form $form
+     *
      * @return void
      */
     protected static function afterSaveHook($form)
     {
-        if(method_exists($form, 'afterSave'))
+        if (method_exists($form, 'afterSave')) {
             $form->afterSave();
+        }
     }
 
     /**
      * A method that gets executed at the end of the lifecycle (after relationships have been saved).
-     * 
-     * @param  Kompo\Form  $form
-     * 
+     *
+     * @param Kompo\Form $form
+     *
      * @return void
      */
     protected static function completedHook($form)
     {
-        if(method_exists($form, 'completed'))
+        if (method_exists($form, 'completed')) {
             $form->completed();
+        }
     }
 
     /**
      * Sets a specific return response for the form.
      *
-     * @param  Kompo\Form  $form
-     * 
+     * @param Kompo\Form $form
+     *
      * @return Response
      */
     protected static function returnResponseHook($form)
     {
-        if(method_exists($form, 'response'))
+        if (method_exists($form, 'response')) {
             return $form->response();
+        }
 
-        if($form->_kompo('options', 'refresh'))
+        if ($form->_kompo('options', 'refresh')) {
             return response()->json(FormDisplayer::displayKomponents($form), 202);
+        }
 
-        if(config('kompo.eloquent_form.return_model_as_response'))
+        if (config('kompo.eloquent_form.return_model_as_response')) {
             return $form->model;
+        }
 
         return $form;
     }
-
 
     protected static function loopOverFieldsFor($stage, $komposer)
     {
         $oneToOneRelations = [];
 
         foreach (KomposerManager::collectFields($komposer) as $fieldKey => $field) {
-
             $processed = FormField::fillDuringStage($stage, $field, $komposer);
 
-            if($processed && $processed->count()){
-                
+            if ($processed && $processed->count()) {
                 KomposerManager::removeField($komposer, $fieldKey);
-                
-                if($stage == 'fillOneToOneBeforeSave') //only here do we need this, relations are auto-saved
+
+                if ($stage == 'fillOneToOneBeforeSave') { //only here do we need this, relations are auto-saved
                     //$oneToOneRelations = array_unique(array_merge($oneToOneRelations, $processed->toArray()));
-                    foreach ($processed as $specs){
+                    foreach ($processed as $specs) {
                         $oneToOneRelations[] = $specs;
                     }
+                }
             }
         }
 
-        if(!count($oneToOneRelations))
+        if (!count($oneToOneRelations)) {
             return;
-            
+        }
+
         $oneToOneRelations = collect($oneToOneRelations)->groupBy('relation');
 
         foreach ($oneToOneRelations as $relation => $names) {

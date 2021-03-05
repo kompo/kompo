@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kompo\Database;
 
@@ -6,23 +6,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Kompo\Database\DatabaseQuery;
-use Kompo\Database\Lineage;
-use Kompo\Database\NameParser;
 use Kompo\Exceptions\NotFoundMorphToModelException;
 use Kompo\Komponents\Managers\FormField;
 
 class EloquentQuery extends DatabaseQuery
 {
     /**
-     * { item_description }
+     * { item_description }.
      */
     protected $model;
 
     /**
-     * Constructs a Kompo\Database\EloquentQuery object
+     * Constructs a Kompo\Database\EloquentQuery object.
      *
-     * @param  array $komponents
+     * @param array $komponents
+     *
      * @return void
      */
     public function __construct($query, $komposer)
@@ -33,9 +31,9 @@ class EloquentQuery extends DatabaseQuery
     }
 
     /**
-     * { function_description }
+     * { function_description }.
      *
-     * @param      <type>  $field  The field
+     * @param <type> $field The field
      */
     public function handleFilter($field)
     {
@@ -52,12 +50,12 @@ class EloquentQuery extends DatabaseQuery
     /**
      * Handles filtering for all relationships except MorphTo.
      *
-     * @param  Illuminate\Database\Eloquent\Builder $q              
-     * @param  Illuminate\Database\Eloquent\Model   $morphToModel  
-     * @param  string                               $recursiveName
-     * @param  string                               $operator
-     * @param  mixed                                $value 
-     * @param  Illuminate\Database\Eloquent\Model   $morphToModel
+     * @param Illuminate\Database\Eloquent\Builder $q
+     * @param Illuminate\Database\Eloquent\Model   $morphToModel
+     * @param string                               $recursiveName
+     * @param string                               $operator
+     * @param mixed                                $value
+     * @param Illuminate\Database\Eloquent\Model   $morphToModel
      *
      * @return Illuminate\Database\Eloquent|Builder
      */
@@ -66,36 +64,37 @@ class EloquentQuery extends DatabaseQuery
         $firstTerm = NameParser::firstTerm($recursiveName);
         $relation = Lineage::findRelation($model, $firstTerm);
 
-        if(!$relation)
+        if (!$relation) {
             return $this->applyWhere($q, $firstTerm, $operator, $value, $model->getTable());
+        }
 
-        if($relation instanceof MorphTo)
+        if ($relation instanceof MorphTo) {
             return $this->handleMorphToFilter($q, $morphToModel, $recursiveName, $operator, $value);
+        }
 
         $model = $relation->getRelated();
 
         $secondTerm = NameParser::secondTerm($recursiveName) ?: $model->getKeyName();
 
         //TODO: write tests for NULL operator
-        if($operator == 'NULL' && ($secondTerm == $model->getKeyName()))
+        if ($operator == 'NULL' && ($secondTerm == $model->getKeyName())) {
             return $q->doesntHave($firstTerm);
+        }
 
-        return $q->whereHas($firstTerm, function($subquery) use($model, $secondTerm, $operator, $value){
-
+        return $q->whereHas($firstTerm, function ($subquery) use ($model, $secondTerm, $operator, $value) {
             $this->handleEloquentFilter($subquery, $model, $secondTerm, $operator, $value);
-
         });
     }
 
     /**
-     * Handles filtering by a MorphTo relationship. This one is different from others 
+     * Handles filtering by a MorphTo relationship. This one is different from others
      * because you need to specify the MorphTo Model since it cannot be infered from the relationship.
      *
-     * @param  Illuminate\Database\Eloquent|Builder $q              
-     * @param  Illuminate\Database\Eloquent\Model   $morphToModel  
-     * @param  string                               $recursiveName
-     * @param  string                               $operator
-     * @param  mixed                                $value 
+     * @param Illuminate\Database\Eloquent|Builder $q
+     * @param Illuminate\Database\Eloquent\Model   $morphToModel
+     * @param string                               $recursiveName
+     * @param string                               $operator
+     * @param mixed                                $value
      *
      * @throws \Kompo\Exceptions\NotFoundMorphToModelException
      *
@@ -105,14 +104,15 @@ class EloquentQuery extends DatabaseQuery
     {
         $firstTerm = NameParser::firstTerm($recursiveName);
 
-        if(!$morphToModel)
+        if (!$morphToModel) {
             throw new NotFoundMorphToModelException($firstTerm);
+        }
 
-        $model = new $morphToModel();       
+        $model = new $morphToModel();
 
         $secondTerm = NameParser::secondTerm($recursiveName) ?: $model->getKeyName();
 
-        return $q->whereHasMorph($firstTerm, [$morphToModel], function($subquery) use($model, $secondTerm, $operator, $value){
+        return $q->whereHasMorph($firstTerm, [$morphToModel], function ($subquery) use ($model, $secondTerm, $operator, $value) {
             $this->handleEloquentFilter($subquery, $model, $secondTerm, $operator, $value);
         });
     }
@@ -132,11 +132,12 @@ class EloquentQuery extends DatabaseQuery
         $sort = explode(':', $sort);
         $sortBy = explode('.', $sort[0]);
 
-        if(Lineage::findRelation($this->model, $sortBy[0])){
-            if(count($sortBy) == 1)
+        if (Lineage::findRelation($this->model, $sortBy[0])) {
+            if (count($sortBy) == 1) {
                 abort(500, 'Please define the column you want to sort on relationship '.$sortBy[0].' using the syntax: relationship.column_name:direction');
+            }
             $this->eloquentSort($sortBy[0], $sortBy[1], count($sort) == 2 ? $sort[1] : 'ASC');
-        }else{
+        } else {
             $this->attributeSort(implode(':', $sort));
         }
     }
@@ -145,8 +146,7 @@ class EloquentQuery extends DatabaseQuery
     {
         $relation = Lineage::findRelation($this->model, $relation);
 
-        if($relation instanceOf BelongsTo)
-        {
+        if ($relation instanceof BelongsTo) {
             $modelTable = $this->model->getTable();
             $relationTable = $relation->getRelated()->getTable();
 
@@ -155,10 +155,8 @@ class EloquentQuery extends DatabaseQuery
 
             $this->query->selectRaw($modelTable.'.*')
                 ->leftJoin($relationTable, $relationTable.'.'.$relationKey, '=', $modelTable.'.'.$modelKey)->orderBy($relationTable.'.'.$column, $direction);
-
-        }else if($relation instanceOf HasOne){
-
-        }else if($relation instanceOf BelongsToMany){
+        } elseif ($relation instanceof HasOne) {
+        } elseif ($relation instanceof BelongsToMany) {
             $modelTable = $this->model->getTable();
             $pivotTable = $relation->getTable();
             $relationTable = $relation->getRelated()->getTable();
@@ -173,6 +171,4 @@ class EloquentQuery extends DatabaseQuery
                 ->leftJoin($relationTable, $relationTable.'.'.$relationKey, '=', $pivotTable.'.'.$relatedPivotKey)->orderBy($relationTable.'.'.$column, $direction);
         }
     }
-
-
 }

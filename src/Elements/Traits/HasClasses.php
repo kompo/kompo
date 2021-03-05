@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 namespace Kompo\Elements\Traits;
 
-trait HasClasses 
+trait HasClasses
 {
     /**
      * The element's classes string.
@@ -15,15 +15,17 @@ trait HasClasses
      * Sets the class attribute of the element.
      * For multiple classes, use a space-separated string.
      *
-     * @param  string  $classes The class attribute.
+     * @param string $classes The class attribute.
+     *
      * @return mixed
      */
     public function class($classes = null)
     {
-        if($classes !== null){
+        if ($classes !== null) {
             $this->class = ($this->class() ? ($this->class().' ') : '').trim($classes);
+
             return $this;
-        }else{
+        } else {
             return property_exists($this, 'class') ? $this->class : '';
         }
     }
@@ -32,30 +34,34 @@ trait HasClasses
      * Sets the class attribute for the input element of the field.
      * For multiple classes, use a space-separated string.
      *
-     * @param  string  $classes The class attribute.
+     * @param string $classes The class attribute.
+     *
      * @return mixed
      */
     public function inputClass($classes)
-    {        
+    {
         return $this->config(['inputClass' => $classes]);
     }
 
     /**
      * Adds classes to the element. TODO: replace with overwriteClass or smth...
      *
-     * @param  string  $classes
+     * @param string $classes
+     *
      * @return mixed
      */
     public function replaceClass($classes)
     {
         $this->class = trim($classes);
+
         return $this;
     }
 
     /**
      * Removes a class or space separated classes from the element.
      *
-     * @param  string  $classes
+     * @param string $classes
+     *
      * @return mixed
      */
     public function removeClass($classes)
@@ -71,11 +77,11 @@ trait HasClasses
      * <php>Columns::form(
      *    Html::form('Column 1')->col('col-8'),
      *    Html::form('Column 2')->col('col-4')
-     * )</php>
+     * )</php>.
      *
-     * @param      string  $col    The col attribute. Ex: `col-8`.
+     * @param string $col The col attribute. Ex: `col-8`.
      *
-     * @return self 
+     * @return self
      */
     public function col($col)
     {

@@ -10,7 +10,7 @@ use Kompo\Routing\Router;
 
 abstract class Form extends Komposer
 {
-	use HasModel;
+    use HasModel;
 
     /**
      * The Vue komposer tag.
@@ -25,30 +25,30 @@ abstract class Form extends Komposer
      * @var string
      */
     public $bladeComponent = 'Form';
-    
+
     /**
      * Disable adding default margins for Form komponents.
      *
-     * @var boolean
+     * @var bool
      */
     public $noMargins = false;
 
     /**
      * Prevent emitting the form data to it's closest parent.
      *
-     * @var boolean
+     * @var bool
      */
     public $emitFormData = true;
 
     /**
      * Prevent submitting a form.
      *
-     * @var boolean
+     * @var bool
      */
     protected $preventSubmit = false;
 
     /**
-     * Custom submit route for quick use (if the route has no parameters)
+     * Custom submit route for quick use (if the route has no parameters).
      *
      * @var string
      */
@@ -96,39 +96,42 @@ abstract class Form extends Komposer
      * @var array
      */
     public $komponents = [];
-    
+
     /**
      * If you wish to reload the form after submit/saving the model, set to true.
      *
-     * @var boolean
+     * @var bool
      */
     protected $refresh = false; //TODO: rename $refreshAfterSubmit which is clearer
 
-	/**
-     * Constructs a Form
-     * 
+    /**
+     * Constructs a Form.
+     *
      * @param null|int|string $modelKey (optional) The record's key or id in the DB table.
-     * @param null|array $store (optional) Additional data passed to the komponent.
+     * @param null|array      $store    (optional) Additional data passed to the komponent.
      *
      * @return self
      */
-	public function __construct($modelKey = null, $store = [], $dontBoot = false)
-	{
+    public function __construct($modelKey = null, $store = [], $dontBoot = false)
+    {
         $this->_kompo('options', [
-            'preventSubmit' => $this->preventSubmit,
-            'submitTo' => $this->submitTo,
-            'submitMethod' => $this->submitMethod,
+            'preventSubmit'        => $this->preventSubmit,
+            'submitTo'             => $this->submitTo,
+            'submitMethod'         => $this->submitMethod,
             'validationErrorAlert' => $this->validationErrorAlert,
-            'redirectTo' => $this->redirectTo,
-            'redirectMessage' => $this->redirectMessage,
-            'refresh' => $this->refresh
+            'redirectTo'           => $this->redirectTo,
+            'redirectMessage'      => $this->redirectMessage,
+            'refresh'              => $this->refresh,
         ]);
-        
-        if(Router::shouldNotBeBooted()) return; //request has not been handled yet
 
-		if(!$dontBoot)
-        	FormBooter::bootForDisplay($this, $modelKey, $store);
-	}
+        if (Router::shouldNotBeBooted()) {
+            return;
+        } //request has not been handled yet
+
+        if (!$dontBoot) {
+            FormBooter::bootForDisplay($this, $modelKey, $store);
+        }
+    }
 
     /**
      * Get the Komponents displayed in the form.
@@ -167,7 +170,7 @@ abstract class Form extends Komposer
      */
     public function prepareForDisplay($komposer)
     {
-        ValidationManager::addRulesToKomposer($this->config('rules'), $komposer); 
+        ValidationManager::addRulesToKomposer($this->config('rules'), $komposer);
     }
 
     /**
@@ -177,10 +180,10 @@ abstract class Form extends Komposer
      */
     public function prepareForAction($komposer)
     {
-        if($komposer instanceOf self) //Cuz in Query filters, Forms would pass their rules to browse & sort actions
-            ValidationManager::addRulesToKomposer($this->config('rules'), $komposer); 
+        if ($komposer instanceof self) { //Cuz in Query filters, Forms would pass their rules to browse & sort actions
+            ValidationManager::addRulesToKomposer($this->config('rules'), $komposer);
+        }
     }
-
 
     /**
      * Shortcut method to render a Form into it's Vue component.
@@ -203,7 +206,7 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Methods that can be called both statically or non-statically
+     * Methods that can be called both statically or non-statically.
      *
      * @return array
      */
@@ -221,13 +224,13 @@ abstract class Form extends Komposer
      */
     public function __toString()
     {
-        if(
-            (property_exists($this, 'hideModel') && $this->hideModel) || 
+        if (
+            (property_exists($this, 'hideModel') && $this->hideModel) ||
             (!property_exists($this, 'hideModel') && config('kompo.eloquent_form.hide_model_in_forms'))
-        )
+        ) {
             unset($this->model);
+        }
 
         return parent::__toString();
     }
-
 }

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Kompo\Elements\Traits;
 
@@ -17,7 +17,7 @@ trait HasId
     /**
      * Sets the id attribute of the element.
      *
-     * @param      string  $id     The id attribute.
+     * @param string $id The id attribute.
      *
      * @return self
      */
@@ -25,10 +25,10 @@ trait HasId
     {
         $this->id = $id;
 
-        if($this instanceOf Komposer)
+        if ($this instanceof Komposer) {
             KompoId::setForKomposer($this, $this->id);
+        }
 
         return $this;
     }
-
 }

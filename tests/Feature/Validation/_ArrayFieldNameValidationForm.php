@@ -8,20 +8,19 @@ use Kompo\Tests\Models\Post;
 
 class _ArrayFieldNameValidationForm extends Form
 {
-	public $model = Post::class;
+    public $model = Post::class;
 
-	public function komponents()
-	{
-		return [
-			Select::form()->name('tags')
-		];
-	}
+    public function komponents()
+    {
+        return [
+            Select::form()->name('tags'),
+        ];
+    }
 
-	public function rules()
-	{
-		return [
-			'tags.*.id' => 'required'
-		];
-	}
-
+    public function rules()
+    {
+        return [
+            'tags.*.id' => 'required',
+        ];
+    }
 }

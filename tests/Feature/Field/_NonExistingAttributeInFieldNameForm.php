@@ -8,13 +8,12 @@ use Kompo\Tests\Models\Post;
 
 class _NonExistingAttributeInFieldNameForm extends Form
 {
-	public $model = Post::class;
+    public $model = Post::class;
 
-	public function komponents()
-	{
-		return [
-			Input::form('Label')->name('fneyaibyveiy'),
-		];
-	}
-
+    public function komponents()
+    {
+        return [
+            Input::form('Label')->name('fneyaibyveiy'),
+        ];
+    }
 }

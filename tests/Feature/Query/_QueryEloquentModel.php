@@ -7,10 +7,10 @@ use Kompo\Tests\Models\Obj;
 
 class _QueryEloquentModel extends Query
 {
-	use _EloquentFiltersTrait;
+    use _EloquentFiltersTrait;
 
     public function query()
-	{
-		return new Obj();
-	}
+    {
+        return new Obj();
+    }
 }
