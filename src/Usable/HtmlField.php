@@ -15,4 +15,12 @@ class HtmlField extends Field
             'selectedValue' => $value,
         ]);
     }
+
+    //TODO DOCUMENT
+    public function selectedClass($selectedClass)
+    {
+        return $this->config([
+            'selectedClass' => $selectedClass,
+        ]);
+    }
 }
