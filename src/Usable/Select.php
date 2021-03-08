@@ -280,12 +280,12 @@ class Select extends Field
      */
     public function optionsFromField($otherFieldName, $searchMethod = null, $retrieveMethod = null)
     {
-        $this->retrieveMethod = $searchMethod ?: $this->inferOptionsMethod('retrieve', $searchMethod);
+        $this->retrieveMethod = $retrieveMethod ?: $this->inferOptionsMethod('retrieve');
 
         return RouteFinder::activateRoute($this)->config([
             'ajaxOptions'          => true,
             'ajaxOptionsFromField' => $otherFieldName,
-            'ajaxOptionsMethod'    => KompoTarget::getEncrypted($searchMethod ?: $this->inferOptionsMethod('search', $searchMethod)),
+            'ajaxOptionsMethod'    => KompoTarget::getEncrypted($searchMethod ?: $this->inferOptionsMethod('search')),
         ]);
     }
 
