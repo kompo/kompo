@@ -237,13 +237,13 @@ class Select extends Field
      */
     public function searchOptions($minSearchLength = 0, $searchMethod = null, $retrieveMethod = null)
     {
-        $this->retrieveMethod = $retrieveMethod ?: $this->inferOptionsMethod('retrieve', $retrieveMethod);
+        $this->retrieveMethod = $retrieveMethod ?: $this->inferOptionsMethod('retrieve');
 
         return RouteFinder::activateRoute($this)->config([
             'ajaxOptions'         => true,
             'ajaxMinSearchLength' => $minSearchLength,
             'enterMoreCharacters' => __(self::ENTER_MORE_CHARACTERS, ['min' => $minSearchLength]),
-            'ajaxOptionsMethod'   => KompoTarget::getEncrypted($searchMethod ?: $this->inferOptionsMethod('search', $searchMethod)),
+            'ajaxOptionsMethod'   => KompoTarget::getEncrypted($searchMethod ?: $this->inferOptionsMethod('search')),
         ]);
     }
 
@@ -289,7 +289,7 @@ class Select extends Field
         ]);
     }
 
-    protected function inferOptionsMethod($step = 'search', $methodName = null)
+    protected function inferOptionsMethod($step = 'search')
     {
         $cleanName = array_map('ucfirst', explode('.', $this->name));
 
