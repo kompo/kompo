@@ -3,6 +3,7 @@
 namespace Kompo\Elements;
 
 use BadMethodCallException;
+use Illuminate\Support\Traits\Macroable;
 
 abstract class Element
 {
@@ -15,6 +16,11 @@ abstract class Element
     use Traits\HasDuskSelector;
     use Traits\IsMountable;
     use Traits\ElementHelperMethods;
+
+    use Macroable {
+        __callStatic as protected __callStaticTrait;
+        __call as protected __callTrait;
+    }
 
     /**
      * The related Vue component name.
@@ -62,6 +68,8 @@ abstract class Element
             return static::$method(...$parameters);
         }
 
+        return $this->__callStaticTrait($method, $parameters);
+
         throw new BadMethodCallException('Method '.static::class.'::'.$method.' does not exist.');
     }
 
@@ -80,6 +88,8 @@ abstract class Element
 
             return $this->$method(...$parameters);
         }
+
+        return $this->__callTrait($method, $parameters);
 
         throw new BadMethodCallException('Method '.static::class.'::'.$method.' does not exist.');
     }
