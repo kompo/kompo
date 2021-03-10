@@ -415,6 +415,13 @@ if (!function_exists('_Json')) {
     }
 }
 
+if (!function_exists('_MultiCheckbox')) {
+    function _MultiCheckbox($label = ''): \Kompo\MultiCheckbox
+    {
+        return Kompo\MultiCheckbox::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_Link')) {
     function _Link($label = ''): \Kompo\Link
     {
