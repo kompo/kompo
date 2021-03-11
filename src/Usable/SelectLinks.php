@@ -3,10 +3,12 @@
 namespace Kompo;
 
 use Kompo\Elements\Traits\HasGutters;
+use Kompo\Komponents\Traits\HasSelectedClass;
 
 class SelectLinks extends Select
 {
-    use HasGutters;
+    use HasGutters,
+        HasSelectedClass;
 
     public $vueComponent = 'SelectButtons';
 

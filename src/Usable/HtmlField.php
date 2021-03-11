@@ -3,9 +3,12 @@
 namespace Kompo;
 
 use Kompo\Komponents\Field;
+use Kompo\Komponents\Traits\HasSelectedClass;
 
 class HtmlField extends Field
 {
+    use HasSelectedClass;
+    
     public $vueComponent = 'HtmlField';
 
     //TODO DOCUMENT
@@ -13,14 +16,6 @@ class HtmlField extends Field
     {
         return $this->config([
             'selectedValue' => $value,
-        ]);
-    }
-
-    //TODO DOCUMENT
-    public function selectedClass($selectedClass)
-    {
-        return $this->config([
-            'selectedClass' => $selectedClass,
         ]);
     }
 }
