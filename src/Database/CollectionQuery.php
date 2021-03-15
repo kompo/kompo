@@ -57,7 +57,7 @@ class CollectionQuery extends QueryOperations
             });
         } else {
             $this->query = $this->query->filter(function ($v, $k) use ($operator, $name, $value) {
-                return $this->compareOperator($v, $value, $name, $operator);
+                return $this->compareOperator($v, $value, $operator, $name);
             });
         }
     }
@@ -73,7 +73,7 @@ class CollectionQuery extends QueryOperations
     ******* PROTECTED COMPARISONS *************
     ******************************************/
 
-    protected function compareOperator($comparing, $compareTo, $name = null, $operator)
+    protected function compareOperator($comparing, $compareTo, $operator, $name = null)
     {
         $compareValue = $this->getComparingValue($comparing, $compareTo, $name);
 
