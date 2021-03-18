@@ -478,6 +478,20 @@ if (!function_exists('_MultiSelect')) {
     }
 }
 
+if (!function_exists('_MultiSelectLinks')) {
+    function _MultiSelectLinks($label = ''): \Kompo\MultiSelectLinks
+    {
+        return Kompo\MultiSelectLinks::form(...func_get_args());
+    }
+}
+
+if (!function_exists('_MultiSelectButtons')) {
+    function _MultiSelectButtons($label = ''): \Kompo\MultiSelectButtons
+    {
+        return Kompo\MultiSelectButtons::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_Panel')) {
     function _Panel($label = ''): \Kompo\Panel
     {

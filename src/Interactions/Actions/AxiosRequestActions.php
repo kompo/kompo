@@ -36,17 +36,19 @@ trait AxiosRequestActions
      *
      * @param string     $methodName  The class's method name that will return the new komponents.
      * @param array|null $ajaxPayload Additional custom data to add to the request (optional).
+     * @param boolean|null $withAllFormValues Posts ALL the form fields values along with the payload.
      *
      * @return self
      */
-    public function getKomponents($methodName, $ajaxPayload = null)
+    public function getKomponents($methodName, $ajaxPayload = null, $withAllFormValues = false)
     {
         $this->applyToElement(function ($el) use ($methodName) {
             $el->config(['includes' => $methodName]);
         });
 
         return $this->selfHttpRequest('POST', 'include-komponents', $methodName, $ajaxPayload)
-            ->config(['included' => true]); //to tell Panel to include rather than separate form
+            ->config(['included' => true]) //to tell Panel to include rather than separate form
+            ->config(['withAllFormValues' => $withAllFormValues]);
     }
 
     /**

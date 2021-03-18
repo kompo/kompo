@@ -33,7 +33,16 @@ class Select extends Field
     protected function vlInitialize($label)
     {
         parent::vlInitialize($label);
-        $this->config(['noOptionsFound' => __(self::NO_OPTIONS_FOUND)]);
+        
+        $this->noResultsMessage(self::NO_OPTIONS_FOUND);
+    }
+
+    //TODO DOCUMENT
+    public function noResultsMessage($message)
+    {
+        return $this->config([
+            'noOptionsFound' => __($message)
+        ]);
     }
 
     public function prepareForFront($komposer)
