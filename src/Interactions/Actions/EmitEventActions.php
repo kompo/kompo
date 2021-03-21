@@ -40,11 +40,23 @@ trait EmitEventActions
 
     /**
      * Closes a modal.
+     * //TODO DOCUMENT
      *
      * @return self
      */
     public function closeModal()
     {
         return $this->emit('closeModal');
+    }
+
+    /**
+     * Confirms a modal dialog.
+     * //TODO DOCUMENT
+     *
+     * @return self
+     */
+    public function confirmModal()
+    {
+        return $this->emit('confirmModal');
     }
 }
