@@ -93,7 +93,9 @@ class ModelManager
 
             $mainModel->{$relation}()->save($mainModel->{$relation});
         } else {
-            $mainModel->{$relation}->delete();
+            if ($mainModel->{$relation}->exists) {
+                $mainModel->{$relation}->delete();
+            }
         }
     }
 
