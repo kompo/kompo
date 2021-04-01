@@ -10,9 +10,9 @@ class AllFieldsValidationsTest extends EnvironmentBoot
     /** @test */
     public function validating_all_fields_rules_in_forms()
     {
-        $form = new _AllFieldsValidationsForm();
+        $form = _AllFieldsValidationsForm::boot();
 
-        $response = $this->submit(new _AllFieldsValidationsForm())->assertStatus(422);
+        $response = $this->submit(_AllFieldsValidationsForm::boot())->assertStatus(422);
 
         $this->assertCount(count($form->komponents), $response['errors']);
 

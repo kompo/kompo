@@ -18,10 +18,10 @@ class KompoLayout
 
     public function __construct($n, $l, $r, $f)
     {
-        $this->setMenu($n, 'navbar', 'vl-nav', 'nav');
+        $this->setMenu($n, 'navbar', 'vl-nav', 'vl-nav');
         $this->setMenu($l, 'lsidebar', 'vl-sidebar-l', 'vl-aside', true);
         $this->setMenu($r, 'rsidebar', 'vl-sidebar-r', 'vl-aside', true);
-        $this->setMenu($f, 'footer', 'vl-footer', 'footer');
+        $this->setMenu($f, 'footer', 'vl-footer', 'vl-footer');
 
         $this->hasAnyFixedMenus = count($this->isFixed) > 0;
     }
@@ -212,7 +212,7 @@ class KompoLayout
     }
 
     public function getKomponentsArray($key)
-    {
+    {        
         return [
             'kompoid'    => KompoId::getFromElement($this->{$key}),
             'kompoinfo'  => KompoInfo::getFromElement($this->{$key}),

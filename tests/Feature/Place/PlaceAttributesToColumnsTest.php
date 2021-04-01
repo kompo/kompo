@@ -9,7 +9,7 @@ class PlaceAttributesToColumnsTest extends PlaceEnvironmentBoot
     {
         //First Submit to empty form
         $this->submit(
-            $form = new _PlaceAttributesToColumnsForm(),
+            $form = _PlaceAttributesToColumnsForm::boot(),
             ['address' => [$place1 = $this->createPlace()]]
         )->assertStatus(201)
         ->assertJson($this->place_to_array($place1));
@@ -17,14 +17,14 @@ class PlaceAttributesToColumnsTest extends PlaceEnvironmentBoot
         $this->assertDatabaseHas('places', $this->place_to_array($place1));
 
         //Display previously saved
-        $form = new _PlaceAttributesToColumnsForm(1);
+        $form = _PlaceAttributesToColumnsForm::boot(1);
 
         $this->assertIsArray($newValue = $form->komponents[0]->value);
         $this->assertSubset($newValue, $this->place_to_array($place1));
 
         //Update file
         $this->submit(
-            $form = new _PlaceAttributesToColumnsForm(1),
+            $form = _PlaceAttributesToColumnsForm::boot(1),
             ['address' => [$place2 = $this->createPlace()]]
         )->assertStatus(200)
         ->assertJson($this->place_to_array($place2));
@@ -33,7 +33,7 @@ class PlaceAttributesToColumnsTest extends PlaceEnvironmentBoot
 
         //Remove file
         $this->submit(
-            $form = new _PlaceAttributesToColumnsForm(1),
+            $form = _PlaceAttributesToColumnsForm::boot(1),
             ['address' => null]
         )->assertStatus(200)
         ->assertJsonMissing($this->place_to_array($place2));
@@ -50,7 +50,7 @@ class PlaceAttributesToColumnsTest extends PlaceEnvironmentBoot
             ['all_columns' => 'some-constant']
         );
         $this->submit(
-            $form = new _PlaceAttributesToColumnsForm(null, ['withExtraAttributes' => true]),
+            $form = _PlaceAttributesToColumnsForm::boot(null, ['withExtraAttributes' => true]),
             ['address' => [$place1]]
         )->assertStatus(201)
         ->assertJson($expected);

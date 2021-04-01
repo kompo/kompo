@@ -17,7 +17,7 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 		$objTag = 'obj-tag';
 		$postTagTitle = 'postTag-title';
 
-		$this->submit_status_and_json_assertions(new _FieldNameOneToOneParsingForm(), 201, $postTitle, $objTitle, $objTag, $postTagTitle);
+		$this->submit_status_and_json_assertions(_FieldNameOneToOneParsingForm::boot(), 201, $postTitle, $objTitle, $objTag, $postTagTitle);
 
 		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
 
@@ -27,7 +27,7 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 		$objTag = null;
 		$postTagTitle = 'postTag-title2';
 
-		$this->submit_status_and_json_assertions(new _FieldNameOneToOneParsingForm(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
+		$this->submit_status_and_json_assertions(_FieldNameOneToOneParsingForm::boot(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
 
 		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
 
@@ -37,7 +37,7 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 		$objTag = 'obj-tag2';
 		$postTagTitle = null;
 
-		$this->submit_status_and_json_assertions(new _FieldNameOneToOneParsingForm(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
+		$this->submit_status_and_json_assertions(_FieldNameOneToOneParsingForm::boot(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
 
 		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
 
@@ -47,7 +47,7 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 		$objTag = null;
 		$postTagTitle = null;
 
-		$this->submit_status_and_json_assertions(new _FieldNameOneToOneParsingForm(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
+		$this->submit_status_and_json_assertions(_FieldNameOneToOneParsingForm::boot(1), 200, $postTitle, $objTitle, $objTag, $postTagTitle);
 
 		$this->database_and_form_reloading_assertions($postTitle, $objTitle, $objTag, $postTagTitle);
 	}
@@ -60,7 +60,7 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 
 		$this->expectException(NotOneToOneRelationException::class);
 
-		$form = new _NotOneToOneRelationInFieldNameForm($post->id);
+		$form = _NotOneToOneRelationInFieldNameForm::boot($post->id);
 	}
 
 
@@ -105,7 +105,7 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
 			$this->assertEquals(0, \DB::table('post_tag')->count());		
 		}
 
-		$form = new _FieldNameOneToOneParsingForm(1);
+		$form = _FieldNameOneToOneParsingForm::boot(1);
 
 		$this->assertEquals($objTitle, $form->komponents[1]->value);
 		$this->assertEquals($objTag, $form->komponents[2]->value);

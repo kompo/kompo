@@ -15,19 +15,19 @@ class QueryFiltersEloquentAttributesTest extends EnvironmentBoot
     /** @test */
     public function filters_work_for_attributes_in_eloquent_builder()
     {
-        $this->filters_work_for_attributes(new _QueryEloquentBuilder());
+        $this->filters_work_for_attributes(_QueryEloquentBuilder::boot());
     }
 
     /** @test */
     public function filters_work_for_attributes_in_eloquent_model()
     {
-        $this->filters_work_for_attributes(new _QueryEloquentModel());
+        $this->filters_work_for_attributes(_QueryEloquentModel::boot());
     }
 
     /** @test */
     public function filters_work_for_attributes_in_eloquent_model_property()
     {
-        $this->filters_work_for_attributes(new _QueryEloquentModelProperty());
+        $this->filters_work_for_attributes(_QueryEloquentModelProperty::boot());
     }
 
     /** @test */
@@ -35,7 +35,7 @@ class QueryFiltersEloquentAttributesTest extends EnvironmentBoot
     {
         factory(Post::class)->create();
 
-        $this->filters_work_for_attributes(new _QueryEloquentRelation());
+        $this->filters_work_for_attributes(_QueryEloquentRelation::boot());
     }
 
     private function filters_work_for_attributes($query)

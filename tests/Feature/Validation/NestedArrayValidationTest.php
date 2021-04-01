@@ -9,7 +9,7 @@ class NestedArrayValidationTest extends EnvironmentBoot
     /** @test */
     public function nested_naming_does_not_interfere_with_array_validations()
     {
-        $form = new _ArrayFieldNameValidationForm();
+        $form = _ArrayFieldNameValidationForm::boot();
 
         $response = $this->submit($form, [
             'tags' => [

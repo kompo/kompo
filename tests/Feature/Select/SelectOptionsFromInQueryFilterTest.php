@@ -16,7 +16,7 @@ class SelectOptionsFromInQueryFilterTest extends EnvironmentBoot
         $posts = factory(Post::class, 8)->create();
         $tags = factory(Tag::class, 9)->create();
 
-        $query = new _SelectAsQueryFilterQuery();
+        $query = _SelectAsQueryFilterQuery::boot();
 
         $this->assertCount(7, $query->filters['top'][0]->options);
         $this->assertCount(8, $query->filters['top'][1]->options);

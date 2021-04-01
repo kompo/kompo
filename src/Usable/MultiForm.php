@@ -46,8 +46,13 @@ class MultiForm extends Field
             throw new NoMultiFormClassException($this->name);
         }
 
-        $childForm = new $formClass($model, $this->childStore);
-        $childForm->{static::$multiFormKey} = $model ? $model->getKey() : null;
+        $modelKey = $model ? $model->getKey() : null;
+        $childForm = new $formClass($modelKey, $this->childStore);
+        if($model)
+            $childForm->model($model); //set the model
+        $childForm->boot();
+
+        $childForm->{static::$multiFormKey} = $modelKey;
 
         //Pass rules upstream
         ValidationManager::addRulesToKomposer(
@@ -118,7 +123,6 @@ class MultiForm extends Field
                 'route'                 => RouteFinder::getKompoRoute(),
                 'routeMethod'           => 'POST', //had to be POST to send ajaxPayload
                 'ajaxPayload'           => $ajaxPayload,
-                'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
             ],
             KompoTarget::getEncryptedArray($formClass)
         ));

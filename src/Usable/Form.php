@@ -6,7 +6,6 @@ use Kompo\Core\ValidationManager;
 use Kompo\Komposers\Form\FormBooter;
 use Kompo\Komposers\Form\HasModel;
 use Kompo\Komposers\Komposer;
-use Kompo\Routing\Router;
 
 abstract class Form extends Komposer
 {
@@ -112,8 +111,10 @@ abstract class Form extends Komposer
      *
      * @return self
      */
-    public function __construct($modelKey = null, $store = [], $dontBoot = false)
+    public function __construct($modelKey = null, $store = [])
     {
+        parent::__construct();
+
         $this->_kompo('options', [
             'preventSubmit'        => $this->preventSubmit,
             'submitTo'             => $this->submitTo,
@@ -124,13 +125,17 @@ abstract class Form extends Komposer
             'refresh'              => $this->refresh,
         ]);
 
-        if (Router::shouldNotBeBooted()) {
-            return;
-        } //request has not been handled yet
-
-        if (!$dontBoot) {
-            FormBooter::bootForDisplay($this, $modelKey, $store);
+        if (is_array($modelKey)) { //Allow permutation of arguments
+            $newStore = $modelKey;
+            $modelKey = is_array($store) ? null : $store;
+            $store = $newStore;
         }
+
+        $this->store($store);
+        $this->modelKey($modelKey);
+
+        if(KompoServiceProvider::$bootFlag)
+            $this->boot();
     }
 
     /**
@@ -170,6 +175,8 @@ abstract class Form extends Komposer
      */
     public function prepareForDisplay($komposer)
     {
+        parent::prepareForDisplay($komposer);
+        
         ValidationManager::addRulesToKomposer($this->config('rules'), $komposer);
     }
 
@@ -180,6 +187,8 @@ abstract class Form extends Komposer
      */
     public function prepareForAction($komposer)
     {
+        parent::prepareForAction($komposer);
+
         if ($komposer instanceof self) { //Cuz in Query filters, Forms would pass their rules to browse & sort actions
             ValidationManager::addRulesToKomposer($this->config('rules'), $komposer);
         }
@@ -192,7 +201,7 @@ abstract class Form extends Komposer
      */
     public static function renderStatic($modelKey = null, $store = [])
     {
-        return with(new static($modelKey, $store))->render();
+        return static::boot($modelKey, $store)->render();
     }
 
     /**
@@ -206,13 +215,23 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Methods that can be called both statically or non-statically.
+     * Shortcut method to boot a Form for display.
      *
-     * @return array
+     * @return string
      */
-    public static function duplicateStaticMethods()
+    public static function bootStatic($modelKey = null, $store = [])
     {
-        return ['render'];
+        return with(new static($modelKey, $store))->boot();
+    }
+
+    /**
+     * Shortcut method to boot a Form for display.
+     *
+     * @return string
+     */
+    public function bootNonStatic()
+    {
+        return FormBooter::bootForDisplay($this);
     }
 
     /**

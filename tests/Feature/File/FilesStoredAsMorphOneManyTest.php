@@ -207,7 +207,7 @@ class FilesStoredAsMorphOneManyTest extends FileEnvironmentBoot
 
     protected function getForm($id = null)
     {
-        return new _FilesStoredAsMorphOneMorphManyForm($id, [
+        return _FilesStoredAsMorphOneMorphManyForm::boot($id, [
             'komponent' => $this->currentRelation,
         ]);
     }

@@ -9,7 +9,7 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
     {
         //First Submit to empty form
         $this->submit(
-            $form = new _PlacesStoredAsSingleColumnForm(),
+            $form = _PlacesStoredAsSingleColumnForm::boot(),
             [
                 'place'       => [$place1 = $this->createPlace()],
                 'place_cast'  => [$place2 = $this->createPlace()],
@@ -32,7 +32,7 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
         ]);
 
         //Reload
-        $form = new _PlacesStoredAsSingleColumnForm(1);
+        $form = _PlacesStoredAsSingleColumnForm::boot(1);
         $this->assertSubset($this->place_to_array($place1), $form->komponents[0]->value);
         $this->assertSubset($this->place_to_array($place2), $form->komponents[1]->value);
         $this->assertSubset($this->place_to_array($place3), $form->komponents[2]->value[0]);
@@ -41,7 +41,7 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
 
         //Update places
         $this->submit(
-            $form = new _PlacesStoredAsSingleColumnForm(1),
+            $form = _PlacesStoredAsSingleColumnForm::boot(1),
             [
                 'place'       => [$place6 = $this->createPlace()],
                 'place_cast'  => [$place7 = $this->createPlace()],
@@ -64,7 +64,7 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
         ]);
 
         //Reload
-        $form = new _PlacesStoredAsSingleColumnForm(1);
+        $form = _PlacesStoredAsSingleColumnForm::boot(1);
         $this->assertSubset($this->place_to_array($place6), $form->komponents[0]->value);
         $this->assertSubset($this->place_to_array($place7), $form->komponents[1]->value);
         $this->assertSubset($this->place_to_array($place8), $form->komponents[2]->value[0]);
@@ -73,7 +73,7 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
 
         //Remove some places
         $this->submit(
-            $form = new _PlacesStoredAsSingleColumnForm(1),
+            $form = _PlacesStoredAsSingleColumnForm::boot(1),
             [
                 'place'       => null,
                 'place_cast'  => null,
@@ -96,7 +96,7 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
         ]);
 
         //Reload
-        $form = new _PlacesStoredAsSingleColumnForm(1);
+        $form = _PlacesStoredAsSingleColumnForm::boot(1);
         $this->assertNull($form->komponents[0]->value);
         $this->assertNull($form->komponents[1]->value);
         $this->assertNull($form->komponents[2]->value);

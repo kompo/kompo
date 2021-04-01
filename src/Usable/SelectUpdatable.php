@@ -49,7 +49,6 @@ class SelectUpdatable extends Select
         //it has to be POST... automatic payload contains id for reopening Form
         return RouteFinder::setUpKomposerRoute($this, $formClassOrRoute, 'POST')->config([
             'ajaxPayload'           => $ajaxPayload,
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
         ]);
     }
 }

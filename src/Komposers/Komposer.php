@@ -47,6 +47,18 @@ abstract class Komposer extends Element
     public $pusherRefresh;
 
     /**
+     * Constructs a Komposer.
+     *
+     * @return self
+     */
+    public function __construct()
+    {
+        $this->config([
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
+        ]);
+    }
+
+    /**
      * When a Komposer is called from a Route.
      *
      * @return mixed
@@ -125,6 +137,7 @@ abstract class Komposer extends Element
      */
     public function prepareForDisplay($komposer)
     {
+        $this->boot();
     }
 
     /**
@@ -134,6 +147,7 @@ abstract class Komposer extends Element
      */
     public function prepareForAction($komposer)
     {
+        $this->boot();
     }
 
     /**
@@ -145,5 +159,50 @@ abstract class Komposer extends Element
     public function getMetaTags()
     {
         return ($this->metaTags && count($this->metaTags)) ? $this->metaTags : null;
+    }
+
+
+    /**
+     * Shortcut method to render a Komposer into it's Vue component.
+     *
+     * @return string
+     */
+    public static function renderStatic($store = [])
+    {
+        return static::boot($store)->render();
+    }
+
+    /**
+     * Shortcut method to render a Komposer into it's Vue component.
+     *
+     * @return string
+     */
+    abstract public function renderNonStatic();
+
+    /**
+     * Shortcut method to boot a Komposer for display.
+     *
+     * @return string
+     */
+    public static function bootStatic($store = [])
+    {
+        return with(new static($store))->boot();
+    }
+
+    /**
+     * Shortcut method to boot a Komposer for display.
+     *
+     * @return string
+     */
+    abstract public function bootNonStatic();
+
+    /**
+     * Methods that can be called both statically or non-statically.
+     *
+     * @return array
+     */
+    public static function duplicateStaticMethods()
+    {
+        return ['boot', 'render'];
     }
 }

@@ -21,13 +21,13 @@ class SelectPrepareValueForFrontTest extends EnvironmentBoot
             'tags_cast' => [2, 5],
         ]);
 
-        $form = new _SelectAttributeFillsForm(1);
+        $form = _SelectAttributeFillsForm::boot(1);
         $this->assert_attributes_are_correctly_transformed($form);
 
-        $form = new _SelectAttributeFillsForm(1, ['optionsMethod' => 'Tags']);
+        $form = _SelectAttributeFillsForm::boot(1, ['optionsMethod' => 'Tags']);
         $this->assert_attributes_are_correctly_transformed($form);
 
-        $form = new _SelectAttributeFillsForm(1, ['optionsMethod' => 'Cards']);
+        $form = _SelectAttributeFillsForm::boot(1, ['optionsMethod' => 'Cards']);
         $this->assert_attributes_are_correctly_transformed($form);
     }
 
@@ -82,7 +82,7 @@ class SelectPrepareValueForFrontTest extends EnvironmentBoot
         Obj::unguard();
         $obj = Obj::create($objSpecs);
 
-        $form = new _SelectOptionsFromForm(1);
+        $form = _SelectOptionsFromForm::boot(1);
 
         foreach ($formPositions as $index) {
             $this->assertEquals(1, $form->komponents[$index]->value);
@@ -100,7 +100,7 @@ class SelectPrepareValueForFrontTest extends EnvironmentBoot
         $relation = $relation.'Plain';
         $obj->{$relation}()->sync([$file1->id, $file2->id, $file3->id]);
 
-        $form = new _SelectOptionsFromForm(1);
+        $form = _SelectOptionsFromForm::boot(1);
 
         //$relationPlain
         $plainIndex = $formPositions[0];

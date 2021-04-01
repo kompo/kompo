@@ -20,7 +20,6 @@ trait KomposerActions
         return $this->prepareAction('refreshKomposer', [
             'route'                 => RouteFinder::getKompoRoute('POST'),
             'kompoid'               => $komposerIds,
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
             'ajaxPayload'           => $payload,
         ]);
     }

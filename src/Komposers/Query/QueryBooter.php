@@ -14,12 +14,13 @@ class QueryBooter
 {
     public static function bootForAction($bootInfo)
     {
-        $query = static::instantiateUnbooted($bootInfo['kompoClass']);
+        $queryClass = $bootInfo['kompoClass'];
+
+        $query = new $queryClass($bootInfo['store']);
+
+        $query->parameter($bootInfo['parameters']);
 
         KompoId::setForKomposer($query, $bootInfo);
-
-        $query->store($bootInfo['store']);
-        $query->parameter($bootInfo['parameters']);
 
         $query->currentPage(request()->header('X-Kompo-Page'));
 
@@ -34,10 +35,10 @@ class QueryBooter
         return $query;
     }
 
-    public static function bootForDisplay($query, array $store = [], $routeParams = null)
+    public static function bootForDisplay($queryClass, array $store = [], $routeParams = null)
     {
-        $query = static::instantiateUnbooted($query);
-        $query->store($store);
+        $query = $queryClass instanceof Query ? $queryClass : new $queryClass($store);
+
         $query->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
         AuthorizationGuard::checkBoot($query);
@@ -63,17 +64,5 @@ class QueryBooter
     public static function renderVueComponent($query)
     {
         return '<vl-query :vkompo="'.htmlspecialchars($query).'"></vl-query>';
-    }
-
-    /**
-     * Returns an unbooted Query if called with it's class string.
-     *
-     * @param mixed $class The class or object
-     *
-     * @return
-     */
-    protected static function instantiateUnbooted($class)
-    {
-        return $class instanceof Query ? $class : new $class(null, true);
     }
 }

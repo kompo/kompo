@@ -87,7 +87,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
     {
         $form = $this->currentForm;
 
-        return new $form($id, [
+        return $form::boot($id, [
             'komponent' => $this->currentRelation,
         ]);
     }

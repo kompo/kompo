@@ -10,7 +10,7 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
     /** @test */
     public function form_has_submit_to_assigned_correctly()
     {
-        $form = new _SubmitRedirectBehaviorForm();
+        $form = _SubmitRedirectBehaviorForm::boot();
 
         $this->assertEquals(url('submit-test'), $form->config('submitUrl'));
         $this->assertEquals('PUT', $form->config('submitMethod'));
@@ -23,7 +23,7 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
     /** @test */
     public function form_handles_submit_in_handle_method()
     {
-        $form = new _SubmitHandleMethodForm();
+        $form = _SubmitHandleMethodForm::boot();
 
         $this->assertEquals($this->kompoRoute, $form->config('submitUrl'));
         $this->assertEquals('POST', $form->config('submitMethod'));
@@ -40,7 +40,7 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
     /** @test */
     public function form_handles_submit_in_eloquent_save_method()
     {
-        $form = new _SubmitEloquentSaveForm();
+        $form = _SubmitEloquentSaveForm::boot();
 
         $this->assertEquals($this->kompoRoute, $form->config('submitUrl'));
         $this->assertEquals('POST', $form->config('submitMethod'));
@@ -61,7 +61,7 @@ class SubmitRedirectBehaviorTest extends EnvironmentBoot
     {
         $this->expectException(AuthorizationException::class);
 
-        $form = new _PreventSubmitForm();
+        $form = _PreventSubmitForm::boot();
 
         $this->assertNull($form->config('submitUrl'));
         $this->assertNull($form->config('submitMethod'));

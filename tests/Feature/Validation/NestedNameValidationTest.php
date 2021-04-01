@@ -30,12 +30,12 @@ class NestedNameValidationTest extends EnvironmentBoot
 
     private function submit_validation_on_request_all_and_individually($requestData)
     {
-        $this->assert_komposer_is_validated_for_action(new _NestedFieldNameValidationForm(), 'submit', $requestData);
+        $this->assert_komposer_is_validated_for_action(_NestedFieldNameValidationForm::boot(), 'submit', $requestData);
     }
 
     private function browse_validation_on_request_all_and_individually($requestData)
     {
-        $this->assert_komposer_is_validated_for_action(new _NestedFieldNameValidationQuery(), 'browse', $requestData);
+        $this->assert_komposer_is_validated_for_action(_NestedFieldNameValidationQuery::boot(), 'browse', $requestData);
     }
 
     /************ PRIVATE 2 *******************/

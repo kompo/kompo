@@ -19,7 +19,7 @@ class SettingFieldValuesFromDbTest extends EnvironmentBoot
 
         $this->assertEquals($post->author->id, $user->id);
 
-        $form = new _SettingFieldValuesFromDbForm($post->id);
+        $form = _SettingFieldValuesFromDbForm::boot($post->id);
 
         $this->assertEquals($post->title, $form->model()->title);
         $this->assertEquals($post->title, $form->komponents[0]->komponents[0]->value);
@@ -45,7 +45,7 @@ class SettingFieldValuesFromDbTest extends EnvironmentBoot
             'integer' => 0,
         ])->first();
 
-        $form = new _NullableButNonNullValuesForm($post->id);
+        $form = _NullableButNonNullValuesForm::boot($post->id);
 
         $this->assertSame('', $form->komponents[0]->value);
         $this->assertNotSame(null, $form->komponents[0]->value);
@@ -58,7 +58,7 @@ class SettingFieldValuesFromDbTest extends EnvironmentBoot
     {
         $post = factory(Post::class, 1)->create()->first();
 
-        $form = new _NonExistingAttributeInFieldNameForm($post->id);
+        $form = _NonExistingAttributeInFieldNameForm::boot($post->id);
 
         $this->assertEquals('fneyaibyveiy', $form->komponents[0]->name);
         $this->assertNull($form->komponents[0]->value);

@@ -11,7 +11,7 @@ class FileStorageDiskTest extends FileEnvironmentBoot
     {
         //First Submit to empty form
         $this->submit(
-            $form = new _FileStorageDiskForm(),
+            $form = _FileStorageDiskForm::boot(),
             ['path' => ($file1 = $this->createFile())]
         )->assertStatus(201)
         ->assertJson([
@@ -22,7 +22,7 @@ class FileStorageDiskTest extends FileEnvironmentBoot
 
         //Update file and delete old one
         $this->submit(
-            $form = new _FileStorageDiskForm(1),
+            $form = _FileStorageDiskForm::boot(1),
             ['path' => ($file2 = $this->createFile())]
         )->assertStatus(200)
         ->assertJson([
@@ -34,7 +34,7 @@ class FileStorageDiskTest extends FileEnvironmentBoot
 
         //Delete file
         $this->submit(
-            $form = new _FileStorageDiskForm(1),
+            $form = _FileStorageDiskForm::boot(1),
             ['path' => null]
         )->assertStatus(200)
         ->assertJson([

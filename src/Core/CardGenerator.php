@@ -36,7 +36,10 @@ class CardGenerator
 
     protected static function getCardDefaultFallback($item, $key, $komposer)
     {
+        \Kompo\KompoServiceProvider::$bootFlag = true;
         $card = method_exists($komposer, 'card') ? $komposer->card($item, $key) : [];
+        \Kompo\KompoServiceProvider::$bootFlag = false;
+
 
         if (is_array($card)) {
             $defaultCard = $komposer->card ?: Card::class;

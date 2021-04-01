@@ -66,9 +66,7 @@ trait QueryActions
             $el->config(['sortsQuery' => $sortOrders ?: true]);
         });
 
-        return $this->prepareAction('sortQuery', [
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
-        ]);
+        return $this->prepareAction('sortQuery');
     }
 
     /**
@@ -86,7 +84,6 @@ trait QueryActions
             'route'                 => RouteFinder::getKompoRoute('POST'),
             'page'                  => $page,
             'kompoid'               => $queryId,
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
         ]);
     }
 

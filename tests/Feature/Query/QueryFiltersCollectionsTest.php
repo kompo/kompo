@@ -11,39 +11,39 @@ class QueryFiltersCollectionsTest extends EnvironmentBoot
     /** @test */
     public function filters_work_for_collection()
     {
-        $this->_checkAllFilters(new _QueryCollection());
+        $this->_checkAllFilters(_QueryCollection::boot());
     }
 
     /** @test */
     public function filters_work_for_simple_array()
     {
-        $this->_checkAllFilters(new _QueryArray());
+        $this->_checkAllFilters(_QueryArray::boot());
     }
 
     /** @test */
     public function filters_work_for_assoc_array()
     {
-        $this->_checkAllFilters(new _QueryAssocArray());
+        $this->_checkAllFilters(_QueryAssocArray::boot());
     }
 
     /** @test */
     public function filters_work_for_array_of_arrays()
     {
         $this->getFromArray = true;
-        $this->_checkAllFilters(new _QueryArrayOfArrays());
+        $this->_checkAllFilters(_QueryArrayOfArrays::boot());
     }
 
     /** @test */
     public function filters_work_for_array_of_objects()
     {
         $this->getFromArray = true; //because object gets decoded as array in JSON response
-        $this->_checkAllFilters(new _QueryArrayOfObjs());
+        $this->_checkAllFilters(_QueryArrayOfObjs::boot());
     }
 
     /** @test */
     public function edge_cases_filters_work_for_array_of_arrays()
     {
-        $response = $this->browse(new _QueryArrayOfArrays(), ['non-existing' => 'rav'])->assertStatus(200);
+        $response = $this->browse(_QueryArrayOfArrays::boot(), ['non-existing' => 'rav'])->assertStatus(200);
 
         $items = $response->decodeResponseJson()['data'];
         $this->assertCount(0, $items);
@@ -52,7 +52,7 @@ class QueryFiltersCollectionsTest extends EnvironmentBoot
     /** @test */
     public function edge_cases_filters_work_for_array_of_objects()
     {
-        $response = $this->browse(new _QueryArrayOfObjs(), ['non-existing' => 'rav'])->assertStatus(200);
+        $response = $this->browse(_QueryArrayOfObjs::boot(), ['non-existing' => 'rav'])->assertStatus(200);
 
         $items = $response->decodeResponseJson()['data'];
         $this->assertCount(0, $items);

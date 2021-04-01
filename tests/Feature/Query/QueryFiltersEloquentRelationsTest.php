@@ -17,19 +17,19 @@ class QueryFiltersEloquentRelationsTest extends EnvironmentBoot
     /** @test */
     public function filters_work_for_relations_in_eloquent_builder()
     {
-        $this->filters_work_for_relations(new _QueryEloquentBuilder());
+        $this->filters_work_for_relations(_QueryEloquentBuilder::boot());
     }
 
     /** @test */
     public function filters_work_for_relations_in_eloquent_model()
     {
-        $this->filters_work_for_relations(new _QueryEloquentModel());
+        $this->filters_work_for_relations(_QueryEloquentModel::boot());
     }
 
     /** @test */
     public function filters_work_for_relations_in_eloquent_model_property()
     {
-        $this->filters_work_for_relations(new _QueryEloquentModelProperty());
+        $this->filters_work_for_relations(_QueryEloquentModelProperty::boot());
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class QueryFiltersEloquentRelationsTest extends EnvironmentBoot
     {
         factory(Post::class)->create();
 
-        $this->filters_work_for_relations(new _QueryEloquentRelation());
+        $this->filters_work_for_relations(_QueryEloquentRelation::boot());
     }
 
     /********** PRIVATE ******************************************/

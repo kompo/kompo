@@ -17,6 +17,13 @@ class KompoServiceProvider extends ServiceProvider
     ];
 
     /**
+     * When active, komposers are booted on instantiation.
+     *
+     * @var        bool
+     */
+    public static $bootFlag = false;
+
+    /**
      * Bootstrap services.
      *
      * @return void

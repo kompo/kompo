@@ -10,7 +10,7 @@ class FormRefreshTest extends EnvironmentBoot
     /** @test */
     public function form_refresh_returns_202_and_form()
     {
-        $form = new _FormRefreshForm();
+        $form = _FormRefreshForm::boot();
 
         $this->assertNull($form->model->created_at);
 

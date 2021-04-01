@@ -94,7 +94,7 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
     /** @test */
     public function layout_has_form_in_children()
     {
-        $el = new _LayoutInstantiationForm();
+        $el = _LayoutInstantiationForm::boot();
 
         $this->assertIsArray($el->komponents);
         $this->assertCount(1, $el->komponents);

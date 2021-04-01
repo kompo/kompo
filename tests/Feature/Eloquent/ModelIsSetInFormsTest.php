@@ -11,7 +11,7 @@ class ModelIsSetInFormsTest extends EnvironmentBoot
     /** @test */
     public function form_has_new_model_after_boot()
     {
-        $form = new _PostForm();
+        $form = _PostForm::boot();
 
         $this->assertTrue($form->model() instanceof Model);
         $this->assertNull($form->model()->id);
@@ -22,7 +22,7 @@ class ModelIsSetInFormsTest extends EnvironmentBoot
     public function form_has_exisiting_model_after_boot()
     {
         $post = factory(Post::class, 1)->create()->first();
-        $form = new _PostForm(1);
+        $form = _PostForm::boot(1);
 
         $this->assertTrue($form->model() instanceof Model);
         $this->assertEquals($form->model()->id, $post->id);
@@ -32,7 +32,7 @@ class ModelIsSetInFormsTest extends EnvironmentBoot
     /** @test */
     public function form_has_new_model_set_in_created_phase()
     {
-        $form = new _ModelInCreatedForm();
+        $form = _ModelInCreatedForm::boot();
 
         $this->assertTrue($form->model() instanceof Model);
         $this->assertNull($form->model()->id);
@@ -43,7 +43,7 @@ class ModelIsSetInFormsTest extends EnvironmentBoot
     public function form_has_existing_model_set_in_created_phase()
     {
         $post = factory(Post::class, 1)->create()->first();
-        $form = new _ModelInCreatedForm(1);
+        $form = _ModelInCreatedForm::boot(1);
 
         $this->assertTrue($form->model() instanceof Model);
         $this->assertEquals($form->model()->id, $post->id);

@@ -10,9 +10,7 @@ trait AxiosRequestActions
 {
     protected function prepareAxiosRequest($config)
     {
-        return $this->prepareAction('axiosRequest', array_merge($config, [
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
-        ]));
+        return $this->prepareAction('axiosRequest', $config);
     }
 
     public function selfHttpRequest($requestType, $kompoAction, $classOrMethod, $ajaxPayload = null)

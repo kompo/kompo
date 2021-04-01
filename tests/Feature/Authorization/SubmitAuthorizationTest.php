@@ -13,13 +13,13 @@ class SubmitAuthorizationTest extends EnvironmentBoot
     /** @test */
     public function submit_is_unauthorized_for_eloquent_forms()
     {
-        $this->assert_unauthorized_submit(new _SubmitUnauthorizedEloquentForm());
+        $this->assert_unauthorized_submit(_SubmitUnauthorizedEloquentForm::boot());
     }
 
     /** @test */
     public function submit_is_unauthorized_for_handle_forms()
     {
-        $this->assert_unauthorized_submit(new _SubmitUnauthorizedHandleForm());
+        $this->assert_unauthorized_submit(_SubmitUnauthorizedHandleForm::boot());
     }
 
     /** @test */
@@ -27,7 +27,7 @@ class SubmitAuthorizationTest extends EnvironmentBoot
     {
         $this->expectException(NotFoundKompoActionException::class);
 
-        $this->withoutExceptionHandling()->submit(new _SubmitUnauthorizedSubmitToForm());
+        $this->withoutExceptionHandling()->submit(_SubmitUnauthorizedSubmitToForm::boot());
     }
 
     /** @test */
@@ -38,7 +38,7 @@ class SubmitAuthorizationTest extends EnvironmentBoot
         $this->expectException(AuthorizationException::class);
 
         $this->withoutExceptionHandling()->withHeaders(
-            KompoInfo::arrayFromElement(new _SubmitUnauthorizedSubmitToForm())
+            KompoInfo::arrayFromElement(_SubmitUnauthorizedSubmitToForm::boot())
         )->post('submit-route');
     }
 

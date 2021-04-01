@@ -193,7 +193,7 @@ class PlacesStoredAsMorphOneManyTest extends PlaceEnvironmentBoot
 
     protected function getForm($id = null)
     {
-        return new _PlacesStoredAsMorphOneMorphManyForm($id, [
+        return _PlacesStoredAsMorphOneMorphManyForm::boot($id, [
             'komponent' => $this->currentRelation,
         ]);
     }

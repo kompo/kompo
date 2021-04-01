@@ -12,7 +12,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     public function query_returns_an_eloquent_model()
     {
         factory(Obj::class, 10)->create();
-        $query = new _QueryEloquentModel();
+        $query = _QueryEloquentModel::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -21,7 +21,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     public function query_use_model_property()
     {
         factory(Obj::class, 10)->create();
-        $query = new _QueryEloquentModelProperty();
+        $query = _QueryEloquentModelProperty::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -30,7 +30,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     public function query_returns_an_eloquent_builder()
     {
         factory(Obj::class, 10)->create();
-        $query = new _QueryEloquentBuilder();
+        $query = _QueryEloquentBuilder::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -40,7 +40,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     {
         factory(Post::class, 1)->create();
         factory(Obj::class, 10)->create();
-        $query = new _QueryEloquentRelation();
+        $query = _QueryEloquentRelation::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -49,7 +49,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     public function query_returns_a_query_builder()
     {
         factory(Post::class, 10)->create();
-        $query = new _QueryDatabaseBuilder();
+        $query = _QueryDatabaseBuilder::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -57,7 +57,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     /** @test */
     public function query_returns_a_collection()
     {
-        $query = new _QueryCollection();
+        $query = _QueryCollection::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -65,7 +65,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     /** @test */
     public function query_returns_an_array()
     {
-        $query = new _QueryArray();
+        $query = _QueryArray::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -73,7 +73,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     /** @test */
     public function query_returns_an_assoc_array()
     {
-        $query = new _QueryAssocArray();
+        $query = _QueryAssocArray::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -81,7 +81,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     /** @test */
     public function query_returns_an_array_of_objs()
     {
-        $query = new _QueryArrayOfObjs();
+        $query = _QueryArrayOfObjs::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -89,7 +89,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     /** @test */
     public function query_returns_an_array_of_arrays()
     {
-        $query = new _QueryArrayOfArrays();
+        $query = _QueryArrayOfArrays::boot();
 
         $this->assertCount(10, $query->query->getCollection());
     }
@@ -97,7 +97,7 @@ class QueryDeclarationTest extends EnvironmentBoot
     /** @test */
     public function query_returns_null()
     {
-        $query = new _QueryNull();
+        $query = _QueryNull::boot();
 
         $this->assertCount(0, $query->query->getCollection());
     }

@@ -4,7 +4,6 @@ namespace Kompo;
 
 use Kompo\Komposers\Komposer;
 use Kompo\Komposers\Query\QueryBooter;
-use Kompo\Routing\Router;
 
 abstract class Query extends Komposer
 {
@@ -123,15 +122,14 @@ abstract class Query extends Komposer
      *
      * @return self
      */
-    public function __construct(?array $store = [], $dontBoot = false)
+    public function __construct(?array $store = [])
     {
-        if (Router::shouldNotBeBooted()) {
-            return;
-        } //request has not been handled yet
+        parent::__construct();
+        
+        $this->store($store);
 
-        if (!$dontBoot) {
-            QueryBooter::bootForDisplay($this, $store);
-        }
+        if(KompoServiceProvider::$bootFlag)
+            $this->boot();
     }
 
     /**
@@ -212,28 +210,18 @@ abstract class Query extends Komposer
      *
      * @return string
      */
-    public static function renderStatic($store = [])
-    {
-        return with(new static($store))->render();
-    }
-
-    /**
-     * Shortcut method to render a Query into it's Vue component.
-     *
-     * @return string
-     */
     public function renderNonStatic()
     {
         return QueryBooter::renderVueComponent($this);
     }
 
     /**
-     * Methods that can be called both statically or non-statically.
+     * Shortcut method to boot a Query for display.
      *
-     * @return array
+     * @return string
      */
-    public static function duplicateStaticMethods()
+    public function bootNonStatic()
     {
-        return ['render'];
+        return QueryBooter::bootForDisplay($this);
     }
 }

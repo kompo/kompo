@@ -9,7 +9,7 @@ class FieldOutputInputValueTest extends EnvironmentBoot
     /** @test */
     public function output_value_and_default_correct_with_model_form()
     {
-        $form = new _FieldOutputValueForm();
+        $form = _FieldOutputValueForm::boot();
         $this->assertEquals('post-title', $form->komponents[0]->value);
         $this->assertEquals('obj-title', $form->komponents[1]->value);
         $this->assertEquals('default-content', $form->komponents[2]->value);
@@ -30,7 +30,7 @@ class FieldOutputInputValueTest extends EnvironmentBoot
             ],
         ]);
 
-        $form = new _FieldOutputValueForm(1);
+        $form = _FieldOutputValueForm::boot(1);
         $this->assertEquals('post-title', $form->komponents[0]->value);
         $this->assertEquals('obj-title', $form->komponents[1]->value);
         $this->assertEquals('default-content', $form->komponents[2]->value);
@@ -51,7 +51,7 @@ class FieldOutputInputValueTest extends EnvironmentBoot
             ],
         ]);
 
-        $form = new _FieldOutputValueForm(1);
+        $form = _FieldOutputValueForm::boot(1);
         $this->assertEquals('other-title', $form->komponents[0]->value);
         $this->assertEquals('other-obj-title', $form->komponents[1]->value);
         $this->assertEquals('other-content', $form->komponents[2]->value);

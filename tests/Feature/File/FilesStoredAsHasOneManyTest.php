@@ -207,7 +207,7 @@ class FilesStoredAsHasOneManyTest extends FileEnvironmentBoot
 
     protected function getForm($id = null)
     {
-        return new _FilesStoredAsHasOneHasManyForm($id, [
+        return _FilesStoredAsHasOneHasManyForm::boot($id, [
             'komponent' => $this->currentRelation,
         ]);
     }

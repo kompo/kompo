@@ -9,7 +9,7 @@ class AssigningCreatedUpdatedByTest extends EnvironmentBoot
     /** @test */
     public function no_error_is_thrown_if_not_authenticated()
     {
-        $this->submit_kompo_model_for_created_updated_by(new _AssigningCreatedUpdatedByForm());
+        $this->submit_kompo_model_for_created_updated_by(_AssigningCreatedUpdatedByForm::boot());
 
         $this->assertDatabaseHas('kompo_models', [
             'name'              => 'test-input',
@@ -23,7 +23,7 @@ class AssigningCreatedUpdatedByTest extends EnvironmentBoot
     /** @test */
     public function created_updated_by_assigned_correctly()
     {
-        $this->actingAs($this->user)->submit_kompo_model_for_created_updated_by(new _AssigningCreatedUpdatedByForm());
+        $this->actingAs($this->user)->submit_kompo_model_for_created_updated_by(_AssigningCreatedUpdatedByForm::boot());
 
         $this->assertDatabaseHas('kompo_models', [
             'name'              => 'test-input',
@@ -37,7 +37,7 @@ class AssigningCreatedUpdatedByTest extends EnvironmentBoot
     /** @test */
     public function custom_created_updated_by_assigned_correctly()
     {
-        $this->actingAs($this->user)->submit_kompo_model_for_created_updated_by(new _AssigningCustomCreatedUpdatedByForm());
+        $this->actingAs($this->user)->submit_kompo_model_for_created_updated_by(_AssigningCustomCreatedUpdatedByForm::boot());
 
         $this->assertDatabaseHas('kompo_models', [
             'name'              => 'test-input',

@@ -11,7 +11,7 @@ class QueryFiltersDeclarationTest extends EnvironmentBoot
     /** @test */
     public function filters_and_subfilters_are_arrays()
     {
-        $query = new _FiltersReturnTypes();
+        $query = _FiltersReturnTypes::boot();
 
         $this->assertIsArray($query->filters);
 
@@ -24,7 +24,7 @@ class QueryFiltersDeclarationTest extends EnvironmentBoot
     /** @test */
     public function null_komponents_are_removed_in_filters()
     {
-        $query = new _FiltersReturnTypes();
+        $query = _FiltersReturnTypes::boot();
 
         $this->assertCount(1, $query->filters['top']);
         $this->assertCount(1, $query->filters['right']);

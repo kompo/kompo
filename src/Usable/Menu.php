@@ -4,7 +4,6 @@ namespace Kompo;
 
 use Kompo\Komposers\Komposer;
 use Kompo\Komposers\Menu\MenuBooter;
-use Kompo\Routing\Router;
 
 abstract class Menu extends Komposer
 {
@@ -38,15 +37,13 @@ abstract class Menu extends Komposer
      *
      * @return self
      */
-    public function __construct(?array $store = [], $dontBoot = false)
+    public function __construct(?array $store = [])
     {
-        if (Router::shouldNotBeBooted()) {
-            return;
-        } //request has not been handled yet
+        parent::__construct();
+        
+        $this->store($store);
 
-        if (!$dontBoot) {
-            MenuBooter::bootForDisplay($this, $store);
-        }
+        $this->boot(); //Menus boot on instantiation by default, since they cannot be called from Route::get()
     }
 
     /**
@@ -74,8 +71,28 @@ abstract class Menu extends Komposer
      *
      * @return string
      */
-    public static function render($store = [])
+    public function renderNonStatic()
     {
-        return MenuBooter::renderVueComponent(new static($store));
+        return MenuBooter::renderVueComponent($this);
+    }
+
+    /**
+     * Shortcut method to boot a Komposer for display.
+     *
+     * @return string
+     */
+    public static function bootStatic($store = [])
+    {
+        return new static($store);
+    }
+
+    /**
+     * Shortcut method to boot a Menu for display.
+     *
+     * @return string
+     */
+    public function bootNonStatic()
+    {
+        return MenuBooter::bootForDisplay($this);
     }
 }

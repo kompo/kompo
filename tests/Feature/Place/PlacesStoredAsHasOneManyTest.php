@@ -193,7 +193,7 @@ class PlacesStoredAsHasOneManyTest extends PlaceEnvironmentBoot
 
     protected function getForm($id = null)
     {
-        return new _PlacesStoredAsHasOneHasManyForm($id, [
+        return _PlacesStoredAsHasOneHasManyForm::boot($id, [
             'komponent' => $this->currentRelation,
         ]);
     }

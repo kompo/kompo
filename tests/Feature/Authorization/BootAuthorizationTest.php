@@ -71,7 +71,7 @@ class BootAuthorizationTest extends EnvironmentBoot
     {
         $this->expectException(AuthorizationException::class);
 
-        $obj = new $objClass();
+        $obj = $objClass::boot();
     }
 
     private function assert_unauthorized_boot_action($objClass)

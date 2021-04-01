@@ -5,17 +5,6 @@ namespace Kompo\Routing;
 class Router
 {
     /**
-     * Check to hold off booting the Komposer from it's constructor because the request has not been handled yet.
-     *
-     * @return bool
-     */
-    public static function shouldNotBeBooted(): bool
-    {
-        return (request()->route() && !request()->hasSession())
-            || (app()->runningInConsole() && !app()->runningUnitTests());
-    }
-
-    /**
      * Gets the merged layout.
      *
      * @param <type> $route The route

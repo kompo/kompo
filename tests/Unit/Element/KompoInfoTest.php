@@ -12,13 +12,13 @@ class KompoInfoTest extends EnvironmentBoot
     /** @test */
     public function kompo_info_is_correctly_created_on_komposers()
     {
-        $form = new _SetElementIdForm();
+        $form = _SetElementIdForm::boot();
 
         $bootInfo = Crypt::decrypt(KompoInfo::getFromElement($form));
         $this->assertNotNull($bootInfo);
         $this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass']);
 
-        $form = new _SetElementIdForm();
+        $form = _SetElementIdForm::boot();
         $bootInfo2 = Crypt::decrypt(KompoInfo::getFromElement($form));
         $this->assertNotNull($bootInfo2);
         $this->assertEquals(_SetElementIdForm::class, $bootInfo['kompoClass']);

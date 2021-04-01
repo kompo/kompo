@@ -13,6 +13,41 @@ trait HasSubmenu
      */
     public $komponents = [];
 
+    /**
+     * Prepares the child komponents of the layout.
+     *
+     * @param Komposer
+     */
+    public function prepareForDisplay($komposer)
+    {
+        collect($this->komponents)->each(function ($komponent) use ($komposer) {
+
+            $komponent->prepareForDisplay($komposer);
+
+            $komponent->mountedHook($komposer);
+
+        });
+    }
+
+    /**
+     * Prepares the child komponents of the layout.
+     *
+     * @param Komposer
+     */
+    public function prepareForAction($komposer)
+    {
+        collect($this->komponents)->each(function ($komponent) use ($komposer) {
+
+            $komponent->prepareForAction($komposer);
+
+            $komponent->mountedHook($komposer);
+            
+        });
+    }
+
+
+
+
     protected function prepareMenu($args)
     {
         return LayoutManager::collectFilteredKomponents($args, $this)->each(function ($component) {

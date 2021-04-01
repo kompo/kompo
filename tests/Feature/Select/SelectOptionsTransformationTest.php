@@ -13,7 +13,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
     /** @test */
     public function array_options_are_transformed_into_label_value_array()
     {
-        $form = new _SelectAttributeFillsForm();
+        $form = _SelectAttributeFillsForm::boot();
 
         $this->assert_array_options_are_transformed_into_label_value_array($form->options(), $form->komponents);
     }
@@ -22,7 +22,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
     public function plucked_options_are_transformed_into_label_value_array()
     {
         factory(Tag::class, 6)->create();
-        $form = new _SelectAttributeFillsForm(null, ['optionsMethod' => 'Tags']);
+        $form = _SelectAttributeFillsForm::boot(null, ['optionsMethod' => 'Tags']);
 
         $this->assert_array_options_are_transformed_into_label_value_array(Tag::pluck('name', 'id'), $form->komponents);
     }
@@ -30,7 +30,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
     /** @test */
     public function custom_label_options_are_transformed_into_label_value_array()
     {
-        $form = new _SelectAttributeFillsForm(null, ['optionsMethod' => 'Cards']);
+        $form = _SelectAttributeFillsForm::boot(null, ['optionsMethod' => 'Cards']);
 
         foreach ($form->komponents as $key => $komponent) {
             $options = $komponent->options;
@@ -55,7 +55,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
         $filesOrdered = File::orderBy('name')->get();
         $filesFiltered = File::where('name', '<', 'm')->get();
 
-        $form = new _SelectOptionsFromForm();
+        $form = _SelectOptionsFromForm::boot();
         $opts = function ($index) use ($form) { return $form->komponents[$index]->options; };
 
         //belongsTo
@@ -86,7 +86,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
         factory(User::class, 4)->create();
         $users = User::orderBy('name')->get();
 
-        $form = new _SelectOptionsFromForm();
+        $form = _SelectOptionsFromForm::boot();
 
         //Card
         $this->assertEquals(count($users), count($opts = $form->komponents[15]->options));

@@ -16,7 +16,7 @@ class ValidatingFromKompoRequestTest extends EnvironmentBoot
         $this->expectException(ValidationException::class);
 
         $this->withoutExceptionHandling()
-            ->submitToRoute(new _KompoRequestValidationForm())
+            ->submitToRoute(_KompoRequestValidationForm::boot())
             ->assertStatus(422);
     }
 
@@ -25,7 +25,7 @@ class ValidatingFromKompoRequestTest extends EnvironmentBoot
     {
         \Route::post('submit-route', function (KompoFormRequest $request) {});
 
-        $this->submitToRoute(new _KompoRequestValidationForm(), ['name' => 'blabla'])
+        $this->submitToRoute(_KompoRequestValidationForm::boot(), ['name' => 'blabla'])
             ->assertStatus(200);
     }
 }

@@ -12,25 +12,25 @@ class SelfRequestsAuthorizationTest extends EnvironmentBoot
     /** @test */
     public function self_get_request_unauthorized_for_form()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedForm(), 'Get');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedForm::boot(), 'Get');
     }
 
     /** @test */
     public function self_post_request_unauthorized_for_form()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedForm(), 'Post');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedForm::boot(), 'Post');
     }
 
     /** @test */
     public function self_put_request_unauthorized_for_form()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedForm(), 'Put');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedForm::boot(), 'Put');
     }
 
     /** @test */
     public function self_delete_request_unauthorized_for_form()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedForm(), 'Delete');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedForm::boot(), 'Delete');
     }
 
     /******** Query ************/
@@ -38,25 +38,25 @@ class SelfRequestsAuthorizationTest extends EnvironmentBoot
     /** @test */
     public function self_get_request_unauthorized_for_query()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedQuery(), 'Get');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedQuery::boot(), 'Get');
     }
 
     /** @test */
     public function self_post_request_unauthorized_for_query()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedQuery(), 'Post');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedQuery::boot(), 'Post');
     }
 
     /** @test */
     public function self_put_request_unauthorized_for_query()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedQuery(), 'Put');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedQuery::boot(), 'Put');
     }
 
     /** @test */
     public function self_delete_request_unauthorized_for_query()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedQuery(), 'Delete');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedQuery::boot(), 'Delete');
     }
 
     /******** Menu ************/
@@ -64,25 +64,25 @@ class SelfRequestsAuthorizationTest extends EnvironmentBoot
     /** @test */
     public function self_get_request_unauthorized_for_menu()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedMenu(), 'Get');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedMenu::boot(), 'Get');
     }
 
     /** @test */
     public function self_post_request_unauthorized_for_menu()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedMenu(), 'Post');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedMenu::boot(), 'Post');
     }
 
     /** @test */
     public function self_put_request_unauthorized_for_menu()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedMenu(), 'Put');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedMenu::boot(), 'Put');
     }
 
     /** @test */
     public function self_delete_request_unauthorized_for_menu()
     {
-        $this->self_request_unauthorized_for(new _SelfRequestUnauthorizedMenu(), 'Delete');
+        $this->self_request_unauthorized_for(_SelfRequestUnauthorizedMenu::boot(), 'Delete');
     }
 
     /** ------------------ PRIVATE --------------------------- */

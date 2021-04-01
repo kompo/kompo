@@ -12,40 +12,40 @@ class FormInstantiationTest extends EnvironmentBoot
     {
         $obj = factory(Obj::class)->create();
 
-        $form = new _FormInstantiationForm();
+        $form = _FormInstantiationForm::boot();
 
         $this->assertNull($form->modelId);
         $this->assertInstanceOf(Obj::class, $form->model);
         $this->assertCount(0, $form->store);
 
-        $form = new _FormInstantiationForm(1);
+        $form = _FormInstantiationForm::boot(1);
 
         $this->assertEquals(1, $form->modelId);
         $this->assertInstanceOf(Obj::class, $form->model);
         $this->assertCount(0, $form->store);
 
-        $form = new _FormInstantiationForm(1, ['some-key' => 'some-value']);
+        $form = _FormInstantiationForm::boot(1, ['some-key' => 'some-value']);
 
         $this->assertEquals(1, $form->modelId);
         $this->assertInstanceOf(Obj::class, $form->model);
         $this->assertCount(1, $form->store);
         $this->assertEquals('some-value', $form->store['some-key']);
 
-        $form = new _FormInstantiationForm(null, ['some-key' => 'some-value']);
+        $form = _FormInstantiationForm::boot(null, ['some-key' => 'some-value']);
 
         $this->assertNull($form->modelId);
         $this->assertInstanceOf(Obj::class, $form->model);
         $this->assertCount(1, $form->store);
         $this->assertEquals('some-value', $form->store['some-key']);
 
-        $form = new _FormInstantiationForm(['some-key' => 'some-value']);
+        $form = _FormInstantiationForm::boot(['some-key' => 'some-value']);
 
         $this->assertNull($form->modelId);
         $this->assertInstanceOf(Obj::class, $form->model);
         $this->assertCount(1, $form->store);
         $this->assertEquals('some-value', $form->store['some-key']);
 
-        $form = new _FormInstantiationForm(['some-key' => 'some-value'], 1);
+        $form = _FormInstantiationForm::boot(['some-key' => 'some-value'], 1);
 
         $this->assertEquals(1, $form->modelId);
         $this->assertInstanceOf(Obj::class, $form->model);

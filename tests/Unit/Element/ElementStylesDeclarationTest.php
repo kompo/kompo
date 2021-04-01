@@ -9,7 +9,7 @@ class ElementStylesDeclarationTest extends EnvironmentBoot
     /** @test */
     public function styles_are_set_on_element()
     {
-        $form = new _SetElementStylesForm();
+        $form = _SetElementStylesForm::boot();
 
         $this->assertEquals('margin:0', $form->komponents[0]->style);
         $this->assertEquals('margin:0', $form->komponents[1]->style);

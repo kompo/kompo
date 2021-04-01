@@ -50,6 +50,17 @@ trait EmitEventActions
     }
 
     /**
+     * Closes a panel.
+     * //TODO DOCUMENT
+     *
+     * @return self
+     */
+    public function closePanel()
+    {
+        return $this->emit('closePanel');
+    }
+
+    /**
      * Confirms a modal dialog.
      * //TODO DOCUMENT
      *

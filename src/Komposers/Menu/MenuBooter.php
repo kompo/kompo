@@ -13,27 +13,28 @@ class MenuBooter
 {
     public static function bootForAction($bootInfo)
     {
-        $menu = static::instantiateUnbooted($bootInfo['kompoClass']);
+        $menuClass = $bootInfo['kompoClass'];
+
+        $menu = new $menuClass($bootInfo['store']);
+
+        $menu->parameter($bootInfo['parameters']); //Parameters necessary for menus??
 
         KompoId::setForKomposer($menu, $bootInfo);
-
-        $menu->store($bootInfo['store']);
-        $menu->parameter($bootInfo['parameters']); //Parameters necessary for menus??
 
         AuthorizationGuard::checkBoot($menu);
 
         return $menu;
     }
 
-    public static function bootForDisplay($menu, array $store = [], $routeParams = null)
+    public static function bootForDisplay($menuClass, array $store = [], $routeParams = null)
     {
-        $menu = static::instantiateUnbooted($menu);
-        $menu->store($store);
+        $menu = $menuClass instanceof Menu ? $menuClass : new $menuClass($store);
+        
         $menu->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
         AuthorizationGuard::checkBoot($menu);
 
-        $menu->komponents = collect($menu->komponents())->filter()->all();
+        $menu->komponents = KomposerManager::prepareKomponentsForDisplay($menu, 'komponents', true);
 
         KompoId::setForKomposer($menu);
 
@@ -52,17 +53,5 @@ class MenuBooter
     public static function renderVueComponent($menu)
     {
         return '<vl-menu :vkompo="'.htmlspecialchars($menu).'"></vl-menu>';
-    }
-
-    /**
-     * Returns an unbooted Menu if called with it's class string.
-     *
-     * @param mixed $class The class or object
-     *
-     * @return
-     */
-    protected static function instantiateUnbooted($class)
-    {
-        return $class instanceof Menu ? $class : new $class(null, true);
     }
 }

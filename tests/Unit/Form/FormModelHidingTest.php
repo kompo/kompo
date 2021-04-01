@@ -9,7 +9,7 @@ class FormModelHidingTest extends EnvironmentBoot
     /** @test */
     public function model_is_hidden_in_response_by_default()
     {
-        $form = new _ModelHidingForm();
+        $form = _ModelHidingForm::boot();
 
         $this->assertNotNull($form->model);
 
@@ -19,7 +19,7 @@ class FormModelHidingTest extends EnvironmentBoot
     /** @test */
     public function model_is_shown_in_response_with_config()
     {
-        $form = new _ModelHidingForm();
+        $form = _ModelHidingForm::boot();
 
         $this->assertNotNull($form->model);
 
@@ -31,7 +31,7 @@ class FormModelHidingTest extends EnvironmentBoot
     /** @test */
     public function model_is_shown_in_response_with_hide_model()
     {
-        $form = new _ModelHidingForm();
+        $form = _ModelHidingForm::boot();
 
         $this->assertNotNull($form->model);
 

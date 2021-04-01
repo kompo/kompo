@@ -14,22 +14,15 @@ class FormBooter
 {
     public static function bootForAction($bootInfo)
     {
-        $form = static::instantiateUnbooted($bootInfo['kompoClass']);
+        $formClass = $bootInfo['kompoClass'];
+
+        $form = new $formClass($bootInfo['modelKey'], $bootInfo['store']);
+        
+        $form->parameter($bootInfo['parameters']);
+
+        $form->model($form->model);
 
         KompoId::setForKomposer($form, $bootInfo);
-
-        $modelKey = $bootInfo['modelKey'];
-        $model = $form->model;
-
-        if ($modelKey instanceof Model) {
-            $model = $modelKey; //made this so we can boot a model (with predefined attributes) with MultiForm for ex.
-            $modelKey = $model->getKey();
-        }
-
-        $form->store($bootInfo['store']);
-        $form->parameter($bootInfo['parameters']);
-        $form->modelKey($modelKey);
-        $form->model($model);
 
         AuthorizationGuard::checkBoot($form);
 
@@ -40,27 +33,13 @@ class FormBooter
         return $form;
     }
 
-    public static function bootForDisplay($form, $modelKey = null, $store = [], $routeParams = null)
+    public static function bootForDisplay($formClass, $modelKey = null, $store = [], $routeParams = null)
     {
-        $form = static::instantiateUnbooted($form);
+        $form = $formClass instanceof Form ? $formClass : new $formClass($modelKey, $store);
 
-        if (is_array($modelKey)) { //Allow permutation of arguments
-            $newStore = $modelKey;
-            $modelKey = is_array($store) ? null : $store;
-            $store = $newStore;
-        }
-
-        $model = $form->model;
-
-        if ($modelKey instanceof Model) {
-            $model = $modelKey; //made this so we can boot a model (with predefined attributes) with MultiForm for ex.
-            $modelKey = $model->getKey();
-        }
-
-        $form->store($store);
         $form->parameter($routeParams ?: RouteFinder::getRouteParameters());
-        $form->modelKey($modelKey);
-        $form->model($model);
+
+        $form->model($form->model);
 
         AuthorizationGuard::checkBoot($form);
 
@@ -99,17 +78,5 @@ class FormBooter
     public static function renderVueComponent($form)
     {
         return '<'.$form->vueKomposerTag.' :vkompo="'.htmlspecialchars($form).'"></'.$form->vueKomposerTag.'>';
-    }
-
-    /**
-     * Returns an unbooted Form if called with it's class string.
-     *
-     * @param mixed $class The class or object
-     *
-     * @return
-     */
-    protected static function instantiateUnbooted($class)
-    {
-        return $class instanceof Form ? $class : new $class(null, null, true);
     }
 }

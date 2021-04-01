@@ -9,7 +9,7 @@ class ElementIdDeclarationTest extends EnvironmentBoot
     /** @test */
     public function id_is_set_on_element()
     {
-        $form = new _SetElementIdForm();
+        $form = _SetElementIdForm::boot();
 
         $this->assertEquals('form-id', $form->id);
         $this->assertNull($form->komponents[0]->id);

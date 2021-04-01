@@ -10,7 +10,7 @@ class DateRangeFieldTest extends EnvironmentBoot
     /** @test */
     public function date_range_is_assigned_value_in_handled_form()
     {
-        $form = new _DateRangeHandledForm();
+        $form = _DateRangeHandledForm::boot();
 
         $this->assertNull($form->komponents[0]->value);
         $this->assertCount(2, $form->komponents[1]->value);
@@ -23,7 +23,7 @@ class DateRangeFieldTest extends EnvironmentBoot
     {
         $post = factory(Post::class, 1)->create()->first();
 
-        $form = new _DateRangeValueFromModelForm(1);
+        $form = _DateRangeValueFromModelForm::boot(1);
 
         //dd($post->created_at);
 
@@ -35,7 +35,7 @@ class DateRangeFieldTest extends EnvironmentBoot
     /** @test */
     public function date_range_is_loaded_and_saved_as_attribute()
     {
-        $form = new _DateRangeAttributeForm();
+        $form = _DateRangeAttributeForm::boot();
 
         $this->assertNull($form->komponents[0]->value);
         $this->assertCount(2, $form->komponents[1]->value);
@@ -56,13 +56,13 @@ class DateRangeFieldTest extends EnvironmentBoot
         $start_dt = date('Y-m-d H:i', strtotime('+7 days'));
         $end_dt = null;
 
-        $this->assert_date_range_fields_save_as_attribute(new _DateRangeAttributeForm(1), 200, $start_d, $end_d, $start_dt, $end_dt);
+        $this->assert_date_range_fields_save_as_attribute(_DateRangeAttributeForm::boot(1), 200, $start_d, $end_d, $start_dt, $end_dt);
     }
 
     /** @test */
     public function date_range_is_loaded_and_saved_as_relation()
     {
-        $form = new _DateRangeRelationForm();
+        $form = _DateRangeRelationForm::boot();
 
         $this->assertNull($form->komponents[0]->value);
         $this->assertCount(2, $form->komponents[1]->value);
@@ -84,7 +84,7 @@ class DateRangeFieldTest extends EnvironmentBoot
         $start_dt = date('Y-m-d', strtotime('+7 days'));
         $end_dt = null;
 
-        $this->assert_date_range_fields_save_as_relation(new _DateRangeRelationForm(1), 200, $start_d, $end_d, $start_dt, $end_dt);
+        $this->assert_date_range_fields_save_as_relation(_DateRangeRelationForm::boot(1), 200, $start_d, $end_d, $start_dt, $end_dt);
     }
 
     /************* PRIVATE ***********************/

@@ -12,7 +12,7 @@ class BrowseFilterAuthorizationTest extends EnvironmentBoot
     {
         $this->expectException(AuthorizationException::class);
 
-        $this->withoutExceptionHandling()->browse(new _BrowseFilterUnauthorizedQuery());
+        $this->withoutExceptionHandling()->browse(_BrowseFilterUnauthorizedQuery::boot());
     }
 
     /** ------------------ PRIVATE --------------------------- */

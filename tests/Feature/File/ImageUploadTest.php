@@ -32,13 +32,13 @@ class ImageUploadTest extends FileEnvironmentBoot
         $image1 = $this->createImage(null, 2000, 200); //fail
         $image2 = $this->createImage(null, 2000, 50);  //pass
 
-        $r = $this->submit(new _ImageUploadForm(), [
+        $r = $this->submit(_ImageUploadForm::boot(), [
             'image' => $image1,
         ])->assertStatus(422);
 
         $this->assertCount(1, $r['errors']);
 
-        $r = $this->submit(new _ImageUploadForm(), [
+        $r = $this->submit(_ImageUploadForm::boot(), [
             'images' => [$image1, $image2],
         ])->assertStatus(422);
 
@@ -52,7 +52,7 @@ class ImageUploadTest extends FileEnvironmentBoot
         $image = $this->createImage(null, $w0);
         $this->assertEquals($w0, Image::make($image)->width());
 
-        $this->submit(new _ImageUploadForm(), [
+        $this->submit(_ImageUploadForm::boot(), [
             $column => $image,
         ])->assertStatus(201)
         ->assertJson([
@@ -76,7 +76,7 @@ class ImageUploadTest extends FileEnvironmentBoot
         //To test deletion
         $image2 = $this->createImage(null, $w0);
 
-        $this->submit(new _ImageUploadForm(1), [
+        $this->submit(_ImageUploadForm::boot(1), [
             $column => $image2,
         ])->assertStatus(200)
         ->assertJson([

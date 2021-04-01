@@ -25,7 +25,6 @@ trait SubmitFormActions
 
         return $this->prepareAction('submitForm', [
             'kompoMethod'           => $methodName ? KompoTarget::getEncrypted($methodName) : null,
-            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
         ]);
     }
 }
