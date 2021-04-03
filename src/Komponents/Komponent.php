@@ -24,15 +24,26 @@ abstract class Komponent extends Element
     public $label;
 
     /**
+     * A second label for when the Komponent has dual states.
+     *
+     * @var string
+     */
+    public $label2;
+
+    /**
      * Constructs a Kompo\Komponent object.
      *
      * @param string $label
      *
      * @return void
      */
-    public function __construct($label = '')
+    public function __construct($label = '', $label2 = null)
     {
         $this->vlInitialize($label);
+
+        if ($label2) {
+            $this->setLabel2($label2);
+        }
     }
 
     /**
@@ -47,6 +58,11 @@ abstract class Komponent extends Element
         KompoId::setForKomponent($this, $label);
 
         $this->label = is_null($label) ? '' : __($label);
+    }
+
+    protected function setLabel2($label2 = null)
+    {
+        $this->label2 = is_null($label2) ? '' : __($label2);
     }
 
     /**

@@ -41,4 +41,20 @@ trait MultiSelectTrait
     {
         return $this->optionsKey ?: ($value instanceof Collection ? $value[0]->getKeyName() : null);
     }
+
+    
+
+    /**
+     * TODO: document. Activates ability to check/uncheck all options.
+     *
+     * @param Komponent/String/Boolean $trigger
+     *
+     * @return self
+     */
+    public function withCheckAll($trigger)
+    {
+        return $this->config([
+            'checkAllActivated' => $trigger,
+        ]);
+    }
 }
