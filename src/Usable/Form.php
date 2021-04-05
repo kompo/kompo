@@ -90,6 +90,13 @@ abstract class Form extends Komposer
     public $model;
 
     /**
+     * Checks if the model exists in DB <=> if Form is doing an INSERT/UPDATE operation.
+     *
+     * @var bool
+     */
+    public $modelExists = false;
+
+    /**
      * Stores the form komponents.
      *
      * @var array

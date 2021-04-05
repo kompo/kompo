@@ -20,7 +20,7 @@ class FormBooter
         
         $form->parameter($bootInfo['parameters']);
 
-        $form->model($form->model);
+        static::setModel($form, $form->model);
 
         KompoId::setForKomposer($form, $bootInfo);
 
@@ -39,7 +39,7 @@ class FormBooter
 
         $form->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
-        $form->model($form->model);
+        static::setModel($form, $form->model);
 
         AuthorizationGuard::checkBoot($form);
 
@@ -51,23 +51,25 @@ class FormBooter
     }
 
     /**
-     * Initialize or find the model (if komposer linked to a model).
+     * Initialize or find the model (if form linked to a model).
      *
-     * @param Kompo\Komposer\Komposer                 $komposer
+     * @param Kompo\Form                 $form
      * @param Illuminate\Database\Eloquent\Model|null $model
      *
      * @return void
      */
-    public static function setModel($komposer, $model = null)
+    public static function setModel($form, $model = null)
     {
         if (is_null($model)) {
             return;
         }
 
-        $komposer->model = $model instanceof Model ? $model : $model::findOrNew($komposer->modelKey());
-        $komposer->modelKey($komposer->model()->getKey()); //set if it wasn't (ex: dynamic model set in created() phase)
+        $form->model = $model instanceof Model ? $model : $model::findOrNew($form->modelKey());
+        $form->modelKey($form->model()->getKey()); //set if it wasn't (ex: dynamic model set in created() phase)
 
-        return $komposer->model;
+        $form->modelExists = $form->model->exists;
+
+        return $form->model;
     }
 
     /**
