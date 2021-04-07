@@ -21,10 +21,15 @@ class QueryFilters
      *
      * @return void
      */
-    public static function prepareFiltersForDisplay($query)
+    public static function prepareFiltersForDisplay($query, $suffix = '')
     {
         foreach (static::$filtersPlacement as $placement) {
-            $query->filters[$placement] = KomposerManager::prepareKomponentsForDisplay($query, $placement, true); //fields are also pushed to query
+            
+            $methodName = $placement.$suffix;
+
+            if (method_exists($query, $methodName)) {
+                $query->filters[$placement] = KomposerManager::prepareKomponentsForDisplay($query, $placement.$suffix, true); //fields are also pushed to query
+            }            
         }
     }
 

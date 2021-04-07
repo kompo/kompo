@@ -38,6 +38,8 @@ class QueryDisplayer
 
         CardGenerator::getTransformedCards($query);
 
+        QueryFilters::prepareFiltersForDisplay($query, 'OnLoad');
+
         return $query;
     }
 
