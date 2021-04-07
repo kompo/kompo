@@ -141,8 +141,9 @@ abstract class Form extends Komposer
         $this->store($store);
         $this->modelKey($modelKey);
 
-        if(KompoServiceProvider::$bootFlag)
+        if (app('bootFlag')) {
             $this->boot();
+        }
     }
 
     /**

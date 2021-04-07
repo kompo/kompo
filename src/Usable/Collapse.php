@@ -2,15 +2,10 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\HasHref;
-use Kompo\Komponents\Traits\HasSubmenu;
-use Kompo\Komponents\Trigger;
+use Kompo\Komponents\TriggerWithSubmenu;
 
-class Collapse extends Trigger
+class Collapse extends TriggerWithSubmenu
 {
-    use HasHref;
-    use HasSubmenu;
-
     public $vueComponent = 'Collapse';
     public $bladeComponent = 'Collapse';
 }

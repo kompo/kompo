@@ -36,10 +36,11 @@ class CardGenerator
 
     protected static function getCardDefaultFallback($item, $key, $komposer)
     {
-        \Kompo\KompoServiceProvider::$bootFlag = true;
-        $card = method_exists($komposer, 'card') ? $komposer->card($item, $key) : [];
-        \Kompo\KompoServiceProvider::$bootFlag = false;
+        $shouldActivateBootFlag = !app('bootFlag'); //because a query's card in a parent card would deactivate it for next one
 
+        $shouldActivateBootFlag && app()->instance('bootFlag', true);
+        $card = method_exists($komposer, 'card') ? $komposer->card($item, $key) : [];
+        $shouldActivateBootFlag && app()->instance('bootFlag', false);
 
         if (is_array($card)) {
             $defaultCard = $komposer->card ?: Card::class;

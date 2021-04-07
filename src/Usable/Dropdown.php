@@ -2,15 +2,10 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\HasHref;
-use Kompo\Komponents\Traits\HasSubmenu;
-use Kompo\Komponents\Trigger;
+use Kompo\Komponents\TriggerWithSubmenu;
 
-class Dropdown extends Trigger
+class Dropdown extends TriggerWithSubmenu
 {
-    use HasHref;
-    use HasSubmenu;
-
     public $vueComponent = 'Dropdown';
     public $bladeComponent = 'Dropdown';
 

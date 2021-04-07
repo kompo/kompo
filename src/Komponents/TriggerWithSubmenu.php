@@ -1,11 +1,14 @@
 <?php
 
-namespace Kompo\Komponents\Traits;
+namespace Kompo\Komponents;
 
+use Kompo\Komponents\Traits\HasHref;
 use Kompo\Komponents\Managers\LayoutManager;
 
-trait HasSubmenu
+abstract class TriggerWithSubmenu extends Trigger
 {
+    use HasHref;
+
     /**
      * Stores the child komponents from the submenu.
      *
@@ -44,9 +47,6 @@ trait HasSubmenu
             
         });
     }
-
-
-
 
     protected function prepareMenu($args)
     {

@@ -2,13 +2,10 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\HasSubmenu;
-use Kompo\Komponents\Trigger;
+use Kompo\Komponents\TriggerWithSubmenu;
 
-class CollapseOnMobile extends Trigger
+class CollapseOnMobile extends TriggerWithSubmenu
 {
-    use HasSubmenu;
-
     public $bladeComponent = 'CollapseOnMobile';
 
     public $leftMenu = [];

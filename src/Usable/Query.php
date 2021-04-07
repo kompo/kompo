@@ -128,8 +128,9 @@ abstract class Query extends Komposer
         
         $this->store($store);
 
-        if(KompoServiceProvider::$bootFlag)
+        if (app('bootFlag')) {
             $this->boot();
+        }
     }
 
     /**
