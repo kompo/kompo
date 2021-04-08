@@ -7,8 +7,8 @@ use Kompo\Komponents\Traits\HasSelectedClass;
 
 class SelectLinks extends Select
 {
-    use HasGutters,
-        HasSelectedClass;
+    use HasGutters;
+    use HasSelectedClass;
 
     public $vueComponent = 'SelectButtons';
 

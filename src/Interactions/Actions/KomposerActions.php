@@ -11,7 +11,7 @@ trait KomposerActions
      * If the argument is left blank, the Komposer will refresh itself. To target another Komposer, add a string or array of target Komposer ids.
      *
      * @param null|string|array $komposerIds The id of the Komposer(s). Keep blank if targeting self.
-     * @param array|null $payload Additional custom data to add to the request (optional).
+     * @param array|null        $payload     Additional custom data to add to the request (optional).
      *
      * @return self
      */

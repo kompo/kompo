@@ -33,7 +33,7 @@ class Select extends Field
     protected function vlInitialize($label)
     {
         parent::vlInitialize($label);
-        
+
         $this->noResultsMessage(self::NO_OPTIONS_FOUND);
     }
 
@@ -41,7 +41,7 @@ class Select extends Field
     public function noResultsMessage($message)
     {
         return $this->config([
-            'noOptionsFound' => __($message)
+            'noOptionsFound' => __($message),
         ]);
     }
 

@@ -184,7 +184,7 @@ abstract class Form extends Komposer
     public function prepareForDisplay($komposer)
     {
         parent::prepareForDisplay($komposer);
-        
+
         ValidationManager::addRulesToKomposer($this->config('rules'), $komposer);
     }
 

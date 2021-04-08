@@ -212,7 +212,7 @@ class KompoLayout
     }
 
     public function getKomponentsArray($key)
-    {        
+    {
         return [
             'kompoid'    => KompoId::getFromElement($this->{$key}),
             'kompoinfo'  => KompoInfo::getFromElement($this->{$key}),

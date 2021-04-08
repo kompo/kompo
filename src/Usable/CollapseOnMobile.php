@@ -17,7 +17,7 @@ class CollapseOnMobile extends TriggerWithSubmenu
      * <php>CollapseOnMobile::leftMenu(
      * Link::form('Link 1'),
      * Link::form('Link 2')
-     * )</php>
+     * )</php>.
      *
      * @param array|args $args The komponents list. Can be written as an array or a list of method arguments.
      *
@@ -35,7 +35,7 @@ class CollapseOnMobile extends TriggerWithSubmenu
      * <php>CollapseOnMobile::rightMenu(
      * Link::form('Link 1'),
      * Link::form('Link 2')
-     * )</php>
+     * )</php>.
      *
      * @param array|args $args The komponents list. Can be written as an array or a list of method arguments.
      *

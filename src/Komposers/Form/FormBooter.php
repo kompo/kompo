@@ -17,7 +17,7 @@ class FormBooter
         $formClass = $bootInfo['kompoClass'];
 
         $form = new $formClass($bootInfo['modelKey'], $bootInfo['store']);
-        
+
         $form->parameter($bootInfo['parameters']);
 
         static::setModel($form, $form->model);
@@ -53,7 +53,7 @@ class FormBooter
     /**
      * Initialize or find the model (if form linked to a model).
      *
-     * @param Kompo\Form                 $form
+     * @param Kompo\Form                              $form
      * @param Illuminate\Database\Eloquent\Model|null $model
      *
      * @return void

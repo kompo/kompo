@@ -125,7 +125,7 @@ abstract class Query extends Komposer
     public function __construct(?array $store = [])
     {
         parent::__construct();
-        
+
         $this->store($store);
 
         if (app('bootFlag')) {

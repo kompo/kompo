@@ -134,7 +134,7 @@ abstract class Field extends Komponent
      */
     public function placeholder($placeholder)
     {
-        $this->placeholder = is_array($placeholder) ? collect($placeholder)->map(fn($p) => __($p)) : __($placeholder);
+        $this->placeholder = is_array($placeholder) ? collect($placeholder)->map(fn ($p) => __($p)) : __($placeholder);
 
         return $this;
     }

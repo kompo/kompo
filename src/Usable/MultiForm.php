@@ -48,8 +48,9 @@ class MultiForm extends Field
 
         $modelKey = $model ? $model->getKey() : null;
         $childForm = new $formClass($modelKey, $this->childStore);
-        if($model)
-            $childForm->model($model); //set the model
+        if ($model) {
+            $childForm->model($model);
+        } //set the model
         $childForm->boot();
 
         $childForm->{static::$multiFormKey} = $modelKey;
