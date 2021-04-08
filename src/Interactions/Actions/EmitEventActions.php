@@ -40,7 +40,7 @@ trait EmitEventActions
 
     /**
      * Closes a modal.
-     * //TODO DOCUMENT
+     * //TODO DOCUMENT.
      *
      * @return self
      */
@@ -51,7 +51,7 @@ trait EmitEventActions
 
     /**
      * Closes a panel.
-     * //TODO DOCUMENT
+     * //TODO DOCUMENT.
      *
      * @return self
      */
@@ -62,7 +62,7 @@ trait EmitEventActions
 
     /**
      * Confirms a modal dialog.
-     * //TODO DOCUMENT
+     * //TODO DOCUMENT.
      *
      * @return self
      */

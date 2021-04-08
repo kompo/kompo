@@ -7,7 +7,6 @@ use Kompo\Core\Util;
 
 trait MultiSelectTrait
 {
-    
     /**
      * Adds a cast to array to the attribute if no cast is present.
      *
@@ -41,8 +40,6 @@ trait MultiSelectTrait
     {
         return $this->optionsKey ?: ($value instanceof Collection ? $value[0]->getKeyName() : null);
     }
-
-    
 
     /**
      * TODO: document. Activates ability to check/uncheck all options.

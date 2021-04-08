@@ -24,12 +24,11 @@ class QueryFilters
     public static function prepareFiltersForDisplay($query, $suffix = '')
     {
         foreach (static::$filtersPlacement as $placement) {
-            
             $methodName = $placement.$suffix;
 
             if (method_exists($query, $methodName)) {
                 $query->filters[$placement] = KomposerManager::prepareKomponentsForDisplay($query, $placement.$suffix, true); //fields are also pushed to query
-            }            
+            }
         }
     }
 

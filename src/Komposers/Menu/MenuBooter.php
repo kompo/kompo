@@ -29,7 +29,7 @@ class MenuBooter
     public static function bootForDisplay($menuClass, array $store = [], $routeParams = null)
     {
         $menu = $menuClass instanceof Menu ? $menuClass : new $menuClass($store);
-        
+
         $menu->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
         AuthorizationGuard::checkBoot($menu);

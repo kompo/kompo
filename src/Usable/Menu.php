@@ -40,7 +40,7 @@ abstract class Menu extends Komposer
     public function __construct(?array $store = [])
     {
         parent::__construct();
-        
+
         $this->store($store);
 
         $this->boot(); //Menus boot on instantiation by default, since they cannot be called from Route::get()

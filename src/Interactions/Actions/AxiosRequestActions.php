@@ -32,9 +32,9 @@ trait AxiosRequestActions
      * <php>->getKomponents('newKomponentsMethod')->inPanel('panel-id')</php>.
      *
      *
-     * @param string     $methodName  The class's method name that will return the new komponents.
-     * @param array|null $ajaxPayload Additional custom data to add to the request (optional).
-     * @param boolean|null $withAllFormValues Posts ALL the form fields values along with the payload.
+     * @param string     $methodName        The class's method name that will return the new komponents.
+     * @param array|null $ajaxPayload       Additional custom data to add to the request (optional).
+     * @param bool|null  $withAllFormValues Posts ALL the form fields values along with the payload.
      *
      * @return self
      */

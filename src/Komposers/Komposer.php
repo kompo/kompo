@@ -161,7 +161,6 @@ abstract class Komposer extends Element
         return ($this->metaTags && count($this->metaTags)) ? $this->metaTags : null;
     }
 
-
     /**
      * Shortcut method to render a Komposer into it's Vue component.
      *

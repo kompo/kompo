@@ -8,7 +8,7 @@ use Kompo\Komponents\Traits\HasSelectedClass;
 class HtmlField extends Field
 {
     use HasSelectedClass;
-    
+
     public $vueComponent = 'HtmlField';
 
     //TODO DOCUMENT

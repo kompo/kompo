@@ -2,8 +2,8 @@
 
 namespace Kompo\Komponents;
 
-use Kompo\Komponents\Traits\HasHref;
 use Kompo\Komponents\Managers\LayoutManager;
+use Kompo\Komponents\Traits\HasHref;
 
 abstract class TriggerWithSubmenu extends Trigger
 {
@@ -24,11 +24,9 @@ abstract class TriggerWithSubmenu extends Trigger
     public function prepareForDisplay($komposer)
     {
         collect($this->komponents)->each(function ($komponent) use ($komposer) {
-
             $komponent->prepareForDisplay($komposer);
 
             $komponent->mountedHook($komposer);
-
         });
     }
 
@@ -40,11 +38,9 @@ abstract class TriggerWithSubmenu extends Trigger
     public function prepareForAction($komposer)
     {
         collect($this->komponents)->each(function ($komponent) use ($komposer) {
-
             $komponent->prepareForAction($komposer);
 
             $komponent->mountedHook($komposer);
-            
         });
     }
 
