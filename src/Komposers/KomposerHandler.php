@@ -17,6 +17,8 @@ class KomposerHandler
 {
     public static function performAction($komposer)
     {
+        app()->instance('bootFlag', true);
+
         switch (KompoAction::header()) {
             case 'eloquent-submit':
                 return FormSubmitter::eloquentSave($komposer);
