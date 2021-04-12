@@ -12,6 +12,10 @@ class LocaleController
 
         \Cookie::queue('locale', $locale);
 
+        if (auth()->user() && method_exists(auth()->user(), 'setLocalePreference')) {
+        	auth()->user()->setLocalePreference($locale);
+        }
+
         return redirect()->back();
     }
 }
