@@ -27,4 +27,12 @@ class Translatable extends Textarea
             return [$locale => $model->getTranslation($this->name, $locale, false)];
         })->all();
     }
+
+    //TODO document
+    public function asTextarea()
+    {
+        return $this->config([
+            'asTextarea' => true,
+        ]);
+    }
 }
