@@ -101,9 +101,10 @@ class Dispatcher
         $responses = [];
 
         foreach (request()->all() as $sub) {
+            
             $subrequest = clone request();
 
-            $subrequest->replace($sub['data'] ?? []);
+            $subrequest->replace(static::parseArrayParametersInRequest($sub['data'] ?? []));
 
             $subrequest->headers->set(KompoInfo::$key, $sub['kompoinfo']);
             $subrequest->headers->set(KompoAction::$key, $baseAction);
@@ -131,5 +132,15 @@ class Dispatcher
         }
 
         throw new NotBootableFromRouteException($komposerClass);
+    }
+
+    protected static function parseArrayParametersInRequest($initialRequestData)
+    {
+        $parsedArrayParameters = [];
+        parse_str(http_build_query($initialRequestData), $parsedArrayParameters);
+
+        return collect(array_merge($initialRequestData, $parsedArrayParameters))->filter(
+            fn($v, $key) => strpos($key, '[') === false
+        )->all();
     }
 }

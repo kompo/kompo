@@ -1,6 +1,6 @@
 [submodule "assets"]
 	path = assets
 	url = git@github.com:kompo/vue-kompo.git
-[submodule "kompo-vue3"]
-	path = kompo-vue3
-	url = git@github.com:kompo/kompo-vue3.git
+[submodule "react"]
+	path = react
+	url = git@github.com:kompo/react
