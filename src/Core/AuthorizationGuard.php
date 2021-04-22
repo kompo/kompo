@@ -11,7 +11,7 @@ use ReflectionClass;
 
 class AuthorizationGuard
 {
-    public static function checkBoot($komposer)
+    public static function checkBoot($komposer, $stage)
     {
         if (!$komposer->authorizeBoot()) {
             return static::throwUnauthorizedException($komposer, 'boot');
@@ -21,7 +21,7 @@ class AuthorizationGuard
             static::checkPreventSubmit($komposer);
         }
 
-        KomposerManager::created($komposer);
+        KomposerManager::created($komposer, $stage);
     }
 
     public static function mainGate($komposer, $stage = null)

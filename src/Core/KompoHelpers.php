@@ -242,6 +242,13 @@ if (!function_exists('_EditableTextarea')) {
     }
 }
 
+if (!function_exists('_ErrorField')) {
+    function _ErrorField($label = ''): \Kompo\ErrorField
+    {
+        return Kompo\ErrorField::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_File')) {
     function _File($label = ''): \Kompo\File
     {

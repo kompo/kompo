@@ -24,7 +24,7 @@ class QueryBooter
 
         $query->currentPage(request()->header('X-Kompo-Page'));
 
-        AuthorizationGuard::checkBoot($query);
+        AuthorizationGuard::checkBoot($query, 'Action');
 
         QueryDisplayer::prepareQuery($query); //setting-up model (like in forms) mainly for 'delete-item' action.
 
@@ -41,7 +41,7 @@ class QueryBooter
 
         $query->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
-        AuthorizationGuard::checkBoot($query);
+        AuthorizationGuard::checkBoot($query, 'Display');
 
         ValidationManager::addRulesToKomposer($query->rules(), $query); //for Front-end validations TODO:
 

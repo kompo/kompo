@@ -21,7 +21,7 @@ class MenuBooter
 
         KompoId::setForKomposer($menu, $bootInfo);
 
-        AuthorizationGuard::checkBoot($menu);
+        AuthorizationGuard::checkBoot($menu, 'Action');
 
         return $menu;
     }
@@ -32,7 +32,7 @@ class MenuBooter
 
         $menu->parameter($routeParams ?: RouteFinder::getRouteParameters());
 
-        AuthorizationGuard::checkBoot($menu);
+        AuthorizationGuard::checkBoot($menu, 'Display');
 
         $menu->komponents = KomposerManager::prepareKomponentsForDisplay($menu, 'komponents', true);
 

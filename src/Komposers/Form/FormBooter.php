@@ -24,7 +24,7 @@ class FormBooter
 
         KompoId::setForKomposer($form, $bootInfo);
 
-        AuthorizationGuard::checkBoot($form);
+        AuthorizationGuard::checkBoot($form, 'Action');
 
         ValidationManager::addRulesToKomposer($form->rules(), $form);
 
@@ -41,7 +41,7 @@ class FormBooter
 
         static::setModel($form, $form->model);
 
-        AuthorizationGuard::checkBoot($form);
+        AuthorizationGuard::checkBoot($form, 'Display');
 
         FormDisplayer::displayKomponents($form);
 

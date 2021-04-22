@@ -15,7 +15,7 @@ class KomposerManager
      *
      * @return Komposer
      */
-    public static function created($komposer)
+    public static function created($komposer, $stage)
     {
         if (config('kompo.auto_classes_for_komposers') && !$komposer->class()) {
             $komposer->class(class_basename($komposer));
@@ -23,6 +23,10 @@ class KomposerManager
 
         if (method_exists($komposer, 'created')) {
             $komposer->created();
+        }
+
+        if (method_exists($komposer, $methodName = ('created'.$stage) )) {
+            $komposer->{$methodName}();
         }
 
         static::preparePusherForFront($komposer);

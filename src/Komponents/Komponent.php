@@ -86,6 +86,17 @@ abstract class Komponent extends Element
         }
     }
 
+
+    /* TODO DOCUMENT 
+     * currently used for disabling a Select option (make it unselectable)
+     */
+    public function disabled()
+    {
+        return $this->config([
+            'disabled' => true,
+        ]);
+    }
+
     /**
      * Overwrite the initially set label.
      *
