@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use ReflectionFunctionAbstract;
 use ReflectionMethod;
 use ReflectionParameter;
+use ReflectionClass;
 
 class DependencyResolver
 {
