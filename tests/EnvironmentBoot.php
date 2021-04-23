@@ -3,6 +3,7 @@
 namespace Kompo\Tests;
 
 use Illuminate\Database\Eloquent\Factory;
+use Kompo\KompoServiceProvider;
 use Kompo\Routing\Mixins\ExtendsRoutingTrait;
 use Kompo\Tests\Models\User;
 use Orchestra\Testbench\TestCase;
@@ -28,9 +29,9 @@ class EnvironmentBoot extends TestCase
             require_once $file;
         }
 
-        if (file_exists($file = __DIR__.'/../src/Core/KompoHelpers.php')) {
-            require_once $file;
-        }
+        KompoServiceProvider::registerHelpers();
+
+        KompoServiceProvider::initializeBootFlag();
 
         $this->extendRouting();
         $this->loadRoutes();

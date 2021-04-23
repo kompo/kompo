@@ -108,11 +108,13 @@ class Place extends Field
 
     public function getValueFromModel($model, $name)
     {
-        return !$this->attributesToColumns ?
+        if (!$this->attributesToColumns) {
+            return ModelManager::getValueFromDb($model, $name);
+        }
 
-            ModelManager::getValueFromDb($model, $name) :
+        $value = collect(static::$allKeys)->map(fn ($key) => $model->{$key});
 
-            collect(static::$allKeys)->map(fn ($key) => $model->{$key})->all();
+        return $value->filter()->count() ? $value->all() : null;
     }
 
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)

@@ -50,10 +50,14 @@ class ModelManager
             if ($relation instanceof MorphTo) {
                 $model->{$relation->getMorphType()} = $value ? $morphToModel : null;
             }
-
             $model->{$relation->getForeignKeyName()} = $value;
-            static::fillExtraAttributes($model->{$name}, $extraAttributes, true);
+
             $model->load($name); //reload fresh belongsTo
+
+            static::fillExtraAttributes($model->{$name}, $extraAttributes, true);
+
+            $model->load($name); //reload fresh belongsTo
+
         } else {
             $model->{$name} = $value;
             static::fillExtraAttributes($model, $extraAttributes);

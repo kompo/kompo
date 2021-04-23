@@ -11,11 +11,6 @@ class KompoServiceProvider extends ServiceProvider
 {
     use ExtendsRoutingTrait;
 
-    protected $helpers = [
-        '/../Core/KompoHelpers.php',
-        '/../Core/HelperUtils.php',
-    ];
-
     /**
      * Bootstrap services.
      *
@@ -33,11 +28,7 @@ class KompoServiceProvider extends ServiceProvider
 
         $this->extendRouting();
 
-        collect($this->helpers)->each(function ($path) {
-            if (file_exists($file = __DIR__.$path)) {
-                require_once $file;
-            }
-        });
+        static::registerHelpers();
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -54,10 +45,6 @@ class KompoServiceProvider extends ServiceProvider
             $kernel->appendMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);
             //app('router')->pushMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);
         }
-
-        /** @var Router $router */
-        /*$router = $this->app['router'];
-        $router->pushMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);*/
     }
 
     /**
@@ -67,7 +54,24 @@ class KompoServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        static::initializeBootFlag();
+    }
+
+    public static function initializeBootFlag()
+    {
         //When active, komposers are booted on instantiation.
-        app()->instance('bootFlag', false);
+        app()->instance('bootFlag', false);        
+    }
+
+    public static function registerHelpers()
+    {
+        collect([
+            '/../Core/KompoHelpers.php',
+            '/../Core/HelperUtils.php',
+        ])->each(function ($path) {
+            if (file_exists($file = __DIR__.$path)) {
+                require_once $file;
+            }
+        });
     }
 }
