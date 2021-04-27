@@ -7,7 +7,11 @@
         $Navbar ?? false,
         $LeftSidebar ?? false,
         $RightSidebar ?? false,
-        $Footer ?? false
+        $Footer ?? false,
+        [
+            'mainClass' => $mainClass ?? '',
+            'mainStyle' => $mainStyle ?? '',
+        ]
     );
 
     $savedCloseTag = $_kompo->wrapperCloseTag(); //cuz by the time it gets there, things change

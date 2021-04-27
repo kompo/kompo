@@ -16,7 +16,10 @@ class KompoLayout
     protected $hasAnyFixedMenus = false;
     protected $overFlowSet = false;
 
-    public function __construct($n, $l, $r, $f)
+    protected $mainClass;
+    protected $mainStyle;
+
+    public function __construct($n, $l, $r, $f, $options = [])
     {
         $this->setMenu($n, 'navbar', 'vl-nav', 'vl-nav');
         $this->setMenu($l, 'lsidebar', 'vl-sidebar-l', 'vl-aside', true);
@@ -24,6 +27,10 @@ class KompoLayout
         $this->setMenu($f, 'footer', 'vl-footer', 'vl-footer');
 
         $this->hasAnyFixedMenus = count($this->isFixed) > 0;
+
+        collect($options)->each(function($option, $key){
+            $this->{$key} = $option;
+        });
     }
 
     protected function setMenu($menu, $key, $menuClass, $menuTag, $menuCollapse = false)
@@ -83,7 +90,7 @@ class KompoLayout
             'kompoFlexCol' :
             ($pm ? 'kompoFlex' : 'vlFlex1');
 
-        $tag = $pm ? '<div' : '<main';
+        $tag = $pm ? '<div' : $this->getMainOpenTag();
 
         $tag .= $appId ? ' id="'.$appId.'" v-cloak' : '';
 
@@ -270,5 +277,14 @@ class KompoLayout
     protected function isSidebar($menu)
     {
         return strpos($menu->config('menuClass'), 'sidebar') > -1;
+    }
+
+    protected function getMainOpenTag()
+    {
+        return '<main'.(
+            $this->mainClass ? (' class="'.$this->mainClass.'"') : ''
+        ).(
+            $this->mainStyle ? (' style="'.$this->mainStyle.'"') : ''
+        );
     }
 }
