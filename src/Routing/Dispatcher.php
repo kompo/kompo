@@ -134,7 +134,7 @@ class Dispatcher
         throw new NotBootableFromRouteException($komposerClass);
     }
 
-    protected static function parseArrayParametersInRequest($initialRequestData)
+    public static function parseArrayParametersInRequest($initialRequestData)
     {
         $parsedArrayParameters = [];
         parse_str(http_build_query($initialRequestData), $parsedArrayParameters);

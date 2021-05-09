@@ -66,7 +66,7 @@ trait TriggerStyles
     }
 
     /**
-     * Assigns the secondary colors. To modify the color, you need to set the $secondary variable in sass.
+     * Assigns the secondary colors. To modify the color, you need to set the var(--secondary) variable in css.
      *
      * @return self
      */
