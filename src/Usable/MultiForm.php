@@ -9,6 +9,7 @@ use Kompo\Core\KompoTarget;
 use Kompo\Core\RequestData;
 use Kompo\Core\ValidationManager;
 use Kompo\Database\Lineage;
+use Kompo\Database\ModelManager;
 use Kompo\Exceptions\NoMultiFormClassException;
 use Kompo\Komponents\Field;
 use Kompo\Komponents\Traits\HasAddLabel;
@@ -32,12 +33,27 @@ class MultiForm extends Field
 
     protected static $multiFormKey = 'multiFormKey';
 
+    protected $relationScope;
+
     protected function vlInitialize($name)
     {
         parent::vlInitialize($name);
         $this->name = lcfirst(Str::camel($name));
 
         $this->addLabel('Add a new item');
+    }
+
+    public function getValueFromModel($model, $name)
+    {
+        return ModelManager::getValueFromDb($model, $name, $this->relationScope);
+    }
+
+    //TODO: document
+    public function where($callback)
+    {
+        $this->relationScope = $callback;
+
+        return $this;
     }
 
     protected function prepareChildForm($parentForm, $model = null)

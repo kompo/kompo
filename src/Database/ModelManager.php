@@ -20,12 +20,15 @@ class ModelManager
      *
      * @param Illuminate\Database\Eloquent\Model $model
      * @param string                             $name
+     * @param closure                            $relationScope
      *
      * @return mixed
      */
-    public static function getValueFromDb($model, $name)
+    public static function getValueFromDb($model, $name, $relationScope = null)
     {
-        $value = $model->{$name};
+        $value = $relationScope ? 
+            $value = $model->{$name}()->where($relationScope)->get(): //only for a special case of MultiForm
+            $model->{$name};
 
         if ($value instanceof Collection && $value->isEmpty()) {
             $value = null;
@@ -86,7 +89,7 @@ class ModelManager
      *
      * @return bool
      */
-    public static function saveOneToOneOrDelete($mainModel, $relation, $names)
+    public static function saveOneToOneOrDelete($mainModel, $relation, $names, $deleteOneToOneIfEmpty = false)
     {
         $nonEmptyAttributes = collect($names)->filter(
             fn ($name) => $mainModel->{$relation}->{$name}
@@ -97,7 +100,7 @@ class ModelManager
 
             $mainModel->{$relation}()->save($mainModel->{$relation});
         } else {
-            if ($mainModel->{$relation}->exists) {
+            if ($mainModel->{$relation}->exists && $deleteOneToOneIfEmpty) {
                 $mainModel->{$relation}->delete();
             }
         }

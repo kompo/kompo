@@ -155,8 +155,12 @@ class FormSubmitter extends FormBooter
         $oneToOneRelations = collect($oneToOneRelations)->groupBy('relation');
 
         foreach ($oneToOneRelations as $relation => $names) {
-            ModelManager::saveOneToOneOrDelete($komposer->model, $relation, $names->pluck('name'));
-            //$komposer->model->{$relation}()->save($komposer->model->{$relation});
+            ModelManager::saveOneToOneOrDelete(
+                $komposer->model, 
+                $relation, 
+                $names->pluck('name'),
+                property_exists($komposer, 'deleteOneToOneIfEmpty') && $komposer->deleteOneToOneIfEmpty,
+            );
         }
     }
 }
