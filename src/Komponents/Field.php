@@ -230,7 +230,7 @@ abstract class Field extends Komponent
     }
 
     /**
-     * Removes a specific field from the database interaction process.
+     * Autosaving for this field is disabled. Developers will have to write the logic themselves.
      *
      * @return self
      */

@@ -49,7 +49,7 @@ class MultiForm extends Field
     }
 
     //TODO: document
-    public function where($callback)
+    public function relationScope($callback)
     {
         $this->relationScope = $callback;
 
