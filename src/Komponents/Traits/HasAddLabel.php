@@ -2,21 +2,25 @@
 
 namespace Kompo\Komponents\Traits;
 
-use Kompo\Core\IconGenerator;
-
 trait HasAddLabel
 {
     /**
      * Specifies the label of the link that will load the form. Default is 'Add a new option'.
      *
-     * @param string      $label The add label text
-     * @param string|null $class The add label class
+     * @param string|Kompo\Komponents\Komponent  $labelOrKomponent The add label text or full komponent if you want to customize it
+     * @param string|null $icon The add label icon - DO NOT USE, will deprecate in v3
+     * @param string|null $class The add label class - DO NOT USE, will deprecate in v3
      */
-    public function addLabel(string $label, ?string $icon = 'icon-plus', string $class = '')
+    public function addLabel($labelOrKomponent, ?string $icon = 'icon-plus', ?string $class = '')
     {
+        $addingKomponent = is_string($labelOrKomponent) ? 
+                                
+                                _Link($labelOrKomponent)->icon($icon)->class($class) : 
+
+                                $labelOrKomponent;
+
         return $this->config([
-            'addLabel'      => IconGenerator::toHtml($icon).' '.__($label),
-            'addLabelClass' => $class,
+            'addLabel' => $addingKomponent->emitDirect('newitem')
         ]);
     }
 }

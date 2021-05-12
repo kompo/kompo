@@ -35,6 +35,8 @@ class MultiForm extends Field
 
     protected $relationScope;
 
+    protected $preloadIfEmpty = false;
+
     protected function vlInitialize($name)
     {
         parent::vlInitialize($name);
@@ -71,20 +73,23 @@ class MultiForm extends Field
 
         $childForm->{static::$multiFormKey} = $modelKey;
 
-        //Pass rules upstream
-        ValidationManager::addRulesToKomposer(
-            collect(ValidationManager::getRules($childForm))->flatMap(function ($v, $k) {
-                return [($this->name.'.*.'.$k) => $v];
-            })->all(),
-            $parentForm
-        );
-
         return $childForm;
     }
 
     public function mounted($parentForm)
     {
-        $this->komponents = !$this->value ? [$this->prepareChildForm($parentForm)] :
+        //Pass rules upstream
+        ValidationManager::addRulesToKomposer(
+            collect(ValidationManager::getRules($this->prepareChildForm($parentForm)))
+                ->flatMap(function ($v, $k) {
+                    return [($this->name.'.*.'.$k) => $v];
+                })->all(),
+            $parentForm
+        );
+
+        $this->komponents = !$this->value ? 
+
+            ($this->preloadIfEmpty ? [$this->prepareChildForm($parentForm)] : []) :
 
             $this->value->map(function ($item) use ($parentForm) {
                 return $this->prepareChildForm($parentForm, $item);
@@ -164,6 +169,13 @@ class MultiForm extends Field
         return $this->config([
             'acceptNullRelations' => true,
         ]);
+    }
+
+    public function preloadIfEmpty()
+    {
+        $this->preloadIfEmpty = true;
+
+        return $this;
     }
 
     protected function isNotAdding()

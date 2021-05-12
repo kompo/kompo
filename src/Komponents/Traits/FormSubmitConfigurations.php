@@ -35,4 +35,12 @@ trait FormSubmitConfigurations
             'getFreshForm' => true,
         ]);
     }
+
+    //TODO document
+    public function resetAfterChange()
+    {
+        return $this->config([
+            'resetAfterChange' => true,
+        ]);
+    }
 }
