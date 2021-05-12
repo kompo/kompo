@@ -15,4 +15,20 @@ class Rows extends Layout
 
     public $vueComponent = 'Rows';
     public $bladeComponent = 'Rows';
+
+    public function mounted()
+    {
+    	//Temporary hack, but the idea is very interesting... Explore further (used in BanksUnitsView)
+    	if ($icon = $this->config('icon')) {
+
+    		$this->vueComponent = 'Flex';
+
+    		$this->komponents = [
+    			_Html($icon),
+    			_Rows(
+    				$this->komponents
+    			)
+    		];
+    	}
+    }
 }
