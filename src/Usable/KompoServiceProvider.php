@@ -36,6 +36,7 @@ class KompoServiceProvider extends ServiceProvider
                 Commands\MakeQuery::class,
                 Commands\MakeTable::class,
                 Commands\MakeMenu::class,
+                Commands\PullCode::class,
             ]);
         }
 
@@ -66,11 +67,12 @@ class KompoServiceProvider extends ServiceProvider
     public static function registerHelpers()
     {
         collect([
-            '/../Core/KompoHelpers.php',
-            '/../Core/HelperUtils.php',
+            __DIR__.'/../Core/KompoHelpers.php',
+            __DIR__.'/../Core/HelperUtils.php',
+            app_path('Kompo/komponents.php'),
         ])->each(function ($path) {
-            if (file_exists($file = __DIR__.$path)) {
-                require_once $file;
+            if (file_exists($path)) {
+                require_once $path;
             }
         });
     }

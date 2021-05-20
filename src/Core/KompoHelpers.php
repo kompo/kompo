@@ -17,14 +17,6 @@ if (!function_exists('assetThumb')) {
 }
 
 /* Kompo helpers */
-
-if (!function_exists('_Query')) {
-    function _Query(): \Kompo\Query
-    {
-        return Kompo\Query::form(...func_get_args());
-    }
-}
-
 if (!function_exists('_Card')) {
     function _Card(): \Kompo\Card
     {
@@ -99,20 +91,6 @@ if (!function_exists('_EditLink')) {
     function _EditLink($label = ''): \Kompo\EditLink
     {
         return Kompo\EditLink::form(...func_get_args());
-    }
-}
-
-if (!function_exists('_Form')) {
-    function _Form($label = ''): \Kompo\Form
-    {
-        return Kompo\Form::form(...func_get_args());
-    }
-}
-
-if (!function_exists('_View')) {
-    function _View($label = ''): \Kompo\View
-    {
-        return Kompo\View::form(...func_get_args());
     }
 }
 
@@ -606,13 +584,6 @@ if (!function_exists('_Svg')) {
     }
 }
 
-if (!function_exists('_Table')) {
-    function _Table(): \Kompo\Table
-    {
-        return Kompo\Table::form(...func_get_args());
-    }
-}
-
 if (!function_exists('_Tab')) {
     function _Tab(): \Kompo\Tab
     {
@@ -694,13 +665,6 @@ if (!function_exists('_Trix')) {
     function _Trix($label = ''): \Kompo\Trix
     {
         return Kompo\Trix::form(...func_get_args());
-    }
-}
-
-if (!function_exists('_Menu')) {
-    function _Menu($label = ''): \Kompo\Menu
-    {
-        return Kompo\Menu::form(...func_get_args());
     }
 }
 

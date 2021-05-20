@@ -64,7 +64,9 @@ class FormBooter
             return;
         }
 
-        $form->model = $model instanceof Model ? $model : $model::findOrNew($form->modelKey());
+        $form->model = $model instanceof Model ? $model : (
+            $form->modelKey() ? $model::findOrNew($form->modelKey()) : new $model
+        );
         $form->modelKey($form->model()->getKey()); //set if it wasn't (ex: dynamic model set in created() phase)
 
         $form->modelExists = $form->model->exists;
