@@ -69,6 +69,20 @@ class CollectionQuery extends QueryOperations
         return new LengthAwarePaginator($slice, $this->query->count(), $this->komposer->perPage, $this->komposer->currentPage());
     }
 
+    public function handleSort($sort)
+    {
+        $reversedArray = array_reverse(explode('|', $sort));
+        
+        foreach ($reversedArray as $colDir) {
+
+            $colDir = explode(':', $colDir);
+
+            $this->query = (count($colDir) == 2 && $colDir[1] == 'DESC' )? 
+                $this->query->sortByDesc($colDir[0]) : 
+                $this->query->sortBy($colDir[0]);
+        }
+    }
+
     /******************************************
     ******* PROTECTED COMPARISONS *************
     ******************************************/
