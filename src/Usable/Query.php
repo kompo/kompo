@@ -109,7 +109,7 @@ abstract class Query extends Komposer
     public $perPage = 15;
 
     /**
-     * The model's namespace used for filters display.
+     * The model's namespace used for filters during display phase.
      *
      * @var string
      */

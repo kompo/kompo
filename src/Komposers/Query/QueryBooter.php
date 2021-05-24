@@ -32,7 +32,7 @@ class QueryBooter
 
         QueryFilters::prepareFiltersForAction($query);
 
-        return $query;
+        return static::cleanUp($query);
     }
 
     public static function bootForDisplay($queryClass, array $store = [], $routeParams = null)
@@ -52,6 +52,14 @@ class QueryBooter
         KompoInfo::saveKomposer($query);
 
         KomposerManager::booted($query);
+
+        return static::cleanUp($query);
+    }
+
+    protected static function cleanUp($query)
+    {
+        //not needed after filters display, can cause errors if model has an appends attribute
+        unset($query->model);
 
         return $query;
     }
