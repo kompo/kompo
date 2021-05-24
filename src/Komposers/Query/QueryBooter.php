@@ -20,6 +20,8 @@ class QueryBooter
 
         $query->parameter($bootInfo['parameters']);
 
+        $initialModel = $query->model;
+
         KompoId::setForKomposer($query, $bootInfo);
 
         $query->currentPage(request()->header('X-Kompo-Page'));
@@ -32,7 +34,7 @@ class QueryBooter
 
         QueryFilters::prepareFiltersForAction($query);
 
-        return static::cleanUp($query);
+        return static::cleanUp($query, $initialModel);
     }
 
     public static function bootForDisplay($queryClass, array $store = [], $routeParams = null)
@@ -40,6 +42,8 @@ class QueryBooter
         $query = $queryClass instanceof Query ? $queryClass : new $queryClass($store);
 
         $query->parameter($routeParams ?: RouteFinder::getRouteParameters());
+
+        $initialModel = $query->model;
 
         AuthorizationGuard::checkBoot($query, 'Display');
 
@@ -53,13 +57,13 @@ class QueryBooter
 
         KomposerManager::booted($query);
 
-        return static::cleanUp($query);
+        return static::cleanUp($query, $initialModel);
     }
 
-    protected static function cleanUp($query)
+    protected static function cleanUp($query, $initialModel)
     {
-        //not needed after filters display, can cause errors if model has an appends attribute
-        unset($query->model);
+        //reset after filters display, can cause errors if model has an appends attribute
+        $query->model = $initialModel;
 
         return $query;
     }

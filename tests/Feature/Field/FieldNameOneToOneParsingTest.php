@@ -89,19 +89,19 @@ class FieldNameOneToOneParsingTest extends EnvironmentBoot
     {
         $this->assertEquals(1, \DB::table('posts')->count());
         $this->assertDatabaseHas('posts', ['id' => 1, 'title' => $postTitle]);
-        if ($objTitle || $objTag) {
-            $this->assertEquals(1, \DB::table('objs')->count());
-            $this->assertDatabaseHas('objs', ['id' => 1, 'title' => $objTitle, 'tag' => $objTag]);
-        } else {
-            $this->assertEquals(0, \DB::table('objs')->count());
-        }
+        //if ($objTitle || $objTag) {
+        $this->assertEquals(1, \DB::table('objs')->count());
+        $this->assertDatabaseHas('objs', ['id' => 1, 'title' => $objTitle, 'tag' => $objTag]);
+        //} else {
+        //    $this->assertEquals(0, \DB::table('objs')->count());
+        //}
 
-        if ($postTagTitle) {
-            $this->assertEquals(1, \DB::table('post_tag')->count());
-            $this->assertDatabaseHas('post_tag', ['id' => 1, 'title' => $postTagTitle]);
-        } else {
-            $this->assertEquals(0, \DB::table('post_tag')->count());
-        }
+        //if ($postTagTitle) {
+        $this->assertEquals(1, \DB::table('post_tag')->count());
+        $this->assertDatabaseHas('post_tag', ['id' => 1, 'title' => $postTagTitle]);
+        //} else {
+        //    $this->assertEquals(0, \DB::table('post_tag')->count());
+        //}
 
         $form = _FieldNameOneToOneParsingForm::boot(1);
 

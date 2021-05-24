@@ -91,6 +91,11 @@ class ModelManager
      */
     public static function saveOneToOneOrDelete($mainModel, $relation, $names, $deleteOneToOneIfEmpty = false)
     {
+        static::setCreatedUpdatedBy($mainModel->{$relation});
+
+        $mainModel->{$relation}()->save($mainModel->{$relation});
+
+        /* Uncomment if we want to $deleteOneToOneIfEmpty       
         $nonEmptyAttributes = collect($names)->filter(
             fn ($name) => $mainModel->{$relation}->{$name}
         )->count();
@@ -103,7 +108,7 @@ class ModelManager
             if ($mainModel->{$relation}->exists && $deleteOneToOneIfEmpty) {
                 $mainModel->{$relation}->delete();
             }
-        }
+        }*/
     }
 
     /**
@@ -139,7 +144,7 @@ class ModelManager
 
     public static function getStoragePath($model, $column)
     {
-        return $model->getConnectionName().'/'.$model->getTable().'/'.$column;
+        return $model->getConnection()->getName().'/'.$model->getTable().'/'.$column;
     }
 
     /********** PROTECTED ************/
