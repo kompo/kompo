@@ -49,13 +49,20 @@ trait LabelInfoComment
      * Adds a help text next to the label that appears on hover. By default, a question mark icon is used.
      *
      * @param string $hint The information text that displays on hover.
+     * @param string|null $hintPlacement Accepted values are up, down, left, right. Default: top.
      *
      * @return self
      */
-    public function hint($hint)
+    public function hint($hint, $hintPlacement = null)
     {
         //TODO: info should be renamed hint() in the Front-end!!
-        return $this->config(['info' => __($hint)]);
+        if ($hintPlacement) {
+            $this->hintPlacement($hintPlacement);
+        }
+
+        return $this->config([
+            'info' => __($hint),
+        ]);
     }
 
     /**
