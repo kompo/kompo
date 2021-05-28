@@ -91,9 +91,19 @@ class ModelManager
      */
     public static function saveOneToOneOrDelete($mainModel, $relation, $names, $deleteOneToOneIfEmpty = false)
     {
-        static::setCreatedUpdatedBy($mainModel->{$relation});
+        $nonEmptyAttributes = collect($names)->filter(
+            fn ($name) => $mainModel->{$relation}->{$name}
+        )->count();
 
-        $mainModel->{$relation}()->save($mainModel->{$relation});
+        if (!$nonEmptyAttributes && $deleteOneToOneIfEmpty) {
+            if ($mainModel->{$relation}->exists) {
+                $mainModel->{$relation}->delete();
+            }
+        }else{
+            static::setCreatedUpdatedBy($mainModel->{$relation});
+
+            $mainModel->{$relation}()->save($mainModel->{$relation});
+        }
 
         /* Uncomment if we want to $deleteOneToOneIfEmpty       
         $nonEmptyAttributes = collect($names)->filter(
