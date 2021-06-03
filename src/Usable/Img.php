@@ -16,10 +16,19 @@ class Img extends Block
         parent::vlInitialize($label);
     }
 
+    //TODO Document
     public function bgCover()
     {
         $this->vueComponent = 'ImgCover';
 
         return $this;
+    }
+
+    //TODO Document
+    public function alt($alt)
+    {
+        return $this->config([
+            'alt' => $alt,
+        ]);
     }
 }
