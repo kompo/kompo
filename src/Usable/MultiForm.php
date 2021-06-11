@@ -98,6 +98,7 @@ class MultiForm extends Field
 
     public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
+        \DB::transaction(fn() => 
         collect(RequestData::get($requestName))->each(function ($subrequest, $subKey) use ($model, $requestName) {
             $form = FormBooter::bootForAction([
                 'kompoClass' => $this->formClass,
@@ -126,7 +127,8 @@ class MultiForm extends Field
             FormSubmitter::saveModel($form);
 
             RequestFacade::swap($mainRequest); //then swap back the original
-        });
+        })
+        );
     }
 
     /**
