@@ -98,37 +98,43 @@ class MultiForm extends Field
 
     public function setRelationFromRequest($requestName, $name, $model, $key = null)
     {
-        \DB::transaction(fn() => 
-        collect(RequestData::get($requestName))->each(function ($subrequest, $subKey) use ($model, $requestName) {
-            $form = FormBooter::bootForAction([
-                'kompoClass' => $this->formClass,
-                'store'      => $this->childStore,
-                'parameters' => [], // is this feature needed?
-                'modelKey'   => $subrequest[static::$multiFormKey] ?? ($this->value[$subKey] ?? null),
-            ]);
-
-            //No Validation or Authorization step - it has already been done on the parent Form
-            if (Lineage::isOneToMany($model, $requestName)) {
-                $relation = Lineage::findRelation($model, $requestName);
-                $form->model->{$relation->getForeignKeyName()} = $model->id;
-            }
-
-            //If all fields are null, don't create a relation for nothing, unless user configured it to do so
-            if (collect($subrequest)->filter()->count() == 0 && !$this->acceptsNullRelations()) {
-                return;
-            }
-
-            //Then we swap the requests for save
-            $mainRequest = request();
-            $subrequest = new Request($subrequest);
-
-            RequestFacade::swap($subrequest);
-
-            FormSubmitter::saveModel($form);
-
-            RequestFacade::swap($mainRequest); //then swap back the original
-        })
+        \DB::transaction(
+            fn() => collect(RequestData::get($requestName))->each(
+                fn($subrequest, $subKey) => $this->saveSingleRelation($model, $requestName, $subrequest, $subKey)
+            )
         );
+    }
+
+    protected function saveSingleRelation($model, $requestName, $subrequest, $subKey)
+    {
+        $form = FormBooter::bootForAction([
+            'kompoClass' => $this->formClass,
+            'store'      => $this->childStore,
+            'parameters' => [], // is this feature needed?
+            'modelKey'   => $subrequest[static::$multiFormKey] ?? ($this->value[$subKey] ?? null),
+        ]);
+
+        //No Validation or Authorization step - it has already been done on the parent Form
+
+        if (Lineage::isOneToMany($model, $requestName)) {
+            $relation = Lineage::findRelation($model, $requestName);
+            $form->model->{$relation->getForeignKeyName()} = $model->id;
+        }
+
+        //If all fields are null, don't create a relation for nothing, unless user configured it to do so
+        if (collect($subrequest)->filter()->count() == 0 && !$this->acceptsNullRelations()) {
+            return;
+        }
+
+        //Then we swap the requests for save
+        $mainRequest = request();
+        $subrequest = new Request($subrequest);
+
+        RequestFacade::swap($subrequest);
+
+        FormSubmitter::saveModel($form);
+
+        RequestFacade::swap($mainRequest); //then swap back the original
     }
 
     /**
