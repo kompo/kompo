@@ -11,7 +11,7 @@ trait SubmitFormActions
      * On click for Buttons/Links.
      * On change for fields (after blur).
      *
-     * @param string $methodName The class's method name that will handle the submit.
+     * @param null|string $methodName If custom submit handling: The class's method that will handle the submit.
      *
      * @return self
      */
@@ -25,6 +25,21 @@ trait SubmitFormActions
 
         return $this->prepareAction('submitForm', [
             'kompoMethod'           => $methodName ? KompoTarget::getEncrypted($methodName) : null,
+        ]);
+    }
+
+    /**
+     * { function_description }
+     *
+     * @param      array  $payload     The payload
+     * @param      null|string    $methodName  The method name
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public function submitWith($payload, $methodName = null)
+    {
+        return $this->submit($methodName)->config([
+            'submitPayload' => $payload,
         ]);
     }
 }
