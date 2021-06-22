@@ -23,8 +23,21 @@ class CardGenerator
     protected static function getItemAttributes($item, $komposer)
     {
         return static::isSpecialQueryLayout($komposer) ? 
+
             $item : 
-            ['id' => $item->{$komposer->keyName} ?? null];
+
+            [
+                'id' => static::attemptGetItemKeyName($item, $komposer->keyName)
+            ];
+    }
+
+    protected static function attemptGetItemKeyName($item, $keyName)
+    {
+        try {
+            return $item->{$keyName};
+        } catch (\Throwable $e) {
+            return;
+        }
     }
 
     protected static function getItemCard($item, $key, $komposer)
