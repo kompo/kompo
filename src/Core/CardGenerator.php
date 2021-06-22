@@ -14,10 +14,17 @@ class CardGenerator
 
         $komposer->query->getCollection()->transform(function ($item, $key) use ($komposer) {
             return [
-                'attributes' => $item,
+                'attributes' => static::getItemAttributes($item, $komposer),
                 'render'     => static::getItemCard($item, $key, $komposer),
             ];
         });
+    }
+
+    protected static function getItemAttributes($item, $komposer)
+    {
+        return static::isSpecialQueryLayout($komposer) ? 
+            $item : 
+            ['id' => $item->{$komposer->keyName} ?? null];
     }
 
     protected static function getItemCard($item, $key, $komposer)
@@ -51,5 +58,10 @@ class CardGenerator
         } else {
             return $card;
         }
+    }
+
+    public static function isSpecialQueryLayout($komposer)
+    {
+        return in_array($komposer->layout, ['CalendarMonth', 'Kanban']);
     }
 }
