@@ -16,6 +16,7 @@ abstract class Element
     use Traits\HasDuskSelector;
     use Traits\IsMountable;
     use Traits\ElementHelperMethods;
+    use Traits\UsesLocale;
     use Macroable {
         __callStatic as protected __callStaticTrait;
         __call as protected __callTrait;

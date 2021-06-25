@@ -96,8 +96,9 @@ class QueryDisplayer
     public static function prepareQuery($komposer)
     {
         if (CardGenerator::isSpecialQueryLayout($komposer)) {
-            $komposer->perPage = 1000000;
-        } //Laravel limitation, besides nobody will ever visualize 1M items...
+            $komposer->perPage = 1000000; //Laravel limitation, besides nobody will ever visualize 1M items...
+            $komposer->passLocale();
+        } 
 
         $q = $komposer->query();
 

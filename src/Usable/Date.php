@@ -20,6 +20,8 @@ class Date extends Field
         $this->setDbFormat();
 
         $this->dateFormat($this->configDateFormat());
+
+        $this->passLocale();
     }
 
     /**
