@@ -106,6 +106,12 @@ class Place extends Field
         return $this->config(['addMarkers' => Arr::wrap($markers)]);
     }
 
+    //TODO document
+    public function componentRestrictions($componentRestrictions)
+    {
+        return $this->config(['componentRestrictions' => $componentRestrictions]);
+    }
+
     public function getValueFromModel($model, $name)
     {
         if (!$this->attributesToColumns) {

@@ -16,9 +16,6 @@ class KompoLayout
     protected $hasAnyFixedMenus = false;
     protected $overFlowSet = false;
 
-    protected $mainClass;
-    protected $mainStyle;
-
     public function __construct($n, $l, $r, $f, $options = [])
     {
         $this->setMenu($n, 'navbar', 'vl-nav', 'vl-nav');
@@ -281,10 +278,6 @@ class KompoLayout
 
     protected function getMainOpenTag()
     {
-        return '<main'.(
-            $this->mainClass ? (' class="'.$this->mainClass.'"') : ''
-        ).(
-            $this->mainStyle ? (' style="'.$this->mainStyle.'"') : ''
-        );
+        return '<main';
     }
 }
