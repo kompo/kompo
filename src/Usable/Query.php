@@ -60,6 +60,11 @@ abstract class Query extends Komposer
     public $headers = [];
 
     /**
+     * The footers of a Table Query.
+     */
+    public $footers;
+
+    /**
      * Whether to display pagination links or not.
      *
      * @var bool

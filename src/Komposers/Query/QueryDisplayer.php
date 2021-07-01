@@ -81,6 +81,10 @@ class QueryDisplayer
             $komposer->headers = collect($komposer->headers())->filter();
         }
 
+        if (method_exists($komposer, 'footers')) {
+            $komposer->footers = collect($komposer->footers())->filter();
+        }
+
         if ($komposer->layout == 'Kanban') {
             KompoTarget::setOnElement($komposer, KompoTarget::getEncrypted('changeStatus'));
         }

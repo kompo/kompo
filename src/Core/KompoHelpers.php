@@ -59,6 +59,13 @@ if (!function_exists('_TableRow')) {
     }
 }
 
+if (!function_exists('_Tr')) {
+    function _Tr($label = ''): \Kompo\Tr
+    {
+        return Kompo\Tr::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_AddButton')) {
     function _AddButton($label = ''): \Kompo\AddButton
     {
