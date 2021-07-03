@@ -47,9 +47,12 @@ class Modal extends Form
 
 	public function footer()
 	{
-		return _FlexEnd(
-			$this->footerButtons()
-		)->class('flex-row-reverse md:flex-row md:ml-8')
+		return _FlexBetween(
+			$this->footerTitle(),
+			_FlexEnd(
+				$this->footerButtons(),
+			),
+		)->class('flex-row-reverse md:flex-row')
 		->class('bg-gray-50 border-t border-gray-200 px-4 py-6 sm:px-6 rounded-b-lg')
 		->class('flex-col items-start md:flex-row md:items-center')
 		->alignStart();		
@@ -83,6 +86,11 @@ class Modal extends Form
 	/* MODAL BODY ELEMENTS */
 
 	/* MODAL FOOTER ELEMENTS */
+	public function footerTitle()
+	{
+
+	}
+
 	public function footerButtons()
 	{
 
