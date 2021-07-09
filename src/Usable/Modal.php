@@ -88,6 +88,7 @@ class Modal extends Form
 	/* MODAL FOOTER ELEMENTS */
 	public function footerTitle()
 	{
+		return _Html();
 
 	}
 

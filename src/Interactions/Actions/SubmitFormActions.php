@@ -24,7 +24,7 @@ trait SubmitFormActions
         });
 
         return $this->prepareAction('submitForm', [
-            'kompoMethod'           => $methodName ? KompoTarget::getEncrypted($methodName) : null,
+            'X-Kompo-Target'           => $methodName ? KompoTarget::getEncrypted($methodName) : null,
         ]);
     }
 

@@ -44,8 +44,15 @@ trait EmitEventActions
      *
      * @return self
      */
-    public function closeModal()
+    public function closeModal($modalName = null)
     {
+        //TODO refactor and consolidate for Vue3
+        if ($modalName) {
+            return $this->prepareAction('closeModal', [
+                'closeModalName' => $modalName,
+            ]);
+        }
+
         return $this->emit('closeModal');
     }
 
