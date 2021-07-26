@@ -35,4 +35,9 @@ trait AddSlidingPanelActions
     {
         return $this->prepareAction('fillPopup');
     }
+
+    public function closePopup()
+    {
+        return $this->prepareAction('closePopup');
+    }
 }
