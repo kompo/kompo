@@ -38,31 +38,29 @@ class PullCode extends Command
      */
     public function handle()
     {
-        $uuid = $this->argument('uuid');
+        $request = Http::post('http://kompoio.local/api/pull-bundle/'.$this->argument('uuid'));
 
-        $request = Http::post('http://kompoio.local/api/pull-bundle', [
-            'slug' => 'basic-auth'
-        ]);
+        $pull = $request->json();
 
-        $kontrollers = $request->json()['kontrollers'];
+        $items = $pull['pull_items'];
 
-        foreach ($kontrollers as $kontroller) {
-            $this->handleKontroller($kontroller);
+        foreach ($items as $item) {
+            $this->handleFile($item['item']);
         }
 
         dd($request->json());
     }
 
-    protected function handleKontroller($kontroller)
+    protected function handleFile($file)
     {
         if (
-            file_exists(base_path($kontroller['path'])) 
-            && !$this->confirm('Do you wish to overwrite '.$kontroller['path'].'?')
+            file_exists(base_path($file['path'])) 
+            && !$this->confirm('Do you wish to overwrite '.$file['path'].'?')
         ) {
             return;
         }
 
-        file_put_contents(base_path($kontroller['path']), $kontroller['file_contents']);
+        file_put_contents(base_path($file['path']), $file['file_contents']);
 
     }
 }
