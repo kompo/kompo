@@ -67,14 +67,4 @@ class QueryBooter
 
         return $query;
     }
-
-    /**
-     * Shortcut method to render a Query into it's Vue component.
-     *
-     * @return string
-     */
-    public static function renderVueComponent($query)
-    {
-        return '<vl-query :vkompo="'.htmlspecialchars($query).'"></vl-query>';
-    }
 }

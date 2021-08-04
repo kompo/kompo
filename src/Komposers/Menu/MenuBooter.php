@@ -44,14 +44,4 @@ class MenuBooter
 
         return $menu;
     }
-
-    /**
-     * Shortcut method to render a Menu into it's Vue component.
-     *
-     * @return string
-     */
-    public static function renderVueComponent($menu)
-    {
-        return '<vl-menu :vkompo="'.htmlspecialchars($menu).'"></vl-menu>';
-    }
 }

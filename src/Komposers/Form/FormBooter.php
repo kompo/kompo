@@ -73,15 +73,4 @@ class FormBooter
 
         return $form->model;
     }
-
-    /**
-     * Shortcut method to render a Form into it's Vue component.
-     *
-     * @return string
-     */
-    public static function renderVueComponent($form)
-    {
-        //return '<'.$form->vueKomposerTag.' data-vkompo="'.htmlspecialchars($form).'"></'.$form->vueKomposerTag.'>';
-        return '<'.$form->vueKomposerTag.' :vkompo="'.htmlspecialchars($form).'"></'.$form->vueKomposerTag.'>';
-    }
 }

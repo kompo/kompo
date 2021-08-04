@@ -212,16 +212,6 @@ abstract class Query extends Komposer
     }
 
     /**
-     * Shortcut method to render a Query into it's Vue component.
-     *
-     * @return string
-     */
-    public function renderNonStatic()
-    {
-        return QueryBooter::renderVueComponent($this);
-    }
-
-    /**
      * Shortcut method to boot a Query for display.
      *
      * @return string

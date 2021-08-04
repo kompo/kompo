@@ -15,6 +15,13 @@ abstract class Menu extends Komposer
     public $komponents = [];
 
     /**
+     * The Vue komposer tag.
+     *
+     * @var string
+     */
+    public $vueKomposerTag = 'vl-menu';
+
+    /**
      * If the menu fixed or scrollable?
      *
      * @var bool
@@ -64,16 +71,6 @@ abstract class Menu extends Komposer
     public function rules()
     {
         return [];
-    }
-
-    /**
-     * Shortcut method to render a Menu into it's Vue component.
-     *
-     * @return string
-     */
-    public function renderNonStatic()
-    {
-        return MenuBooter::renderVueComponent($this);
     }
 
     /**

@@ -213,16 +213,6 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Shortcut method to render a Form into it's Vue component.
-     *
-     * @return string
-     */
-    public function renderNonStatic()
-    {
-        return FormBooter::renderVueComponent($this);
-    }
-
-    /**
      * Shortcut method to boot a Form for display.
      *
      * @return string

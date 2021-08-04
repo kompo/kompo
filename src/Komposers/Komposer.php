@@ -70,10 +70,9 @@ abstract class Komposer extends Element
 
         if ($layout = Router::getMergedLayout($route)) {
             $komposer = $dispatcher->bootKomposerForDisplay();
-            $booter = $dispatcher->booter;
 
             return view('kompo::view', [
-                'vueComponent'   => $booter::renderVueComponent($komposer),
+                'vueComponent'   => $komposer->render(),
                 'containerClass' => property_exists($komposer, 'containerClass') ? $komposer->containerClass : 'container',
                 'metaTags'       => $komposer->getMetaTags($komposer),
                 'js'             => method_exists($komposer, 'js') ? $komposer->js() : null,
@@ -176,7 +175,10 @@ abstract class Komposer extends Element
      *
      * @return string
      */
-    abstract public function renderNonStatic();
+    public function renderNonStatic()
+    {
+        return '<'.$this->vueKomposerTag.' :vkompo="'.htmlspecialchars($this).'"></'.$this->vueKomposerTag.'>';
+    }
 
     /**
      * Shortcut method to boot a Komposer for display.
