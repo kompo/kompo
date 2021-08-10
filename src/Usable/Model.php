@@ -11,11 +11,11 @@ class Model extends LaravelModel
     public function save(array $options = [])
     {
         if (defined(get_class($this).'::CREATED_BY') && !$this->getKey() && static::CREATED_BY && auth()->check()) {
-            $this->{static::CREATED_BY} = auth()->user()->id;
+            $this->{static::CREATED_BY} = auth()->id();
         }
 
         if (defined(get_class($this).'::UPDATED_BY') && static::UPDATED_BY && auth()->check()) {
-            $this->{static::UPDATED_BY} = auth()->user()->id;
+            $this->{static::UPDATED_BY} = auth()->id();
         }
 
         parent::save($options);
@@ -24,11 +24,11 @@ class Model extends LaravelModel
     /* RELATIONS */
     public function createdBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'created_by');
+        return $this->belongsTo(User::class, static::CREATED_BY);
     }
 
     public function updatedBy(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'updated_by');
+        return $this->belongsTo(User::class, static::UPDATED_BY);
     }
 }

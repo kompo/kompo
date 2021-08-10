@@ -46,6 +46,11 @@ class KompoServiceProvider extends ServiceProvider
             $kernel->appendMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);
             //app('router')->pushMiddlewareToGroup('web', SetKompoLocaleMiddleware::class);
         }
+
+         //Usage: php artisan vendor:publish --provider="Kompo\KompoServiceProvider"
+        $this->publishes([
+            __DIR__.'/../../config/kompo.php' => config_path('kompo.php'),
+        ]);
     }
 
     /**

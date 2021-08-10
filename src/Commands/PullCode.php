@@ -4,6 +4,8 @@ namespace Kompo\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class PullCode extends Command
 {
@@ -53,14 +55,21 @@ class PullCode extends Command
 
     protected function handleFile($file)
     {
+        $filePath = base_path($file['path']);
+
         if (
-            file_exists(base_path($file['path'])) 
+            file_exists($filePath) 
             && !$this->confirm('Do you wish to overwrite '.$file['path'].'?')
         ) {
+            $this->line('Ignoring '.$filePath);
             return;
         }
 
-        file_put_contents(base_path($file['path']), $file['file_contents']);
+        $this->info('Writing '.$filePath);
+
+        (new Filesystem)->ensureDirectoryExists(Str::beforeLast($filePath, '/'));
+
+        file_put_contents($filePath, $file['file_contents']);
 
     }
 }
