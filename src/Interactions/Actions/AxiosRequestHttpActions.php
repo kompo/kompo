@@ -70,4 +70,20 @@ trait AxiosRequestHttpActions
     {
         return $this->routeHttpRequest('DELETE', $route, $parameters, $ajaxPayload);
     }
+
+    //TODO: document
+    public function create($route, $parameters = null, $ajaxPayload = null)
+    {
+        $this->applyToElement(
+            fn($el) => $el->class('cursor-pointer')->config(['refreshParent' => true])
+        );
+
+        return $this->get($route, $parameters, $ajaxPayload);
+    }
+
+    //TODO: document
+    public function update($route, $parameters = null, $ajaxPayload = null)
+    {
+        return $this->create($route, $parameters, $ajaxPayload);
+    }
 }

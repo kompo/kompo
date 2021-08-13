@@ -146,6 +146,25 @@ trait AxiosRequestActions
     }
 
     //TODO: document
+    public function selfCreate($methodName, $ajaxPayload = null)
+    {
+        $this->applyToElement(
+            fn($el) => $el->class('cursor-pointer')->config(['refreshParent' => true])
+        );
+
+        return $this->selfGet($methodName, $ajaxPayload);
+    }
+
+    //TODO: document
+    public function selfUpdate($methodName, $ajaxPayload = null)
+    {
+        return $this->selfCreate($methodName, $ajaxPayload);
+    }
+
+
+
+
+    //TODO: document
     public function setHistory($route, $parameters)
     {
         return $this->prepareAction('setHistory', [
