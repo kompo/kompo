@@ -136,6 +136,13 @@ if (!function_exists('_Calendar')) {
     }
 }
 
+if (!function_exists('_Chart')) {
+    function _Chart($label = ''): \Kompo\Chart
+    {
+        return Kompo\Chart::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_Checkbox')) {
     function _Checkbox($label = ''): \Kompo\Checkbox
     {
