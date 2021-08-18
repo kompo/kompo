@@ -2,8 +2,15 @@
 
 namespace Kompo;
 
+use Kompo\Core\AuthorizationGuard;
+use Kompo\Core\KompoId;
+use Kompo\Core\KompoInfo;
+use Kompo\Core\ValidationManager;
 use Kompo\Komposers\Komposer;
-use Kompo\Komposers\Query\QueryBooter;
+use Kompo\Komposers\KomposerManager;
+use Kompo\Komposers\Query\QueryDisplayer;
+use Kompo\Komposers\Query\QueryFilters;
+use Kompo\Routing\RouteFinder;
 
 abstract class Query extends Komposer
 {
@@ -212,12 +219,58 @@ abstract class Query extends Komposer
     }
 
     /**
-     * Shortcut method to boot a Query for display.
+     * Initial boot of a Query Komponent for display.
      *
-     * @return string
+     * @return self
      */
-    public function bootNonStatic()
+    public function bootForDisplay($routeParams = null)
     {
-        return QueryBooter::bootForDisplay($this);
+        $this->parameter($routeParams ?: RouteFinder::getRouteParameters());
+
+        $initialModel = $this->model;
+
+        AuthorizationGuard::checkBoot($this, 'Display');
+
+        ValidationManager::addRulesToKomposer($this->rules(), $this); //for Front-end validations TODO:
+
+        QueryDisplayer::displayFiltersAndCards($this);
+
+        KompoId::setForKomposer($this);
+
+        KompoInfo::saveKomposer($this);
+
+        KomposerManager::booted($this);
+
+        return $this->cleanUp($initialModel);
+    }
+
+    /**
+     * Subsequent boot of a Query Komponent for a later action (i.e. paginating, filtering, sorting, etc...)
+     *
+     * @return self
+     */
+    public function bootForAction()
+    {
+        $initialModel = $this->model;
+
+        $this->currentPage(request()->header('X-Kompo-Page'));
+
+        AuthorizationGuard::checkBoot($this, 'Action');
+
+        QueryDisplayer::prepareQuery($this); //setting-up model (like in forms) mainly for 'delete-item' action.
+
+        ValidationManager::addRulesToKomposer($this->rules(), $this);
+
+        QueryFilters::prepareFiltersForAction($this);
+
+        return $this->cleanUp($initialModel);
+    }
+
+    protected function cleanUp($initialModel)
+    {
+        //reset after filters display, can cause errors if model has an appends attribute
+        $this->model = $initialModel;
+
+        return $this;
     }
 }

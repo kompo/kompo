@@ -2,10 +2,13 @@
 
 namespace Kompo;
 
+use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\ValidationManager;
-use Kompo\Komposers\Form\FormBooter;
+use Kompo\Komposers\Form\FormDisplayer;
 use Kompo\Komposers\Form\HasModel;
 use Kompo\Komposers\Komposer;
+use Kompo\Komposers\KomposerManager;
+use Kompo\Routing\RouteFinder;
 
 abstract class Form extends Komposer
 {
@@ -223,13 +226,53 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Shortcut method to boot a Form for display.
+     * Initial boot of a Form Komponent for display.
      *
-     * @return string
+     * @return self
      */
-    public function bootNonStatic()
+    public function bootForDisplay($routeParams = null)
     {
-        return FormBooter::bootForDisplay($this);
+        $this->parameter($routeParams ?: RouteFinder::getRouteParameters());
+
+        $this->setModel($this->model);
+
+        AuthorizationGuard::checkBoot($this, 'Display');
+
+        FormDisplayer::displayKomponents($this);
+
+        KomposerManager::booted($this);
+
+        return $this;
+    }
+
+    /**
+     * Subsequent boot of a Form Komponent for a later action (i.e. submit, Ajax request, etc...)
+     *
+     * @return self
+     */
+    public function bootForAction()
+    {
+        $this->setModel($this->model);
+
+        AuthorizationGuard::checkBoot($this, 'Action');
+
+        ValidationManager::addRulesToKomposer($this->rules(), $this);
+
+        KomposerManager::prepareKomponentsForAction($this, 'komponents', true); //mainly to retrieve rules from fields
+
+        return $this;
+    }
+
+    /**
+     * Constructing a Form from an array of parameters
+     *
+     * @param  array  $info  The parameters
+     *
+     * @return  self
+     */
+    public static function constructFromArray($info)
+    {
+        return is_string($komposer = $info['kompoClass']) ? new $komposer($info['modelKey'], $info['store']) : $komposer;
     }
 
     /**

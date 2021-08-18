@@ -2,6 +2,7 @@
 
 namespace Kompo\Komposers;
 
+use Kompo\Core\KompoId;
 use Kompo\Elements\Element;
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
@@ -195,7 +196,40 @@ abstract class Komposer extends Element
      *
      * @return string
      */
-    abstract public function bootNonStatic();
+    public function bootNonStatic()
+    {
+        return $this->bootForDisplay();
+    }
+
+    /**
+     * Constructing a Komposer from the info sent by AJAX
+     *
+     * @param  array  $bootInfo  The boot information
+     *
+     * @return  self
+     */
+    public static function constructFromBootInfo($bootInfo)
+    {
+        $komposer = static::constructFromArray($bootInfo);
+
+        $komposer->parameter($bootInfo['parameters']);
+
+        KompoId::setForKomposer($komposer, $bootInfo);
+
+        return $komposer;
+    }
+
+    /**
+     * Constructing a Komposer from an array of information
+     *
+     * @param  array  $info  The array information
+     *
+     * @return  self
+     */
+    public static function constructFromArray($info)
+    {
+        return is_string($komposer = $info['kompoClass']) ? new $komposer($info['store']) : $komposer;
+    }
 
     /**
      * Methods that can be called both statically or non-statically.

@@ -10,7 +10,7 @@ use Kompo\Database\ModelManager;
 use Kompo\Komponents\Managers\FormField;
 use Kompo\Komposers\KomposerManager;
 
-class FormSubmitter extends FormBooter
+class FormSubmitter
 {
     protected static function prepareForSubmit($form)
     {

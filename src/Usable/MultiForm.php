@@ -11,9 +11,9 @@ use Kompo\Core\ValidationManager;
 use Kompo\Database\Lineage;
 use Kompo\Database\ModelManager;
 use Kompo\Exceptions\NoMultiFormClassException;
+use Kompo\Form;
 use Kompo\Komponents\Field;
 use Kompo\Komponents\Traits\HasAddLabel;
-use Kompo\Komposers\Form\FormBooter;
 use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Routing\RouteFinder;
 
@@ -107,12 +107,12 @@ class MultiForm extends Field
 
     protected function saveSingleRelation($model, $requestName, $subrequest, $subKey)
     {
-        $form = FormBooter::bootForAction([
+        $form = Form::constructFromBootInfo([
             'kompoClass' => $this->formClass,
             'store'      => $this->childStore,
             'parameters' => [], // is this feature needed?
             'modelKey'   => $subrequest[static::$multiFormKey] ?? ($this->value[$subKey] ?? null),
-        ]);
+        ])->bootForAction();
 
         //No Validation or Authorization step - it has already been done on the parent Form
 

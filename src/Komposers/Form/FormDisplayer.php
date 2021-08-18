@@ -8,7 +8,7 @@ use Kompo\Core\ValidationManager;
 use Kompo\Komposers\KomposerManager;
 use Kompo\Routing\RouteFinder;
 
-class FormDisplayer extends FormBooter
+class FormDisplayer
 {
     public static function displayKomponents($form)
     {

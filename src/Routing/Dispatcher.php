@@ -18,6 +18,8 @@ class Dispatcher
 
     protected $type;
 
+    protected $komposerTypeClass;
+
     public $booter;
 
     protected $bootInfo;
@@ -31,6 +33,8 @@ class Dispatcher
         $this->komposerClass = $komposerClass ?: $this->bootInfo['kompoClass'];
 
         $this->type = static::getKomposerType($this->komposerClass);
+
+        $this->komposerTypeClass = 'Kompo\\'.$this->type;
 
         $this->booter = 'Kompo\\Komposers\\'.$this->type.'\\'.$this->type.'Booter';
     }
@@ -55,32 +59,51 @@ class Dispatcher
     public static function bootKomposerForAction()
     {
         $dispatcher = new static();
-        $booter = $dispatcher->booter;
 
-        return $booter::bootForAction($dispatcher->bootInfo);
+        $type = $dispatcher->komposerTypeClass;
+
+        return $type::constructFromBootInfo($dispatcher->bootInfo)->bootForAction();
     }
 
     public function bootKomposerForDisplay()
     {
-        $booter = $this->booter;
+        $type = $this->komposerTypeClass;
 
         if ($this->type == 'Form') {
-            return $booter::bootForDisplay($this->komposerClass, request('id'), request()->except('id'));
+            $komposer = $type::constructFromArray([
+                'kompoClass' => $this->komposerClass, 
+                'modelKey' => request('id'), 
+                'store' => request()->except('id'),
+            ]);
         } else {
-            return $booter::bootForDisplay($this->komposerClass, request()->all());
+            $komposer = $type::constructFromArray([
+                'kompoClass' => $this->komposerClass, 
+                'store' => request()->all(),
+            ]);
         }
+        
+        return $komposer->bootForDisplay();
     }
 
     protected static function rebootKomposerForDisplay()
     {
         $d = new static();
-        $booter = $d->booter;
+        $type = $d->komposerTypeClass;
 
         if ($d->type == 'Form') {
-            return $booter::bootForDisplay($d->komposerClass, $d->bootInfo['modelKey'], $d->bootInfo['store'], $d->bootInfo['parameters']);
+            $komposer = $type::constructFromArray([
+                'kompoClass' => $d->komposerClass, 
+                'modelKey' => $d->bootInfo['modelKey'], 
+                'store' => $d->bootInfo['store'],
+            ]);
         } else {
-            return $booter::bootForDisplay($d->komposerClass, $d->bootInfo['store'], $d->bootInfo['parameters']);
+            $komposer = $type::constructFromArray([
+                'kompoClass' => $d->komposerClass, 
+                'modelKey' => $d->bootInfo['store'],
+            ]);
         }
+
+        return $komposer->bootForDisplay($d->bootInfo['parameters']);
     }
 
     protected static function refreshManyKomposers()

@@ -2,8 +2,12 @@
 
 namespace Kompo;
 
+use Kompo\Core\AuthorizationGuard;
+use Kompo\Core\KompoId;
+use Kompo\Core\KompoInfo;
 use Kompo\Komposers\Komposer;
-use Kompo\Komposers\Menu\MenuBooter;
+use Kompo\Komposers\KomposerManager;
+use Kompo\Routing\RouteFinder;
 
 abstract class Menu extends Komposer
 {
@@ -84,12 +88,36 @@ abstract class Menu extends Komposer
     }
 
     /**
-     * Shortcut method to boot a Menu for display.
+     * Initial boot of a Menu Komponent for display.
      *
-     * @return string
+     * @return self
      */
-    public function bootNonStatic()
+    public function bootForDisplay($routeParams = null)
     {
-        return MenuBooter::bootForDisplay($this);
+        $this->parameter($routeParams ?: RouteFinder::getRouteParameters());
+
+        AuthorizationGuard::checkBoot($this, 'Display');
+
+        $this->komponents = KomposerManager::prepareKomponentsForDisplay($this, 'komponents', true);
+
+        KompoId::setForKomposer($this);
+
+        KompoInfo::saveKomposer($this);
+
+        KomposerManager::booted($this);
+
+        return $this;
+    }
+
+    /**
+     * Subsequent boot of a Menu Komponent for a later action (i.e. ajax request, etc...)
+     *
+     * @return self
+     */
+    public function bootForAction()
+    {
+        AuthorizationGuard::checkBoot($this, 'Action');
+
+        return $this;
     }
 }
