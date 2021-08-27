@@ -10,6 +10,8 @@ return [
         //'fr' => 'Français'
     ],
 
+    'helpers_dir' => 'app/Kompo/Helpers', //TODO document
+
     /***************
      * PULL config *
      ***************/
