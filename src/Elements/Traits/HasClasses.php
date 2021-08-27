@@ -87,4 +87,40 @@ trait HasClasses
     {
         return $this->config(['col' => $col]);
     }
+
+    //Optional if using tailwind - maybe document in a bundle instead of main docs
+    //TODO: document
+    public function color($colorScale = null, $opacity = null)
+    {
+        if ($colorScale) {
+            $this->class('text-'.color().'-'.$colorScale);
+        }
+
+        if ($opacity) {
+            $this->class('text-opacity-'.$opacity);
+        }
+
+        return $this;
+    }
+
+    //TODO: document
+    public function bgColor($colorScale = null, $opacity = null)
+    {
+        
+        if ($colorScale) {
+            $this->class('bg-'.color().'-'.$colorScale);
+        }
+
+        if ($opacity) {
+            $this->class('bg-opacity-'.$opacity);
+        }
+
+        return $this;
+    }
+
+    //TODO: document
+    public function monoGradient($fromScale, $toScale)
+    {
+        return $this->class('from-'.color().'-'.$fromScale.' to-'.color().'-'.$toScale);
+    }
 }

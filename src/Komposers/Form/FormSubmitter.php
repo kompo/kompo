@@ -42,6 +42,8 @@ class FormSubmitter
      */
     public static function saveModel($form)
     {
+        static::beforeFillHook($form);
+
         static::loopOverFieldsFor('fillBeforeSave', $form);
 
         static::beforeSaveHook($form);
@@ -61,6 +63,20 @@ class FormSubmitter
         static::completedHook($form);
 
         return static::returnResponseHook($form);
+    }
+
+    /**
+     * A method that gets executed before the model is automatically filled from attribute fields.
+     *
+     * @param Kompo\Form $form
+     *
+     * @return void
+     */
+    protected static function beforeFillHook($form)
+    {
+        if (method_exists($form, 'beforeFill')) {
+            $form->beforeFill();
+        }
     }
 
     /**

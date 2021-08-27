@@ -72,9 +72,9 @@ class KompoServiceProvider extends ServiceProvider
     public static function registerHelpers()
     {
         collect([
+            app_path('Kompo/komponents.php'), //has to be before KompoHelpers
             __DIR__.'/../Core/KompoHelpers.php',
             __DIR__.'/../Core/HelperUtils.php',
-            app_path('Kompo/komponents.php'),
         ])->each(function ($path) {
             if (file_exists($path)) {
                 require_once $path;

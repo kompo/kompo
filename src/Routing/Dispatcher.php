@@ -99,7 +99,7 @@ class Dispatcher
         } else {
             $komposer = $type::constructFromArray([
                 'kompoClass' => $d->komposerClass, 
-                'modelKey' => $d->bootInfo['store'],
+                'store' => $d->bootInfo['store'],
             ]);
         }
 

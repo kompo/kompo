@@ -50,7 +50,7 @@ class PullCode extends Command
             $this->handleFile($item['item']);
         }
 
-        dd($request->json());
+        $this->info('Completed!');
     }
 
     protected function handleFile($file)
@@ -59,7 +59,10 @@ class PullCode extends Command
 
         if (
             file_exists($filePath) 
-            && !$this->confirm('Do you wish to overwrite '.$file['path'].'?')
+            && (
+                $this->fileContentsAreTheSame($filePath, $file['file_contents'])
+                || !$this->confirm('Do you wish to overwrite '.$file['path'].'?')
+            )
         ) {
             $this->line('Ignoring '.$filePath);
             return;
@@ -71,5 +74,10 @@ class PullCode extends Command
 
         file_put_contents($filePath, $file['file_contents']);
 
+    }
+
+    protected function fileContentsAreTheSame($filePath, $newContents)
+    {
+        return file_get_contents($filePath) === $newContents;
     }
 }

@@ -21,4 +21,16 @@ class Code extends Block
             'tabSize' => $tabSize,
         ]);
     }
+
+    /**
+     * TODO: document AND bring in the syntax highlighting (with optional import)
+     *
+     * @param      <type>  $language  The language
+     */
+    public function language($language)
+    {
+        return $this->config([
+            'codeLanguage' => $language,
+        ]);
+    }
 }
