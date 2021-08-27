@@ -71,16 +71,17 @@ class KompoServiceProvider extends ServiceProvider
 
     public static function registerHelpers()
     {
-        $autoloadHelpers = collect(
-            \File::allFiles(base_path(config('kompo.helpers_dir'))) //All files in this directory will be loaded as helpers
-        )->map(fn($file) => $file->getRealPath());
+        $helpersDir = base_path(config('kompo.helpers_dir')); //All files in this directory will be loaded as helpers
+
+        $autoloadedHelpers = collect(is_dir($helpersDir) ? \File::allFiles($helpersDir) : [])
+            ->map(fn($file) => $file->getRealPath());
 
         $packageHelpers = [
             __DIR__.'/../Core/KompoHelpers.php', 
             __DIR__.'/../Core/HelperUtils.php',
         ];
 
-        $autoloadHelpers->concat($packageHelpers)->each(function ($path) {
+        $autoloadedHelpers->concat($packageHelpers)->each(function ($path) {
             if (file_exists($path)) {
                 require_once $path;
             }
