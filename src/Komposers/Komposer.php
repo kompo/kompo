@@ -131,6 +131,19 @@ abstract class Komposer extends Element
     }
 
     /**
+     * TODO: document and use throughout the examples.
+     * Gets the prop of the Komposer, first we check if it's a route parameter, then we check if it is found in the store.
+     *
+     * @param string $parameter
+     *
+     * @return mixed
+     */
+    public function prop($data)
+    {
+        return $this->parameter($data) ?: $this->store($data);
+    }
+
+    /**
      * Do nothing for Querys and Menus.
      *
      * @return void
@@ -229,6 +242,12 @@ abstract class Komposer extends Element
     public static function constructFromArray($info)
     {
         return is_string($komposer = $info['kompoClass']) ? new $komposer($info['store']) : $komposer;
+    }
+
+    //TODO: document
+    public function kompoId()
+    {
+        return KompoId::getFromElement($this);
     }
 
     /**

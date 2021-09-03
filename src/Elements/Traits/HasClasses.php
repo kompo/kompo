@@ -119,8 +119,10 @@ trait HasClasses
     }
 
     //TODO: document
-    public function monoGradient($fromScale, $toScale)
+    public function monoGradient($fromScale, $toScale, $direction = 'br')
     {
-        return $this->class('from-'.color().'-'.$fromScale.' to-'.color().'-'.$toScale);
+        return $this->class('bg-gradient-to-'.$direction)
+            ->class('from-'.color().'-'.$fromScale)
+            ->class('to-'.color().'-'.$toScale);
     }
 }
