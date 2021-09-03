@@ -9,6 +9,13 @@ class AuthLogoutForm extends Form
 {
     protected $redirectTo = '/';
 
+    protected $linkClass = 'vlColorInherit px-4 py-2';
+
+    public function created()
+    {
+        $this->linkClass = $this->prop('link_class') ?: $this->linkClass;
+    }
+
     public function handle()
     {
         \Auth::guard()->logout();
@@ -21,7 +28,7 @@ class AuthLogoutForm extends Form
     public function komponents()
     {
         return [
-            Link::form('Logout')->class('vlColorInherit px-4 py-2')->submit(),
+            Link::form('Logout')->class($this->linkClass)->submit(),
         ];
     }
 }
