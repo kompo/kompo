@@ -87,4 +87,21 @@ class KompoServiceProvider extends ServiceProvider
             }
         });
     }
+
+    protected function registerBladeDirectives()
+    {
+        \Blade::directive('kompoStyles', function ($style = null) {
+
+            $styleFilename = 'app'.($style ? '-'.$style : '');
+
+            return '<link href="https://unpkg.com/vue-kompo/dist/app'.$styleFilename.'.min.css" rel="stylesheet">';
+
+        });
+
+        \Blade::directive('kompoScripts', function () {
+
+            return '<script src="https://unpkg.com/vue-kompo/dist/app.min.js"></script>';
+            
+        });
+    }
 }

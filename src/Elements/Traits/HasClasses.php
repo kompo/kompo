@@ -119,6 +119,12 @@ trait HasClasses
     }
 
     //TODO: document
+    public function borderColor($colorScale)
+    {
+        return $this->class('border-'.color().'-'.$colorScale);
+    }
+
+    //TODO: document
     public function monoGradient($fromScale, $toScale, $direction = 'br')
     {
         return $this->class('bg-gradient-to-'.$direction)

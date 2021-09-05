@@ -32,8 +32,9 @@
 <!-- additional global custom styles included if available -->
 @includeIf('kompo.styles')
 
-<!-- Header -->
-@stack('header')
+<!-- Head -->
+@stack('head')
+@stack('header') {{-- Deprecated --}}
 
 @hasSection('metaTags')
 	@yield('metaTags')

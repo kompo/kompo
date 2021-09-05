@@ -14,7 +14,7 @@
 ?>
 
 <head>
-    @include('kompo::header')
+    @include('kompo::head')
 </head>
 
 <body @isset($bodyClass) class="{{$bodyClass}}" @endif>
