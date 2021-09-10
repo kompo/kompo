@@ -228,12 +228,20 @@ class KompoLayout
     {
         $menu = $this->{$key};
 
-        return $this->getClassAttribute($menu).
+        return $this->getVKompoAttribute($menu).
+            /* TODELETE 
+            $this->getClassAttribute($menu).
             $this->getIdAttribute($menu).
-            $this->getStyleAttribute($menu).
+            $this->getStyleAttribute($menu).*/
             ($this->isSidebar($menu) ? $this->getSidebarSideAttribute($key) : '');
     }
 
+    protected function getVKompoAttribute($menu)
+    {
+        return ' :vkompo="'.htmlspecialchars($menu).'"';
+    }
+
+    /* TO DELETE
     protected function getClassAttribute($menu)
     {
         return ' class="'.$menu->config('menuClass').
@@ -248,7 +256,7 @@ class KompoLayout
     protected function getStyleAttribute($menu)
     {
         return $menu->style ? (' style="'.$menu->style.'"') : '';
-    }
+    }*/
 
     protected function getSidebarSideAttribute($key)
     {
