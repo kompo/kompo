@@ -5,6 +5,7 @@ namespace Kompo;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\ValidationManager;
 use Kompo\Komposers\Form\FormDisplayer;
+use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Komposers\Form\HasModel;
 use Kompo\Komposers\Komposer;
 use Kompo\Komposers\KomposerManager;
@@ -203,6 +204,26 @@ abstract class Form extends Komposer
         if ($komposer instanceof self) { //Cuz in Query filters, Forms would pass their rules to browse & sort actions
             ValidationManager::addRulesToKomposer($this->config('rules'), $komposer);
         }
+    }
+
+    /**
+     * Calls a custom method on form submit.
+     *
+     * @return mixed
+     */
+    public function callCustomHandle()
+    {
+        return FormSubmitter::callCustomHandle($this);
+    }
+
+    /**
+     * Calls the internal kompo eloquent saving mechanism on form submit.
+     *
+     * @return mixed
+     */
+    public function eloquentSave()
+    {
+        return FormSubmitter::eloquentSave($this);
     }
 
     /**

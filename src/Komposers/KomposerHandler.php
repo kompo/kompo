@@ -21,10 +21,12 @@ class KomposerHandler
 
         switch (KompoAction::header()) {
             case 'eloquent-submit':
-                return FormSubmitter::eloquentSave($komposer);
+                return $komposer->eloquentSave();
+                //return FormSubmitter::eloquentSave($komposer);
 
             case 'handle-submit':
-                return FormSubmitter::callCustomHandle($komposer);
+                return $komposer->callCustomHandle();
+                //return FormSubmitter::callCustomHandle($komposer);
 
             case 'include-komponents':
                 return static::getIncludedKomponents($komposer);
