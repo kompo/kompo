@@ -10,4 +10,9 @@ class MultiCheckbox extends MultiSelect
     {
         parent::vlInitialize($label);
     }
+
+    public function horizontal()
+    {
+        return $this->class('vlHorizontalMutiCheckbox');
+    }
 }
