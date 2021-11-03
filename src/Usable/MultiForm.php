@@ -17,6 +17,8 @@ use Kompo\Komponents\Traits\HasAddLabel;
 use Kompo\Komposers\Form\FormSubmitter;
 use Kompo\Routing\RouteFinder;
 
+use Illuminate\Database\Eloquent\Model;
+
 class MultiForm extends Field
 {
     use HasAddLabel;
@@ -111,7 +113,7 @@ class MultiForm extends Field
             'kompoClass' => $this->formClass,
             'store'      => $this->childStore,
             'parameters' => [], // is this feature needed?
-            'modelKey'   => $subrequest[static::$multiFormKey] ?? ($this->value[$subKey] ?? null),
+            'modelKey'   => static::getModelKeyFromRequest($subrequest, $this->value, $subKey),
         ])->bootForAction();
 
         //No Validation or Authorization step - it has already been done on the parent Form
@@ -135,6 +137,20 @@ class MultiForm extends Field
         FormSubmitter::saveModel($form);
 
         RequestFacade::swap($mainRequest); //then swap back the original
+    }
+
+    protected static function getModelKeyFromRequest($subrequest, $value, $subKey)
+    {
+        if (array_key_exists(static::$multiFormKey, $subrequest)) {
+            
+            return $subrequest[static::$multiFormKey];
+
+        }else if ($value) {
+            
+            $model = $value[$subKey] ?? null;
+
+            return $model instanceof Model ? $model->getKey() : $model; //TODO: check if the else case here is relevant
+        }
     }
 
     /**
