@@ -456,6 +456,13 @@ if (!function_exists('_Place')) {
     }
 }
 
+if (!function_exists('_Radio')) {
+    function _Radio(): \Kompo\Radio
+    {
+        return Kompo\Radio::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_Rows')) {
     function _Rows(): \Kompo\Rows
     {
