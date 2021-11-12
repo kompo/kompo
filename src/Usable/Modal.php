@@ -65,9 +65,10 @@ class Modal extends Form
 			return;
 		}
 
-		return _Title($this->_Title)->class('text-2xl sm:text-3xl font-bold')
+		return _Title($this->_Title)
 			->icon($this->icon())
-			->class('font-semibold mb-4 md:mb-0')
+			->class('text-2xl sm:text-3xl font-bold')
+			->class('mb-4 md:mb-0')
 			->class('flex items-center');
 	}
 

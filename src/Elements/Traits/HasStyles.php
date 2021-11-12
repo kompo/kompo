@@ -37,7 +37,7 @@ trait HasStyles
      */
     public function style($styles = null)
     {
-        if ($styles) {
+        if ($styles !== null) {
             $this->style = trim($styles);
 
             return $this;
