@@ -2,7 +2,7 @@
 
 {!! $_kompo->getOpenTag($menuKey) !!}
 
-    @include('kompo::menus.komponents', $_kompo->getKomponentsArray($menuKey))
+    {{-- @include('kompo::menus.komponents', $_kompo->getKomponentsArray($menuKey)) --}}
 
 {!! $_kompo->getCloseTag($menuKey) !!}
 

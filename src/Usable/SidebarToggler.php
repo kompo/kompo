@@ -2,10 +2,11 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Trigger;
+use Kompo\Link;
 
-class SidebarToggler extends Trigger
+class SidebarToggler extends Link
 {
+    public $vueComponent = 'SidebarToggler';
     public $bladeComponent = 'SidebarToggler';
 
     protected function vlInitialize($label)

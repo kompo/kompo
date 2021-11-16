@@ -2,13 +2,11 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\HasHref;
-use Kompo\Komponents\Trigger;
+use Kompo\Link;
 
-class Logo extends Trigger
+class Logo extends Link
 {
-    use HasHref;
-
+    public $vueComponent = 'Logo';
     public $bladeComponent = 'Logo';
 
     public $imageUrl = false;

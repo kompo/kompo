@@ -10,7 +10,7 @@
         $Footer ?? false,
     );
 
-    $savedCloseTag = $_kompo->wrapperCloseTag(); //cuz by the time it gets there, things change
+    $savedCloseTag = $_kompo->wrapperCloseTag(); //by the time it gets there, things change
 ?>
 
 <head>
