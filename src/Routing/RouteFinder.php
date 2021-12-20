@@ -80,6 +80,10 @@ class RouteFinder
             throw new EmptyRouteException();
         }
 
+        if (filter_var($route, FILTER_VALIDATE_URL) !== false || $route === 'javascript:void(0)') {
+            return $route;
+        }
+
         $routeObject = static::getRouteByName($route);
 
         return is_null($routeObject) ? url($route, $parameters) : route($route, $parameters);

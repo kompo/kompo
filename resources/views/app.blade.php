@@ -8,6 +8,10 @@
         $LeftSidebar ?? false,
         $RightSidebar ?? false,
         $Footer ?? false,
+        [
+            'mainClass' => isset($mainClass) ? $mainClass : '',
+            'mainStyle' => isset($mainStyle) ? $mainStyle : '',
+        ]
     );
 
     $savedCloseTag = $_kompo->wrapperCloseTag(); //by the time it gets there, things change

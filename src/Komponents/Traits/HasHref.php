@@ -40,12 +40,8 @@ trait HasHref
     {
         $this->checkTurbo($route, $parameters);
 
-        if (filter_var($route, FILTER_VALIDATE_URL) !== false || $route === 'javascript:void(0)') {
-            $this->href = $route;
-        } else {
-            //$this->setRoute($route, $parameters); //Why?
-            $this->href = RouteFinder::guessRoute($route, $parameters);
-        }
+        $this->href = RouteFinder::guessRoute($route, $parameters);
+        
         $this->prepareClickable();
 
         return $this;

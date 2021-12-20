@@ -29,4 +29,19 @@ trait HasConfig
             return $config ? ($this->config[$config] ?? null) : $this->config;
         }
     }
+
+    //TODO document
+    /**
+     * When having custom options in a Select, this tells specifically what text represents the option when searching/filtering
+     *
+     * @param string  $searchableBy  The searchable by
+     *
+     * @return self
+     */
+    public function searchableBy($searchableBy)
+    {
+        return $this->config([
+            'searchableBy' => $searchableBy,
+        ]);
+    }
 }

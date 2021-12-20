@@ -16,6 +16,9 @@ class KompoLayout
     protected $hasAnyFixedMenus = false;
     protected $overFlowSet = false;
 
+    protected $mainClass;
+    protected $mainStyle;
+
     public function __construct($n, $l, $r, $f, $options = [])
     {
         $this->setMenu($n, 'navbar', 'vl-nav', 'vl-nav');
@@ -83,21 +86,13 @@ class KompoLayout
     {
         $pm = $this->getPrimaryMenu();
 
-        $flex = in_array($pm, ['navbar', 'footer', 'navbar|footer']) ?
-            'kompoFlexCol' :
-            ($pm ? 'kompoFlex' : 'vlFlex1');
+        $wrapperClasses = $this->getFlexClass($pm).$this->getOverflowClass($appId);
 
-        $tag = $pm ? '<div' : $this->getMainOpenTag();
+        $tag = $pm ? ('<div class="'.$wrapperClasses.'"') : $this->getMainOpenTag($wrapperClasses);
 
         $tag .= $appId ? ' id="'.$appId.'" v-cloak' : '';
 
-        $overflow = !$appId ? '' : ($this->hasAnyFixedMenus ? 'vl100vh ' : 'vlMin100vh ');
-
-        if ($this->hasAnyFixedMenus && !$this->overFlowSet) {
-            $overflow .= $this->noFixedMenusLeft() ? 'kompoScrollableContent' : 'kompoFixedContent';
-        }
-
-        return $tag.' class="'.$flex.($overflow ? (' '.$overflow) : '').'">';
+        return $tag.'>';
     }
 
     public function wrapperCloseTag()
@@ -105,6 +100,22 @@ class KompoLayout
         $pm = $this->getPrimaryMenu();
 
         return $pm ? '</div>' : '</main>';
+    }
+
+    protected function getFlexClass($pm)
+    {
+        return in_array($pm, ['navbar', 'footer', 'navbar|footer']) ? 'kompoFlexCol' : ($pm ? 'kompoFlex' : 'vlFlex1');
+    }
+
+    protected function getOverflowClass($appId = false)
+    {
+        $overflow = !$appId ? '' : ($this->hasAnyFixedMenus ? 'vl100vh ' : 'vlMin100vh ');
+
+        if ($this->hasAnyFixedMenus && !$this->overFlowSet) {
+            $overflow .= $this->noFixedMenusLeft() ? 'kompoScrollableContent' : 'kompoFixedContent';
+        }
+
+        return $overflow ? (' '.$overflow) : '';
     }
 
     public function getPrimaryMenu()
@@ -241,23 +252,6 @@ class KompoLayout
         return ' :vkompo="'.htmlspecialchars($menu).'"';
     }
 
-    /* TO DELETE
-    protected function getClassAttribute($menu)
-    {
-        return ' class="'.$menu->config('menuClass').
-            ($menu->class() ? (' '.$menu->class()) : '').'"';
-    }
-
-    protected function getIdAttribute($menu)
-    {
-        return $menu->id ? (' id="'.$menu->id.'"') : '';
-    }
-
-    protected function getStyleAttribute($menu)
-    {
-        return $menu->style ? (' style="'.$menu->style.'"') : '';
-    }*/
-
     protected function getSidebarSideAttribute($key)
     {
         return ' side="'.($key == 'rsidebar' ? 'right' : 'left').'"';
@@ -284,8 +278,11 @@ class KompoLayout
         return strpos($menu->config('menuClass'), 'sidebar') > -1;
     }
 
-    protected function getMainOpenTag()
+    protected function getMainOpenTag($wrapperClasses)
     {
-        return '<main';
+        $mainClassStr = ' class="'.$wrapperClasses.($this->mainClass ? (' '.$this->mainClass) : '').'"';
+        $mainStyleStr = $this->mainStyle ? (' style="'.$this->mainStyle.'"') : '';
+
+        return '<main'.$mainClassStr.$mainStyleStr;
     }
 }

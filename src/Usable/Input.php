@@ -34,8 +34,6 @@ class Input extends Field
     //TODO: document
     public function clearable()
     {
-        return $this->config([
-            'clearable' => true,
-        ]);
+        return $this->type('search');
     }
 }

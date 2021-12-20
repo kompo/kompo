@@ -1,5 +1,4 @@
 <?php
-
 /* Kompo helpers */
 if (!function_exists('_AddButton')) {
     function _AddButton(): \Kompo\AddButton
@@ -285,6 +284,13 @@ if (!function_exists('_I')) {
     function _I(): \Kompo\I
     {
         return Kompo\I::form(...func_get_args());
+    }
+}
+
+if (!function_exists('_Iframe')) {
+    function _Iframe(): \Kompo\Iframe
+    {
+        return Kompo\Iframe::form(...func_get_args());
     }
 }
 
@@ -731,7 +737,7 @@ if (!function_exists('_Tr')) {
     }
 }
 
-/* ADDITIONAL HELPERS */
+/* ADDITIONAL USEFUL HELPERS */
 if (!function_exists('_Flex4')) {
     function _Flex4(): \Kompo\Flex
     {

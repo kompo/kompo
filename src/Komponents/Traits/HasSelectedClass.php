@@ -20,4 +20,19 @@ trait HasSelectedClass
             'unselectedClass' => $unselectedClass,
         ]);
     }
+
+    /**
+     * Sets the class for both the selected and unselected states.
+     *
+     * @param string      $commonClass   The class(es) for the both selected and unselected states
+     *
+     * @return self
+     */
+    public function commonClass($commonClass)
+    {
+        //TODO: add to kompo documentation
+        return $this->config([
+            'commonClass'   => $commonClass,
+        ]);
+    }
 }
