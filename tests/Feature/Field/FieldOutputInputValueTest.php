@@ -10,10 +10,10 @@ class FieldOutputInputValueTest extends EnvironmentBoot
     public function output_value_and_default_correct_with_model_form()
     {
         $form = _FieldOutputValueForm::boot();
-        $this->assertEquals('post-title', $form->komponents[0]->value);
-        $this->assertEquals('obj-title', $form->komponents[1]->value);
-        $this->assertEquals('default-content', $form->komponents[2]->value);
-        $this->assertEquals('default-tag', $form->komponents[3]->value);
+        $this->assertEquals('post-title', $form->elements[0]->value);
+        $this->assertEquals('obj-title', $form->elements[1]->value);
+        $this->assertEquals('default-content', $form->elements[2]->value);
+        $this->assertEquals('default-tag', $form->elements[3]->value);
 
         $this->submit($form, [
             'title'     => null,
@@ -31,10 +31,10 @@ class FieldOutputInputValueTest extends EnvironmentBoot
         ]);
 
         $form = _FieldOutputValueForm::boot(1);
-        $this->assertEquals('post-title', $form->komponents[0]->value);
-        $this->assertEquals('obj-title', $form->komponents[1]->value);
-        $this->assertEquals('default-content', $form->komponents[2]->value);
-        $this->assertEquals('default-tag', $form->komponents[3]->value);
+        $this->assertEquals('post-title', $form->elements[0]->value);
+        $this->assertEquals('obj-title', $form->elements[1]->value);
+        $this->assertEquals('default-content', $form->elements[2]->value);
+        $this->assertEquals('default-tag', $form->elements[3]->value);
 
         $this->submit($form, [
             'title'     => 'other-title',
@@ -52,10 +52,10 @@ class FieldOutputInputValueTest extends EnvironmentBoot
         ]);
 
         $form = _FieldOutputValueForm::boot(1);
-        $this->assertEquals('other-title', $form->komponents[0]->value);
-        $this->assertEquals('other-obj-title', $form->komponents[1]->value);
-        $this->assertEquals('other-content', $form->komponents[2]->value);
-        $this->assertEquals('other-tag', $form->komponents[3]->value);
+        $this->assertEquals('other-title', $form->elements[0]->value);
+        $this->assertEquals('other-obj-title', $form->elements[1]->value);
+        $this->assertEquals('other-content', $form->elements[2]->value);
+        $this->assertEquals('other-tag', $form->elements[3]->value);
     }
 
     /** ------------------ PRIVATE --------------------------- */

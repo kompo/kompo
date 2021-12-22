@@ -51,7 +51,7 @@ trait _EloquentFiltersTrait
         ];
     }
 
-    public function card($item)
+    public function render($item)
     {
         return [
             'id'      => $item->id,

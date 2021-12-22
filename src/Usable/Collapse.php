@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\TriggerWithSubmenu;
+use Kompo\Elements\TriggerWithSubmenu;
 
 class Collapse extends TriggerWithSubmenu
 {

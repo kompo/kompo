@@ -5,7 +5,7 @@ namespace Kompo\Routing;
 use Illuminate\Support\Arr;
 use Kompo\Core\KompoTarget;
 use Kompo\Exceptions\EmptyRouteException;
-use Kompo\Komposers\Komposer;
+use Kompo\Komponents\Komponent;
 
 class RouteFinder
 {
@@ -29,7 +29,7 @@ class RouteFinder
     }
 
     /**
-     * Adds the main kompo route point to the komponent.
+     * Adds the main kompo route point to the element.
      *
      * @param mixed $kompo A kompo object
      *
@@ -45,23 +45,23 @@ class RouteFinder
     /**
      * { function_description }.
      *
-     * @param <type> $komponent       The komponent
-     * @param string $routeOrKomposer The route or komposer class
+     * @param <type> $element       The element
+     * @param string $routeOrKomponent The route or komponent class
      */
-    public static function setUpKomposerRoute($komponent, $routeOrKomposer, $routeMethod = 'GET')
+    public static function setUpKomponentRoute($element, $routeOrKomponent, $routeMethod = 'GET')
     {
-        if (is_a($routeOrKomposer, Komposer::class, true)) {
-            return $komponent->config(array_merge(
+        if (is_a($routeOrKomponent, Komponent::class, true)) {
+            return $element->config(array_merge(
                 [
                     'route'       => RouteFinder::getKompoRoute(),
                     'routeMethod' => $routeMethod,
                 ],
-                KompoTarget::getEncryptedArray($routeOrKomposer)
+                KompoTarget::getEncryptedArray($routeOrKomponent)
             ));
         }
 
-        return $komponent->config([
-            'route'       => $routeOrKomposer,
+        return $element->config([
+            'route'       => $routeOrKomponent,
             'routeMethod' => $routeMethod,
         ]);
     }

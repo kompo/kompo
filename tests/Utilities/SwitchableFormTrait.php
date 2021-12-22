@@ -4,11 +4,11 @@ namespace Kompo\Tests\Utilities;
 
 trait SwitchableFormTrait
 {
-    public function filter($komponents)
+    public function filter($elements)
     {
-        return collect($komponents)->filter(function ($komponent) {
-            if ($komponent->name == $this->store('komponent')) {
-                return $komponent;
+        return collect($elements)->filter(function ($element) {
+            if ($element->name == $this->store('element')) {
+                return $element;
             }
         });
     }

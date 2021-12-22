@@ -2,6 +2,6 @@
 	{{ $component->class() }}"
 	@include('kompo::partials.IdStyle')>
 
-    @include('kompo::menus.komponents', [ 'komponents' => $component->komponents ])
+    @include('kompo::menus.elements', [ 'elements' => $component->elements ])
 
 </div>

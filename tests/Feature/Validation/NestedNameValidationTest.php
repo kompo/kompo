@@ -30,16 +30,16 @@ class NestedNameValidationTest extends EnvironmentBoot
 
     private function submit_validation_on_request_all_and_individually($requestData)
     {
-        $this->assert_komposer_is_validated_for_action(_NestedFieldNameValidationForm::boot(), 'submit', $requestData);
+        $this->assert_komponent_is_validated_for_action(_NestedFieldNameValidationForm::boot(), 'submit', $requestData);
     }
 
     private function browse_validation_on_request_all_and_individually($requestData)
     {
-        $this->assert_komposer_is_validated_for_action(_NestedFieldNameValidationQuery::boot(), 'browse', $requestData);
+        $this->assert_komponent_is_validated_for_action(_NestedFieldNameValidationQuery::boot(), 'browse', $requestData);
     }
 
     /************ PRIVATE 2 *******************/
-    private function assert_komposer_is_validated_for_action($komposer, $action, $requestData)
+    private function assert_komponent_is_validated_for_action($komponent, $action, $requestData)
     {
         $arrayKeys = array_keys($requestData);
 
@@ -47,7 +47,7 @@ class NestedNameValidationTest extends EnvironmentBoot
             $permutedRequest = $requestData;
             $permutedRequest[$arrayKey] = null;
 
-            $response = $this->{$action}($komposer, $permutedRequest)->assertStatus(422);
+            $response = $this->{$action}($komponent, $permutedRequest)->assertStatus(422);
             $this->assertCount(1, $response['errors']);
         }
     }

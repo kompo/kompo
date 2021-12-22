@@ -6,8 +6,8 @@ use Illuminate\Support\Arr;
 use Kompo\Core\RequestData;
 use Kompo\Core\Util;
 use Kompo\Database\ModelManager;
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Managers\FormField;
+use Kompo\Elements\Field;
+use Kompo\Elements\Managers\FormField;
 
 class Place extends Field
 {

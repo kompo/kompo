@@ -4,9 +4,9 @@ namespace Kompo;
 
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Komponents\Layout;
-use Kompo\Komponents\Traits\HasHref;
-use Kompo\Komponents\Traits\VerticalAlignmentTrait;
+use Kompo\Elements\Layout;
+use Kompo\Elements\Traits\HasHref;
+use Kompo\Elements\Traits\VerticalAlignmentTrait;
 
 class Flex extends Layout
 {

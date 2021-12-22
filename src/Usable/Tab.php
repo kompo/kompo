@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Layout;
+use Kompo\Elements\Layout;
 
 class Tab extends Layout
 {

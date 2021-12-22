@@ -7,17 +7,17 @@ use Kompo\Form;
 
 class _RunElementClosureFromActionForm extends Form
 {
-    public function komponents()
+    public function render()
     {
         return [
-            Button::form()->getKomponents('includeMethod'),
+            Button::form()->getElements('includeMethod'),
 
             Button::form()->on('click', function ($e) {
-                $e->get('someView')->getKomponents('includeMethod');
+                $e->get('someView')->getElements('includeMethod');
             }),
 
             Button::form()->post('something')->onSuccess(function ($e) {
-                $e->getKomponents('includeMethod');
+                $e->getElements('includeMethod');
             }),
 
             Button::form()->on('click', function ($e) {
@@ -25,7 +25,7 @@ class _RunElementClosureFromActionForm extends Form
 
                 $e->post('someView')->onSuccess(function ($e) {
                     $e->inPanel('cs')->onSuccess(function ($e) {
-                        $e->getKomponents('includeMethod');
+                        $e->getElements('includeMethod');
                     });
                 });
             }),
@@ -36,7 +36,7 @@ class _RunElementClosureFromActionForm extends Form
     public function includeMethod(_InteractionPostRequest $request)
     {
         return [
-            //some komponents
+            //some elements
         ];
     }
 }

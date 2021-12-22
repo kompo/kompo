@@ -5,7 +5,7 @@ namespace Kompo\Interactions\Actions;
 trait EmitEventActions
 {
     /**
-     * Emits a Vue event to the parent <b>Komposer</b>.
+     * Emits a Vue event to the parent <b>Komponent</b>.
      * You may add an optional payload as the event's first parameter.
      *
      * @param string     $event The event name
@@ -22,7 +22,7 @@ trait EmitEventActions
     }
 
     /**
-     * Emits a regular Vue event to it's parent <b>Komponent</b>. This is useful for custom Komponents.
+     * Emits a regular Vue event to it's parent <b>Element</b>. This is useful for custom Elements.
      * You may add an optional payload as the event's first parameter.
      *
      * @param string     $event The event name

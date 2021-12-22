@@ -10,12 +10,12 @@ class MetaAnalysis
 
         $files = array_diff(scandir($dir), ['.', '..']);
 
-        return collect($files)->map(function ($komponent) use ($type) {
-            $komponent = str_replace('.php', '', $komponent);
-            $komponentClass = 'Kompo\\'.$komponent;
+        return collect($files)->map(function ($element) use ($type) {
+            $element = str_replace('.php', '', $element);
+            $elementClass = 'Kompo\\'.$element;
 
-            if (is_a($komponentClass, $type, true)) {
-                return $komponentClass;
+            if (is_a($elementClass, $type, true)) {
+                return $elementClass;
             }
         })->filter()->values()->all();
     }

@@ -226,12 +226,12 @@ class KompoLayout
         return $tag;
     }
 
-    public function getKomponentsArray($key)
+    public function getElementsArray($key)
     {
         return [
             'kompoid'    => KompoId::getFromElement($this->{$key}),
             'kompoinfo'  => KompoInfo::getFromElement($this->{$key}),
-            'komponents' => $this->{$key}->komponents,
+            'elements' => $this->{$key}->elements,
         ];
     }
 

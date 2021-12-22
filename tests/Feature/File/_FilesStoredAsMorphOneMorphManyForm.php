@@ -14,7 +14,7 @@ class _FilesStoredAsMorphOneMorphManyForm extends Form
 
     public $model = Obj::class;
 
-    public function komponents()
+    public function render()
     {
         return $this->filter([
             File::form('A')->name('morphOnePlain'),

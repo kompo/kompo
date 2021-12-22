@@ -3,7 +3,7 @@
 namespace Kompo;
 
 use Illuminate\Support\Carbon;
-use Kompo\Komponents\Field;
+use Kompo\Elements\Field;
 
 class Time extends Field
 {

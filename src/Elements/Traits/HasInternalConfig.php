@@ -2,12 +2,12 @@
 
 namespace Kompo\Elements\Traits;
 
-use Kompo\Komponents\Field;
+use Kompo\Elements\Field;
 
 trait HasInternalConfig
 {
     /**
-     * The komposer / komponent's config for internal usage. Contains the store, route parameters, etc...
+     * The komponent / element's config for internal usage. Contains the store, route parameters, etc...
      *
      * @var array
      */
@@ -33,7 +33,7 @@ trait HasInternalConfig
 
                 return $this;
             }
-        } elseif ($key === 'fields') { //storing field Komponents: push
+        } elseif ($key === 'fields') { //storing field Elements: push
 
             if ($config instanceof Field) {
                 array_push($this->_kompo[$key], $config);

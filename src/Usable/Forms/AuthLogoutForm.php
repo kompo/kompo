@@ -25,7 +25,7 @@ class AuthLogoutForm extends Form
         session(['kompo_locale' => $locale]); //for multi-lang sites
     }
 
-    public function komponents()
+    public function render()
     {
         return [
             Link::form('Logout')->class($this->linkClass)->submit(),

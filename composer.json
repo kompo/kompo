@@ -28,7 +28,6 @@
             "Kompo\\Http\\": "src/Http",
             "Kompo\\Interactions\\": "src/Interactions",
             "Kompo\\Komponents\\": "src/Komponents",
-            "Kompo\\Komposers\\": "src/Komposers",
             "Kompo\\Layout\\": "src/Layout",
             "Kompo\\Routing\\": "src/Routing",
             "Kompo\\Utilities\\": "src/Utilities",

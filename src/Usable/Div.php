@@ -4,8 +4,8 @@ namespace Kompo;
 
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Komponents\Layout;
-use Kompo\Komponents\Traits\HasHref;
+use Kompo\Elements\Layout;
+use Kompo\Elements\Traits\HasHref;
 
 class Div extends Layout
 {

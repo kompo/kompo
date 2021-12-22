@@ -13,7 +13,7 @@ class StripeButton extends Button
 
     public $vueComponent = 'StripeButton';
 
-    public function mounted($komposer)
+    public function mounted($komponent)
     {
         $this->emitDirect('stripeRedirect');
     }

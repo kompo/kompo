@@ -3,7 +3,7 @@
 namespace Kompo\Elements\Traits;
 
 use Kompo\Core\KompoId;
-use Kompo\Komposers\Komposer;
+use Kompo\Komponents\Komponent;
 
 trait HasId
 {
@@ -25,8 +25,8 @@ trait HasId
     {
         $this->id = $id;
 
-        if ($this instanceof Komposer) {
-            KompoId::setForKomposer($this, $this->id);
+        if ($this instanceof Komponent) {
+            KompoId::setForKomponent($this, $this->id);
         }
 
         return $this;

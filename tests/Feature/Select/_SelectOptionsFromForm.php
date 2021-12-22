@@ -13,7 +13,7 @@ class _SelectOptionsFromForm extends Form
 {
     public $model = Obj::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             //From string: relationships

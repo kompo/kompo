@@ -2,7 +2,7 @@
 
 namespace Kompo\Core;
 
-use Kompo\Komponents\Komponent;
+use Kompo\Elements\Element;
 use Kompo\Svg;
 
 class IconGenerator
@@ -10,7 +10,7 @@ class IconGenerator
     /**
      * Generates the icon's HTML if needed.
      *
-     * @param string|Komponent $icon The icon class, html or Komponent
+     * @param string|Element $icon The icon class, html or Element
      *
      * @return string (The well formed icon HTML)
      */
@@ -24,7 +24,7 @@ class IconGenerator
             return static::makeSvgIcon($icon)->__toHtml();
         }
 
-        if ($icon instanceof Komponent) {
+        if ($icon instanceof Element) {
             return $icon->__toHtml();
         }
 

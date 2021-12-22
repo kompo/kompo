@@ -4,8 +4,8 @@ namespace Kompo;
 
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Komponents\Layout;
-use Kompo\Komponents\Traits\HasHref;
+use Kompo\Elements\Layout;
+use Kompo\Elements\Traits\HasHref;
 
 class Rows extends Layout
 {
@@ -23,10 +23,10 @@ class Rows extends Layout
 
     		$this->vueComponent = 'Flex';
 
-    		$this->komponents = [
+    		$this->elements = [
     			_Html($icon),
     			_Rows(
-    				$this->komponents
+    				$this->elements
     			)
     		];
     	}

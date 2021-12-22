@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\ModalLinks;
+use Kompo\Elements\Traits\ModalLinks;
 
 class AddLink extends Link
 {

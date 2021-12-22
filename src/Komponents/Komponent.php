@@ -2,163 +2,252 @@
 
 namespace Kompo\Komponents;
 
-use Kompo\Core\IconGenerator;
-use Kompo\Core\KompoAction;
 use Kompo\Core\KompoId;
-use Kompo\Elements\Element;
-use Kompo\Komposers\KomposerManager;
+use Kompo\Elements\BaseElement;
+use Kompo\Interactions\Traits\ForwardsInteraction;
+use Kompo\Interactions\Traits\HasInteractions;
+use Kompo\Routing\Dispatcher;
+use Kompo\Routing\Router;
 
-abstract class Komponent extends Element
+abstract class Komponent extends BaseElement
 {
-    use Traits\HasHtmlAttributes;
-    use Traits\UsedInTables;
-    use Traits\DoesTurboRefresh;
-
-    public $bladeComponent = 'Komponent';
+    use HasInteractions;
+    use ForwardsInteraction;
 
     /**
-     * The component's label.
+     * The Vue component to render the Komponent as a child of another Komponent.
      *
      * @var string
      */
-    public $label;
+    public $vueComponent = 'Komponent';
 
     /**
-     * A second label for when the Komponent has dual states.
+     * The meta element's data for internal usage. Contains the store, route parameters, etc...
      *
-     * @var string
+     * @var array
      */
-    public $label2;
+    protected $_kompo = [
+        'parameters' => [],
+        'store'      => [],
+        'fields'     => [],
+        'options'    => [],
+    ];
 
     /**
-     * Constructs a Kompo\Komponent object.
+     * The komponent's meta tags array that are displayed if the komponent is booted in a layout from route.
      *
-     * @param string $label
-     *
-     * @return void
+     * @var array
      */
-    public function __construct($label = '', $label2 = null)
-    {
-        $this->vlInitialize($label);
-
-        if ($label2) {
-            $this->setLabel2($label2);
-        }
-    }
+    protected $metaTags = [];
 
     /**
-     * Initializes a komponent.
+     * Specifications for pusher messages. An associate array where the key is the channel name and the value is a string or array of fully qualified Message classes.
      *
-     * @param string $label
-     *
-     * @return void
+     * @var string[] array('EchoChannelName' => [MessageClass1::class, MessageClassName2::class])
      */
-    protected function vlInitialize($label)
-    {
-        KompoId::setForKomponent($this, $label);
-
-        $this->label = is_null($label) ? '' : __($label);
-    }
-
-    protected function setLabel2($label2 = null)
-    {
-        $this->label2 = is_null($label2) ? '' : __($label2);
-    }
+    public $pusherRefresh;
 
     /**
-     * Passes Form attributes to the component.
+     * Constructs a Komponent.
      *
-     * @return void
+     * @return self
      */
-    public function prepareForDisplay($komposer)
+    public function __construct()
     {
-    }
-
-    /**
-     * Passes Form attributes to the component.
-     *
-     * @return void
-     */
-    public function prepareForAction($komposer)
-    {
-        if ($this->config('includes') && KompoAction::is('eloquent-save')) {
-            KomposerManager::prepareKomponentsForAction($komposer, $this->config('includes'), true);
-        }
-    }
-
-
-    /* TODO DOCUMENT 
-     * currently used for disabling a Select option (make it unselectable)
-     */
-    public function disabled()
-    {
-        return $this->config([
-            'disabled' => true,
+        $this->config([
+            'sessionTimeoutMessage' => __('sessionTimeoutMessage'),
         ]);
     }
 
     /**
-     * Overwrite the initially set label.
+     * When a Komponent is called from a Route.
      *
-     * @param string $label
-     *
-     * @return Element
+     * @return mixed
      */
-    public function labelNonStatic($label)
+    public function __invoke()
     {
-        $this->label = __($label);
+        $route = request()->route();
+        $dispatcher = new Dispatcher($route->action['controller']);
 
-        return $this;
+        if ($layout = Router::getMergedLayout($route)) {
+            $komponent = $dispatcher->bootKomponentForDisplay();
+
+            return view('kompo::view', [
+                'vueComponent'   => $komponent->toHtml(),
+                'containerClass' => property_exists($komponent, 'containerClass') ? $komponent->containerClass : 'container',
+                'metaTags'       => $komponent->getMetaTags($komponent),
+                'js'             => method_exists($komponent, 'js') ? $komponent->js() : null,
+                'layout'         => $layout,
+                'section'        => Router::getLastSection($route),
+            ]);
+        } else {
+            return $dispatcher->bootKomponentForDisplay();
+        }
     }
 
     /**
-     * Overwrite the initially set label.
+     * This method is fired at the very beginning of the booting process (even before created).
+     * Handles booting authorization logic.
      *
-     * @param string $label
-     *
-     * @return Element
+     * @return bool Is booting the Komponent authorized or not?
      */
-    public static function labelStatic(...$arguments)
+    public function authorizeBoot()
     {
-        return static::form(...$arguments);
+        return true;
     }
 
     /**
-     * Adds an icon before component's label.
+     * Gets the failed authorization message, if defined.
      *
-     * @param string $iconString This is the icon HTML or icon class in &lt;i class="...">&lt;/i>
-     *
-     * @return Element
+     * @return string
      */
-    public function iconNonStatic($iconString)
+    public function getFailedAuthorizationMessage()
     {
-        $this->config(['icon' => IconGenerator::toHtml($iconString)]);
-
-        return $this;
-    }
-
-    public static function iconStatic($iconString)
-    {
-        return static::form('')->icon($iconString);
+        return property_exists($this, 'failedAuthorizationMessage') ? $this->failedAuthorizationMessage : null;
     }
 
     /**
-     * Adds an icon after component's label.
+     * Assign additional session data to the komponent. Or retrieve it if parameter is a string key.
      *
-     * @param string $iconString This is the icon HTML or icon class in &lt;i class="...">&lt;/i>
+     * @param mixed $data
      *
-     * @return Element
+     * @return mixed
      */
-    public function rIconNonStatic($iconString)
+    public function store($data = null)
     {
-        $this->config(['rIcon' => IconGenerator::toHtml($iconString)]);
-
-        return $this;
+        return $this->_kompo('store', $data);
     }
 
-    public static function rIconStatic($iconString)
+    /**
+     * Gets the route's parameter or the one persisted in the session.
+     *
+     * @param string|array|null $parameter
+     *
+     * @return mixed
+     */
+    public function parameter($data = null)
     {
-        return static::form('')->rIcon($iconString);
+        return $this->_kompo('parameters', $data);
+    }
+
+    /**
+     * TODO: document and use throughout the examples.
+     * Gets the prop of the Komponent, first we check if it's a route parameter, then we check if it is found in the store.
+     *
+     * @param string $parameter
+     *
+     * @return mixed
+     */
+    public function prop($data)
+    {
+        return $this->parameter($data) ?: $this->store($data);
+    }
+
+    /**
+     * Do nothing for Querys and Menus.
+     *
+     * @return void
+     */
+    public function prepareForDisplay($komponent)
+    {
+        $this->boot();
+    }
+
+    /**
+     * Do nothing for Querys and Menus.
+     *
+     * @return void
+     */
+    public function prepareForAction($komponent)
+    {
+        $this->boot();
+    }
+
+    /**
+     * The komponent's meta tags array that are displayed if the komponent is booted in a layout from route.
+     * Can be overriden.
+     *
+     * @var array
+     */
+    public function getMetaTags()
+    {
+        return ($this->metaTags && count($this->metaTags)) ? $this->metaTags : null;
+    }
+
+    /**
+     * Shortcut method to output the Komponent into it's HTML Vue tag.
+     *
+     * @return string
+     */
+    public static function toHtmlStatic($store = [])
+    {
+        return static::boot($store)->toHtml();
+    }
+
+    /**
+     * Shortcut method to output the Komponent into it's HTML Vue tag.
+     *
+     * @return string
+     */
+    public function toHtmlNonStatic()
+    {
+        return '<'.$this->vueKomponentTag.' :vkompo="'.htmlspecialchars($this).'"></'.$this->vueKomponentTag.'>';
+    }
+
+    /**
+     * Shortcut method to boot a Komponent for display.
+     *
+     * @return string
+     */
+    public static function bootStatic($store = [])
+    {
+        return with(new static($store))->boot();
+    }
+
+    /**
+     * Shortcut method to boot a Komponent for display.
+     *
+     * @return string
+     */
+    public function bootNonStatic()
+    {
+        return $this->bootForDisplay();
+    }
+
+    /**
+     * Constructing a Komponent from the info sent by AJAX
+     *
+     * @param  array  $bootInfo  The boot information
+     *
+     * @return  self
+     */
+    public static function constructFromBootInfo($bootInfo)
+    {
+        $komponent = static::constructFromArray($bootInfo);
+
+        $komponent->parameter($bootInfo['parameters']);
+
+        KompoId::setForKomponent($komponent, $bootInfo);
+
+        return $komponent;
+    }
+
+    /**
+     * Constructing a Komponent from an array of information
+     *
+     * @param  array  $info  The array information
+     *
+     * @return  self
+     */
+    public static function constructFromArray($info)
+    {
+        return is_string($komponent = $info['kompoClass']) ? new $komponent($info['store']) : $komponent;
+    }
+
+    //TODO: document
+    public function kompoId()
+    {
+        return KompoId::getFromElement($this);
     }
 
     /**
@@ -168,6 +257,6 @@ abstract class Komponent extends Element
      */
     public static function duplicateStaticMethods()
     {
-        return ['label', 'icon', 'rIcon'];
+        return ['boot', 'toHtml'];
     }
 }

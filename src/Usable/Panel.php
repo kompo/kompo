@@ -5,7 +5,7 @@ namespace Kompo;
 use Kompo\Core\IconGenerator;
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Komponents\Layout;
+use Kompo\Elements\Layout;
 
 class Panel extends Layout
 {

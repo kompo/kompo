@@ -13,7 +13,7 @@ class DummyClass extends Form
 		return '<div>'.var_export(request()->all(), true).'</div>';
 	}
 
-	public function komponents()
+	public function render()
 	{
 		return [
 			Title::form('Sample Form'),

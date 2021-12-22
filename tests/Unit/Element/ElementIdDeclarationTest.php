@@ -12,8 +12,8 @@ class ElementIdDeclarationTest extends EnvironmentBoot
         $form = _SetElementIdForm::boot();
 
         $this->assertEquals('form-id', $form->id);
-        $this->assertNull($form->komponents[0]->id);
-        $this->assertEquals('some-id', $form->komponents[1]->id);
-        $this->assertEquals('override-id', $form->komponents[2]->id);
+        $this->assertNull($form->elements[0]->id);
+        $this->assertEquals('some-id', $form->elements[1]->id);
+        $this->assertEquals('override-id', $form->elements[2]->id);
     }
 }

@@ -22,7 +22,7 @@ class FileAttributesToColumnsTest extends FileEnvironmentBoot
         //Display previously saved
         $form = _FileAttributesToColumnsForm::boot(1);
 
-        $this->assertIsArray($newValue = $form->komponents[0]->value);
+        $this->assertIsArray($newValue = $form->elements[0]->value);
         $this->assertSubset($newValue, $this->file_to_array($file1, 'path'));
 
         //Update file

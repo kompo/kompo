@@ -10,7 +10,7 @@ use Kompo\Tests\Utilities\_Form;
 class KompoIdTest extends EnvironmentBoot
 {
     /** @test */
-    public function kompo_id_is_correctly_created_on_komponents()
+    public function kompo_id_is_correctly_created_on_elements()
     {
         $el = Input::form('<span>Some Label()*</span>&#');
 
@@ -27,7 +27,7 @@ class KompoIdTest extends EnvironmentBoot
     }
 
     /** @test */
-    public function kompo_id_is_correctly_created_on_komposers_without_id()
+    public function kompo_id_is_correctly_created_on_komponents_without_id()
     {
         $form = _Form::boot();
 
@@ -44,7 +44,7 @@ class KompoIdTest extends EnvironmentBoot
     }
 
     /** @test */
-    public function kompo_id_is_correctly_created_on_komposers_with_id()
+    public function kompo_id_is_correctly_created_on_komponents_with_id()
     {
         $form = _SetElementIdForm::boot();
 

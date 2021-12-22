@@ -10,7 +10,7 @@ class _PlaceAttributesToColumnsForm extends Form
 {
     public $model = PlaceModel::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             //When AttributesToColumns, the name of the field should correspond to the path column

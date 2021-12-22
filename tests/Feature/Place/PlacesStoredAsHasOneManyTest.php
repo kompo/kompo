@@ -62,8 +62,8 @@ class PlacesStoredAsHasOneManyTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertEquals(1, $form->komponents[0]->value->id);
-        $this->assertSubset($this->place_to_array($place1), $form->komponents[0]->value);
+        $this->assertEquals(1, $form->elements[0]->value->id);
+        $this->assertSubset($this->place_to_array($place1), $form->elements[0]->value);
 
         //Update
         $this->submit(
@@ -80,8 +80,8 @@ class PlacesStoredAsHasOneManyTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertEquals(2, $form->komponents[0]->value->id);
-        $this->assertSubset($this->place_to_array($place2), $form->komponents[0]->value);
+        $this->assertEquals(2, $form->elements[0]->value->id);
+        $this->assertSubset($this->place_to_array($place2), $form->elements[0]->value);
 
         //Remove
         $this->submit(
@@ -99,7 +99,7 @@ class PlacesStoredAsHasOneManyTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertNull($form->komponents[0]->value);
+        $this->assertNull($form->elements[0]->value);
     }
 
     private function assert_has_many_places($relation, $snaked)
@@ -124,16 +124,16 @@ class PlacesStoredAsHasOneManyTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertCount(2, $form->komponents[0]->value);
+        $this->assertCount(2, $form->elements[0]->value);
         if ($relation == 'hasManyOrdered2') {
-            $this->assertSubset($this->place_to_array($place2), $form->komponents[0]->value[0]);
-            $this->assertSubset($this->place_to_array($place1), $form->komponents[0]->value[1]);
+            $this->assertSubset($this->place_to_array($place2), $form->elements[0]->value[0]);
+            $this->assertSubset($this->place_to_array($place1), $form->elements[0]->value[1]);
         } else {
-            $this->assertSubset($this->place_to_array($place1), $form->komponents[0]->value[0]);
-            $this->assertSubset($this->place_to_array($place2), $form->komponents[0]->value[1]);
+            $this->assertSubset($this->place_to_array($place1), $form->elements[0]->value[0]);
+            $this->assertSubset($this->place_to_array($place2), $form->elements[0]->value[1]);
         }
         if ($relation == 'hasManyFiltered2') {
-            $this->assertEquals(1, $form->komponents[0]->value[0]->order);
+            $this->assertEquals(1, $form->elements[0]->value[0]->order);
         }
 
         //Update
@@ -156,18 +156,18 @@ class PlacesStoredAsHasOneManyTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertCount(3, $form->komponents[0]->value);
+        $this->assertCount(3, $form->elements[0]->value);
         if ($relation == 'hasManyOrdered2') {
-            $this->assertSubset($this->place_to_array($place4), $form->komponents[0]->value[0]);
-            $this->assertSubset($this->place_to_array($place1), $form->komponents[0]->value[1]);
-            $this->assertSubset($this->place_to_array($place3), $form->komponents[0]->value[2]);
+            $this->assertSubset($this->place_to_array($place4), $form->elements[0]->value[0]);
+            $this->assertSubset($this->place_to_array($place1), $form->elements[0]->value[1]);
+            $this->assertSubset($this->place_to_array($place3), $form->elements[0]->value[2]);
         } else {
-            $this->assertSubset($this->place_to_array($place1), $form->komponents[0]->value[0]);
-            $this->assertSubset($this->place_to_array($place3), $form->komponents[0]->value[1]);
-            $this->assertSubset($this->place_to_array($place4), $form->komponents[0]->value[2]);
+            $this->assertSubset($this->place_to_array($place1), $form->elements[0]->value[0]);
+            $this->assertSubset($this->place_to_array($place3), $form->elements[0]->value[1]);
+            $this->assertSubset($this->place_to_array($place4), $form->elements[0]->value[2]);
         }
         if ($relation == 'hasManyFiltered2') {
-            $this->assertEquals(1, $form->komponents[0]->value[0]->order);
+            $this->assertEquals(1, $form->elements[0]->value[0]->order);
         }
 
         //Remove
@@ -188,13 +188,13 @@ class PlacesStoredAsHasOneManyTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertNull($form->komponents[0]->value);
+        $this->assertNull($form->elements[0]->value);
     }
 
     protected function getForm($id = null)
     {
         return _PlacesStoredAsHasOneHasManyForm::boot($id, [
-            'komponent' => $this->currentRelation,
+            'element' => $this->currentRelation,
         ]);
     }
 }

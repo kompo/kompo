@@ -13,7 +13,7 @@ class _SelectMorphedByManyForm extends Form
 
     public $model = Obj::class;
 
-    public function komponents()
+    public function render()
     {
         return $this->filter([
             MultiSelect::form('A')->name('morphedByManyPlain'),

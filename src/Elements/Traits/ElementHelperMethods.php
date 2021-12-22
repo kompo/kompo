@@ -5,7 +5,7 @@ namespace Kompo\Elements\Traits;
 trait ElementHelperMethods
 {
     /*************************************************************************
-    ** It is OK if these methods are overriden in Komposer classes... ********
+    ** It is OK if these methods are overriden in Komponent classes... ********
     *************************************************************************/
 
     /**

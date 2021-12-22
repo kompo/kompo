@@ -12,10 +12,10 @@ class DateRangeFieldTest extends EnvironmentBoot
     {
         $form = _DateRangeHandledForm::boot();
 
-        $this->assertNull($form->komponents[0]->value);
-        $this->assertCount(2, $form->komponents[1]->value);
-        $this->assertEquals(date('Y-m-d'), $form->komponents[1]->value[0]);
-        $this->assertEquals(date('Y-m-d', strtotime('+1 days')), $form->komponents[1]->value[1]);
+        $this->assertNull($form->elements[0]->value);
+        $this->assertCount(2, $form->elements[1]->value);
+        $this->assertEquals(date('Y-m-d'), $form->elements[1]->value[0]);
+        $this->assertEquals(date('Y-m-d', strtotime('+1 days')), $form->elements[1]->value[1]);
     }
 
     /** @test */
@@ -27,9 +27,9 @@ class DateRangeFieldTest extends EnvironmentBoot
 
         //dd($post->created_at);
 
-        $this->assertIsArray($form->komponents[0]->value);
-        $this->assertEquals($post->created_at, $form->komponents[0]->value[0]);
-        $this->assertEquals($post->updated_at, $form->komponents[0]->value[1]);
+        $this->assertIsArray($form->elements[0]->value);
+        $this->assertEquals($post->created_at, $form->elements[0]->value[0]);
+        $this->assertEquals($post->updated_at, $form->elements[0]->value[1]);
     }
 
     /** @test */
@@ -37,10 +37,10 @@ class DateRangeFieldTest extends EnvironmentBoot
     {
         $form = _DateRangeAttributeForm::boot();
 
-        $this->assertNull($form->komponents[0]->value);
-        $this->assertCount(2, $form->komponents[1]->value);
-        $this->assertEquals(date('Y-m-d'), $form->komponents[1]->value[0]);
-        $this->assertEquals(date('Y-m-d', strtotime('+1 days')), $form->komponents[1]->value[1]);
+        $this->assertNull($form->elements[0]->value);
+        $this->assertCount(2, $form->elements[1]->value);
+        $this->assertEquals(date('Y-m-d'), $form->elements[1]->value[0]);
+        $this->assertEquals(date('Y-m-d', strtotime('+1 days')), $form->elements[1]->value[1]);
 
         $this->assertDatabaseMissing('objs', ['id' => 1]);
 
@@ -64,10 +64,10 @@ class DateRangeFieldTest extends EnvironmentBoot
     {
         $form = _DateRangeRelationForm::boot();
 
-        $this->assertNull($form->komponents[0]->value);
-        $this->assertCount(2, $form->komponents[1]->value);
-        $this->assertEquals(date('Y-m-d'), $form->komponents[1]->value[0]);
-        $this->assertEquals(date('Y-m-d', strtotime('+1 days')), $form->komponents[1]->value[1]);
+        $this->assertNull($form->elements[0]->value);
+        $this->assertCount(2, $form->elements[1]->value);
+        $this->assertEquals(date('Y-m-d'), $form->elements[1]->value[0]);
+        $this->assertEquals(date('Y-m-d', strtotime('+1 days')), $form->elements[1]->value[1]);
 
         $this->assertDatabaseMissing('posts', ['id' => 1]);
         $this->assertDatabaseMissing('objs', ['id' => 1]);

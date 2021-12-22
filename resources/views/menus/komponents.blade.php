@@ -1,6 +1,6 @@
-@foreach($komponents as $komponent)
-	@include('kompo::navitems.'.$komponent->bladeComponent, [
-		'component' => $komponent,
+@foreach($elements as $element)
+	@include('kompo::navitems.'.$element->bladeComponent, [
+		'component' => $element,
 		'kompoinfo' => $kompoinfo,
 		'kompoid' => $kompoid,
 	])

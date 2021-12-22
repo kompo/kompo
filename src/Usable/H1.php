@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Block;
+use Kompo\Elements\Block;
 
 class H1 extends Block
 {

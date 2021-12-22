@@ -2,8 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Traits\CKEditorTrait;
+use Kompo\Elements\Field;
+use Kompo\Elements\Traits\CKEditorTrait;
 
 class CKEditor extends Field
 {

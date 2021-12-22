@@ -15,7 +15,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
     {
         $form = _SelectAttributeFillsForm::boot();
 
-        $this->assert_array_options_are_transformed_into_label_value_array($form->options(), $form->komponents);
+        $this->assert_array_options_are_transformed_into_label_value_array($form->options(), $form->elements);
     }
 
     /** @test */
@@ -24,7 +24,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
         factory(Tag::class, 6)->create();
         $form = _SelectAttributeFillsForm::boot(null, ['optionsMethod' => 'Tags']);
 
-        $this->assert_array_options_are_transformed_into_label_value_array(Tag::pluck('name', 'id'), $form->komponents);
+        $this->assert_array_options_are_transformed_into_label_value_array(Tag::pluck('name', 'id'), $form->elements);
     }
 
     /** @test */
@@ -32,15 +32,15 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
     {
         $form = _SelectAttributeFillsForm::boot(null, ['optionsMethod' => 'Cards']);
 
-        foreach ($form->komponents as $key => $komponent) {
-            $options = $komponent->options;
+        foreach ($form->elements as $key => $element) {
+            $options = $element->options;
 
             $this->assertCount(5, $options);
             $this->assertTrue($options[0]['label'] instanceof IconText);
             $this->assertEquals(1, $options[0]['value']);
-            $this->assertEquals('Option 1', $options[0]['label']->komponents['text']);
+            $this->assertEquals('Option 1', $options[0]['label']->elements['text']);
             $this->assertEquals(4, $options[3]['value']);
-            $this->assertEquals('Option 4', $options[3]['label']->komponents['text']);
+            $this->assertEquals('Option 4', $options[3]['label']->elements['text']);
         }
     }
 
@@ -56,7 +56,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
         $filesFiltered = File::where('name', '<', 'm')->get();
 
         $form = _SelectOptionsFromForm::boot();
-        $opts = function ($index) use ($form) { return $form->komponents[$index]->options; };
+        $opts = function ($index) use ($form) { return $form->elements[$index]->options; };
 
         //belongsTo
         $this->assert_relationships_options_are_loaded_ordered_or_filtered($users, $opts(0));
@@ -89,16 +89,16 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
         $form = _SelectOptionsFromForm::boot();
 
         //Card
-        $this->assertEquals(count($users), count($opts = $form->komponents[15]->options));
+        $this->assertEquals(count($users), count($opts = $form->elements[15]->options));
         foreach ($opts as $key => $opt) {
             $this->assertEquals($users[$key]->id, $opt['value']);
             $this->assertTrue($opt['label'] instanceof IconText);
-            $this->assertEquals(strtoupper($users[$key]->name), $opt['label']->komponents['text']);
-            $this->assertEquals('icon-location', $opt['label']->komponents['icon']);
+            $this->assertEquals(strtoupper($users[$key]->name), $opt['label']->elements['text']);
+            $this->assertEquals('icon-location', $opt['label']->elements['icon']);
         }
 
         //Array
-        $this->assertEquals(count($users), count($opts = $form->komponents[16]->options));
+        $this->assertEquals(count($users), count($opts = $form->elements[16]->options));
         foreach ($opts as $key => $opt) {
             $this->assertEquals($users[$key]->id, $opt['value']);
             $this->assertCount(2, $opt['label']);
@@ -107,7 +107,7 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
         }
 
         //Closure
-        $this->assertEquals(count($users), count($opts = $form->komponents[17]->options));
+        $this->assertEquals(count($users), count($opts = $form->elements[17]->options));
         foreach ($opts as $key => $opt) {
             $this->assertEquals($users[$key]->id, $opt['value']);
             $this->assertEquals(strtoupper($users[$key]->name), $opt['label']);
@@ -115,12 +115,12 @@ class SelectOptionsTransformationTest extends EnvironmentBoot
     }
 
     /** ------------------ PRIVATE --------------------------- */
-    private function assert_array_options_are_transformed_into_label_value_array($opts0, $formKomponents)
+    private function assert_array_options_are_transformed_into_label_value_array($opts0, $formElements)
     {
-        foreach ($formKomponents as $komponent) {
-            $this->assertEquals(count($opts0), count($komponent->options));
+        foreach ($formElements as $element) {
+            $this->assertEquals(count($opts0), count($element->options));
 
-            foreach ($komponent->options as $key => $opt) {
+            foreach ($element->options as $key => $opt) {
                 $this->assertEquals($key + 1, $opt['value']);
                 $this->assertEquals($opts0[$key + 1], $opt['label']);
             }

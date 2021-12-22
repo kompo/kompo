@@ -5,25 +5,25 @@ namespace Kompo;
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
-use Kompo\Komposers\Komposer;
-use Kompo\Komposers\KomposerManager;
+use Kompo\Komponents\Komponent;
+use Kompo\Komponents\KomponentManager;
 use Kompo\Routing\RouteFinder;
 
-abstract class Menu extends Komposer
+abstract class Menu extends Komponent
 {
     /**
-     * Stores the menu komponents.
+     * Stores the menu elements.
      *
      * @var array
      */
-    public $komponents = [];
+    public $elements = [];
 
     /**
-     * The Vue komposer tag.
+     * The Vue komponent tag.
      *
      * @var string
      */
-    public $vueKomposerTag = 'vl-menu';
+    public $vueKomponentTag = 'vl-menu';
 
     /**
      * If the menu fixed or scrollable?
@@ -44,7 +44,7 @@ abstract class Menu extends Komposer
     /**
      * Constructs a Menu.
      *
-     * @param null|array $store (optional) Additional data passed to the komponent.
+     * @param null|array $store (optional) Additional data passed to the Komponent.
      *
      * @return self
      */
@@ -58,11 +58,11 @@ abstract class Menu extends Komposer
     }
 
     /**
-     * Get the Komponents displayed in the form.
+     * Get the elements displayed in the menu.
      *
      * @return array
      */
-    public function komponents()
+    public function render()
     {
         return [];
     }
@@ -78,7 +78,7 @@ abstract class Menu extends Komposer
     }
 
     /**
-     * Shortcut method to boot a Komposer for display.
+     * Shortcut method to boot a Komponent for display.
      *
      * @return string
      */
@@ -98,13 +98,13 @@ abstract class Menu extends Komposer
 
         AuthorizationGuard::checkBoot($this, 'Display');
 
-        $this->komponents = KomposerManager::prepareKomponentsForDisplay($this, 'komponents', true);
+        $this->elements = KomponentManager::prepareElementsForDisplay($this, 'render', true);
 
-        KompoId::setForKomposer($this);
+        KompoId::setForKomponent($this);
 
-        KompoInfo::saveKomposer($this);
+        KompoInfo::saveKomponent($this);
 
-        KomposerManager::booted($this);
+        KomponentManager::booted($this);
 
         return $this;
     }

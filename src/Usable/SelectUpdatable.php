@@ -3,7 +3,7 @@
 namespace Kompo;
 
 use Kompo\Core\KompoId;
-use Kompo\Komponents\Traits\HasAddLabel;
+use Kompo\Elements\Traits\HasAddLabel;
 use Kompo\Routing\RouteFinder;
 
 class SelectUpdatable extends Select
@@ -21,9 +21,9 @@ class SelectUpdatable extends Select
 
     public function mounted($form)
     {
-        $this->komponents = [clone $this];
-        $this->komponents[0]->vueComponent = 'Select';
-        KompoId::appendToElement($this->komponents[0], '-select');
+        $this->elements = [clone $this];
+        $this->elements[0]->vueComponent = 'Select';
+        KompoId::appendToElement($this->elements[0], '-select');
 
         $this->config([
             'optionsKey'   => $this->optionsKey,
@@ -33,7 +33,7 @@ class SelectUpdatable extends Select
 
     /**
      * Specifies which form to open in the modal. In the first parameter:
-     * - You may either call a Form class directly. Ex: App\Http\Komposers\MyForm::class
+     * - You may either call a Form class directly. Ex: App\Http\Komponents\MyForm::class
      * - Or call a Route::get() that points to the Form Class. Ex: route('my-form').
      * After submit, the object will be added to the select options (and selected).
      *
@@ -47,7 +47,7 @@ class SelectUpdatable extends Select
         $ajaxPayload = null
     ) {
         //it has to be POST... automatic payload contains id for reopening Form
-        return RouteFinder::setUpKomposerRoute($this, $formClassOrRoute, 'POST')->config([
+        return RouteFinder::setUpKomponentRoute($this, $formClassOrRoute, 'POST')->config([
             'ajaxPayload'           => $ajaxPayload,
         ]);
     }

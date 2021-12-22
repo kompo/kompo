@@ -9,7 +9,7 @@ class _KompoRequestValidationForm extends Form
 {
     public $submitTo = 'submit-route';
 
-    public function komponents()
+    public function render()
     {
         return [
             Input::form()->name('name'),

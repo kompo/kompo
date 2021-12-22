@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Block;
+use Kompo\Elements\Block;
 use Kompo\Routing\RouteFinder;
 
 class Iframe extends Block

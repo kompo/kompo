@@ -10,7 +10,7 @@ class _DateRangeAttributeForm extends Form
 {
     public $model = Obj::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             DateRange::form('A')->name([

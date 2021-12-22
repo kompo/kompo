@@ -13,7 +13,7 @@ class _SettingFieldValuesFromDbForm extends Form
 {
     public $model = Post::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             Columns::form(

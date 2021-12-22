@@ -2,8 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Layout;
-use Kompo\Komponents\Managers\LayoutManager;
+use Kompo\Elements\Layout;
+use Kompo\Elements\Managers\LayoutManager;
 
 class Card extends Layout
 {
@@ -13,7 +13,7 @@ class Card extends Layout
     {
         $this->vlInitialize(LayoutManager::getNormalizedLabel($args, $this));
 
-        $this->komponents = LayoutManager::collectFilteredKomponents($args, $this)->all(); //no ->values() chained to preserve 'keys' (but Layout has it)
+        $this->elements = LayoutManager::collectFilteredElements($args, $this)->all(); //no ->values() chained to preserve 'keys' (but Layout has it)
     }
 
     /**
@@ -40,6 +40,6 @@ class Card extends Layout
      */
     public function prop($key)
     {
-        return $this->komponents[$key];
+        return $this->elements[$key];
     }
 }

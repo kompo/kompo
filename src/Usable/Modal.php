@@ -8,7 +8,7 @@ class Modal extends Form
 	protected $_Icon;
 
 	/* KOMPO RENDER METHOD */
-	public function komponents()
+	public function render()
 	{
 		return [
 			$this->header(),
@@ -28,7 +28,7 @@ class Modal extends Form
 				$this->headerButtons()
 			)->class('flex-row-reverse md:flex-row md:ml-8')
 		)
-		->class('bg-gray-50 border-b border-gray-200 px-4 py-6 sm:px-6 rounded-t-lg')
+		->class('bg-gray-50 border-b border-gray-200 p-4 rounded-t-lg')
 		->class('flex-col items-start md:flex-row md:items-center')
 		->alignStart();
 	}

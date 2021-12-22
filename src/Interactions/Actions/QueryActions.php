@@ -4,7 +4,7 @@ namespace Kompo\Interactions\Actions;
 
 use Kompo\Exceptions\FilterOperatorNotAllowedException;
 use Kompo\Exceptions\NotFilterCapableException;
-use Kompo\Komponents\Field;
+use Kompo\Elements\Field;
 use Kompo\Routing\RouteFinder;
 
 trait QueryActions

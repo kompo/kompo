@@ -8,8 +8,8 @@ use Kompo\Core\DependencyResolver;
 use Kompo\Core\KompoTarget;
 use Kompo\Core\Util;
 use Kompo\Database\EloquentField;
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Managers\FormField;
+use Kompo\Elements\Field;
+use Kompo\Elements\Managers\FormField;
 use Kompo\Routing\RouteFinder;
 
 class Select extends Field
@@ -45,37 +45,37 @@ class Select extends Field
         ]);
     }
 
-    public function prepareForFront($komposer)
+    public function prepareForFront($komponent)
     {
         //Load options...
         if ($this->optionsKey && $this->optionsLabel && !$this->config('ajaxOptions')) {
             $this->options(
-                EloquentField::getRelatedCandidates($komposer->model, $this->name, FormField::getConfig($this, 'morphToModel')),
+                EloquentField::getRelatedCandidates($komponent->model, $this->name, FormField::getConfig($this, 'morphToModel')),
                 $this->optionsKey,
                 $this->optionsLabel
             );
         }
 
         if ($this->config('ajaxOptions') && $this->value) {
-            $this->retrieveOptionsFromValue($komposer);
+            $this->retrieveOptionsFromValue($komponent);
         }
 
         $this->setValueForFront();
     }
 
-    protected function retrieveOptionsFromValue($komposer)
+    protected function retrieveOptionsFromValue($komponent)
     {
-        if ($this->retrieveMethod && method_exists($komposer, $this->retrieveMethod)) {
-            $this->options(Util::collect($this->value)->mapWithKeys(function ($optionKey) use ($komposer) {
-                return $komposer->{$this->retrieveMethod}($optionKey);
+        if ($this->retrieveMethod && method_exists($komponent, $this->retrieveMethod)) {
+            $this->options(Util::collect($this->value)->mapWithKeys(function ($optionKey) use ($komponent) {
+                return $komponent->{$this->retrieveMethod}($optionKey);
             }));
         } elseif ($this->optionsKey && $this->optionsLabel) {
             $this->options(Util::collect($this->value), $this->optionsKey, $this->optionsLabel);
         } else {
             //Not recommended last case scenario. This will load all options which may not be desired.
             //User should fix by using the above scenarios. Should I throw error or not?? No for now: worst case, the query will be slow.
-            $allOptions = DependencyResolver::callKomposerMethod(
-                $komposer,
+            $allOptions = DependencyResolver::callKomponentMethod(
+                $komponent,
                 KompoTarget::getDecrypted($this->config('ajaxOptionsMethod')),
                 ['search' => '']
             )->all();
@@ -149,7 +149,7 @@ class Select extends Field
     {
         if ($optionsLabel instanceof Card) {
             $computedLabel = clone $optionsLabel;
-            $computedLabel->komponents = static::transformLabelKey($computedLabel->komponents, $value);
+            $computedLabel->elements = static::transformLabelKey($computedLabel->elements, $value);
 
             return $computedLabel;
         } elseif (is_array($optionsLabel)) {
@@ -220,7 +220,7 @@ class Select extends Field
      * For that, a new public method in your class is needed to return the matched options.
      * Note that the requests are debounced.
      * For example:
-     * <php>public function komponents()
+     * <php>public function render()
      * {
      *    return [
      *       //User can search and matched options will be loaded from the backend
@@ -262,7 +262,7 @@ class Select extends Field
      * You may load the select options from the backend using another field's value.
      * For that, a new public method in your class is needed to return the new options.
      * For example:
-     * <php>public function komponents()
+     * <php>public function render()
      * {
      *    return [
      *       Select::form('Category')

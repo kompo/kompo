@@ -2,8 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Traits\HasBooleanValue;
+use Kompo\Elements\Field;
+use Kompo\Elements\Traits\HasBooleanValue;
 
 class Toggle extends Field
 {

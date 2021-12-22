@@ -3,7 +3,7 @@
 namespace Kompo;
 
 use Kompo\Core\ImageHandler;
-use Kompo\Komponents\Traits\UploadsImages;
+use Kompo\Elements\Traits\UploadsImages;
 
 class MultiImage extends MultiFile
 {
@@ -16,7 +16,7 @@ class MultiImage extends MultiFile
      */
     protected $fileHandler = ImageHandler::class;
 
-    public function prepareForFront($komposer)
+    public function prepareForFront($komponent)
     {
         $this->value = collect($this->value)->map(function ($image) {
             return $this->transformFromDB($image);

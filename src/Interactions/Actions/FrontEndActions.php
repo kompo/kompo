@@ -27,7 +27,7 @@ trait FrontEndActions
     }
 
     /**
-     * The Komponent will hide itself after an interaction.
+     * The Element will hide itself after an interaction.
      *
      * @return self
      */

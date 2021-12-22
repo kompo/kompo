@@ -13,9 +13,9 @@
         <i class="icon-down"></i>
     @endif
 
-    <template v-slot:komponents>
+    <template v-slot:elements>
         
-        @include('kompo::menus.komponents', [ 'komponents' => $component->komponents ])
+        @include('kompo::menus.elements', [ 'elements' => $component->elements ])
     
     </template>
 

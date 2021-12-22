@@ -10,11 +10,11 @@ use Kompo\Routing\Dispatcher;
 class KompoFormRequest extends FormRequest
 {
     /**
-     * The request's Komposer.
+     * The request's Komponent.
      *
-     * @var Kompo\Komposers\Komposer
+     * @var Kompo\Komponents\Komponent
      */
-    protected $komposer;
+    protected $komponent;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -23,9 +23,9 @@ class KompoFormRequest extends FormRequest
      */
     public function authorize()
     {
-        $this->komposer = Dispatcher::bootKomposerForAction();
+        $this->komponent = Dispatcher::bootKomponentForAction();
 
-        return AuthorizationGuard::mainGate($this->komposer);
+        return AuthorizationGuard::mainGate($this->komponent);
     }
 
     /**
@@ -35,6 +35,6 @@ class KompoFormRequest extends FormRequest
      */
     public function rules()
     {
-        return ValidationManager::getRules($this->komposer);
+        return ValidationManager::getRules($this->komponent);
     }
 }

@@ -83,7 +83,7 @@ class QueryFiltersCollectionsTest extends EnvironmentBoot
 
         $this->assertCount(count($expected), $items);
         foreach ($items as $key => $item) {
-            $value = $item['render']['komponents']['value'];
+            $value = $item['render']['elements']['value'];
 
             if ($this->getFromArray) {
                 $value = $value[array_key_first($input)];

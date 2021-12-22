@@ -167,8 +167,8 @@ class QueryFiltersEloquentRelationsTest extends EnvironmentBoot
 
         $this->assertCount($odd ? 6 : 5, $items);
         foreach ($items as $item) {
-            $this->assertEquals($odd ? 1 : 0, $item['render']['komponents']['id'] % 2);
-            $this->assertEquals($odd ? 1 : 2, $item['render']['komponents']['user_id']);
+            $this->assertEquals($odd ? 1 : 0, $item['render']['elements']['id'] % 2);
+            $this->assertEquals($odd ? 1 : 2, $item['render']['elements']['user_id']);
         }
     }
 
@@ -179,7 +179,7 @@ class QueryFiltersEloquentRelationsTest extends EnvironmentBoot
             ->decodeResponseJson()['data'];
 
         $this->assertCount(1, $items);
-        $this->assertEquals(1, $items[0]['render']['komponents']['id']);
+        $this->assertEquals(1, $items[0]['render']['elements']['id']);
     }
 
     private function assert_no_items_are_returned($query, $data)

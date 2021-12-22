@@ -20,17 +20,17 @@ class {name} extends Table
         ];
     }
 
-    public function card($item)
+    public function render($item)
     {
     	return [
-    	   // Card Komponents
+    	   // Card Elements
     	];
     }
 
     public function top()
 	{
 		return [
-			//Filters or Decorative Komponents
+			//Filters or Decorative Elements
 		];
 	}
 }

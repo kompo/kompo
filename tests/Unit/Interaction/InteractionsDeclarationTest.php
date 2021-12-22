@@ -15,7 +15,7 @@ use Kompo\Tests\EnvironmentBoot;
 class InteractionsDeclarationTest extends EnvironmentBoot
 {
     /** @test */
-    public function default_interaction_is_correctly_set_on_komponents()
+    public function default_interaction_is_correctly_set_on_elements()
     {
         //Input
         $el = Input::form()->submit();

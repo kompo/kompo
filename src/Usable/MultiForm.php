@@ -12,9 +12,9 @@ use Kompo\Database\Lineage;
 use Kompo\Database\ModelManager;
 use Kompo\Exceptions\NoMultiFormClassException;
 use Kompo\Form;
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Traits\HasAddLabel;
-use Kompo\Komposers\Form\FormSubmitter;
+use Kompo\Elements\Field;
+use Kompo\Elements\Traits\HasAddLabel;
+use Kompo\Komponents\Form\FormSubmitter;
 use Kompo\Routing\RouteFinder;
 
 use Illuminate\Database\Eloquent\Model;
@@ -25,7 +25,7 @@ class MultiForm extends Field
 
     public $vueComponent = 'MultiForm';
 
-    public $komponents;
+    public $elements;
 
     public $multiple = true;
 
@@ -81,7 +81,7 @@ class MultiForm extends Field
     public function mounted($parentForm)
     {
         //Pass rules upstream
-        ValidationManager::addRulesToKomposer(
+        ValidationManager::addRulesToKomponent(
             collect(ValidationManager::getRules($this->prepareChildForm($parentForm)))
                 ->flatMap(function ($v, $k) {
                     return [($this->name.'.*.'.$k) => $v];
@@ -89,7 +89,7 @@ class MultiForm extends Field
             $parentForm
         );
 
-        $this->komponents = !$this->value ? 
+        $this->elements = !$this->value ? 
 
             ($this->preloadIfEmpty ? [$this->prepareChildForm($parentForm)] : []) :
 
@@ -156,7 +156,7 @@ class MultiForm extends Field
     /**
      * Sets the fully qualified class name of the form that will be loaded from the Back-end or displayed multiple times when displaying relationships.
      *
-     * @param string     $formClass   The fully qualified form class. Ex: App\Http\Komposers\MyForm::class
+     * @param string     $formClass   The fully qualified form class. Ex: App\Http\Komponents\MyForm::class
      * @param array|null $ajaxPayload Associative array of custom data to include in the form's store (optional).
      */
     public function formClass($formClass, $ajaxPayload = null)

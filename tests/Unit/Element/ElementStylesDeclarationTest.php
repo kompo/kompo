@@ -11,10 +11,10 @@ class ElementStylesDeclarationTest extends EnvironmentBoot
     {
         $form = _SetElementStylesForm::boot();
 
-        $this->assertEquals('margin:0', $form->komponents[0]->style);
-        $this->assertEquals('margin:0', $form->komponents[1]->style);
-        $this->assertEquals('margin:0', $form->komponents[2]->style);
-        $this->assertEquals('margin:0;padding:0', $form->komponents[3]->style);
-        $this->assertEquals('margin:0;padding:0;color:red', $form->komponents[4]->style);
+        $this->assertEquals('margin:0', $form->elements[0]->style);
+        $this->assertEquals('margin:0', $form->elements[1]->style);
+        $this->assertEquals('margin:0', $form->elements[2]->style);
+        $this->assertEquals('margin:0;padding:0', $form->elements[3]->style);
+        $this->assertEquals('margin:0;padding:0;color:red', $form->elements[4]->style);
     }
 }

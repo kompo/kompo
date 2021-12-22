@@ -14,7 +14,7 @@ class _SelectAjaxOptionsFromFieldForm extends Form
 {
     public $model = Obj::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             //attributes

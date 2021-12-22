@@ -14,7 +14,7 @@ class AllFieldsValidationsTest extends EnvironmentBoot
 
         $response = $this->submit(_AllFieldsValidationsForm::boot())->assertStatus(422);
 
-        $this->assertCount(count($form->komponents), $response['errors']);
+        $this->assertCount(count($form->elements), $response['errors']);
 
         foreach (ValidationManager::getRules($form) as $key => $value) {
             $this->assertEquals(substr($response['errors'][$key][0], -12), 'is required.');

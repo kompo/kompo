@@ -2,9 +2,9 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\HasHref;
-use Kompo\Komponents\Traits\TriggerStyles;
-use Kompo\Komponents\Trigger;
+use Kompo\Elements\Traits\HasHref;
+use Kompo\Elements\Traits\TriggerStyles;
+use Kompo\Elements\Trigger;
 
 class Link extends Trigger
 {

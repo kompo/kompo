@@ -3,7 +3,7 @@
 namespace Kompo;
 
 use Kompo\Elements\Traits\HasGutters;
-use Kompo\Komponents\Traits\HasSelectedClass;
+use Kompo\Elements\Traits\HasSelectedClass;
 
 class SelectLinks extends Select
 {

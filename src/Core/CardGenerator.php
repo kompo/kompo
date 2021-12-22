@@ -3,31 +3,31 @@
 namespace Kompo\Core;
 
 use Kompo\Card;
-use Kompo\Komponents\Layout;
+use Kompo\Elements\Layout;
 use Kompo\Rows;
 
 class CardGenerator
 {
-    public static function getTransformedCards($komposer)
+    public static function getTransformedCards($komponent)
     {
-        $komposer->query = $komposer->query->getPaginated();
+        $komponent->query = $komponent->query->getPaginated();
 
-        $komposer->query->getCollection()->transform(function ($item, $key) use ($komposer) {
+        $komponent->query->getCollection()->transform(function ($item, $key) use ($komponent) {
             return [
-                'attributes' => static::getItemAttributes($item, $komposer),
-                'render'     => static::getItemCard($item, $key, $komposer),
+                'attributes' => static::getItemAttributes($item, $komponent),
+                'render'     => static::getItemCard($item, $key, $komponent),
             ];
         });
     }
 
-    protected static function getItemAttributes($item, $komposer)
+    protected static function getItemAttributes($item, $komponent)
     {
-        return static::isSpecialQueryLayout($komposer) ? 
+        return static::isSpecialQueryLayout($komponent) ? 
 
             $item : 
 
             [
-                'id' => static::attemptGetItemKeyName($item, $komposer->keyName)
+                'id' => static::attemptGetItemKeyName($item, $komponent->keyName)
             ];
     }
 
@@ -40,30 +40,30 @@ class CardGenerator
         }
     }
 
-    protected static function getItemCard($item, $key, $komposer)
+    protected static function getItemCard($item, $key, $komponent)
     {
-        $card = static::getCardDefaultFallback($item, $key, $komposer);
+        $card = static::getCardDefaultFallback($item, $key, $komponent);
 
-        if ($komposer->orderable) {
+        if ($komponent->orderable) {
             $card->config([
-                'item_id'    => $item->{$komposer->keyName},
-                'item_order' => $item->{$komposer->orderable},
+                'item_id'    => $item->{$komponent->keyName},
+                'item_order' => $item->{$komponent->orderable},
             ]);
         }
 
         return $card;
     }
 
-    protected static function getCardDefaultFallback($item, $key, $komposer)
+    protected static function getCardDefaultFallback($item, $key, $komponent)
     {
         $shouldActivateBootFlag = !app('bootFlag'); //because a query's card in a parent card would deactivate it for next one
 
         $shouldActivateBootFlag && app()->instance('bootFlag', true);
-        $card = method_exists($komposer, 'card') ? $komposer->card($item, $key) : [];
+        $card = method_exists($komponent, 'render') ? $komponent->render($item, $key) : [];
         $shouldActivateBootFlag && app()->instance('bootFlag', false);
 
         if (is_array($card)) {
-            $defaultCard = $komposer->card ?: Card::class;
+            $defaultCard = $komponent->card ?: Card::class;
 
             return $defaultCard::form($card);
         } elseif (!($card instanceof Card) && !($card instanceof Layout)) {
@@ -73,8 +73,8 @@ class CardGenerator
         }
     }
 
-    public static function isSpecialQueryLayout($komposer)
+    public static function isSpecialQueryLayout($komponent)
     {
-        return in_array($komposer->layout, ['CalendarMonth', 'Kanban']);
+        return in_array($komponent->layout, ['CalendarMonth', 'Kanban']);
     }
 }

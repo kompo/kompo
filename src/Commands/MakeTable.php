@@ -61,7 +61,7 @@ class MakeTable extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace.'\Http\Komposers';
+        return $rootNamespace.'\Http\Komponents';
     }
 
     /**

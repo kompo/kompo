@@ -6,8 +6,8 @@ use InvalidArgumentException;
 
 class NotBootableFromRouteException extends InvalidArgumentException
 {
-    public function __construct($komponentClass)
+    public function __construct($elementClass)
     {
-        parent::__construct("The class [{$komponentClass}] cannot be booted from a route with kompo.");
+        parent::__construct("The class [{$elementClass}] cannot be booted from a route with kompo.");
     }
 }

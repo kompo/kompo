@@ -65,7 +65,7 @@ class KompoServiceProvider extends ServiceProvider
 
     public static function initializeBootFlag()
     {
-        //When active, komposers are booted on instantiation.
+        //When active, komponents are booted on instantiation.
         app()->instance('bootFlag', false);        
     }
 

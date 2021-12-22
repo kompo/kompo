@@ -10,7 +10,7 @@ use Kompo\Tests\EnvironmentBoot;
 class KompoInfoTest extends EnvironmentBoot
 {
     /** @test */
-    public function kompo_info_is_correctly_created_on_komposers()
+    public function kompo_info_is_correctly_created_on_komponents()
     {
         $form = _SetElementIdForm::boot();
 

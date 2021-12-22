@@ -31,7 +31,7 @@ return [
      ************/
     'vue_app_id' => 'app',
 
-    'auto_classes_for_komposers' => false,
+    'auto_classes_for_komponents' => false,
 
     'smart_readonly_fields' => false,
 

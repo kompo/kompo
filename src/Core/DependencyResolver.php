@@ -11,23 +11,23 @@ use ReflectionClass;
 class DependencyResolver
 {
     /**
-     * Calls one of the Komposer's method with Dependency injection.
+     * Calls one of the Komponent's method with Dependency injection.
      *
-     * @param Komposer $komposer
+     * @param Komponent $komponent
      * @param string   $method
      * @param array    $specialParams
      *
      * @return mixed
      */
-    public static function callKomposerMethod($komposer, $method, $specialParams = [], $force = false)
+    public static function callKomponentMethod($komponent, $method, $specialParams = [], $force = false)
     {
         if (!$force) {
-            AuthorizationGuard::selfMethodGate($komposer, $method);
+            AuthorizationGuard::selfMethodGate($komponent, $method);
         }
 
-        $reflectionMethod = new ReflectionMethod($komposer, $method);
+        $reflectionMethod = new ReflectionMethod($komponent, $method);
 
-        return $komposer->{$method}(...static::resolveMethodDependencies($specialParams, $reflectionMethod));
+        return $komponent->{$method}(...static::resolveMethodDependencies($specialParams, $reflectionMethod));
     }
 
     /*

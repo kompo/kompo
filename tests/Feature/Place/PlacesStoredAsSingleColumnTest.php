@@ -33,11 +33,11 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = _PlacesStoredAsSingleColumnForm::boot(1);
-        $this->assertSubset($this->place_to_array($place1), $form->komponents[0]->value);
-        $this->assertSubset($this->place_to_array($place2), $form->komponents[1]->value);
-        $this->assertSubset($this->place_to_array($place3), $form->komponents[2]->value[0]);
-        $this->assertSubset($this->place_to_array($place4), $form->komponents[2]->value[1]);
-        $this->assertSubset($this->place_to_array($place5), $form->komponents[3]->value[0]);
+        $this->assertSubset($this->place_to_array($place1), $form->elements[0]->value);
+        $this->assertSubset($this->place_to_array($place2), $form->elements[1]->value);
+        $this->assertSubset($this->place_to_array($place3), $form->elements[2]->value[0]);
+        $this->assertSubset($this->place_to_array($place4), $form->elements[2]->value[1]);
+        $this->assertSubset($this->place_to_array($place5), $form->elements[3]->value[0]);
 
         //Update places
         $this->submit(
@@ -65,11 +65,11 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = _PlacesStoredAsSingleColumnForm::boot(1);
-        $this->assertSubset($this->place_to_array($place6), $form->komponents[0]->value);
-        $this->assertSubset($this->place_to_array($place7), $form->komponents[1]->value);
-        $this->assertSubset($this->place_to_array($place8), $form->komponents[2]->value[0]);
-        $this->assertSubset($this->place_to_array($place5), $form->komponents[3]->value[0]);
-        $this->assertSubset($this->place_to_array($place9), $form->komponents[3]->value[1]);
+        $this->assertSubset($this->place_to_array($place6), $form->elements[0]->value);
+        $this->assertSubset($this->place_to_array($place7), $form->elements[1]->value);
+        $this->assertSubset($this->place_to_array($place8), $form->elements[2]->value[0]);
+        $this->assertSubset($this->place_to_array($place5), $form->elements[3]->value[0]);
+        $this->assertSubset($this->place_to_array($place9), $form->elements[3]->value[1]);
 
         //Remove some places
         $this->submit(
@@ -97,9 +97,9 @@ class PlacesStoredAsSingleColumnTest extends PlaceEnvironmentBoot
 
         //Reload
         $form = _PlacesStoredAsSingleColumnForm::boot(1);
-        $this->assertNull($form->komponents[0]->value);
-        $this->assertNull($form->komponents[1]->value);
-        $this->assertNull($form->komponents[2]->value);
-        $this->assertSubset($this->place_to_array($place9), $form->komponents[3]->value[0]);
+        $this->assertNull($form->elements[0]->value);
+        $this->assertNull($form->elements[1]->value);
+        $this->assertNull($form->elements[2]->value);
+        $this->assertSubset($this->place_to_array($place9), $form->elements[3]->value[0]);
     }
 }

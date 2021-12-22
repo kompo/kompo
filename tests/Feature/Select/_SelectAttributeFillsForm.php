@@ -13,7 +13,7 @@ class _SelectAttributeFillsForm extends Form
 {
     public $model = Obj::class;
 
-    public function komponents()
+    public function render()
     {
         $optionsMethod = 'options'.$this->store('optionsMethod');
 

@@ -2,8 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\TriggerStyles;
-use Kompo\Komponents\Trigger;
+use Kompo\Elements\Traits\TriggerStyles;
+use Kompo\Elements\Trigger;
 
 class Button extends Trigger
 {

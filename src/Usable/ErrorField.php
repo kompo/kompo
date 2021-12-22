@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Field;
+use Kompo\Elements\Field;
 
 class ErrorField extends Field
 {

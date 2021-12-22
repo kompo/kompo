@@ -12,54 +12,54 @@ trait KompoTestRequestsTrait
 
     /**** Kompo Requests & Actions *****/
 
-    protected function getKomponents($komposer, $method)
+    protected function getElements($komponent, $method)
     {
-        return $this->kompoAction($komposer, 'include-komponents', [], KompoTarget::getEncryptedArray($method));
+        return $this->kompoAction($komponent, 'include-elements', [], KompoTarget::getEncryptedArray($method));
     }
 
-    protected function submit($komposer, $data = [])
+    protected function submit($komponent, $data = [])
     {
-        return $this->kompoAction($komposer, $komposer->config('submitAction'), $data);
+        return $this->kompoAction($komponent, $komponent->config('submitAction'), $data);
     }
 
-    protected function browse($komposer, $data = [], $sort = null, $page = null)
+    protected function browse($komponent, $data = [], $sort = null, $page = null)
     {
-        return $this->kompoAction($komposer, 'browse-items', $data, [
+        return $this->kompoAction($komponent, 'browse-items', $data, [
             'X-Kompo-Page' => $page,
             'X-Kompo-Sort' => $sort,
         ]);
     }
 
-    protected function searchOptions($komposer, $search, $method)
+    protected function searchOptions($komponent, $search, $method)
     {
-        return $this->kompoAction($komposer, 'search-options', ['search' => $search], KompoTarget::getEncryptedArray($method));
+        return $this->kompoAction($komponent, 'search-options', ['search' => $search], KompoTarget::getEncryptedArray($method));
     }
 
-    protected function selfGet($komposer, $method, $data = [])
+    protected function selfGet($komponent, $method, $data = [])
     {
-        return $this->kompoAction($komposer, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'GET');
+        return $this->kompoAction($komponent, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'GET');
     }
 
-    protected function selfPost($komposer, $method, $data = [])
+    protected function selfPost($komponent, $method, $data = [])
     {
-        return $this->kompoAction($komposer, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'POST');
+        return $this->kompoAction($komponent, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'POST');
     }
 
-    protected function selfPut($komposer, $method, $data = [])
+    protected function selfPut($komponent, $method, $data = [])
     {
-        return $this->kompoAction($komposer, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'PUT');
+        return $this->kompoAction($komponent, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'PUT');
     }
 
-    protected function selfDelete($komposer, $method, $data = [])
+    protected function selfDelete($komponent, $method, $data = [])
     {
-        return $this->kompoAction($komposer, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'DELETE');
+        return $this->kompoAction($komponent, 'self-method', $data, KompoTarget::getEncryptedArray($method), 'DELETE');
     }
 
-    protected function kompoAction($komposer, $action, $data, $headers = [], $method = 'POST')
+    protected function kompoAction($komponent, $action, $data, $headers = [], $method = 'POST')
     {
         return $this->withHeaders(array_merge(
             $headers,
-            KompoInfo::arrayFromElement($komposer),
+            KompoInfo::arrayFromElement($komponent),
             KompoAction::headerArray($action)
         ))
         ->json($method, $this->kompoUri, $data);
@@ -79,43 +79,43 @@ trait KompoTestRequestsTrait
         dd($this->withoutExceptionHandling()->get($uri)->dump());
     }
 
-    protected function submitdd($komposer, $data = [])
+    protected function submitdd($komponent, $data = [])
     {
-        dd($this->withoutExceptionHandling()->submit($komposer, $data)->dump());
+        dd($this->withoutExceptionHandling()->submit($komponent, $data)->dump());
     }
 
-    protected function browsedd($komposer, $data, $sort = null, $page = null)
+    protected function browsedd($komponent, $data, $sort = null, $page = null)
     {
-        dd($this->withoutExceptionHandling()->browse($komposer, $data)->dump());
+        dd($this->withoutExceptionHandling()->browse($komponent, $data)->dump());
     }
 
-    protected function searchOptionsdd($komposer, $search, $method)
+    protected function searchOptionsdd($komponent, $search, $method)
     {
-        dd($this->withoutExceptionHandling()->searchOptions($komposer, $search, $method)->dump());
+        dd($this->withoutExceptionHandling()->searchOptions($komponent, $search, $method)->dump());
     }
 
-    protected function selfGetdd($komposer, $method, $data = [])
+    protected function selfGetdd($komponent, $method, $data = [])
     {
-        dd($this->withoutExceptionHandling()->selfGet($komposer, $method, $data)->dump());
+        dd($this->withoutExceptionHandling()->selfGet($komponent, $method, $data)->dump());
     }
 
-    protected function selfPostdd($komposer, $method, $data = [])
+    protected function selfPostdd($komponent, $method, $data = [])
     {
-        dd($this->withoutExceptionHandling()->selfPost($komposer, $method, $data)->dump());
+        dd($this->withoutExceptionHandling()->selfPost($komponent, $method, $data)->dump());
     }
 
-    protected function selfPutdd($komposer, $method, $data = [])
+    protected function selfPutdd($komponent, $method, $data = [])
     {
-        dd($this->withoutExceptionHandling()->selfPut($komposer, $method, $data)->dump());
+        dd($this->withoutExceptionHandling()->selfPut($komponent, $method, $data)->dump());
     }
 
-    protected function selfDeletedd($komposer, $method, $data = [])
+    protected function selfDeletedd($komponent, $method, $data = [])
     {
-        dd($this->withoutExceptionHandling()->selfDelete($komposer, $method, $data)->dump());
+        dd($this->withoutExceptionHandling()->selfDelete($komponent, $method, $data)->dump());
     }
 
-    protected function submitToRoutedd($komposer, $route, $data = [])
+    protected function submitToRoutedd($komponent, $route, $data = [])
     {
-        dd($this->withoutExceptionHandling()->submitToRoute($komposer, $route, $data)->dump());
+        dd($this->withoutExceptionHandling()->submitToRoute($komponent, $route, $data)->dump());
     }
 }

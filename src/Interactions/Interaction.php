@@ -6,10 +6,10 @@ use Kompo\Exceptions\NotAllowedInteractionException;
 use Kompo\Exceptions\NotApplicableInteractionException;
 use Kompo\Exceptions\NotFoundInteractionException;
 use Kompo\Input;
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Layout;
-use Kompo\Komponents\Trigger;
-use Kompo\Komposers\Komposer;
+use Kompo\Elements\Field;
+use Kompo\Elements\Layout;
+use Kompo\Elements\Trigger;
+use Kompo\Komponents\Komponent;
 use Kompo\Panel;
 
 class Interaction
@@ -20,15 +20,15 @@ class Interaction
         Panel::class         => 'load',
         Layout::class        => 'click',
         Trigger::class       => 'click',
-        Komposer::class      => 'success',
+        Komponent::class      => 'success',
         Action::class        => 'success',
         ChainedAction::class => 'success',
     ];
 
     protected static $allowedInteractions = [
-        'load'  => [Panel::class, Field::class, Komposer::class],
+        'load'  => [Panel::class, Field::class, Komponent::class],
         'click' => [Trigger::class, Layout::class],
-        'emit'  => [Komposer::class],
+        'emit'  => [Komponent::class],
         'focus' => [Field::class],
         'blur'  => [Field::class],
         //'mounted' => [Field::class, Trigger::class],

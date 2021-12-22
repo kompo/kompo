@@ -86,10 +86,10 @@ class SelfRequestsAuthorizationTest extends EnvironmentBoot
     }
 
     /** ------------------ PRIVATE --------------------------- */
-    private function self_request_unauthorized_for($komposer, $type)
+    private function self_request_unauthorized_for($komponent, $type)
     {
         $this->expectException(AuthorizationException::class);
 
-        $this->withoutExceptionHandling()->{'self'.$type}($komposer, 'whatever');
+        $this->withoutExceptionHandling()->{'self'.$type}($komponent, 'whatever');
     }
 }

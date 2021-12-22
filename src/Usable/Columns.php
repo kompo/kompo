@@ -5,8 +5,8 @@ namespace Kompo;
 use Kompo\Elements\Traits\HasGutters;
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
-use Kompo\Komponents\Layout;
-use Kompo\Komponents\Traits\VerticalAlignmentTrait;
+use Kompo\Elements\Layout;
+use Kompo\Elements\Traits\VerticalAlignmentTrait;
 
 class Columns extends Layout
 {

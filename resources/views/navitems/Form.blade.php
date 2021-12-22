@@ -1,1 +1,1 @@
-{!! $component->render() !!}
+{!! $component->toHtml() !!}

@@ -11,7 +11,7 @@ class Action
     use HasInteractions;
     use HasConfig;
     use Actions\AddAlertActions;
-    use Actions\AddSlidingPanelActions;
+    use Actions\AddDrawerActions;
     use Actions\AxiosRequestActions;
     use Actions\AxiosRequestHttpActions;
     use Actions\QueryActions;
@@ -19,7 +19,7 @@ class Action
     use Actions\FillPanelActions;
     use Actions\FillModalActions;
     use Actions\FrontEndActions;
-    use Actions\KomposerActions;
+    use Actions\KomponentActions;
     use Actions\RedirectActions;
     use Actions\RunJsActions;
     use Actions\SubmitFormActions;

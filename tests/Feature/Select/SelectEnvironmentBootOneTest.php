@@ -41,7 +41,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertEquals($user1->id, $form->komponents[0]->value);
+        $this->assertEquals($user1->id, $form->elements[0]->value);
 
         //Update
         $user2 = factory(User::class)->create();
@@ -62,7 +62,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertEquals($user2->id, $form->komponents[0]->value);
+        $this->assertEquals($user2->id, $form->elements[0]->value);
 
         //Remove
         $this->submit(
@@ -80,7 +80,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertNull($form->komponents[0]->value);
+        $this->assertNull($form->elements[0]->value);
     }
 
     protected function getForm($id = null)
@@ -88,7 +88,7 @@ abstract class SelectEnvironmentBootOneTest extends EnvironmentBoot
         $form = $this->currentForm;
 
         return $form::boot($id, [
-            'komponent' => $this->currentRelation,
+            'element' => $this->currentRelation,
         ]);
     }
 }

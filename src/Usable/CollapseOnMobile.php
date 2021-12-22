@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\TriggerWithSubmenu;
+use Kompo\Elements\TriggerWithSubmenu;
 
 class CollapseOnMobile extends TriggerWithSubmenu
 {
@@ -13,13 +13,13 @@ class CollapseOnMobile extends TriggerWithSubmenu
     public $rightMenu = [];
 
     /**
-     * Allows us to include a list of komponents in the left side of the navbar part that collapses on mobile. For example:
+     * Allows us to include a list of elements in the left side of the navbar part that collapses on mobile. For example:
      * <php>CollapseOnMobile::leftMenu(
      * Link::form('Link 1'),
      * Link::form('Link 2')
      * )</php>.
      *
-     * @param array|args $args The komponents list. Can be written as an array or a list of method arguments.
+     * @param array|args $args The elements list. Can be written as an array or a list of method arguments.
      *
      * @return self ( description_of_the_return_value )
      */
@@ -31,13 +31,13 @@ class CollapseOnMobile extends TriggerWithSubmenu
     }
 
     /**
-     * Allows us to include a list of komponents in the right side of the navbar part that collapses on mobile. For example:
+     * Allows us to include a list of elements in the right side of the navbar part that collapses on mobile. For example:
      * <php>CollapseOnMobile::rightMenu(
      * Link::form('Link 1'),
      * Link::form('Link 2')
      * )</php>.
      *
-     * @param array|args $args The komponents list. Can be written as an array or a list of method arguments.
+     * @param array|args $args The elements list. Can be written as an array or a list of method arguments.
      *
      * @return self ( description_of_the_return_value )
      */

@@ -2,7 +2,7 @@
 
 namespace Kompo\Tests\Feature\Select;
 
-use Kompo\Exceptions\KomposerMethodNotFoundException;
+use Kompo\Exceptions\KomponentMethodNotFoundException;
 use Kompo\Tests\EnvironmentBoot;
 use Kompo\Tests\Models\File;
 use Kompo\Tests\Models\Obj;
@@ -14,7 +14,7 @@ class SelectOptionsLoadedByAjaxTest extends EnvironmentBoot
     /** @test */
     public function no_search_method_found_for_retrieving_options()
     {
-        $this->expectException(KomposerMethodNotFoundException::class);
+        $this->expectException(KomponentMethodNotFoundException::class);
 
         $this->withoutExceptionHandling()->searchOptions(_SelectAjaxOptionsForm::boot(), null, 'Non existing Method');
     }
@@ -59,7 +59,7 @@ class SelectOptionsLoadedByAjaxTest extends EnvironmentBoot
 
         $form = _SelectAjaxOptionsEloquentForm::boot(1);
 
-        $opts = function ($index) use ($form) { return $form->komponents[$index]->options; };
+        $opts = function ($index) use ($form) { return $form->elements[$index]->options; };
 
         $this->assertCount(1, $opts(0));
         $this->assert_option_matches_model($tags[2], $opts(0)[0]);

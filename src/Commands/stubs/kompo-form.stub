@@ -9,10 +9,10 @@ class DummyClass extends Form
 {
 	//public $model = User::class;
 
-	public function komponents()
+	public function render()
 	{
 		return [
-			//The Komponents...
+			//The Elements...
 			//Input::form('First Name'),
 			//SubmitButton::form('Submit')
 		];

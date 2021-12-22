@@ -9,7 +9,7 @@ abstract class QueryOperations
 {
     protected $query;
 
-    protected $komposer;
+    protected $komponent;
 
     abstract public function handleFilter($field);
 
@@ -20,15 +20,15 @@ abstract class QueryOperations
     /**
      * Constructs a Kompo\Database\QueryOperations object.
      *
-     * @param array $komponents
+     * @param array $elements
      *
      * @return void
      */
-    public function __construct($query, $komposer)
+    public function __construct($query, $komponent)
     {
         $this->query = $query;
 
-        $this->komposer = $komposer;
+        $this->komponent = $komponent;
     }
 
     public function getQuery()

@@ -15,7 +15,7 @@ class DatabaseQuery extends QueryOperations
 
     public function getPaginated()
     {
-        return $this->query->paginate($this->komposer->perPage, ['*'], 'page', $this->komposer->currentPage());
+        return $this->query->paginate($this->komponent->perPage, ['*'], 'page', $this->komponent->currentPage());
     }
 
     public function applyWhere($q, $name, $operator, $value, $table = null)
@@ -62,7 +62,7 @@ class DatabaseQuery extends QueryOperations
 
     protected function modelOrderColumn()
     {
-        return $this->komposer->orderable;
+        return $this->komponent->orderable;
     }
 
     public function handleSort($sort)

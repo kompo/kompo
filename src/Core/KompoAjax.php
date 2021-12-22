@@ -11,7 +11,7 @@ abstract class KompoAjax
         return $el->config(static::$key);
     }
 
-    public static function setOnElement($el, $kompoData)
+    public static function setForBaseElement($el, $kompoData)
     {
         return $el->config([static::$key => $kompoData]);
     }

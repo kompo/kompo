@@ -3,56 +3,56 @@
 namespace Kompo\Core;
 
 use Illuminate\Auth\Access\AuthorizationException;
-use Kompo\Exceptions\KomposerMethodNotFoundException;
-use Kompo\Exceptions\KomposerNotDirectMethodException;
-use Kompo\Komposers\KomposerManager;
+use Kompo\Exceptions\KomponentMethodNotFoundException;
+use Kompo\Exceptions\KomponentNotDirectMethodException;
+use Kompo\Komponents\KomponentManager;
 use Kompo\Routing\Dispatcher;
 use ReflectionClass;
 
 class AuthorizationGuard
 {
-    public static function checkBoot($komposer, $stage)
+    public static function checkBoot($komponent, $stage)
     {
-        if (!$komposer->authorizeBoot()) {
-            return static::throwUnauthorizedException($komposer, 'boot');
+        if (!$komponent->authorizeBoot()) {
+            return static::throwUnauthorizedException($komponent, 'boot');
         }
 
         if (KompoAction::is(['eloquent-submit', 'handle-submit'])) {
-            static::checkPreventSubmit($komposer);
+            static::checkPreventSubmit($komponent);
         }
 
-        KomposerManager::created($komposer, $stage);
+        KomponentManager::created($komponent, $stage);
     }
 
-    public static function mainGate($komposer, $stage = null)
+    public static function mainGate($komponent, $stage = null)
     {
-        if (method_exists($komposer, 'authorize') && !$komposer->authorize()) {
-            return static::throwUnauthorizedException($komposer, $stage);
+        if (method_exists($komponent, 'authorize') && !$komponent->authorize()) {
+            return static::throwUnauthorizedException($komponent, $stage);
         }
 
         return true;
     }
 
-    public static function selfMethodGate($komposer, $method)
+    public static function selfMethodGate($komponent, $method)
     {
-        static::checkMethodExists($komposer, $method);
+        static::checkMethodExists($komponent, $method);
 
-        $komposerType = 'Kompo\\'.Dispatcher::getKomposerType($komposer);
+        $komponentType = 'Kompo\\'.Dispatcher::getKomponentType($komponent);
 
-        $baseMethodNames = collect((new ReflectionClass($komposerType))->getMethods())->pluck('name')->all();
+        $baseMethodNames = collect((new ReflectionClass($komponentType))->getMethods())->pluck('name')->all();
 
         if (in_array($method, $baseMethodNames)) {
-            throw new KomposerNotDirectMethodException($method, get_class($komposer));
+            throw new KomponentNotDirectMethodException($method, get_class($komponent));
         }
     }
 
     /**** PRIVATE / PROTECTED ****/
 
-    protected static function throwUnauthorizedException($komposer, $stage = null)
+    protected static function throwUnauthorizedException($komponent, $stage = null)
     {
-        $message = method_exists($komposer, 'failedAuthorization') ?
-            $komposer->failedAuthorization() :
-            $komposer->getFailedAuthorizationMessage();
+        $message = method_exists($komponent, 'failedAuthorization') ?
+            $komponent->failedAuthorization() :
+            $komponent->getFailedAuthorizationMessage();
 
         throw new AuthorizationException(
             $message ?:
@@ -60,17 +60,17 @@ class AuthorizationGuard
         );
     }
 
-    protected static function checkMethodExists($komposer, $method)
+    protected static function checkMethodExists($komponent, $method)
     {
-        if (!method_exists($komposer, $method)) {
-            throw new KomposerMethodNotFoundException($method, $komposer);
+        if (!method_exists($komponent, $method)) {
+            throw new KomponentMethodNotFoundException($method, $komponent);
         }
     }
 
-    protected static function checkPreventSubmit($komposer)
+    protected static function checkPreventSubmit($komponent)
     {
-        if ($komposer->_kompo('options', 'preventSubmit')) {
-            return static::throwUnauthorizedException($komposer, 'submit');
+        if ($komponent->_kompo('options', 'preventSubmit')) {
+            return static::throwUnauthorizedException($komponent, 'submit');
         }
     }
 }

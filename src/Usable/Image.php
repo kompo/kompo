@@ -3,7 +3,7 @@
 namespace Kompo;
 
 use Kompo\Core\ImageHandler;
-use Kompo\Komponents\Traits\UploadsImages;
+use Kompo\Elements\Traits\UploadsImages;
 
 class Image extends File
 {
@@ -16,7 +16,7 @@ class Image extends File
      */
     protected $fileHandler = ImageHandler::class;
 
-    public function prepareForFront($komposer)
+    public function prepareForFront($komponent)
     {
         $this->value = $this->value ? $this->transformFromDB($this->value) : null;
     }

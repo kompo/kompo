@@ -10,7 +10,7 @@ class _NotOneToOneRelationInFieldNameForm extends Form
 {
     public $model = Post::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             Select::form('Tags')->name('tags.name'), //not OneToOne

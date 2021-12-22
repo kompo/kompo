@@ -5,7 +5,7 @@ namespace Kompo\Tests\Feature\Validation;
 use Illuminate\Support\Str;
 use Kompo\Core\MetaAnalysis;
 use Kompo\Form;
-use Kompo\Komponents\Field;
+use Kompo\Elements\Field;
 use Kompo\MultiForm;
 use Kompo\Tests\Utilities\_Form;
 
@@ -28,7 +28,7 @@ class _AllFieldsValidationsForm extends Form
     {
     }
 
-    public function komponents()
+    public function render()
     {
         return $this->fields;
     }

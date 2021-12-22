@@ -2,8 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Traits\HasSelectedClass;
+use Kompo\Elements\Field;
+use Kompo\Elements\Traits\HasSelectedClass;
 
 class HtmlField extends Field
 {

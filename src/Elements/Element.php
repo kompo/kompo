@@ -2,96 +2,165 @@
 
 namespace Kompo\Elements;
 
-use BadMethodCallException;
-use Illuminate\Support\Traits\Macroable;
+use Kompo\Core\IconGenerator;
+use Kompo\Core\KompoAction;
+use Kompo\Core\KompoId;
+use Kompo\Komponents\KomponentManager;
 
-abstract class Element
+abstract class Element extends BaseElement
 {
-    use Traits\HasId;
-    use Traits\HasClasses;
-    use Traits\HasInternalConfig;
-    use Traits\HasConfig;
-    use Traits\HasStyles;
-    use Traits\HasAnimation;
-    use Traits\HasDuskSelector;
-    use Traits\IsMountable;
-    use Traits\ElementHelperMethods;
-    use Traits\UsesLocale;
-    use Macroable {
-        __callStatic as protected __callStaticTrait;
-        __call as protected __callTrait;
-    }
+    use Traits\HasHtmlAttributes;
+    use Traits\UsedInTables;
+    use Traits\DoesTurboRefresh;
 
     /**
-     * The related Vue component name.
+     * The component's label.
      *
      * @var string
      */
-    public $vueComponent;
+    public $label;
 
     /**
-     * Prepares an element and passes important information for display.
-     */
-    abstract public function prepareForDisplay($komposer);
-
-    /**
-     * Prepares an element and passes important information for submit.
-     */
-    abstract public function prepareForAction($komposer);
-
-    /**
-     * A helpful way to construct a Kompo object and chain it additional methods.
-     * ! Works for Komposers too - because ... handles variable # of arguments.
+     * A second label for when the Element has dual states.
      *
-     * @param mixed $arguments
-     *
-     * @return self
+     * @var string
      */
-    public static function form(...$arguments)
+    public $label2;
+
+    /**
+     * Constructs a Kompo\Element object.
+     *
+     * @param string $label
+     *
+     * @return void
+     */
+    public function __construct($label = '', $label2 = null)
     {
-        return new static(...$arguments);
+        $this->vlInitialize($label);
+
+        if ($label2) {
+            $this->setLabel2($label2);
+        }
     }
 
     /**
-     * Handle dynamic method calls into the method.
+     * Initializes an element.
      *
-     * @param string $method
-     * @param array  $parameters
+     * @param string $label
      *
-     * @return mixed
+     * @return void
      */
-    public static function __callStatic($method, $parameters)
+    protected function vlInitialize($label)
     {
-        if (in_array($method, static::duplicateStaticMethods())) {
-            $method .= 'Static';
+        KompoId::setForElement($this, $label);
 
-            return static::$method(...$parameters);
-        }
-
-        return $this->__callStaticTrait($method, $parameters);
-
-        throw new BadMethodCallException('Method '.static::class.'::'.$method.' does not exist.');
+        $this->label = is_null($label) ? '' : __($label);
     }
 
     /**
-     * Handle dynamic static method calls into the method.
+     * Sets a second label for the dual elements.
      *
-     * @param string $method
-     * @param array  $parameters
-     *
-     * @return mixed
+     * @param  string  $label2  The secondary label
      */
-    public function __call($method, $parameters)
+    protected function setLabel2($label2 = null)
     {
-        if (in_array($method, static::duplicateStaticMethods())) {
-            $method .= 'NonStatic';
+        $this->label2 = is_null($label2) ? '' : __($label2);
+    }
 
-            return $this->$method(...$parameters);
+    /**
+     * Passes Form attributes to the component.
+     *
+     * @return void
+     */
+    public function prepareForDisplay($komponent)
+    {
+    }
+
+    /**
+     * Passes Form attributes to the component.
+     *
+     * @return void
+     */
+    public function prepareForAction($komponent)
+    {
+        if ($this->config('includes') && KompoAction::is('eloquent-save')) {
+            KomponentManager::prepareElementsForAction($komponent, $this->config('includes'), true);
         }
+    }
 
-        return $this->__callTrait($method, $parameters);
 
-        throw new BadMethodCallException('Method '.static::class.'::'.$method.' does not exist.');
+    /* TODO DOCUMENT 
+     * currently used for disabling a Select option (make it unselectable)
+     */
+    public function disabled()
+    {
+        return $this->config([
+            'disabled' => true,
+        ]);
+    }
+
+    /**
+     * Overwrite the initially set label.
+     *
+     * @param string $label
+     *
+     * @return Element
+     */
+    public function labelNonStatic($label)
+    {
+        $this->label = __($label);
+
+        return $this;
+    }
+
+    /**
+     * Overwrite the initially set label.
+     *
+     * @param string $label
+     *
+     * @return Element
+     */
+    public static function labelStatic(...$arguments)
+    {
+        return static::form(...$arguments);
+    }
+
+    /**
+     * Adds an icon before component's label.
+     *
+     * @param string $iconString This is the icon HTML or icon class in &lt;i class="...">&lt;/i>
+     *
+     * @return Element
+     */
+    public function iconNonStatic($iconString)
+    {
+        $this->config(['icon' => IconGenerator::toHtml($iconString)]);
+
+        return $this;
+    }
+
+    public static function iconStatic($iconString)
+    {
+        return static::form('')->icon($iconString);
+    }
+
+    /**
+     * Adds an icon after component's label.
+     *
+     * @param string $iconString This is the icon HTML or icon class in &lt;i class="...">&lt;/i>
+     *
+     * @return Element
+     */
+    public function rIconNonStatic($iconString)
+    {
+        $this->config(['rIcon' => IconGenerator::toHtml($iconString)]);
+
+        return $this;
+    }
+
+    public static function rIconStatic($iconString)
+    {
+        return static::form('')->rIcon($iconString);
     }
 
     /**
@@ -101,17 +170,6 @@ abstract class Element
      */
     public static function duplicateStaticMethods()
     {
-        return [];
-    }
-
-    /**
-     * Displays the rendered Vue component.
-     * Mostly, useful when echoing in blade for example.
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return json_encode($this);
+        return ['label', 'icon', 'rIcon'];
     }
 }

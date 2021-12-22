@@ -10,7 +10,7 @@ class _NestedFieldNameValidationForm extends Form
 {
     public $model = Post::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             Input::form('Has One Obj Title')->name('obj.title'),

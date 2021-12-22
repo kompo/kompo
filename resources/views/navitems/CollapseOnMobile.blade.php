@@ -11,12 +11,12 @@
 	
 	<div class="vl-nav-left">
 		@if(count($component->leftMenu))
-			@include('kompo::menus.komponents', [ 'komponents' => $component->leftMenu ])
+			@include('kompo::menus.elements', [ 'elements' => $component->leftMenu ])
 		@endif
 	</div>
 	<div class="vl-nav-right">
 		@if(count($component->rightMenu))
-			@include('kompo::menus.komponents', [ 'komponents' => $component->rightMenu ])
+			@include('kompo::menus.elements', [ 'elements' => $component->rightMenu ])
 		@endif
 	</div>
 

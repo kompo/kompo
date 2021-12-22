@@ -9,7 +9,7 @@ class _SetElementIdForm extends Form
 {
     public $id = 'form-id';
 
-    public function komponents()
+    public function render()
     {
         return [
             Input::form('Title'),

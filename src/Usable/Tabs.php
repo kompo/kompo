@@ -2,8 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Layout;
-use Kompo\Komponents\Traits\HasSelectedClass;
+use Kompo\Elements\Layout;
+use Kompo\Elements\Traits\HasSelectedClass;
 
 class Tabs extends Layout
 {
@@ -52,9 +52,9 @@ class Tabs extends Layout
     //TODO DOCUMENT
     public function disableAfter($index)
     {
-        collect($this->komponents)->each(function($komponent, $key) use ($index) {
+        collect($this->elements)->each(function($element, $key) use ($index) {
             if ($key >= $index) {
-                $komponent->disabled();
+                $element->disabled();
             }
         });
 

@@ -7,8 +7,8 @@ use Kompo\Core\FileHandler;
 use Kompo\Core\RequestData;
 use Kompo\Database\Lineage;
 use Kompo\Database\ModelManager;
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Managers\FormField;
+use Kompo\Elements\Field;
+use Kompo\Elements\Managers\FormField;
 use LogicException;
 
 class File extends Field

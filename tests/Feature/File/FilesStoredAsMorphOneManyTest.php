@@ -65,8 +65,8 @@ class FilesStoredAsMorphOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertEquals(1, $form->komponents[0]->value->id);
-        $this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[0]->value);
+        $this->assertEquals(1, $form->elements[0]->value->id);
+        $this->assertSubset($this->file_to_array($file1, 'path'), $form->elements[0]->value);
 
         //Update
         $this->submit(
@@ -84,8 +84,8 @@ class FilesStoredAsMorphOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertEquals(2, $form->komponents[0]->value->id);
-        $this->assertSubset($this->file_to_array($file2, 'path'), $form->komponents[0]->value);
+        $this->assertEquals(2, $form->elements[0]->value->id);
+        $this->assertSubset($this->file_to_array($file2, 'path'), $form->elements[0]->value);
 
         //Remove
         $this->submit(
@@ -104,7 +104,7 @@ class FilesStoredAsMorphOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertNull($form->komponents[0]->value);
+        $this->assertNull($form->elements[0]->value);
     }
 
     private function assert_morph_many_files($relation, $snaked)
@@ -131,16 +131,16 @@ class FilesStoredAsMorphOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertCount(2, $form->komponents[0]->value);
+        $this->assertCount(2, $form->elements[0]->value);
         if ($relation == 'morphManyOrdered') {
-            $this->assertSubset($this->file_to_array($file2, 'path'), $form->komponents[0]->value[0]);
-            $this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[0]->value[1]);
+            $this->assertSubset($this->file_to_array($file2, 'path'), $form->elements[0]->value[0]);
+            $this->assertSubset($this->file_to_array($file1, 'path'), $form->elements[0]->value[1]);
         } else {
-            $this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[0]->value[0]);
-            $this->assertSubset($this->file_to_array($file2, 'path'), $form->komponents[0]->value[1]);
+            $this->assertSubset($this->file_to_array($file1, 'path'), $form->elements[0]->value[0]);
+            $this->assertSubset($this->file_to_array($file2, 'path'), $form->elements[0]->value[1]);
         }
         if ($relation == 'morphManyFiltered') {
-            $this->assertEquals(1, $form->komponents[0]->value[0]->order);
+            $this->assertEquals(1, $form->elements[0]->value[0]->order);
         }
 
         //Update
@@ -167,18 +167,18 @@ class FilesStoredAsMorphOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertCount(3, $form->komponents[0]->value);
+        $this->assertCount(3, $form->elements[0]->value);
         if ($relation == 'morphManyOrdered') {
-            $this->assertSubset($this->file_to_array($file4, 'path'), $form->komponents[0]->value[0]);
-            $this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[0]->value[1]);
-            $this->assertSubset($this->file_to_array($file3, 'path'), $form->komponents[0]->value[2]);
+            $this->assertSubset($this->file_to_array($file4, 'path'), $form->elements[0]->value[0]);
+            $this->assertSubset($this->file_to_array($file1, 'path'), $form->elements[0]->value[1]);
+            $this->assertSubset($this->file_to_array($file3, 'path'), $form->elements[0]->value[2]);
         } else {
-            $this->assertSubset($this->file_to_array($file1, 'path'), $form->komponents[0]->value[0]);
-            $this->assertSubset($this->file_to_array($file3, 'path'), $form->komponents[0]->value[1]);
-            $this->assertSubset($this->file_to_array($file4, 'path'), $form->komponents[0]->value[2]);
+            $this->assertSubset($this->file_to_array($file1, 'path'), $form->elements[0]->value[0]);
+            $this->assertSubset($this->file_to_array($file3, 'path'), $form->elements[0]->value[1]);
+            $this->assertSubset($this->file_to_array($file4, 'path'), $form->elements[0]->value[2]);
         }
         if ($relation == 'morphManyFiltered') {
-            $this->assertEquals(1, $form->komponents[0]->value[0]->order);
+            $this->assertEquals(1, $form->elements[0]->value[0]->order);
         }
 
         //Remove
@@ -202,13 +202,13 @@ class FilesStoredAsMorphOneManyTest extends FileEnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertNull($form->komponents[0]->value);
+        $this->assertNull($form->elements[0]->value);
     }
 
     protected function getForm($id = null)
     {
         return _FilesStoredAsMorphOneMorphManyForm::boot($id, [
-            'komponent' => $this->currentRelation,
+            'element' => $this->currentRelation,
         ]);
     }
 }

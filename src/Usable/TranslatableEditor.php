@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Traits\CKEditorTrait;
+use Kompo\Elements\Traits\CKEditorTrait;
 
 class TranslatableEditor extends Translatable
 {

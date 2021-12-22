@@ -6,13 +6,13 @@ use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\KompoId;
 use Kompo\Core\KompoInfo;
 use Kompo\Core\ValidationManager;
-use Kompo\Komposers\Komposer;
-use Kompo\Komposers\KomposerManager;
-use Kompo\Komposers\Query\QueryDisplayer;
-use Kompo\Komposers\Query\QueryFilters;
+use Kompo\Komponents\Komponent;
+use Kompo\Komponents\KomponentManager;
+use Kompo\Komponents\Query\QueryDisplayer;
+use Kompo\Komponents\Query\QueryFilters;
 use Kompo\Routing\RouteFinder;
 
-abstract class Query extends Komposer
+abstract class Query extends Komponent
 {
     /**
      * The card vue component name or Card class to display an item.
@@ -29,11 +29,11 @@ abstract class Query extends Komposer
     public $layout = 'Horizontal';
 
     /**
-     * The Vue komposer tag.
+     * The Vue komponent tag.
      *
      * @var string
      */
-    public $vueKomposerTag = 'vl-query';
+    public $vueKomponentTag = 'vl-query';
 
     /**
      * The Query results.
@@ -41,7 +41,7 @@ abstract class Query extends Komposer
     public $query;
 
     /**
-     * The Query filter Komponents.
+     * The Query filter Elements.
      */
     public $filters;
 
@@ -130,7 +130,7 @@ abstract class Query extends Komposer
     /**
      * Constructs a Query.
      *
-     * @param null|array $store (optional) Additional data passed to the komponent.
+     * @param null|array $store (optional) Additional data passed to the Komponent.
      *
      * @return self
      */
@@ -170,7 +170,7 @@ abstract class Query extends Komposer
      *
      * @return array|Kompo\Card
      */
-    /*public function card($item) //commented out to override with any parameter desired
+    /*public function render($item) //commented out to override with any parameter desired
     {
         return [];
     }*/
@@ -231,15 +231,15 @@ abstract class Query extends Komposer
 
         AuthorizationGuard::checkBoot($this, 'Display');
 
-        ValidationManager::addRulesToKomposer($this->rules(), $this); //for Front-end validations TODO:
+        ValidationManager::addRulesToKomponent($this->rules(), $this); //for Front-end validations TODO:
 
         QueryDisplayer::displayFiltersAndCards($this);
 
-        KompoId::setForKomposer($this);
+        KompoId::setForKomponent($this);
 
-        KompoInfo::saveKomposer($this);
+        KompoInfo::saveKomponent($this);
 
-        KomposerManager::booted($this);
+        KomponentManager::booted($this);
 
         return $this->cleanUp($initialModel);
     }
@@ -259,7 +259,7 @@ abstract class Query extends Komposer
 
         QueryDisplayer::prepareQuery($this); //setting-up model (like in forms) mainly for 'delete-item' action.
 
-        ValidationManager::addRulesToKomposer($this->rules(), $this);
+        ValidationManager::addRulesToKomponent($this->rules(), $this);
 
         QueryFilters::prepareFiltersForAction($this);
 

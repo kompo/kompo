@@ -2,8 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Field;
-use Kompo\Komponents\Traits\HasInputAttributes;
+use Kompo\Elements\Field;
+use Kompo\Elements\Traits\HasInputAttributes;
 
 class Input extends Field
 {
@@ -26,7 +26,7 @@ class Input extends Field
         $this->debounce();
     }
 
-    public function mounted($komposer)
+    public function mounted($komponent)
     {
         $this->onEnter->submit();
     }

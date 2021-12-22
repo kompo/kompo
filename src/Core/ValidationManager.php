@@ -7,13 +7,13 @@ use Kompo\Database\NameParser;
 class ValidationManager
 {
     /**
-     * Validates the incoming request with the komposer's rules.
+     * Validates the incoming request with the komponent's rules.
      *
-     * @param Kompo\Komposers\Komposer $komposer The komposer
+     * @param Kompo\Komponents\Komponent $komponent The komponent
      */
-    public static function validateRequest($komposer)
+    public static function validateRequest($komponent)
     {
-        request()->validate(static::getRules($komposer));
+        request()->validate(static::getRules($komponent));
     }
 
     /**
@@ -32,49 +32,49 @@ class ValidationManager
     }
 
     /**
-     * Appends validation rules to the Komposer.
+     * Appends validation rules to the Komponent.
      *
      * @param array $rules The validation rules array.
      *
      * @return void
      */
-    public static function addRulesToKomposer($rules, $komposer)
+    public static function addRulesToKomponent($rules, $komponent)
     {
-        return static::setRules($rules, $komposer);
+        return static::setRules($rules, $komponent);
     }
 
     /**
-     * Pushes field rules to the Komposer if they were set on the field directly.
+     * Pushes field rules to the Komponent if they were set on the field directly.
      *
      * @param <type>                   $field    The field
-     * @param Kompo\Komposers\Komposer $komposer The form
+     * @param Kompo\Komponents\Komponent $komponent The form
      */
-    public static function pushCleanRulesToKomposer($field, $komposer)
+    public static function pushCleanRulesToKomponent($field, $komponent)
     {
         if ($field->config('rules')) {
-            static::addRulesToKomposer($field->config('rules'), $komposer);
+            static::addRulesToKomponent($field->config('rules'), $komponent);
         }
 
-        static::cleanNestedNameRules($field, $komposer);
+        static::cleanNestedNameRules($field, $komponent);
     }
 
-    protected static function cleanNestedNameRules($field, $komposer)
+    protected static function cleanNestedNameRules($field, $komponent)
     {
-        Util::collect($field->name)->each(function ($name) use ($komposer) {
-            $komposerRules = static::getRules($komposer);
+        Util::collect($field->name)->each(function ($name) use ($komponent) {
+            $komponentRules = static::getRules($komponent);
 
-            if (NameParser::isNested($name) && ($komposerRules[$name] ?? null)) {
-                $komposerRules[RequestData::convert($name)] = $komposerRules[$name];
-                unset($komposerRules[$name]);
-                static::overwriteRules($komposerRules, $komposer);
+            if (NameParser::isNested($name) && ($komponentRules[$name] ?? null)) {
+                $komponentRules[RequestData::convert($name)] = $komponentRules[$name];
+                unset($komponentRules[$name]);
+                static::overwriteRules($komponentRules, $komponent);
             }
         });
     }
 
     /**
-     * Gets the validation rules from a komposer or komponent.
+     * Gets the validation rules from a komponent or element.
      *
-     * @param <type> $element The komposer or komponent
+     * @param <type> $element The komponent or element
      *
      * @return array
      */

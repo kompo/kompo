@@ -4,5 +4,5 @@ namespace Kompo;
 
 class View extends Form
 {
-    public $vueKomposerTag = 'vl-view';
+    public $vueKomponentTag = 'vl-view';
 }

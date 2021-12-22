@@ -11,7 +11,7 @@ class _FilesStoredAsSingleColumnForm extends Form
 {
     public $model = Obj::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             File::form('A')->name('file'),

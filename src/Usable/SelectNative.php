@@ -15,7 +15,7 @@ class SelectNative extends Select
         return $this;
     }
 
-    public function mounted($komposer)
+    public function mounted($komponent)
     {
         if ($this->placeholder) {
             array_unshift(

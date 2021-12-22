@@ -10,7 +10,7 @@ class _AssigningCreatedUpdatedByForm extends Form
 {
     public $model = KompoModel::class;
 
-    public function komponents()
+    public function render()
     {
         return [
             Input::form('Name'),

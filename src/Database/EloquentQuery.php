@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Kompo\Exceptions\NotFoundMorphToModelException;
-use Kompo\Komponents\Managers\FormField;
+use Kompo\Elements\Managers\FormField;
 
 class EloquentQuery extends DatabaseQuery
 {
@@ -19,15 +19,15 @@ class EloquentQuery extends DatabaseQuery
     /**
      * Constructs a Kompo\Database\EloquentQuery object.
      *
-     * @param array $komponents
+     * @param array $elements
      *
      * @return void
      */
-    public function __construct($query, $komposer)
+    public function __construct($query, $komponent)
     {
-        parent::__construct($query, $komposer);
+        parent::__construct($query, $komponent);
 
-        $this->model = $this->komposer->model;
+        $this->model = $this->komponent->model;
     }
 
     /**

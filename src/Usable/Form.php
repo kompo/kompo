@@ -4,23 +4,23 @@ namespace Kompo;
 
 use Kompo\Core\AuthorizationGuard;
 use Kompo\Core\ValidationManager;
-use Kompo\Komposers\Form\FormDisplayer;
-use Kompo\Komposers\Form\FormSubmitter;
-use Kompo\Komposers\Form\HasModel;
-use Kompo\Komposers\Komposer;
-use Kompo\Komposers\KomposerManager;
+use Kompo\Komponents\Form\FormDisplayer;
+use Kompo\Komponents\Form\FormSubmitter;
+use Kompo\Komponents\Form\HasModel;
+use Kompo\Komponents\Komponent;
+use Kompo\Komponents\KomponentManager;
 use Kompo\Routing\RouteFinder;
 
-abstract class Form extends Komposer
+abstract class Form extends Komponent
 {
     use HasModel;
 
     /**
-     * The Vue komposer tag.
+     * The Vue komponent tag.
      *
      * @var string
      */
-    public $vueKomposerTag = 'vl-form';
+    public $vueKomponentTag = 'vl-form';
 
     /**
      * The Blade component to render the Form.
@@ -30,7 +30,7 @@ abstract class Form extends Komposer
     public $bladeComponent = 'Form';
 
     /**
-     * Disable adding default margins for Form komponents.
+     * Disable adding default margins for Form elements.
      *
      * @var bool
      */
@@ -101,11 +101,11 @@ abstract class Form extends Komposer
     public $modelExists = false;
 
     /**
-     * Stores the form komponents.
+     * Stores the form elements.
      *
      * @var array
      */
-    public $komponents = [];
+    public $elements = [];
 
     /**
      * If you wish to reload the form after submit/saving the model, set to true.
@@ -118,7 +118,7 @@ abstract class Form extends Komposer
      * Constructs a Form.
      *
      * @param null|int|string $modelKey (optional) The record's key or id in the DB table.
-     * @param null|array      $store    (optional) Additional data passed to the komponent.
+     * @param null|array      $store    (optional) Additional data passed to the Komponent.
      *
      * @return self
      */
@@ -151,11 +151,11 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Get the Komponents displayed in the form.
+     * Get the elements displayed in the form.
      *
      * @return array
      */
-    public function komponents()
+    public function render()
     {
         return [];
     }
@@ -181,28 +181,28 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Prepares the komponents of the Form when included in another Komposer.
+     * Prepares the elements of the Form when included in another Komponent.
      *
      * @var array
      */
-    public function prepareForDisplay($komposer)
+    public function prepareForDisplay($komponent)
     {
-        parent::prepareForDisplay($komposer);
+        parent::prepareForDisplay($komponent);
 
-        ValidationManager::addRulesToKomposer($this->config('rules'), $komposer);
+        ValidationManager::addRulesToKomponent($this->config('rules'), $komponent);
     }
 
     /**
-     * Prepares the komponents of the Form when included in another Komposer.
+     * Prepares the elements of the Form when included in another Komponent.
      *
      * @var array
      */
-    public function prepareForAction($komposer)
+    public function prepareForAction($komponent)
     {
-        parent::prepareForAction($komposer);
+        parent::prepareForAction($komponent);
 
-        if ($komposer instanceof self) { //Cuz in Query filters, Forms would pass their rules to browse & sort actions
-            ValidationManager::addRulesToKomposer($this->config('rules'), $komposer);
+        if ($komponent instanceof self) { //Cuz in Query filters, Forms would pass their rules to browse & sort actions
+            ValidationManager::addRulesToKomponent($this->config('rules'), $komponent);
         }
     }
 
@@ -227,13 +227,13 @@ abstract class Form extends Komposer
     }
 
     /**
-     * Shortcut method to render a Form into it's Vue component.
+     * Shortcut method to output the Komponent into it's HTML Vue tag.
      *
      * @return string
      */
-    public static function renderStatic($modelKey = null, $store = [])
+    public static function toHtmlStatic($modelKey = null, $store = [])
     {
-        return static::boot($modelKey, $store)->render();
+        return static::boot($modelKey, $store)->toHtml();
     }
 
     /**
@@ -259,9 +259,9 @@ abstract class Form extends Komposer
 
         AuthorizationGuard::checkBoot($this, 'Display');
 
-        FormDisplayer::displayKomponents($this);
+        FormDisplayer::displayElements($this);
 
-        KomposerManager::booted($this);
+        KomponentManager::booted($this);
 
         return $this;
     }
@@ -277,9 +277,9 @@ abstract class Form extends Komposer
 
         AuthorizationGuard::checkBoot($this, 'Action');
 
-        ValidationManager::addRulesToKomposer($this->rules(), $this);
+        ValidationManager::addRulesToKomponent($this->rules(), $this);
 
-        KomposerManager::prepareKomponentsForAction($this, 'komponents', true); //mainly to retrieve rules from fields
+        KomponentManager::prepareElementsForAction($this, 'render', true); //mainly to retrieve rules from fields
 
         return $this;
     }
@@ -293,7 +293,7 @@ abstract class Form extends Komposer
      */
     public static function constructFromArray($info)
     {
-        return is_string($komposer = $info['kompoClass']) ? new $komposer($info['modelKey'], $info['store']) : $komposer;
+        return is_string($komponent = $info['kompoClass']) ? new $komponent($info['modelKey'], $info['store']) : $komponent;
     }
 
     /**

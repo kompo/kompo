@@ -11,13 +11,13 @@ class CollectionQuery extends QueryOperations
     /**
      * Constructs a Kompo\Database\CollectionQuery object.
      *
-     * @param array $komponents
+     * @param array $elements
      *
      * @return void
      */
-    public function __construct($query, $komposer)
+    public function __construct($query, $komponent)
     {
-        parent::__construct(Util::collect($query), $komposer);
+        parent::__construct(Util::collect($query), $komponent);
     }
 
     public function orderItems()
@@ -64,9 +64,9 @@ class CollectionQuery extends QueryOperations
 
     public function getPaginated()
     {
-        $slice = $this->query->slice(($this->komposer->currentPage() - 1) * $this->komposer->perPage, $this->komposer->perPage)->values();
+        $slice = $this->query->slice(($this->komponent->currentPage() - 1) * $this->komponent->perPage, $this->komponent->perPage)->values();
 
-        return new LengthAwarePaginator($slice, $this->query->count(), $this->komposer->perPage, $this->komposer->currentPage());
+        return new LengthAwarePaginator($slice, $this->query->count(), $this->komponent->perPage, $this->komponent->currentPage());
     }
 
     public function handleSort($sort)

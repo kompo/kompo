@@ -7,7 +7,7 @@ use Kompo\Input;
 
 class _SetElementStylesForm extends Form
 {
-    public function komponents()
+    public function render()
     {
         return [
             Input::form('Title')->style('margin:0'),

@@ -22,7 +22,7 @@ trait _CollectionFiltersTrait
         'juliett',
     ];
 
-    public function card($item, $key)
+    public function render($item, $key)
     {
         return [
             'key'   => $key,

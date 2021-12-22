@@ -103,7 +103,7 @@ class QueryFiltersEloquentAttributesTest extends EnvironmentBoot
 
         $this->assertCount(5, $items);
         foreach ($items as $item) {
-            $this->assertEquals($odd ? 1 : 2, $item['render']['komponents']['user_id']);
+            $this->assertEquals($odd ? 1 : 2, $item['render']['elements']['user_id']);
         }
     }
 }

@@ -10,7 +10,7 @@ class _FileStorageDiskForm extends Form
 {
     public $model = FileModel::class;
 
-    public function komponents()
+    public function render()
     {
         return [
 

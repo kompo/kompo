@@ -2,8 +2,8 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Block;
-use Kompo\Komponents\Traits\OutputsHtml;
+use Kompo\Elements\Block;
+use Kompo\Elements\Traits\OutputsHtml;
 
 class Html extends Block
 {

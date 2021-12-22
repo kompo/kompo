@@ -8,41 +8,41 @@ use Kompo\Core\KompoAction;
 use Kompo\Core\KompoInfo;
 use Kompo\Exceptions\NotBootableFromRouteException;
 use Kompo\Form;
-use Kompo\Komposers\KomposerHandler;
+use Kompo\Komponents\KomponentHandler;
 use Kompo\Menu;
 use Kompo\Query;
 
 class Dispatcher
 {
-    protected $komposerClass;
+    protected $komponentClass;
 
     protected $type;
 
-    protected $komposerTypeClass;
+    protected $komponentTypeClass;
 
     public $booter;
 
     protected $bootInfo;
 
-    public function __construct($komposerClass = null)
+    public function __construct($komponentClass = null)
     {
-        if (!$komposerClass) {
+        if (!$komponentClass) {
             $this->bootInfo = KompoInfo::getKompo();
         }
 
-        $this->komposerClass = $komposerClass ?: $this->bootInfo['kompoClass'];
+        $this->komponentClass = $komponentClass ?: $this->bootInfo['kompoClass'];
 
-        $this->type = static::getKomposerType($this->komposerClass);
+        $this->type = static::getKomponentType($this->komponentClass);
 
-        $this->komposerTypeClass = 'Kompo\\'.$this->type;
+        $this->komponentTypeClass = 'Kompo\\'.$this->type;
 
-        $this->booter = 'Kompo\\Komposers\\'.$this->type.'\\'.$this->type.'Booter';
+        $this->booter = 'Kompo\\Komponents\\'.$this->type.'\\'.$this->type.'Booter';
     }
 
     public static function dispatchConnection()
     {
         if (KompoAction::is('refresh-many')) {
-            return static::refreshManyKomposers();
+            return static::refreshManyKomponents();
         }
 
         if (KompoAction::is('browse-many')) {
@@ -50,63 +50,63 @@ class Dispatcher
         }
 
         if (KompoAction::is('refresh-self')) {
-            return static::rebootKomposerForDisplay();
+            return static::rebootKomponentForDisplay();
         }
 
-        return KomposerHandler::performAction(static::bootKomposerForAction());
+        return KomponentHandler::performAction(static::bootKomponentForAction());
     }
 
-    public static function bootKomposerForAction()
+    public static function bootKomponentForAction()
     {
         $dispatcher = new static();
 
-        $type = $dispatcher->komposerTypeClass;
+        $type = $dispatcher->komponentTypeClass;
 
         return $type::constructFromBootInfo($dispatcher->bootInfo)->bootForAction();
     }
 
-    public function bootKomposerForDisplay()
+    public function bootKomponentForDisplay()
     {
-        $type = $this->komposerTypeClass;
+        $type = $this->komponentTypeClass;
 
         if ($this->type == 'Form') {
-            $komposer = $type::constructFromArray([
-                'kompoClass' => $this->komposerClass, 
+            $komponent = $type::constructFromArray([
+                'kompoClass' => $this->komponentClass, 
                 'modelKey' => request('id'), 
                 'store' => request()->except('id'),
             ]);
         } else {
-            $komposer = $type::constructFromArray([
-                'kompoClass' => $this->komposerClass, 
+            $komponent = $type::constructFromArray([
+                'kompoClass' => $this->komponentClass, 
                 'store' => request()->all(),
             ]);
         }
         
-        return $komposer->bootForDisplay();
+        return $komponent->bootForDisplay();
     }
 
-    protected static function rebootKomposerForDisplay()
+    protected static function rebootKomponentForDisplay()
     {
         $d = new static();
-        $type = $d->komposerTypeClass;
+        $type = $d->komponentTypeClass;
 
         if ($d->type == 'Form') {
-            $komposer = $type::constructFromArray([
-                'kompoClass' => $d->komposerClass, 
+            $komponent = $type::constructFromArray([
+                'kompoClass' => $d->komponentClass, 
                 'modelKey' => $d->bootInfo['modelKey'], 
                 'store' => $d->bootInfo['store'],
             ]);
         } else {
-            $komposer = $type::constructFromArray([
-                'kompoClass' => $d->komposerClass, 
+            $komponent = $type::constructFromArray([
+                'kompoClass' => $d->komponentClass, 
                 'store' => $d->bootInfo['store'],
             ]);
         }
 
-        return $komposer->bootForDisplay($d->bootInfo['parameters']);
+        return $komponent->bootForDisplay($d->bootInfo['parameters']);
     }
 
-    protected static function refreshManyKomposers()
+    protected static function refreshManyKomponents()
     {
         return static::runManyRequests('refresh-self');
     }
@@ -144,17 +144,17 @@ class Dispatcher
         return $responses;
     }
 
-    public static function getKomposerType($komposerClass)
+    public static function getKomponentType($komponentClass)
     {
-        if (is_a($komposerClass, Form::class, true)) {
+        if (is_a($komponentClass, Form::class, true)) {
             return 'Form';
-        } elseif (is_a($komposerClass, Query::class, true)) {
+        } elseif (is_a($komponentClass, Query::class, true)) {
             return 'Query';
-        } elseif (is_a($komposerClass, Menu::class, true)) {
+        } elseif (is_a($komponentClass, Menu::class, true)) {
             return 'Menu';
         }
 
-        throw new NotBootableFromRouteException($komposerClass);
+        throw new NotBootableFromRouteException($komponentClass);
     }
 
     public static function parseArrayParametersInRequest($initialRequestData)

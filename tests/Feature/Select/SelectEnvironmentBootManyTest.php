@@ -37,13 +37,13 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertCount(2, $form->komponents[0]->value);
+        $this->assertCount(2, $form->elements[0]->value);
         if ($type == 'ordered') {
-            $this->assertEquals($file2->id, $form->komponents[0]->value[0]);
-            $this->assertEquals($file1->id, $form->komponents[0]->value[1]);
+            $this->assertEquals($file2->id, $form->elements[0]->value[0]);
+            $this->assertEquals($file1->id, $form->elements[0]->value[1]);
         } else {
-            $this->assertEquals($file1->id, $form->komponents[0]->value[0]);
-            $this->assertEquals($file2->id, $form->komponents[0]->value[1]);
+            $this->assertEquals($file1->id, $form->elements[0]->value[0]);
+            $this->assertEquals($file2->id, $form->elements[0]->value[1]);
         }
 
         //Update
@@ -68,19 +68,19 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
         //Reload
         $form = $this->getForm(1);
         if ($type == 'ordered') {
-            $this->assertCount(3, $form->komponents[0]->value);
-            $this->assertEquals($file4->id, $form->komponents[0]->value[0]);
-            $this->assertEquals($file1->id, $form->komponents[0]->value[1]);
-            $this->assertEquals($file3->id, $form->komponents[0]->value[2]);
+            $this->assertCount(3, $form->elements[0]->value);
+            $this->assertEquals($file4->id, $form->elements[0]->value[0]);
+            $this->assertEquals($file1->id, $form->elements[0]->value[1]);
+            $this->assertEquals($file3->id, $form->elements[0]->value[2]);
         } elseif ($type == 'filtered') {
-            $this->assertCount(2, $form->komponents[0]->value);
-            $this->assertEquals($file1->id, $form->komponents[0]->value[0]);
-            $this->assertEquals($file4->id, $form->komponents[0]->value[1]);
+            $this->assertCount(2, $form->elements[0]->value);
+            $this->assertEquals($file1->id, $form->elements[0]->value[0]);
+            $this->assertEquals($file4->id, $form->elements[0]->value[1]);
         } else {
-            $this->assertCount(3, $form->komponents[0]->value);
-            $this->assertEquals($file1->id, $form->komponents[0]->value[0]);
-            $this->assertEquals($file3->id, $form->komponents[0]->value[1]);
-            $this->assertEquals($file4->id, $form->komponents[0]->value[2]);
+            $this->assertCount(3, $form->elements[0]->value);
+            $this->assertEquals($file1->id, $form->elements[0]->value[0]);
+            $this->assertEquals($file3->id, $form->elements[0]->value[1]);
+            $this->assertEquals($file4->id, $form->elements[0]->value[2]);
         }
 
         //Remove
@@ -98,7 +98,7 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
 
         //Reload
         $form = $this->getForm(1);
-        $this->assertNull($form->komponents[0]->value);
+        $this->assertNull($form->elements[0]->value);
     }
 
     protected function getForm($id = null)
@@ -106,7 +106,7 @@ abstract class SelectEnvironmentBootManyTest extends EnvironmentBoot
         $form = $this->currentForm;
 
         return $form::boot($id, [
-            'komponent' => $this->currentRelation,
+            'element' => $this->currentRelation,
         ]);
     }
 }

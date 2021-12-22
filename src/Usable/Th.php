@@ -2,7 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Komponents\Trigger;
+use Kompo\Elements\Trigger;
 
 class Th extends Trigger
 {
