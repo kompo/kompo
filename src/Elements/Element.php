@@ -17,6 +17,8 @@ abstract class Element
     use Traits\IsMountable;
     use Traits\ElementHelperMethods;
     use Traits\UsesLocale;
+    use Traits\HasRolePermission;
+    
     use Macroable {
         __callStatic as protected __callStaticTrait;
         __call as protected __callTrait;
