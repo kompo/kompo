@@ -3,7 +3,6 @@
 namespace DummyNamespace;
 
 use Kompo\Form;
-//use Kompo\{Input, SubmitButton};
 
 class DummyClass extends Form
 {
@@ -13,8 +12,8 @@ class DummyClass extends Form
 	{
 		return [
 			//The Elements...
-			//Input::form('First Name'),
-			//SubmitButton::form('Submit')
+			//_Input('First Name'),
+			//_SubmitButton('Submit')
 		];
 	}
 

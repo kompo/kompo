@@ -73,8 +73,8 @@ trait EmitEventActions
      *
      * @return self
      */
-    public function confirmModal()
+    public function confirmSubmit()
     {
-        return $this->emit('confirmModal');
+        return $this->emit('confirmSubmit');
     }
 }

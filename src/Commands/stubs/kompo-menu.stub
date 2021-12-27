@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Menus;
+namespace DummyNamespace;
 
 use Kompo\Menu;
 
-class {name}  extends Menu
+class DummyClass  extends Menu
 {
 	public function render()
 	{

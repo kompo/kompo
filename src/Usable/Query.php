@@ -100,11 +100,11 @@ abstract class Query extends Komponent
     public $leftPagination = false;
 
     /**
-     * The pagination links style. Values: Links|Showing|Scroll.
+     * The pagination links. Values: Links|Showing|Scroll.
      *
      * @var string
      */
-    public $paginationStyle = 'Links';
+    public $paginationType = 'Links';
 
     /**
      * The default message that displays when no items are found (or translation key if multi-language app).

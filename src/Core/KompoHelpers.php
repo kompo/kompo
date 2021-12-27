@@ -21,6 +21,13 @@ if (!function_exists('_DeleteLink')) {
     }
 }
 
+if (!function_exists('_DeleteButton')) {
+    function _DeleteButton(): \Kompo\DeleteButton
+    {
+        return Kompo\DeleteButton::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_EditButton')) {
     function _EditButton(): \Kompo\EditButton
     {

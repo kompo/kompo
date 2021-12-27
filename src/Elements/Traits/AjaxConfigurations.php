@@ -17,6 +17,16 @@ trait AjaxConfigurations
         return $this->config(['warnBeforeClose' => $message ? __($message) : __('warnBeforeClose')]);
     }
 
+    /** TODO document
+     * Refreshes the parent Komponent when opened in a Modal, Panel, Drawer or Popup
+     *
+     * @return self
+     */
+    public function refreshParent()
+    {
+        return $this->config(['refreshParent' => true]);
+    }
+
     /**
      * Cancels or reverts the closest parent Panel (hides it and shows previous state).
      *

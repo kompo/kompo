@@ -3,9 +3,31 @@
 namespace Kompo\Core;
 
 use Kompo\Database\NameParser;
+use Kompo\Exceptions\ValidationWarningException;
 
 class ValidationManager
 {
+    /**
+     * TODO DOCUMENT
+     * A helper method you can call beforeSave() to ask the user for a confirmation that he truly accepts the form submit.
+     * Useful when for example, you want to warn the user of a potential duplicate record in your database.
+     *
+     * @param  Kompo\Komponents\Komponent|string  $confirmationElements  The confirmation elements
+     * @param  bool                            $condition             The condition (true or false) - check for duplicates for example
+     *
+     * @throws     \Kompo\Exceptions\ValidationWarningException  (description)
+     */
+    public static function confirmSubmit($confirmationElements, bool $condition)
+    {
+        if (!request('kompoConfirmed')) {
+            if ($condition) {
+                throw new ValidationWarningException($confirmationElements);
+            }
+        }
+
+        //else the user has confirmed he really want's to submit
+    }
+
     /**
      * Validates the incoming request with the komponent's rules.
      *

@@ -4,11 +4,8 @@ namespace DummyNamespace;
 
 use Kompo\Query;
 
-class {name} extends Query
+class DummyClass extends Query
 {
-    public $layout;
-    public $card;
-
     public function query()
     {
         //return Post::orderBy('published_at');

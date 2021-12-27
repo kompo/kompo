@@ -3,9 +3,8 @@
 namespace DummyNamespace;
 
 use Kompo\Table;
-use Kompo\Th;
 
-class {name} extends Table
+class DummyClass extends Table
 {
     public function query()
     {
@@ -15,8 +14,8 @@ class {name} extends Table
     public function headers()
     {
         return [
-            // Th::form('Column1'),
-            // Th::form('Column2'),
+            // _Th('Column1'),
+            // _Th('Column2'),
         ];
     }
 
