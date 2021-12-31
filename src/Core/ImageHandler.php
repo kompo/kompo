@@ -8,6 +8,12 @@ use Intervention\Image\Facades\Image;
 class ImageHandler extends FileHandler
 {
     /**
+     * The specified disk for uploaded files.
+     * By default (see config file), it is stored in the 'local' disk for _File() and 'public' disk for _Image().
+     */
+    protected $disk;
+
+    /**
      * For Kompo\Image: max width in px of full image.
      * intervention/image does resizing.
      * Set to false to deactivate resizing.
@@ -24,6 +30,11 @@ class ImageHandler extends FileHandler
      * @var int|bool
      */
     public $withThumbnail = false;
+
+    protected function initializeDisk()
+    {
+        $this->disk = config('kompo.default_storage_disk.image');
+    }
 
     /**
      * Stores on disk.

@@ -16,9 +16,9 @@ class FileHandler
 
     /**
      * The specified disk for uploaded files.
-     * By default, it is stored in the 'public' disk.
+     * By default (see config file), it is stored in the 'local' disk for _File() and 'public' disk for _Image().
      */
-    protected $disk = 'public';
+    protected $disk;
 
     /**
      * The storage visibility.
@@ -37,14 +37,21 @@ class FileHandler
 
     public function __construct()
     {
+        $this->initializeDisk();
+
         collect($this->allKeys = config('kompo.files_attributes'))->each(function ($column, $key) {
             $this->{$key.'Key'} = $column;
         });
     }
 
+    protected function initializeDisk()
+    {
+        $this->disk = config('kompo.default_storage_disk.file');
+    }
+
     /**
      * Saves the uploaded file or image to the specified disk.
-     * By default, it is stored in the 'local' disk.
+     * By default (see config file), it is stored in the 'local' disk for _File() and 'public' disk for _Image().
      *
      * @param string $disk The disk instance key.
      *
@@ -129,7 +136,7 @@ class FileHandler
 
             array_merge([
                 $this->nameKey      => $file->getClientOriginalName(),
-                $this->pathKey      => 'storage/'.$this->getStoragePath($file, $modelPath),
+                $this->pathKey      => $this->getStoragePath($file, $modelPath),
                 $this->mime_typeKey => $file->getClientMimeType(),
                 $this->sizeKey      => $file->getSize(),
             ], $withId ? [
@@ -167,9 +174,9 @@ class FileHandler
             return;
         }
 
-        if ($filePath = $file[$this->pathKey] ?? $file->{$this->pathKey}) {
-            $this->storageDelete(substr($filePath, 8));
-        } //to remove storage/
+        if ($filePath = $file[$this->pathKey] ?? $file->{$this->pathKey}) {            
+            $this->storageDelete($filePath);
+        }
     }
 
     protected function storageDelete($filePath)
