@@ -22,7 +22,6 @@
 </head>
 
 <body @isset($bodyClass) class="{{$bodyClass}}" @endif>
-    <div id="vl-md" class="vlBlock vlHiddenLg"></div>
 
     {!! $_kompo->wrapperOpenTag(config('kompo.vue_app_id')) !!}
 

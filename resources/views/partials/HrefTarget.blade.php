@@ -1,1 +1,0 @@
-href="{{ $component->href }}" {{ $component->target ? ' target="_blank" ' : '' }} {{$component->turbo ? 'v-turbo-click' : '' }}

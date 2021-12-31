@@ -5,7 +5,7 @@
 
 @if(in_array($menuKey, ['navbar', 'lsidebar', 'lsidebar|rsidebar', 'navbar|footer']))
 
-	@include('kompo::menus.menu', $_kompo->getFirstKey($menuKey))
+	@include('kompo::menu', $_kompo->getFirstKey($menuKey))
 
 @endif
 
@@ -25,6 +25,6 @@
 
 @if(in_array($menuKey, ['footer', 'rsidebar', 'lsidebar|rsidebar', 'navbar|footer']))
 
-	@include('kompo::menus.menu', $_kompo->getLastKey($menuKey))
+	@include('kompo::menu', $_kompo->getLastKey($menuKey))
 
 @endif
