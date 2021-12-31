@@ -40,10 +40,10 @@
                 "Kompo\\KompoServiceProvider"
             ],
             "aliases": {
-                "VlForm": "Kompo\\Form",
-                "VlQuery": "Kompo\\Query",
-                "VlTable": "Kompo\\Table",
-                "VlMenu": "Kompo\\Menu"
+                "KForm": "Kompo\\Form",
+                "KQuery": "Kompo\\Query",
+                "KTable": "Kompo\\Table",
+                "KMenu": "Kompo\\Menu"
             }
         }
     },
