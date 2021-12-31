@@ -32,25 +32,36 @@ class File extends Field
     /**
      * The file's handler class.
      */
-    protected $fileHandler = FileHandler::class;
+    protected $fileHandler;
+
+    /**
+     * The specified disk for uploaded files.
+     * By default (see config file), it is stored in the 'local' disk for _File() and 'public' disk for _Image().
+     */
+    protected $disk;
 
     /**
      * Assign the config columns.
      *
      * @param string $label The label
      */
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
-        $fileHandler = $this->fileHandler;
+        $this->setupFileHandler();
+    }
 
-        $this->fileHandler = new $fileHandler();
+    protected function setupFileHandler()
+    {
+        $this->disk = config('kompo.default_storage_disk.file');
+
+        $this->fileHandler = new FileHandler();
     }
 
     /**
      * Saves the uploaded file or image to the specified disk.
-     * By default, it is stored in the 'public' disk.
+     * By default (see config file), it is stored in the 'local' disk for _File() and 'public' disk for _Image().
      *
      * @param string $disk The disk instance key.
      *
@@ -58,6 +69,7 @@ class File extends Field
      */
     public function disk($disk)
     {
+        $this->disk = $disk;
         $this->fileHandler->setDisk($disk);
 
         return $this;

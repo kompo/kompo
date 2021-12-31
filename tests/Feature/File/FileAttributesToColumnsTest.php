@@ -32,6 +32,7 @@ class FileAttributesToColumnsTest extends FileEnvironmentBoot
         )->assertStatus(200)
         ->assertJson($this->file_to_array($file2, 'path'));
 
+        $this->assert_not_in_storage($file1, 'path');
         $this->assert_in_storage($file2, 'path');
         $this->assertDatabaseHas('files', $this->file_to_array($file2, 'path'));
 

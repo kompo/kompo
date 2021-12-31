@@ -8,6 +8,8 @@ class ImageUploadTest extends FileEnvironmentBoot
 {
     public $modelPath = 'sqlite/objs';
 
+    protected $disk = 'public';
+
     /** @test */
     public function image_upload_is_resized_for_web()
     {

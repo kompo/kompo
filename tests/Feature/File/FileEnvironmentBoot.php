@@ -14,6 +14,8 @@ class FileEnvironmentBoot extends EnvironmentBoot
     protected $mime_typeKey;
     protected $sizeKey;
 
+    protected $disk = 'local';
+
     protected function getEnvironmentSetUp($app)
     {
         parent::getEnvironmentSetUp($app);
@@ -53,7 +55,7 @@ class FileEnvironmentBoot extends EnvironmentBoot
     {
         return array_merge([
             $this->nameKey      => $file->name,
-            $this->pathKey      => 'storage/'.$this->modelPath.'/'.$column.'/'.$file->hashName(),
+            $this->pathKey      => $this->modelPath.'/'.$column.'/'.$file->hashName(),
             $this->mime_typeKey => $file->getClientMimeType(),
             $this->sizeKey      => $file->getSize(),
         ], $withHash ? [
@@ -75,19 +77,19 @@ class FileEnvironmentBoot extends EnvironmentBoot
 
     /*** storage ***/
 
-    protected function assert_in_storage($file, $column, $disk = 'public')
+    protected function assert_in_storage($file, $column, $disk = null)
     {
-        Storage::disk($disk)->assertExists($this->storage_path($file, $column));
+        Storage::disk($disk ?: $this->disk)->assertExists($this->storage_path($file, $column));
     }
 
-    protected function assert_not_in_storage($file, $column, $disk = 'public')
+    protected function assert_not_in_storage($file, $column, $disk = null)
     {
-        Storage::disk($disk)->assertMissing($this->storage_path($file, $column));
+        Storage::disk($disk ?: $this->disk)->assertMissing($this->storage_path($file, $column));
     }
 
-    protected function get_from_storage($file, $column, $disk = 'public')
+    protected function get_from_storage($file, $column, $disk = null)
     {
-        return Storage::disk($disk)->path($this->storage_path($file, $column));
+        return Storage::disk($disk ?: $this->disk)->path($this->storage_path($file, $column));
     }
 
     protected function storage_path($file, $column)
@@ -97,19 +99,19 @@ class FileEnvironmentBoot extends EnvironmentBoot
 
     /*** storage thumb ***/
 
-    protected function assert_thumb_in_storage($file, $column, $disk = 'public')
+    protected function assert_thumb_in_storage($file, $column, $disk = null)
     {
-        Storage::disk($disk)->assertExists($this->thumb_storage_path($file, $column));
+        Storage::disk($disk ?: $this->disk)->assertExists($this->thumb_storage_path($file, $column));
     }
 
-    protected function assert_thumb_not_in_storage($file, $column, $disk = 'public')
+    protected function assert_thumb_not_in_storage($file, $column, $disk = null)
     {
-        Storage::disk($disk)->assertMissing($this->thumb_storage_path($file, $column));
+        Storage::disk($disk ?: $this->disk)->assertMissing($this->thumb_storage_path($file, $column));
     }
 
-    protected function get_thumb_from_storage($file, $column, $disk = 'public')
+    protected function get_thumb_from_storage($file, $column, $disk = null)
     {
-        return Storage::disk($disk)->path($this->thumb_storage_path($file, $column));
+        return Storage::disk($disk ?: $this->disk)->path($this->thumb_storage_path($file, $column));
     }
 
     protected function thumb_storage_path($file, $column)

@@ -14,7 +14,14 @@ class Image extends File
     /**
      * The file's handler class.
      */
-    protected $fileHandler = ImageHandler::class;
+    protected $fileHandler;
+
+    protected function setupFileHandler()
+    {
+        $this->disk = config('kompo.default_storage_disk.image');
+
+        $this->fileHandler = new ImageHandler();
+    }
 
     public function prepareForFront($komponent)
     {
