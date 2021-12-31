@@ -2,9 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Elements\Traits\MultiSelectTrait;
-
-class MultiSelectButtons extends SelectButtons
+class MultiSelectButtons extends MultiButtonGroup
 {
-    use MultiSelectTrait;
+    //DO NOT USE - WILL BE DEPRECATED IN V4
 }

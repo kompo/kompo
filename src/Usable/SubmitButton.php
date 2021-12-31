@@ -4,9 +4,9 @@ namespace Kompo;
 
 class SubmitButton extends Button
 {
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label ?: 'Save');
+        parent::initialize($label ?: 'Save');
 
         $this->submit();
     }

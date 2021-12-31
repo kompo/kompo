@@ -2,9 +2,7 @@
 
 namespace Kompo;
 
-use Kompo\Elements\Traits\MultiSelectTrait;
-
-class MultiSelectLinks extends SelectLinks
+class MultiSelectLinks extends MultiLinkGroup
 {
-    use MultiSelectTrait;
+    //DO NOT USE - WILL BE DEPRECATED IN V4    
 }

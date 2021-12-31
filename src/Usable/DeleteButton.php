@@ -4,9 +4,9 @@ namespace Kompo;
 
 class DeleteButton extends DeleteLink
 {
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->button();
     }

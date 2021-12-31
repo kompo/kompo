@@ -2,18 +2,7 @@
 
 namespace Kompo;
 
-class SelectButtons extends SelectLinks
+class SelectButtons extends ButtonGroup
 {
-    protected function vlInitialize($label)
-    {
-        parent::vlInitialize($label);
-
-        $this->noInputWrapper();
-
-        $this->containerClass('row');
-
-        $this->optionClass('col');
-
-        $this->optionInnerClass('vlInputWrapper');
-    }
+    //DO NOT USE - WILL BE DEPRECATED IN V4
 }
