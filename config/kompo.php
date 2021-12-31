@@ -26,6 +26,14 @@ return [
         'model' => Illuminate\Database\Eloquent\Model::class,
     ],
 
+    /******************
+     * Storage config *
+     *****************/
+    'default_storage_disk' => [
+        'file' => 'local',
+        'image' => 'public',
+    ],
+
     /*************
      * DB config *
      ************/
