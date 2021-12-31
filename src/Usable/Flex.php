@@ -18,9 +18,9 @@ class Flex extends Layout
     public $vueComponent = 'Flex';
     public $bladeComponent = 'Flex';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->justifyStart();
 
@@ -46,7 +46,7 @@ class Flex extends Layout
      */
     public function justifyCenter()
     {
-        $this->config(['justifyClass' => 'vlJustifyCenter']);
+        $this->config(['justifyClass' => 'justify-center']);
 
         return $this;
     }
@@ -58,7 +58,7 @@ class Flex extends Layout
      */
     public function justifyEnd()
     {
-        $this->config(['justifyClass' => 'vlJustifyEnd']);
+        $this->config(['justifyClass' => 'justify-end']);
 
         return $this;
     }
@@ -70,7 +70,7 @@ class Flex extends Layout
      */
     public function justifyBetween()
     {
-        $this->config(['justifyClass' => 'vlJustifyBetween']);
+        $this->config(['justifyClass' => 'justify-between']);
 
         return $this;
     }
@@ -82,7 +82,7 @@ class Flex extends Layout
      */
     public function justifyAround()
     {
-        $this->config(['justifyClass' => 'vlJustifyAround']);
+        $this->config(['justifyClass' => 'justify-around']);
 
         return $this;
     }

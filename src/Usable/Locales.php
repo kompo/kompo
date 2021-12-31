@@ -6,9 +6,9 @@ class Locales extends Dropdown
 {
     public $bladeComponent = 'Dropdown';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label ?: strtoupper(session('kompo_locale')));
+        parent::initialize($label ?: strtoupper(session('kompo_locale')));
 
         $this->submenu(
             collect(config('kompo.locales'))->map(function ($language, $locale) {

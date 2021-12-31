@@ -9,7 +9,7 @@ class AuthLogoutForm extends Form
 {
     protected $redirectTo = '/';
 
-    protected $linkClass = 'vlColorInherit px-4 py-2';
+    protected $linkClass = 'text-inherit px-4 py-2';
 
     public function created()
     {

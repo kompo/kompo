@@ -26,6 +26,20 @@ class Dropdown extends TriggerWithSubmenu
         ]);
     }
 
+    //TODO DOCUMENT
+    public function noBorder()
+    {
+        return $this->config([
+            'menuNoBorder' => true,
+        ]);
+    }
+
+    //TODO DOCUMENT
+    public function button($additionalClass = '')
+    {
+        return $this->togglerClass('vlBtn justify-center'.($additionalClass ? ' '.$additionalClass : ''));
+    }
+
     public function openOnClick()
     {
         return $this->config([

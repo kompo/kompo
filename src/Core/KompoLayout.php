@@ -104,12 +104,12 @@ class KompoLayout
 
     protected function getFlexClass($pm)
     {
-        return in_array($pm, ['navbar', 'footer', 'navbar|footer']) ? 'kompoFlexCol' : ($pm ? 'kompoFlex' : 'vlFlex1');
+        return in_array($pm, ['navbar', 'footer', 'navbar|footer']) ? 'kompoFlexCol' : ($pm ? 'kompoFlex' : 'flex-1');
     }
 
     protected function getOverflowClass($appId = false)
     {
-        $overflow = !$appId ? '' : ($this->hasAnyFixedMenus ? 'vl100vh ' : 'vlMin100vh ');
+        $overflow = !$appId ? '' : ($this->hasAnyFixedMenus ? 'h-screen ' : 'min-h-screen ');
 
         if ($this->hasAnyFixedMenus && !$this->overFlowSet) {
             $overflow .= $this->noFixedMenusLeft() ? 'kompoScrollableContent' : 'kompoFixedContent';

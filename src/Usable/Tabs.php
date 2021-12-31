@@ -16,9 +16,9 @@ class Tabs extends Layout
      *
      * @param      <type>  $label  The label
      */
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->commonClass('border-b-2 px-4 py-2 mb-4 block'); //defaults can be overridden
 

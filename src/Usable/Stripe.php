@@ -15,9 +15,9 @@ class Stripe extends Field
 
     public $vueComponent = 'Stripe';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->noLabel();
     }

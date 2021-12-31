@@ -4,9 +4,9 @@ namespace Kompo;
 
 class Search extends Select
 {
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->config([
             'searchInput' => true,

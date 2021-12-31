@@ -9,9 +9,9 @@ class SidebarToggler extends Link
     public $vueComponent = 'SidebarToggler';
     public $bladeComponent = 'SidebarToggler';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label ?: '&#9776;');
+        parent::initialize($label ?: '&#9776;');
 
         $this->toggleSidebar();
     }

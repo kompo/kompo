@@ -8,9 +8,9 @@ class Translatable extends Textarea
 
     protected $locales;
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->locales = config('kompo.locales');
 

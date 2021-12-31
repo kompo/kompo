@@ -11,9 +11,9 @@ class Date extends Field
     protected $dbFormat = 'Y-m-d';
     protected $configFormatKey = 'default_date_format';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->icon('icon-calendar');
 

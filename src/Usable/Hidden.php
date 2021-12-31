@@ -10,9 +10,9 @@ class Hidden extends Field
 
     public $showHidden = false;
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->name = $label; //not snakecase...
     }

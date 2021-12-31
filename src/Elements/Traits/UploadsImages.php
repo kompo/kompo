@@ -92,7 +92,7 @@ trait UploadsImages
      */
     protected function transformFromDB($file)
     {
-        $file['src'] = asset($file['path']);
+        $file['src'] = \Storage::disk($this->disk)->exists($file['path']) ? \Storage::disk($this->disk)->url($file['path']) : asset($file['path']);
 
         return $file;
     }

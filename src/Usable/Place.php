@@ -44,9 +44,9 @@ class Place extends Field
      *
      * @param string $label The label
      */
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         collect(static::$allKeys = config('kompo.places_attributes'))->each(function ($column, $key) {
             $internalKeyName = $key.'Key';

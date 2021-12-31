@@ -15,9 +15,9 @@ class Liste extends Input
 
     const DEFAULT_KEY_LABEL = 'key';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->inputType('text');
         $this->keyLabel(self::DEFAULT_KEY_LABEL);

@@ -8,9 +8,9 @@ class Json extends Liste
 
     const DEFAULT_VALUE_LABEL = 'value';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->valueLabel(self::DEFAULT_VALUE_LABEL);
     }

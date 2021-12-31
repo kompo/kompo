@@ -81,7 +81,7 @@ trait HasHref
      */
     public function addHash($hash = null)
     {
-        $this->hash = $hash ?: Str::slug($this->label, '-');
+        $this->hash = $hash ?: Str::slug(strip_tags($this->label), '-');
 
         if ($this->href != 'javascript:void(0)') {
             $this->href .= '#'.$this->hash;
@@ -110,10 +110,12 @@ trait HasHref
     //Active navigation methods
     public function checkActive()
     {
-        if ($this->href == \Request::getSchemeAndHttpHost()) { //home page only active if matched completely
-            $this->setActive(\Request::url() == $this->href ? $this->getActiveClass() : '');
+        $hrefWithoutHash = strtok($this->href, '#');
+        
+        if ($hrefWithoutHash == \Request::getSchemeAndHttpHost()) { //home page only active if matched completely
+            $this->setActive(\Request::url() == $hrefWithoutHash? $this->getActiveClass() : '');
         } else {
-            $this->setActive(substr(\Request::url(), 0, strlen($this->href)) == $this->href ? $this->getActiveClass() : '');
+            $this->setActive(substr(\Request::url(), 0, strlen($hrefWithoutHash)) == $hrefWithoutHash ? $this->getActiveClass() : '');
         }
     }
 

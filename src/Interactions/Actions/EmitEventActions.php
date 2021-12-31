@@ -68,6 +68,17 @@ trait EmitEventActions
     }
 
     /**
+     * Closes a sidebar.
+     * //TODO DOCUMENT.
+     *
+     * @return self
+     */
+    public function closeSidebar()
+    {
+        return $this->emit('closeSidebar');
+    }
+
+    /**
      * Confirms a modal dialog.
      * //TODO DOCUMENT.
      *

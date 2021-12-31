@@ -17,9 +17,9 @@ class Columns extends Layout
 
     public $vueComponent = 'Columns';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->breakpoint('md');
     }

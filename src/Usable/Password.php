@@ -6,9 +6,9 @@ use Illuminate\Support\Facades\Hash;
 
 class Password extends Input
 {
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->inputType('password');
     }

@@ -14,7 +14,7 @@ class Panel extends Layout
 
     public $vueComponent = 'FormPanel';
 
-    protected function vlInitialize($labelAsId)
+    protected function initialize($labelAsId)
     {
         $this->id('Vl'.$labelAsId);
     }

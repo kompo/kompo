@@ -87,6 +87,16 @@ abstract class TriggerWithSubmenu extends Trigger
     }
 
     /**
+     * TODO document
+     *
+     * @return self
+     */
+    public function togglerClass($togglerClass)
+    {
+        return $this->config(['togglerClass' => $togglerClass]);
+    }
+
+    /**
      * The collapsible menu will be opened on page load.
      *
      * @return self

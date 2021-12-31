@@ -30,9 +30,9 @@ class Select extends Field
 
     protected $orderBy = [];
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->noResultsMessage(self::NO_OPTIONS_FOUND);
     }

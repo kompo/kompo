@@ -71,9 +71,9 @@ abstract class Field extends Element
      *
      * @return void
      */
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->name = Str::snake($label); //not $this->label because it could be already translated
     }

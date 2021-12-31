@@ -6,9 +6,9 @@ class NavSearch extends Search
 {
     public $bladeComponent = 'NavSearch';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->noLabel()->placeholder($label)->noMargins();
     }

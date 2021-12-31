@@ -28,8 +28,8 @@ trait DoesTurboRefresh
         }
 
         if (
-            ($routeObject = RouteFinder::getRouteObject($route, $parameters)) &&
-            (($routeObject->action['layout'] ?? '') === (request()->route()->action['layout'] ?? false))
+            ($routeObject = RouteFinder::getRouteObject($route, $parameters)) && ($routeObject->action['layout'] ?? '')
+            //(($routeObject->action['layout'] ?? '') === (request()->route()->action['layout'] ?? false))
         ) {
             $this->forceTurbo();
         }

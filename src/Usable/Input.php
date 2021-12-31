@@ -13,9 +13,9 @@ class Input extends Field
 
     public $vuetifyComponent = 'text-field';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         if (strtolower($label) == 'email') {
             $this->inputType('email');

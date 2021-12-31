@@ -17,6 +17,26 @@ trait TriggerStyles
         return $this;
     }
 
+    /** TODO: DOCUMENT
+     * Makes the Button or Link smaller.
+     *
+     * @return self
+     */
+    public function small()
+    {
+        return $this->class('small');
+    }
+
+    /** TODO: DOCUMENT
+     * Makes the Button or Link bigger.
+     *
+     * @return self
+     */
+    public function big()
+    {
+        return $this->class('big');
+    }
+
     /**
      * Sets the plain style.
      *

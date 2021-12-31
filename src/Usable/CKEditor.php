@@ -11,9 +11,9 @@ class CKEditor extends Field
 
     public $vueComponent = 'CKEditor';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->setDefaultToolbar();
     }

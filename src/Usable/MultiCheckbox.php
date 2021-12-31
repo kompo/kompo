@@ -6,9 +6,9 @@ class MultiCheckbox extends MultiSelect
 {
     public $vueComponent = 'MultiCheckbox';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
     }
 
     public function horizontal()

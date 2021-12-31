@@ -36,7 +36,7 @@ abstract class Element extends BaseElement
      */
     public function __construct($label = '', $label2 = null)
     {
-        $this->vlInitialize($label);
+        $this->initialize($label);
 
         if ($label2) {
             $this->setLabel2($label2);
@@ -50,7 +50,7 @@ abstract class Element extends BaseElement
      *
      * @return void
      */
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
         KompoId::setForElement($this, $label);
 

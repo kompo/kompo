@@ -70,6 +70,13 @@ if (!function_exists('_Button')) {
     }
 }
 
+if (!function_exists('_ButtonGroup')) {
+    function _ButtonGroup(): \Kompo\ButtonGroup
+    {
+        return Kompo\ButtonGroup::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_Calendar')) {
     function _Calendar(): \Kompo\Calendar
     {
@@ -350,6 +357,13 @@ if (!function_exists('_Link')) {
     }
 }
 
+if (!function_exists('_LinkGroup')) {
+    function _LinkGroup(): \Kompo\LinkGroup
+    {
+        return Kompo\LinkGroup::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_Liste')) {
     function _Liste(): \Kompo\Liste
     {
@@ -361,6 +375,20 @@ if (!function_exists('_ListeSelect')) {
     function _ListeSelect(): \Kompo\ListeSelect
     {
         return Kompo\ListeSelect::form(...func_get_args());
+    }
+}
+
+if (!function_exists('_MultiButtonGroup')) {
+    function _MultiButtonGroup(): \Kompo\MultiButtonGroup
+    {
+        return Kompo\MultiButtonGroup::form(...func_get_args());
+    }
+}
+
+if (!function_exists('_MultiLinkGroup')) {
+    function _MultiLinkGroup(): \Kompo\MultiLinkGroup
+    {
+        return Kompo\MultiLinkGroup::form(...func_get_args());
     }
 }
 
@@ -652,13 +680,6 @@ if (!function_exists('_Collapse')) {
     }
 }
 
-if (!function_exists('_CollapseOnMobile')) {
-    function _CollapseOnMobile(): \Kompo\CollapseOnMobile
-    {
-        return Kompo\CollapseOnMobile::form(...func_get_args());
-    }
-}
-
 if (!function_exists('_Dropdown')) {
     function _Dropdown(): \Kompo\Dropdown
     {
@@ -756,5 +777,12 @@ if (!function_exists('_FlexEnd4')) {
     function _FlexEnd4(): \Kompo\FlexEnd
     {
         return _FlexEnd(...func_get_args())->class('space-x-4');
+    }
+}
+
+if (!function_exists('_Rows4')) {
+    function _Rows4(): \Kompo\Rows
+    {
+        return _Rows(...func_get_args())->class('space-y-4');
     }
 }

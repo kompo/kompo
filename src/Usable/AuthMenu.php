@@ -6,9 +6,9 @@ use Kompo\Forms\AuthLogoutForm;
 
 class AuthMenu extends Dropdown
 {
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label ?: auth()->user()->name);
+        parent::initialize($label ?: auth()->user()->name);
 
         $this->submenu([
             new AuthLogoutForm(),

@@ -39,9 +39,9 @@ class MultiForm extends Field
 
     protected $preloadIfEmpty = false;
 
-    protected function vlInitialize($name)
+    protected function initialize($name)
     {
-        parent::vlInitialize($name);
+        parent::initialize($name);
         $this->name = lcfirst(Str::camel($name));
 
         $this->addLabel('Add a new item');

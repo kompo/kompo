@@ -20,7 +20,7 @@ abstract class Layout extends Element
      */
     public function __construct(...$args)
     {
-        $this->vlInitialize(class_basename($this));
+        $this->initialize(class_basename($this));
 
         $this->elements = LayoutManager::collectFilteredElements($args, $this)->values()->all();
     }

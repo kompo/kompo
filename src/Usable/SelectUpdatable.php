@@ -12,9 +12,9 @@ class SelectUpdatable extends Select
 
     public $vueComponent = 'SelectUpdatable';
 
-    protected function vlInitialize($label)
+    protected function initialize($label)
     {
-        parent::vlInitialize($label);
+        parent::initialize($label);
 
         $this->addLabel('Add a new option');
     }
