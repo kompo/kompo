@@ -94,13 +94,13 @@ class KompoServiceProvider extends ServiceProvider
 
             $styleFilename = 'app'.($style ? '-'.$style : '');
 
-            return '<link href="https://unpkg.com/vue-kompo/dist/app'.$styleFilename.'.min.css" rel="stylesheet">';
+            return '<link href="https://unpkg.com/vue-kompo@^3/dist/app'.$styleFilename.'.min.css" rel="stylesheet">';
 
         });
 
         \Blade::directive('kompoScripts', function () {
 
-            return '<script src="https://unpkg.com/vue-kompo/dist/app.min.js"></script>';
+            return '<script src="https://unpkg.com/vue-kompo@^3/dist/app.min.js"></script>';
             
         });
     }
