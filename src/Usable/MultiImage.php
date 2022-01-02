@@ -11,10 +11,12 @@ class MultiImage extends MultiFile
 
     public $vueComponent = 'Image';
 
-    /**
-     * The file's handler class.
-     */
-    protected $fileHandler = ImageHandler::class;
+    protected function setupFileHandler()
+    {
+        $this->disk = config('kompo.default_storage_disk.image');
+
+        $this->fileHandler = new ImageHandler();
+    }
 
     public function prepareForFront($komponent)
     {
