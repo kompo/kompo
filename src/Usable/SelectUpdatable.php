@@ -51,4 +51,13 @@ class SelectUpdatable extends Select
             'ajaxPayload'           => $ajaxPayload,
         ]);
     }
+
+    //TODO DOCUMENT
+    public function multiple()
+    {
+        $this->multiple = true;
+        $this->castsToArray = true;
+
+        return $this;
+    }
 }
