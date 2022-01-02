@@ -11,11 +11,6 @@ class Image extends File
 
     public $vueComponent = 'Image';
 
-    /**
-     * The file's handler class.
-     */
-    protected $fileHandler;
-
     protected function setupFileHandler()
     {
         $this->disk = config('kompo.default_storage_disk.image');
