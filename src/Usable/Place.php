@@ -93,11 +93,11 @@ class Place extends Field
     }
 
     //TODO document
-    //You have to add this in your js
+    //For global style, you may add this in your js
     //window.GoogleMapsStyle = require('kompo-googlemaps/styles/silver').default
-    public function customMapStyle()
+    public function customMapStyle($styles)
     {
-        return $this->config(['customMapStyle' => true]);
+        return $this->config(['customMapStyle' => $styles]);
     }
 
     //TODO document
