@@ -11,6 +11,7 @@ use Kompo\Komponents\Form\FormSubmitter;
 use Kompo\Komponents\Query\QueryDisplayer;
 use Kompo\Komponents\Query\QueryManager;
 use Kompo\Routing\Dispatcher;
+use Kompo\Routing\RouteFinder;
 use Kompo\Select;
 
 class KomponentHandler
@@ -113,7 +114,21 @@ class KomponentHandler
     {
         $komponentClass = KompoTarget::getDecrypted();
 
-        return with(new Dispatcher($komponentClass))->bootKomponentForDisplay();
+        if (config('kompo.komponent_route_strict')) {
+
+            $routeObject = RouteFinder::findRouteByKomponent($komponentClass);
+            
+            return $routeObject ? \Http::get(url($routeObject->uri)) : _Rows(
+                _Html('Sorry, this komponent class cannot be called directly'),
+                _Html('Please set a route that points to it to allow this action.'),
+                _Link('See fore more info (TODO add link to doc)'),
+            )->style('padding:2rem');
+
+        } else {
+
+            return with(new Dispatcher($komponentClass))->bootKomponentForDisplay();
+            
+        }
     }
 
     /**

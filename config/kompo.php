@@ -12,6 +12,8 @@ return [
 
     'helpers_dir' => 'app/Kompo/Helpers', //TODO document
 
+    'komponent_route_strict' => false, //TODO document
+
     /***************
      * PULL config *
      ***************/

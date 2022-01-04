@@ -114,6 +114,20 @@ class RouteFinder
     }
 
     /**
+     * Finds a route by komponent.
+     *
+     * @param      <type>  $komponentClass  The komponent class
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
+    public static function findRouteByKomponent($komponentClass)
+    {
+        return collect(\Route::getRoutes())->first(function ($r) use ($komponentClass) {
+            return ($r->action['controller'] ?? null) == $komponentClass;
+        });
+    }
+
+    /**
      * The default route that handles Kompo requests.
      *
      * @return string.
