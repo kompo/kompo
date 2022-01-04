@@ -22,4 +22,10 @@ class Image extends File
     {
         $this->value = $this->value ? $this->transformFromDB($this->value) : null;
     }
+
+    //TODO DOCUMENT
+    public function rounded()
+    {
+        return $this->class('k-rounded-image');
+    }
 }
