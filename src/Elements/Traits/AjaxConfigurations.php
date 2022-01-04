@@ -51,13 +51,19 @@ trait AjaxConfigurations
         return $this;
     }
 
-    /**
+    /** Deprecated in v4 => keepOpen()
      * Keeps the modal open after a form submit.
      *
      * @return Kompo\Elements\Element
      */
     public function keepModalOpen()
     {
-        return $this->config(['keepModalOpen' => true]);
+        return $this->keepOpen();
+    }
+
+    //TODO DOCUMENT
+    public function keepOpen()
+    {
+        return $this->config(['keepOpen' => true]);
     }
 }

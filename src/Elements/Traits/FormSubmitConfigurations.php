@@ -31,7 +31,7 @@ trait FormSubmitConfigurations
      */
     public function getFreshForm()
     {
-        return $this->keepModalOpen()->config([
+        return $this->keepOpen()->config([
             'getFreshForm' => true,
         ]);
     }
