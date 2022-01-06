@@ -18,7 +18,6 @@ abstract class Field extends Element
 {
     use HasInteractions;
     use ForwardsInteraction;
-    use Traits\AjaxConfigurations;
     use Traits\FormSubmitConfigurations;
     use Traits\LabelInfoComment;
 

@@ -12,6 +12,7 @@ abstract class Element extends BaseElement
     use Traits\HasHtmlAttributes;
     use Traits\UsedInTables;
     use Traits\DoesTurboRefresh;
+    use Traits\AjaxConfigurations;
 
     /**
      * The component's label.

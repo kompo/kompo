@@ -10,7 +10,6 @@ abstract class Trigger extends Element
     use HasInteractions;
     use ForwardsInteraction;
     use Traits\FormSubmitConfigurations;
-    use Traits\AjaxConfigurations;
     use Traits\LabelInfoComment;
 
     /**
