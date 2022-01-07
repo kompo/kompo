@@ -9,8 +9,7 @@ trait HasHtmlAttributes
      * <php>->attr([
      *     'title' => 'Some title',
      *     'data-target' => '#target-id'
-     * ])</php>.
-     *
+     * ])</php>
      *
      * @param array|string|null $attributes Associative array of attribute names and values.
      *
@@ -29,7 +28,6 @@ trait HasHtmlAttributes
 
     /**
      * Sets the HTML title attribute of the element.
-     *
      *
      * @param string $title The HTML title attribute
      *

@@ -17,7 +17,11 @@
 
     @else
 
+        @includeIf('kompo.content-top')
+
     	@yield('content')
+
+        @includeIf('kompo.content-bottom')
 
     @endif
     

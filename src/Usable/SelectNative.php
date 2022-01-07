@@ -6,6 +6,8 @@ class SelectNative extends Select
 {
     public $vueComponent = 'SelectNative';
 
+    //TODO DOCUMENT with Select
+
     //TODO REFACTOR the other way around...
 
     public function placeholder($placeholder)

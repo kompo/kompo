@@ -20,7 +20,7 @@ class SubMenuInstantiationStylesTest extends EnvironmentBoot
     /** @test */
     public function submenu_is_instantianted_with_string()
     {
-        $el = Collapse::form()->submenu('String is not taken into account'); //TODO: document when that is needed
+        $el = Collapse::form()->submenu('String is not taken into account');
 
         $this->assertEquals([], $el->elements);
     }

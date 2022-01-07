@@ -19,12 +19,12 @@ class Img extends Block
 
     protected function initialize($label)
     {
+        $this->disk = config('kompo.default_storage_disk.image');
+
         $this->alt($label); //To avoid breadking change - to deprecate in v4
         $this->src($label);
 
         parent::initialize('');
-        
-        $this->disk = config('kompo.default_storage_disk.image');
     }
 
     //TODO Document

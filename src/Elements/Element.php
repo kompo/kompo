@@ -90,8 +90,10 @@ abstract class Element extends BaseElement
     }
 
 
-    /* TODO DOCUMENT 
-     * currently used for disabling a Select option (make it unselectable)
+    /**
+     * Disables the element. Useful in _Select()->options(...) for example to disable an option.
+     * 
+     * @return void
      */
     public function disabled()
     {

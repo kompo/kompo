@@ -20,7 +20,7 @@ class LayoutInstantiationStylesTest extends EnvironmentBoot
     /** @test */
     public function layout_is_instantianted_with_string()
     {
-        $el = Columns::form('String is not taken into account'); //TODO: document when that is needed
+        $el = Columns::form('String is not taken into account');
 
         $this->assertEquals([], $el->elements);
     }

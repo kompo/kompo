@@ -23,6 +23,8 @@
 
 <body @isset($bodyClass) class="{{$bodyClass}}" @endif>
 
+    @includeIf('kompo.body-top')
+
     {!! $_kompo->wrapperOpenTag(config('kompo.vue_app_id')) !!}
 
         @if($_kompo->getPrimaryMenu())
@@ -31,13 +33,19 @@
 
         @else
 
+            @includeIf('kompo.content-top')
+
             @yield('content')
+
+            @includeIf('kompo.content-bottom')
 
         @endif
 
         <vl-floating-elements></vl-floating-elements>
 
     {!! $savedCloseTag !!}
+
+    @includeIf('kompo.body-bottom')
 
     @include('kompo::scripts')
 

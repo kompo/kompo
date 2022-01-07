@@ -43,9 +43,12 @@ trait AddDrawerActions
      *      *
      * @return self
      */
-    public function inPopup()
+    public function inPopup($draggable = false, $resizable = false)
     {
-        return $this->prepareAction('fillPopup');
+        return $this->prepareAction('fillPopup', [
+            'draggable' => $draggable,
+            'resizable' => $resizable,
+        ]);
     }
 
     public function closePopup()
