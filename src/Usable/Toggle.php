@@ -10,4 +10,11 @@ class Toggle extends Field
     use HasBooleanValue;
 
     public $vueComponent = 'Toggle';
+
+    protected function initialize($label)
+    {
+        parent::initialize($label);
+
+        $this->noInputWrapper();
+    }
 }

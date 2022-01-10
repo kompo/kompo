@@ -44,6 +44,10 @@ trait HasHref
         
         $this->checkActive();
 
+        if (method_exists($this, 'addCursorPointer')  ) {
+            $this->addCursorPointer();
+        }
+
         return $this;
     }
 

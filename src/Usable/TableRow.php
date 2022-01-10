@@ -13,4 +13,9 @@ class TableRow extends Card
     use HasHref;
 
     public $vueComponent = 'TableRow';
+
+    public function addCursorPointer()
+    {
+        $this->class('cursor-pointer');
+    }
 }

@@ -131,20 +131,21 @@ abstract class Element extends BaseElement
     /**
      * Adds an icon before component's label.
      *
-     * @param string $iconString This is the icon HTML or icon class in &lt;i class="...">&lt;/i>
+     * @param string      $iconString     This is the icon HTML, Svg name or icon class in &lt;i class="...">&lt;/i>
+     * @param string|null $iconClass      An optional class that we may assign directly to the icon
      *
      * @return Element
      */
-    public function iconNonStatic($iconString)
-    {
-        $this->config(['icon' => IconGenerator::toHtml($iconString)]);
+    public function iconNonStatic($iconString, $iconClass = null)
+    {        
+        $this->config(['icon' => IconGenerator::toHtml($iconString, $iconClass)]);
 
         return $this;
     }
 
-    public static function iconStatic($iconString)
+    public static function iconStatic($iconString, $iconClass = null)
     {
-        return static::form('')->icon($iconString);
+        return static::form('')->icon($iconString, $iconClass);
     }
 
     /**

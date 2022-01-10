@@ -103,15 +103,22 @@ class Select extends Field
     }
 
     /**
-     * Sets the Select's options.
-     * You may use an <b>associative array</b> directly:
+     * Sets the Element's options.
+     * You may use an `associative array` directly:
      * <php>->options([
-     *    'key1' => 'value1',
-     *    'key2' => 'value2',
+     *    'value1' => 'label1',
+     *    'value2' => 'label2',
      *    ...
      * ])</php>
-     * Or Laravel's <b>pluck</b> method :
-     * <php>->options(Tags::pluck('tag_name', 'tag_id'))</php>.
+     * Or Laravel's `pluck` method :
+     * <php>->options(Tags::pluck('tag_name', 'tag_id'))</php>
+     * Or with `mapWithKeys` to have an id/label pair:
+     * <php>->options(
+     *      User::get()->mapWithKeys(fn($user) => [
+     *          $user->id => _Html($user->name)
+     *      ])
+     * )</php>
+     * Note: For `Selects`, the label can also be an Element, a Layout with nested elements...
      *
      * @param array|Collection $options An associative array the values and labels of the options.
      *

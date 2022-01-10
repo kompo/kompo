@@ -5,5 +5,5 @@
 	"Delete this item": "Delete this item", 
     "No items found": "No items found",
     "warnBeforeClose": "Any unsaved changes will be lost. Are you sure you want to close this window?",
-    "sessionTimeoutMessage": "This page has expired due to inactivity.\nWould you like to refresh the page?"
+    "sessionTimeoutMessage": "You are either not logged in or your session has expired due to inactivity.\nWould you like to login?"
 }
