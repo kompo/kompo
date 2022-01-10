@@ -113,7 +113,7 @@ trait HasTranslations
         if ($key !== null) {
             $this->guardAgainstUntranslatableAttribute($key);
 
-            $attributeTranslations = $this->getAttributes()[$key];
+            $attributeTranslations = $this->getAttributes()[$key] ?? null;
 
             return $attributeTranslations ? json_decode($attributeTranslations, true) : null;
         }
