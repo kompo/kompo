@@ -16,7 +16,7 @@ class FormDisplayer
 
         ValidationManager::addRulesToKomponent($form->rules(), $form); //for Front-end validations TODO:
 
-        $form->elements = KomponentManager::prepareElementsForDisplay($form, 'render', true);
+        $form->elements = $form->prepareOwnElementsForDisplay($form->render());
 
         KompoId::setForKomponent($form);
 

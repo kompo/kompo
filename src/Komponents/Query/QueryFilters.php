@@ -27,7 +27,7 @@ class QueryFilters
             $methodName = $placement.$suffix;
 
             if (method_exists($query, $methodName)) {
-                $query->filters[$placement] = KomponentManager::prepareElementsForDisplay($query, $placement.$suffix, true); //fields are also pushed to query
+                $query->filters[$placement] = $query->prepareOwnElementsForDisplay($query->{$methodName}()); //fields are also pushed to query
             }
         }
     }
@@ -39,9 +39,10 @@ class QueryFilters
      */
     public static function prepareFiltersForAction($query)
     {
-        foreach (static::$filtersPlacement as $placement) {
-            KomponentManager::prepareElementsForAction($query, $placement, true);
-        }
+        $query->prepareOwnElementsForAction($query->top()); //explicitely writing method names for IDE support
+        $query->prepareOwnElementsForAction($query->left());
+        $query->prepareOwnElementsForAction($query->bottom());
+        $query->prepareOwnElementsForAction($query->right());
 
         //don't include Filtering here since some Actions don't require filtering
     }

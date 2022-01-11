@@ -2,7 +2,9 @@
 
 namespace Kompo\Elements;
 
+use Kompo\Elements\BaseElement;
 use Kompo\Elements\Managers\LayoutManager;
+use Kompo\Exceptions\NotAKompoBaseElementException;
 
 abstract class Layout extends Element
 {
@@ -53,12 +55,14 @@ abstract class Layout extends Element
     protected function prepareFor($methodName, $komponent)
     {
         collect($this->elements)->each(function ($element) use ($methodName, $komponent) {
+
+            if (!$element instanceof BaseElement) {
+                throw new NotAKompoBaseElementException($element);
+            }
+
             $element->{$methodName}($komponent);
 
             $element->mountedHook($komponent);
-
-            //To UNCOMMENT
-            //$this->prepareHashAndActiveState($element); //added this to extend Flex becoming a Menuitem
         });
     }
 }

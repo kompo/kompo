@@ -98,7 +98,7 @@ abstract class Menu extends Komponent
 
         AuthorizationGuard::checkBoot($this, 'Display');
 
-        $this->elements = KomponentManager::prepareElementsForDisplay($this, 'render', true);
+        $this->elements = $this->prepareOwnElementsForDisplay($this->render());
 
         KompoId::setForKomponent($this);
 

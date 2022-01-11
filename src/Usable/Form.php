@@ -279,7 +279,7 @@ abstract class Form extends Komponent
 
         ValidationManager::addRulesToKomponent($this->rules(), $this);
 
-        KomponentManager::prepareElementsForAction($this, 'render', true); //mainly to retrieve rules from fields
+        $this->prepareOwnElementsForAction($this->render()); //mainly to retrieve rules from fields
 
         return $this;
     }

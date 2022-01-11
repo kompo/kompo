@@ -3,6 +3,7 @@
 namespace Kompo\Komponents;
 
 use Kompo\Core\KompoId;
+use Kompo\Core\Util;
 use Kompo\Elements\BaseElement;
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
@@ -242,6 +243,48 @@ abstract class Komponent extends BaseElement
     public static function constructFromArray($info)
     {
         return is_string($komponent = $info['kompoClass']) ? new $komponent($info['store']) : $komponent;
+    }
+
+    /**
+     * Loops over an array of elements specified in the Komponent (render, top, bottom, ...) before the display phase
+     *
+     * @param null|array|Collection|Element  $renderedElements  The rendered elements
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function prepareOwnElementsForDisplay($renderedElements)
+    {
+        return Util::collect($renderedElements)->filter()->each(function ($element) {
+            
+            if (!$element instanceof BaseElement) {
+                throw new NotAKompoBaseElementException($element);
+            }
+
+            $element->prepareForDisplay($this);
+
+            $element->mountedHook($this);
+        })->values()->all();
+    }
+
+    /**
+     * Loops over an array of elements specified in the Komponent (render, top, bottom, ...) before the action phase
+     *
+     * @param null|array|Collection|Element  $renderedElements  The rendered elements
+     *
+     * @return Illuminate\Support\Collection
+     */
+    public function prepareOwnElementsForAction($renderedElements)
+    {
+        return Util::collect($renderedElements)->filter()->each(function ($element) {
+            
+            if (!$element instanceof BaseElement) {
+                throw new NotAKompoBaseElementException($element);
+            }
+
+            $element->prepareForAction($this);
+
+            $element->mountedHook($this);
+        })->values()->all();
     }
 
     //TODO: document
