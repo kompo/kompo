@@ -3,6 +3,7 @@
 namespace Kompo\Database;
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 use Kompo\Exceptions\NotTranslatableException;
 
 trait HasTranslations
@@ -52,18 +53,17 @@ trait HasTranslations
      *
      * @return $this
      */
-    /*
     public function setAttribute($key, $value)
     {
         // pass arrays and untranslatable attributes to the parent method
-        if (!$this->isTranslatableAttribute($key) || is_array($value)) {
+        if (!$this->isTranslatableAttribute($key) || is_array($value) || is_null($value) || $value instanceof Collection) {
             return parent::setAttribute($key, $value);
         }
 
         // if the attribute is translatable and not already translated (=array),
         // set a translation for the current app locale
         return $this->setTranslation($key, $this->getLocale(), $value);
-    }*/
+    }
 
     /**
      * @param string $key
@@ -125,14 +125,11 @@ trait HasTranslations
         });
     }
 
-    /*
     public function setTranslation(string $key, string $locale, $value): self
     {
         $this->guardAgainstUntranslatableAttribute($key);
 
         $translations = $this->getTranslations($key);
-
-        $oldValue = $translations[$locale] ?? '';
 
         if ($this->hasSetMutator($key)) {
             $method = 'set'.Str::studly($key).'Attribute';
@@ -142,10 +139,10 @@ trait HasTranslations
 
         $translations[$locale] = $value;
 
-        $this->attributes[$key] = $this->asJson($translations);
+        $this->attributes[$key] = collect($translations)->filter()->count() ? $this->asJson($translations) : null;
 
         return $this;
-    }*/
+    }
 
     /**
      * @param string $key
