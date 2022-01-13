@@ -773,6 +773,13 @@ if (!function_exists('_Flex4')) {
     }
 }
 
+if (!function_exists('_Flex2')) {
+    function _Flex2(): \Kompo\Flex
+    {
+        return _Flex(...func_get_args())->class('space-x-2');
+    }
+}
+
 if (!function_exists('_FlexEnd4')) {
     function _FlexEnd4(): \Kompo\FlexEnd
     {
