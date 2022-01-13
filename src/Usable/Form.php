@@ -115,6 +115,13 @@ abstract class Form extends Komponent
     protected $refresh = false; //TODO: rename $refreshAfterSubmit which is clearer
 
     /**
+     * If you wish to reload the form after submit/saving the model, set to true.
+     *
+     * @var bool
+     */
+    public $refreshAfterSubmit = false;
+
+    /**
      * Constructs a Form.
      *
      * @param null|int|string $modelKey (optional) The record's key or id in the DB table.
