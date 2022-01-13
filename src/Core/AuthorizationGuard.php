@@ -3,6 +3,7 @@
 namespace Kompo\Core;
 
 use Illuminate\Auth\Access\AuthorizationException;
+use Kompo\Exceptions\KomponentMethodNotAllowedException;
 use Kompo\Exceptions\KomponentMethodNotFoundException;
 use Kompo\Exceptions\KomponentNotDirectMethodException;
 use Kompo\Komponents\KomponentManager;
@@ -37,6 +38,8 @@ class AuthorizationGuard
     {
         static::checkMethodExists($komponent, $method);
 
+        static::checkMethodAllowed($komponent, $method);
+
         $komponentType = 'Kompo\\'.Dispatcher::getKomponentType($komponent);
 
         $baseMethodNames = collect((new ReflectionClass($komponentType))->getMethods())->pluck('name')->all();
@@ -67,10 +70,42 @@ class AuthorizationGuard
         }
     }
 
+    protected static function checkMethodAllowed($komponent, $method)
+    {
+        if (!static::isAllowedCallableMethod($komponent, $method)) {
+            throw new KomponentMethodNotAllowedException($method, $komponent);
+        }
+    }
+
     protected static function checkPreventSubmit($komponent)
     {
         if ($komponent->_kompo('options', 'preventSubmit')) {
             return static::throwUnauthorizedException($komponent, 'submit');
         }
+    }
+
+    private static function isAllowedCallableMethod($komponent, $calledMethod)
+    {
+        $reflection = new \ReflectionClass(get_class($komponent));
+        $publicMethods = $reflection->getMethods(\ReflectionMethod::IS_PUBLIC);
+
+        $nonKompoMethods = [];
+        foreach ($publicMethods as $method){
+            if (substr($method->class, 0, 6) !== 'Kompo\\')
+                 $nonKompoMethods[] = $method->name;
+        }
+
+        return in_array($calledMethod, array_diff($nonKompoMethods, [
+            'render', 
+            'rules', 
+            'handle', 
+            'created', 
+            'mounted', 
+            'beforeSave',
+            'afterSave', 
+            'completed', 
+            'response', 
+            'query',
+        ]));
     }
 }

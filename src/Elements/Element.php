@@ -84,7 +84,7 @@ abstract class Element extends BaseElement
      */
     public function prepareForAction($komponent)
     {
-        if ($this->config('includes') && KompoAction::is('eloquent-save')) {
+        if ($this->config('includes') && KompoAction::is('eloquent-save')) { //TODO eloquent-save is wrong => check ce & others b4 changing back
             KomponentManager::prepareElementsForAction($komponent, $this->config('includes'), true);
         }
     }

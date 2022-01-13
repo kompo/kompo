@@ -134,7 +134,7 @@ class FormSubmitter
             return $form->response();
         }
 
-        if ($form->_kompo('options', 'refresh')) {
+        if ($form->_kompo('options', 'refresh') || $form->refreshAfterSubmit) {
             return response()->json(FormDisplayer::displayElements($form), 202);
         }
 
