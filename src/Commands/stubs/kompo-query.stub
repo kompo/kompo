@@ -11,17 +11,17 @@ class DummyClass extends Query
         //return Post::orderBy('published_at');
     }
 
+    public function top()
+    {
+        return [
+            //Filters or Decorative Elements
+        ];
+    }
+
     public function render($item)
     {
         return [
            // Card Elements
         ];
     }
-
-    public function top()
-	{
-        return [
-            //Filters or Decorative Elements
-        ];
-	}
 }

@@ -23,7 +23,9 @@ class FormSubmitter
     {
         static::prepareForSubmit($form);
 
-        return DependencyResolver::callKomponentMethod($form, KompoTarget::getDecrypted() ?: 'handle');
+        $methodName = KompoTarget::getDecrypted();
+
+        return DependencyResolver::callKomponentMethod($form, $methodName ?: 'handle', [], !$methodName);
     }
 
     public static function eloquentSave($form)

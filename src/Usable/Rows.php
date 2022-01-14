@@ -2,15 +2,17 @@
 
 namespace Kompo;
 
-use Kompo\Interactions\Traits\ForwardsInteraction;
-use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Elements\Layout;
 use Kompo\Elements\Traits\HasHref;
+use Kompo\Elements\Traits\VerticalAlignmentTrait;
+use Kompo\Interactions\Traits\ForwardsInteraction;
+use Kompo\Interactions\Traits\HasInteractions;
 
 class Rows extends Layout
 {
     use HasInteractions;
     use ForwardsInteraction;
+    use VerticalAlignmentTrait;
     use HasHref;
 
     public $vueComponent = 'Rows';

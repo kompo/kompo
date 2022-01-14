@@ -787,9 +787,23 @@ if (!function_exists('_FlexEnd4')) {
     }
 }
 
+if (!function_exists('_FlexEnd2')) {
+    function _FlexEnd2(): \Kompo\FlexEnd
+    {
+        return _FlexEnd(...func_get_args())->class('space-x-2');
+    }
+}
+
 if (!function_exists('_Rows4')) {
     function _Rows4(): \Kompo\Rows
     {
         return _Rows(...func_get_args())->class('space-y-4');
+    }
+}
+
+if (!function_exists('_Rows2')) {
+    function _Rows2(): \Kompo\Rows
+    {
+        return _Rows(...func_get_args())->class('space-y-2');
     }
 }

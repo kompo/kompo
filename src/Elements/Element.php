@@ -5,6 +5,7 @@ namespace Kompo\Elements;
 use Kompo\Core\IconGenerator;
 use Kompo\Core\KompoAction;
 use Kompo\Core\KompoId;
+use Kompo\Exceptions\NotAllowedLabelException;
 use Kompo\Komponents\KomponentManager;
 
 abstract class Element extends BaseElement
@@ -53,6 +54,8 @@ abstract class Element extends BaseElement
      */
     protected function initialize($label)
     {
+        $this->checkIfLabelIsAllowed($label);
+
         KompoId::setForElement($this, $label);
 
         $this->label = is_null($label) ? '' : __($label);
@@ -65,7 +68,16 @@ abstract class Element extends BaseElement
      */
     protected function setLabel2($label2 = null)
     {
+        $this->checkIfLabelIsAllowed($label2);
+
         $this->label2 = is_null($label2) ? '' : __($label2);
+    }
+
+    protected function checkIfLabelIsAllowed($label)
+    {
+        if ($label && is_object($label)) {
+            throw new NotAllowedLabelException($label, $this);
+        }
     }
 
     /**

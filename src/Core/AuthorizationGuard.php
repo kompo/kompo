@@ -91,7 +91,7 @@ class AuthorizationGuard
 
         $nonKompoMethods = [];
         foreach ($publicMethods as $method){
-            if (substr($method->class, 0, 6) !== 'Kompo\\')
+            if (app()->runningUnitTests() || substr($method->class, 0, 6) !== 'Kompo\\')
                  $nonKompoMethods[] = $method->name;
         }
 

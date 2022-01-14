@@ -11,6 +11,13 @@ class DummyClass extends Table
         //return Post::orderBy('published_at');
     }
 
+    public function top()
+    {
+        return [
+            //Filters or Decorative Elements
+        ];
+    }
+
     public function headers()
     {
         return [
@@ -25,11 +32,4 @@ class DummyClass extends Table
     	   // Card Elements
     	];
     }
-
-    public function top()
-	{
-		return [
-			//Filters or Decorative Elements
-		];
-	}
 }
