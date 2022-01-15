@@ -27,7 +27,7 @@ class Tabs extends Layout
         $this->disabledClass('text-gray-400 cursor-not-allowed'); //defaults can be overridden
     }
 
-    /** TODO ADD TO DOCUMENTATION
+    /** 
      * Force a certain tab to be active (set it by it's index starting from 0)
      *
      * @param      integer    $index  The index of the starting active tab
@@ -41,7 +41,13 @@ class Tabs extends Layout
         ]);
     }
 
-    //TODO DOCUMENT
+    /**
+     * Sets the classes for the disabled tabs
+     *
+     * @param  string  $disabledClass  The disabled labels' class
+     *
+     * @return self
+     */
     public function disabledClass($disabledClass)
     {
         return $this->config([
@@ -49,7 +55,13 @@ class Tabs extends Layout
         ]);
     }
 
-    //TODO DOCUMENT
+    /**
+     * Disable after a certain index.
+     *
+     * @param      int   $index  The index of the last active tab
+     *
+     * @return     self
+     */
     public function disableAfter($index)
     {
         collect($this->elements)->each(function($element, $key) use ($index) {

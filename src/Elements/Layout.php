@@ -24,7 +24,14 @@ abstract class Layout extends Element
     {
         $this->initialize(class_basename($this));
 
-        $this->elements = LayoutManager::collectFilteredElements($args, $this)->values()->all();
+        $this->setElementsFromArguments($args);
+    }
+
+    
+    protected function setElementsFromArguments($args)
+    {
+
+        $this->elements = LayoutManager::collectFilteredElements($args, $this)->values()->all();        
     }
 
     /**

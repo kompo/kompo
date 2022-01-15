@@ -52,7 +52,17 @@ class MultiForm extends Field
         return ModelManager::getValueFromDb($model, $name, $this->relationScope);
     }
 
-    //TODO: document
+    /**
+     * When updating children items, we may adda scope to show specific children only in the MultiForm.
+     * <php>_MultiForm()->name('postItems')
+            ->relationScope(function($query){
+                $query->where('type', 'news-articles');
+            })</php>
+     *
+     * @param   Closure  $callback  The callback
+     *
+     * @return     self
+     */
     public function relationScope($callback)
     {
         $this->relationScope = $callback;
@@ -174,6 +184,13 @@ class MultiForm extends Field
         ));
     }
 
+    /**
+     * When we want to display the children Elements in a table, we may use this method and pass it the table's headers as parameters.
+     *
+     * @param      array  $headers  The headers
+     *
+     * @return     self   ( description_of_the_return_value )
+     */
     public function asTable($headers = [])
     {
         $this->headers = $headers;
@@ -181,6 +198,11 @@ class MultiForm extends Field
         return $this;
     }
 
+    /**
+     * Disables adding more child items to the MultiForm
+     *
+     * @return  self
+     */
     public function noAdding()
     {
         return $this->config([
@@ -188,6 +210,11 @@ class MultiForm extends Field
         ]);
     }
 
+    /**
+     * TODO:
+     *
+     * @return     <type>  ( description_of_the_return_value )
+     */
     public function acceptNullRelations()
     {
         return $this->config([
@@ -195,6 +222,11 @@ class MultiForm extends Field
         ]);
     }
 
+    /**
+     * If the parent does not have any children yet, we may preload a line of the child form so that the user may start filling the fields directly. (It saves a click on the link to add an itemand helps UI wise).
+     *
+     * @return     self 
+     */
     public function preloadIfEmpty()
     {
         $this->preloadIfEmpty = true;
