@@ -27,7 +27,7 @@ abstract class Layout extends Element
         $this->setElementsFromArguments($args);
     }
 
-    
+
     protected function setElementsFromArguments($args)
     {
 

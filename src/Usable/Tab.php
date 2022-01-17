@@ -17,14 +17,14 @@ class Tab extends Layout
 
         } else {
 
-            parent::__construct($args);
+            parent::__construct(...$args);
 
         }
     }
 
     public function content(...$args)
     {
-        $this->setElementsFromArguments($args);
+        $this->setElementsFromArguments(...func_get_args());
 
         return $this;
     }
