@@ -24,7 +24,7 @@ class Tab extends Layout
 
     public function content(...$args)
     {
-        $this->setElementsFromArguments(...func_get_args());
+        $this->setElementsFromArguments(func_get_args());
 
         return $this;
     }
