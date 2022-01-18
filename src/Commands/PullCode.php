@@ -40,7 +40,7 @@ class PullCode extends Command
      */
     public function handle()
     {
-        $request = Http::post('http://kompoio.local/api/pull-bundle/'.$this->argument('uuid'));
+        $request = Http::post('https://kompo.io/api/pull-bundle/'.$this->argument('uuid'));
 
         $pull = $request->json();
 
