@@ -23,8 +23,8 @@ class Translatable extends Textarea
 
     public function getValueFromModel($model, $name)
     {
-        return collect($this->locales)->mapWithKeys(function ($language, $locale) use ($model) {
-            return [$locale => $model->getTranslation($this->name, $locale, false)];
+        return collect($this->locales)->mapWithKeys(function ($language, $locale) use ($model, $name) {
+            return [$locale => $model->getTranslation($name, $locale, false)];
         })->all();
     }
 
