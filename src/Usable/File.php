@@ -127,10 +127,19 @@ class File extends Field
     {
         $oldFile = $this->attributesToColumns ? $model : ModelManager::getValueFromDb($model, $name);
 
+        if (Lineage::isBelongsTo($model, $name)) {
+            $oldFile = $model->{$name}()->first(); 
+        }
+
         if (($uploadedFile = RequestData::get($requestName)) && $uploadedFile instanceof UploadedFile) {
             $this->fileHandler->unlinkFileIfExists($oldFile);
 
-            $newFile = $this->fileHandler->fileToDB($uploadedFile, $model, $name, !$this->attributesToColumns);
+            $newFile = $this->fileHandler->fileToDB($uploadedFile, $model, $name, !$this->attributesToColumns && !Lineage::isBelongsTo($model, $name));
+
+            if($belongsToId = ModelManager::saveBelongsToRelation($model, $name, $newFile, FormField::getConfig($this, 'extraAttributes'))) {
+                $oldFile && $oldFile->delete();
+                return $belongsToId;
+            }
 
             if (!$this->attributesToColumns) {
                 return $newFile;
@@ -146,6 +155,10 @@ class File extends Field
         } elseif (!RequestData::get($requestName)) {
             $this->fileHandler->unlinkFileIfExists($oldFile);
 
+            if (Lineage::isBelongsTo($model, $name)) {
+                $oldFile && $oldFile->delete();
+            }
+
             if (!$this->attributesToColumns) {
                 return null;
             }
@@ -158,6 +171,11 @@ class File extends Field
 
             return null;
         } else {
+
+            if (Lineage::isBelongsTo($model, $name)) {
+                return $model->{$name}()->first()->getKey();
+            }
+
             return $this->convertBackToDb(RequestData::get($requestName));
         }
     }

@@ -43,7 +43,7 @@ class FormSubmitter
      * @return void
      */
     public static function saveModel($form)
-    {
+    {        
         static::beforeFillHook($form);
 
         static::loopOverFieldsFor('fillBeforeSave', $form);

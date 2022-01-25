@@ -3,6 +3,7 @@
 namespace Kompo\Core;
 
 use Illuminate\Support\Facades\Storage;
+use Kompo\Database\Lineage;
 use Kompo\Database\ModelManager;
 
 class FileHandler
@@ -87,6 +88,11 @@ class FileHandler
     public function fileToDB($file, $model, $name = null, $withId = false)
     {
         $name = ($this->attributesToColumns || !$name) ? $this->pathKey : $name;
+
+        if (Lineage::isBelongsTo($model, $name)) {
+            $model = Lineage::getRelatedNewInstance($model, $name);
+            $name = $this->pathKey;
+        }
 
         $modelPath = ModelManager::getStoragePath($model, $name);
 

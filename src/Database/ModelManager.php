@@ -122,6 +122,25 @@ class ModelManager
     }
 
     /**
+     * Save a BelongsTo relationship.
+     *
+     * @param Illuminate\Database\Eloquent\Model $model
+     * @param string                             $name
+     *
+     * @return bool
+     */
+    public static function saveBelongsToRelation($model, $name, $value, $extraAttributes = null)
+    {
+        $relation = Lineage::findRelation($model, $name);
+
+        if ($relation instanceof BelongsTo || $relation instanceof MorphTo) {
+            $value = Util::merge($value, $extraAttributes);
+
+            return static::saveBelongsTo($relation, $name, $value);
+        }
+    }
+
+    /**
      * Fill the model's relations value according to the field's name.
      *
      * @param Illuminate\Database\Eloquent\Model $model
@@ -210,5 +229,21 @@ class ModelManager
         foreach ($arrayOfAttributes as $attributes) {
             static::saveOne($relation, $column, $attributes);
         }
+    }
+
+    //TODO refactor
+    protected static function saveBelongsTo($relation, $column, $attributes)
+    {
+        if (!$attributes) {
+            return;
+        }
+
+        $related = $relation->getRelated()->newInstance();
+        foreach ($attributes as $key => $attribute) {
+            $related->{$key} = $attribute;
+        }
+        $related->save();
+
+        return $related->getKey();
     }
 }

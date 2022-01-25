@@ -86,6 +86,13 @@ class Lineage
         return $relation instanceof BelongsTo || $relation instanceof HasOne || $relation instanceof MorphOne;
     }
 
+    public static function isBelongsTo($model, $relationName)
+    {
+        $relation = static::findRelation($model, $relationName);
+
+        return $relation instanceof BelongsTo || $relation instanceof HasOne;
+    }
+
     public static function isOneToMany($model, $relationName)
     {
         $relation = static::findRelation($model, $relationName);
@@ -96,5 +103,11 @@ class Lineage
     public static function fillsAfterSave($mainModel, $requestName)
     {
         return ($relation = static::findRelation($mainModel, $requestName)) && !($relation instanceof BelongsTo); //morphTo is a belongsTo
+    }
+
+
+    public static function getRelatedNewInstance($model, $relationName)
+    {
+        return static::findOrFailRelation($model, $relationName)->getRelated()->newInstance();
     }
 }
