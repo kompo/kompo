@@ -167,16 +167,16 @@ abstract class Element extends BaseElement
      *
      * @return Element
      */
-    public function rIconNonStatic($iconString)
+    public function rIconNonStatic($iconString, $iconClass = null)
     {
-        $this->config(['rIcon' => IconGenerator::toHtml($iconString)]);
+        $this->config(['rIcon' => IconGenerator::toHtml($iconString, $iconClass)]);
 
         return $this;
     }
 
-    public static function rIconStatic($iconString)
+    public static function rIconStatic($iconString, $iconClass = null)
     {
-        return static::form('')->rIcon($iconString);
+        return static::form('')->rIcon($iconString, $iconClass);
     }
 
     /**
