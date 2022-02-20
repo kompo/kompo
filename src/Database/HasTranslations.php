@@ -125,6 +125,13 @@ trait HasTranslations
         });
     }
 
+    public function getTranslationsStr($key = null)
+    {
+        $translations = $this->getTranslations($key);
+
+        return $translations ? json_encode($translations) : null;
+    }
+
     public function setTranslation(string $key, string $locale, $value): self
     {
         $this->guardAgainstUntranslatableAttribute($key);

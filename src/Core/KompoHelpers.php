@@ -504,6 +504,13 @@ if (!function_exists('_Radio')) {
     }
 }
 
+if (!function_exists('_Range')) {
+    function _Range(): \Kompo\Range
+    {
+        return Kompo\Range::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_Rows')) {
     function _Rows(): \Kompo\Rows
     {
