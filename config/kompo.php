@@ -36,6 +36,8 @@ return [
         'image' => 'public',
     ],
 
+    'file_name_convention' => 'hash', //or 'slug'
+
     /*************
      * DB config *
      ************/

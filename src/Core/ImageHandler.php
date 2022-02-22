@@ -44,19 +44,28 @@ class ImageHandler extends FileHandler
      */
     protected function storeOnDisk($file, $modelPath)
     {
+        $filename = $this->getStoredFileName($file, $modelPath);
+
+        $this->setFilePath($modelPath, $filename);
+
         if ($this->optimizeForWeb) {
             Storage::disk($this->disk)->put(
-                $this->getStoragePath($file, $modelPath),
+                $this->filePath,
                 $this->resize($file, $this->optimizeForWeb === true ? 2000 : $this->optimizeForWeb),
                 $this->visibility
             );
         } else {
-            Storage::disk($this->disk)->put($modelPath, $file, $this->visibility);
+            Storage::disk($this->disk)->putFileAs(
+                $modelPath, 
+                $file, 
+                $filename, 
+                $this->visibility
+            );
         }
 
         if ($this->withThumbnail) {
             Storage::disk($this->disk)->put(
-                thumb($this->getStoragePath($file, $modelPath)),
+                thumb($this->filePath),
                 $this->resize($file, $this->withThumbnail === true ? 300 : $this->withThumbnail),
                 $this->visibility
             );
@@ -65,10 +74,12 @@ class ImageHandler extends FileHandler
 
     protected function resize($file, $width)
     {
-        return Image::make($file)->resize($width, null, function ($constraint) {
+        $image = Image::make($file)->resize($width, null, function ($constraint) {
             $constraint->aspectRatio(); //auto height
             $constraint->upsize(); //prevent upsizing
         })->encode()->__toString();
+
+        return $image;
     }
 
     protected function storageDelete($filePath)

@@ -28,6 +28,13 @@ class FileHandler
      */
     public $visibility = 'public';
 
+    /**
+     * Ways of saving file names. slug|hash
+     *
+     * @var string
+     */
+    protected $filenameConvention;
+
     //File column names from config
     protected $allKeys;
     protected $idKey;
@@ -36,6 +43,10 @@ class FileHandler
     protected $mime_typeKey;
     protected $sizeKey;
 
+
+    protected $filePath;
+
+
     public function __construct()
     {
         $this->initializeDisk();
@@ -43,6 +54,8 @@ class FileHandler
         collect($this->allKeys = config('kompo.files_attributes'))->each(function ($column, $key) {
             $this->{$key.'Key'} = $column;
         });
+
+        $this->filenameConvention = config('kompo.file_name_convention');
     }
 
     protected function initializeDisk()
@@ -111,7 +124,17 @@ class FileHandler
      */
     protected function storeOnDisk($file, $modelPath)
     {
-        Storage::disk($this->disk)->put($modelPath, $file, $this->visibility);
+        $filename = $this->getStoredFileName($file, $modelPath);
+
+        $this->setFilePath($modelPath, $filename);
+
+        Storage::disk($this->disk)->putFileAs($modelPath, $file, $filename, $this->visibility);
+    }
+
+
+    protected function setFilePath($modelPath, $filename)
+    {
+        $this->filePath = $modelPath.'/'.$filename;
     }
 
     /**
@@ -122,9 +145,32 @@ class FileHandler
      *
      * @return string
      */
-    protected function getStoragePath($file, $modelPath)
+    protected function getStoredFileName($file, $modelPath)
     {
-        return $modelPath.'/'.$file->hashName();
+        return ($this->filenameConvention == 'slug') ? static::getUniqueName($file, $modelPath, $this->disk) : static::getHashname($file);
+    }
+
+    public static function getHashname($file)
+    {
+        return $file->hashName();
+    }
+
+    protected static function getUniqueName($file, $modelPath, $disk)
+    {
+        $name = $file->getClientOriginalName();
+        $extension_pos = strrpos($name, '.');
+        $extension = substr($name, $extension_pos);
+        $name = \Str::slug(substr($name, 0, $extension_pos));
+
+        $filename = $name.$extension;
+        $i = 0;
+
+        while (\Storage::disk($disk)->exists($modelPath.'/'.$filename)) {
+            $i ++;
+            $filename = $name.'-'.$i.$extension;
+        }
+
+        return $filename;
     }
 
     /**
@@ -142,7 +188,7 @@ class FileHandler
 
             array_merge([
                 $this->nameKey      => $file->getClientOriginalName(),
-                $this->pathKey      => $this->getStoragePath($file, $modelPath),
+                $this->pathKey      => $this->filePath,
                 $this->mime_typeKey => $file->getClientMimeType(),
                 $this->sizeKey      => $file->getSize(),
             ], $withId ? [
@@ -175,12 +221,12 @@ class FileHandler
      * @param mixed $file
      */
     public function unlinkFileIfExists($file)
-    {
+    {        
         if (!$file) {
             return;
         }
 
-        if ($filePath = $file[$this->pathKey] ?? $file->{$this->pathKey}) {            
+        if ($filePath = $file[$this->pathKey] ?? $file->{$this->pathKey}) {           
             $this->storageDelete($filePath);
         }
     }

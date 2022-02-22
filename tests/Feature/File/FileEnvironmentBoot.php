@@ -4,6 +4,7 @@ namespace Kompo\Tests\Feature\File;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Kompo\Core\FileHandler;
 use Kompo\Tests\EnvironmentBoot;
 
 class FileEnvironmentBoot extends EnvironmentBoot
@@ -55,11 +56,11 @@ class FileEnvironmentBoot extends EnvironmentBoot
     {
         return array_merge([
             $this->nameKey      => $file->name,
-            $this->pathKey      => $this->modelPath.'/'.$column.'/'.$file->hashName(),
+            $this->pathKey      => $this->storage_path($file, $column),
             $this->mime_typeKey => $file->getClientMimeType(),
             $this->sizeKey      => $file->getSize(),
         ], $withHash ? [
-            $this->idKey => $file->hashName(),
+            $this->idKey => FileHandler::getHashname($file),
         ] : []);
     }
 
@@ -94,7 +95,7 @@ class FileEnvironmentBoot extends EnvironmentBoot
 
     protected function storage_path($file, $column)
     {
-        return $this->modelPath.'/'.$column.'/'.$file->hashName();
+        return $this->modelPath.'/'.$column.'/'.FileHandler::getHashname($file);
     }
 
     /*** storage thumb ***/
@@ -116,6 +117,6 @@ class FileEnvironmentBoot extends EnvironmentBoot
 
     protected function thumb_storage_path($file, $column)
     {
-        return thumb($this->modelPath.'/'.$column.'/'.$file->hashName());
+        return thumb($this->storage_path($file, $column));
     }
 }

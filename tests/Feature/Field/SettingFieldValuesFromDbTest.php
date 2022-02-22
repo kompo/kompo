@@ -49,7 +49,7 @@ class SettingFieldValuesFromDbTest extends EnvironmentBoot
 
         $this->assertSame('', $form->elements[0]->value);
         $this->assertNotSame(null, $form->elements[0]->value);
-        $this->assertSame('0', $form->elements[1]->value);
+        $this->assertSame(0, $form->elements[1]->value);
         $this->assertNotSame(null, $form->elements[1]->value);
     }
 
