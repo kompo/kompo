@@ -16,6 +16,21 @@ class MultiFile extends File
      */
     public $multiple = true;
 
+    /**
+     * Store the order of MultiImages relationship column name.
+     *
+     * @var string
+     */
+    protected $orderColumn = null;
+
+    //TODO DOCUMENT
+    public function orderable($orderColumn = 'order')
+    {
+        $this->orderColumn = $orderColumn;
+
+        return $this;
+    }
+
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)
     {
         $oldFiles = ModelManager::getValueFromDb($model, $name);
@@ -42,6 +57,16 @@ class MultiFile extends File
                 return json_decode($file)->{$model->getKeyName()} ?? null;
             })->all();
 
+            if ($this->orderColumn) {
+                collect($keepIds)->each(function($id, $order) use ($model, $name) {
+                    if ($id) {
+                        $related = Lineage::findOrFailRelation($model, $name)->getRelated()->find($id);
+                        $related->{$this->orderColumn} = $order;
+                        $related->save();
+                    }
+                });
+            }
+
             $oldFiles->filter(function ($file) use ($keepIds, $model) {
                 return !in_array($file->{$model->getKeyName()} ?? '', $keepIds);
             })->each(function ($file) {
@@ -55,8 +80,14 @@ class MultiFile extends File
         if ($uploadedFiles = RequestData::file($requestName)) {
             $relatedModel = Lineage::findOrFailRelated($model, $name);
 
-            return collect($uploadedFiles)->map(function ($file) use ($relatedModel) {
-                return $this->fileHandler->fileToDB($file, $relatedModel);
+            return collect($uploadedFiles)->map(function ($file, $order) use ($relatedModel) {
+                $fileSpecsArray = $this->fileHandler->fileToDB($file, $relatedModel);
+                
+                if ($this->orderColumn) {
+                    $fileSpecsArray[$this->orderColumn] = $order;
+                }
+                
+                return $fileSpecsArray;
             });
         }
     }
