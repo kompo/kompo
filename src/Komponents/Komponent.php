@@ -5,6 +5,7 @@ namespace Kompo\Komponents;
 use Kompo\Core\KompoId;
 use Kompo\Core\Util;
 use Kompo\Elements\BaseElement;
+use Kompo\Exceptions\NotAKompoBaseElementException;
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
 use Kompo\Routing\Dispatcher;
