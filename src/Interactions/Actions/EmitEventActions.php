@@ -39,6 +39,23 @@ trait EmitEventActions
     }
 
     /**
+     * Emits a root Vue event. This is useful for custom Elements.
+     * You may add an optional payload as the event's first parameter.
+     *
+     * @param string     $event The event name
+     * @param array|null $data  The optional additional data
+     *
+     * @return self
+     */
+    public function emitRoot($event, $data = null)
+    {
+        return $this->prepareAction('emitRoot', [
+            'event'       => $event,
+            'emitPayload' => $data,
+        ]);
+    }
+
+    /**
      * Closes a modal.
      * //TODO DOCUMENT.
      *

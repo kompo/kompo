@@ -112,13 +112,33 @@ class Place extends Field
         return $this->config(['componentRestrictions' => $componentRestrictions]);
     }
 
+    //TODO document
+    public function editableWith($placeEditLink)
+    {
+        return $this->config([
+            'placeEditLink' => $placeEditLink,
+        ]);
+    }
+
+    //TODO document
+    public function formattedLabel($formattedLabel)
+    {
+        return $this->config([
+            'formattedLabel' => $formattedLabel,
+        ]);
+    }
+
+
+
     public function getValueFromModel($model, $name)
     {
         if (!$this->attributesToColumns) {
             return ModelManager::getValueFromDb($model, $name);
         }
 
-        $value = collect(static::$allKeys)->map(fn ($key) => $model->{$key});
+        $keys = array_merge(static::$allKeys, $this->config('formattedLabel') ? [$this->config('formattedLabel') => $this->config('formattedLabel')] : []);
+
+        $value = collect($keys)->map(fn ($key) => $model->{$key});
 
         return $value->filter()->count() ? $value->all() : null;
     }
