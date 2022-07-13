@@ -17,6 +17,8 @@ class KomponentManager
      */
     public static function created($komponent, $stage)
     {
+        app()->instance('currentKomponent', class_basename($komponent));
+
         if (config('kompo.auto_classes_for_komponents') && !$komponent->class()) {
             $komponent->class(class_basename($komponent));
         } //made this configurable

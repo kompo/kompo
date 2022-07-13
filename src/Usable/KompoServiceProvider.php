@@ -61,12 +61,19 @@ class KompoServiceProvider extends ServiceProvider
     public function register()
     {
         static::initializeBootFlag();
+
+        static::initializeCurrentKomponent();
     }
 
     public static function initializeBootFlag()
     {
         //When active, komponents are booted on instantiation.
         app()->instance('bootFlag', false);        
+    }
+
+    public static function initializeCurrentKomponent()
+    {
+        app()->instance('currentKomponent', null);
     }
 
     public static function registerHelpers()
