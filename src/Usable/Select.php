@@ -14,6 +14,8 @@ use Kompo\Routing\RouteFinder;
 
 class Select extends Field
 {
+    use \Kompo\Elements\Traits\FocusBlur;
+    
     public $vueComponent = 'Select';
 
     const NO_OPTIONS_FOUND = 'No results found';

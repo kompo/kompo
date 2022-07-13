@@ -3,11 +3,11 @@
 namespace Kompo;
 
 use Kompo\Elements\Field;
-use Kompo\Elements\Traits\HasInputAttributes;
 
 class Input extends Field
 {
-    use HasInputAttributes;
+    use \Kompo\Elements\Traits\HasInputAttributes;
+    use \Kompo\Elements\Traits\FocusBlur;
 
     public $vueComponent = 'Input';
 

@@ -6,6 +6,8 @@ use Kompo\Core\IconGenerator;
 
 trait CKEditorTrait
 {
+    use \Kompo\Elements\Traits\FocusBlur;
+    
     protected function setDefaultToolbar()
     {
         $this->toolbar(array_merge(
@@ -54,16 +56,6 @@ trait CKEditorTrait
     public function prependToolbar($additionalToolbar)
     {
         return $this->toolbar(array_merge($additionalToolbar, $this->config('toolbar')));
-    }
-
-    /**
-     * TODO: document.
-     */
-    public function focusOnLoad()
-    {
-        return $this->config([
-            'focusOnLoad' => true,
-        ]);
     }
 
     /**
