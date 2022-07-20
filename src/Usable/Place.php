@@ -136,11 +136,18 @@ class Place extends Field
             return ModelManager::getValueFromDb($model, $name);
         }
 
-        $keys = array_merge(static::$allKeys, $this->config('formattedLabel') ? [$this->config('formattedLabel') => $this->config('formattedLabel')] : []);
+        $value = collect(static::$allKeys)->map(fn ($key) => $model->{$key});
 
-        $value = collect($keys)->map(fn ($key) => $model->{$key});
+        if (!$value->filter()->count()) {
+            return;
+        }
 
-        return $value->filter()->count() ? $value->all() : null;
+        if ($this->config('formattedLabel')) {
+            $keys = array_merge(static::$allKeys, [$this->config('formattedLabel') => $this->config('formattedLabel')]);
+            $value = collect($keys)->map(fn ($key) => $model->{$key});
+        }
+
+        return $value->all();
     }
 
     public function setAttributeFromRequest($requestName, $name, $model, $key = null)
