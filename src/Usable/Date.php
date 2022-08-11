@@ -3,12 +3,14 @@
 namespace Kompo;
 
 use Kompo\Elements\Field;
+use Illuminate\Support\Carbon;
 
 class Date extends Field
 {
     public $vueComponent = 'Date';
 
     protected $dbFormat = 'Y-m-d';
+    protected $outputFormat = 'Y-m-d';
     protected $configFormatKey = 'default_date_format';
 
     protected function initialize($label)
@@ -54,6 +56,16 @@ class Date extends Field
         ]);
 
         return $this;
+    }
+
+    //If a date cast is added to the model's attribute, we should remove any reference to timezone before outputting
+    //Otherwise flatpickr changes it to a UTC date...
+    public function setOutput($value, $key)
+    {
+        if (!is_null($value)) {
+            $value = $value instanceof Carbon ? $value->format($this->outputFormat) : $value;
+            $this->value($value);
+        }
     }
 
     /** PROTECTED ***/
