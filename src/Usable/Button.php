@@ -11,6 +11,4 @@ class Button extends Trigger
 
     public $vueComponent = 'Button';
     public $bladeComponent = 'Button';
-
-    public $vuetifyComponent = 'btn';
 }

@@ -78,11 +78,11 @@ class QueryDisplayer
             $komponent->noItemsFound() : __($komponent->noItemsFound);
 
         if (method_exists($komponent, 'headers')) {
-            $komponent->headers = collect($komponent->headers())->filter();
+            $komponent->headers = collect($komponent->headers())->filter()->values();
         }
 
         if (method_exists($komponent, 'footers')) {
-            $komponent->footers = collect($komponent->footers())->filter();
+            $komponent->footers = collect($komponent->footers())->filter()->values();
         }
 
         if ($komponent->layout == 'Kanban') {

@@ -244,7 +244,7 @@ class Place extends Field
             ]);
         } else {
             return collect(static::$allKeys)->mapWithKeys(fn ($dbKey, $internalKey) => [
-                $dbKey => $place[$internalKey],
+                $dbKey => $place[$internalKey] ?? '',
             ])->all();
         }
     }

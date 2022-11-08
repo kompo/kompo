@@ -11,8 +11,6 @@ class Input extends Field
 
     public $vueComponent = 'Input';
 
-    public $vuetifyComponent = 'text-field';
-
     protected function initialize($label)
     {
         parent::initialize($label);

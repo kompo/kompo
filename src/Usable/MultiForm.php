@@ -210,6 +210,18 @@ class MultiForm extends Field
         ]);
     }
 
+    /** TODO: DOCUMENT
+     * Adding more child items to the MultiForm is positionned on top instead of on bottom
+     *
+     * @return  self
+     */
+    public function topAdding()
+    {
+        return $this->config([
+            'topAdding' => true,
+        ]);
+    }
+
     /**
      * TODO:
      *
