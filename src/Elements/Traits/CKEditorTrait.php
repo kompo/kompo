@@ -69,7 +69,7 @@ trait CKEditorTrait
      *
      * @return self
      */
-    public function addMention($marker, $feed, $minimumCharacters = 0, $icon = null, $itemName = 'name', $itemType = null)
+    public function addMention($marker, $feed, $minimumCharacters = 0, $icon = null, $itemName = 'name', $itemType = null, $itemLabel = null)
     {
         $mentions = $this->config('mentions') ?: [];
 
@@ -79,6 +79,7 @@ trait CKEditorTrait
             'iconClass'         => $icon,
             'iconHtml'          => IconGenerator::toHtml($icon),
             'itemType'          => $itemType,
+            'itemLabel'         => $itemLabel ?: __($itemType),
             'initialFeed'       => !$icon ? $feed : $feed->map(
                 fn ($item)      => static::mapMention($item, $marker, $icon, $itemName, $itemType)
             )->toArray(),
