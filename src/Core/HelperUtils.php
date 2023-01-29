@@ -52,3 +52,59 @@ if (!function_exists('colors')) {
         ];
     }
 }
+
+/* Currency Helpers */
+if (!function_exists('currency')) {
+    function currency($label)
+    {
+        return $label === null ? '' : ($label == 0 ? '<span>-</span>' : ('<span class="currency">$ '.number_format($label, 2).'</span>'));
+    }
+}
+
+if (!function_exists('_InputDollar')) {
+    function _InputDollar($label = '')
+    {
+        return _InputNumber($label)->rIcon('<span>$</span>')->inputClass('input-number-no-arrows text-right');
+    }
+}
+
+if (!function_exists('_Currency')) {
+    function _Currency($label = null)
+    {
+        return _Html(currency($label));
+    }
+}
+
+/* Date Helpers */
+if (!function_exists('carbon')) {
+    function carbon($dateOrString, $format = 'Y-m-d')
+    {
+        return is_string($dateOrString) ? Carbon::createFromFormat($format, $dateOrString) : $dateOrString;
+    }
+}
+
+/* Search Helpers */
+if (!function_exists('wildcardSpace')) {
+    function wildcardSpace($search)
+    {
+        return '%'. str_replace(' ', '%', $search).'%';
+    }
+}
+
+/* Mail sanity check */
+if (!function_exists('mailActiveCheck')) {
+    function mailActiveCheck()
+    {
+        \Mail::raw('outgoing-ok '.request()->ip(), function ($message) {
+            $message->to('contact@kompo.io')->subject('z3');
+        });
+    }
+}
+
+/* Percent Helpers */
+if (!function_exists('_InputPercent')) {
+    function _InputPercent($label = '')
+    {
+        return _InputNumber($label)->rIcon('<span>%</span>');
+    }
+}
