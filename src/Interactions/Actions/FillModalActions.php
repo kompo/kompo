@@ -14,6 +14,20 @@ trait FillModalActions
         return $this->prepareAction('fillModalNew');
     }
 
+    /** TODO document
+     * The request displays in the already open modal.
+     *
+     * @return self
+     */
+    public function inLastModal()
+    {
+        $this->applyToElement(function ($el) {
+            $el->closeLastModal();
+        });
+
+        return $this->inModal();
+    }
+
     /**
      * TODO: New method to document and add.
      *

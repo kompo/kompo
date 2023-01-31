@@ -27,6 +27,16 @@ trait AjaxConfigurations
         return $this->config(['refreshParent' => true]);
     }
 
+    /** TODO document
+     * Close last modal before filling new one
+     *
+     * @return self
+     */
+    public function closeLastModal()
+    {
+        return $this->config(['closeLastModal' => true]);
+    }
+
     /**
      * Cancels or reverts the closest parent Panel (hides it and shows previous state).
      *
