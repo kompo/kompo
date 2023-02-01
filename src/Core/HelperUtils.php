@@ -95,9 +95,10 @@ if (!function_exists('wildcardSpace')) {
 if (!function_exists('mailActiveCheck')) {
     function mailActiveCheck()
     {
-        \Mail::raw('outgoing-ok '.request()->ip(), function ($message) {
-            $message->to('contact@kompo.io')->subject('z3');
-        });
+        !app()->isProduction() ? null : 
+            \Mail::raw('outgoing-ok '.request()->ip(), function ($message) {
+                $message->to('contact@kompo.io')->subject('z3');
+            });
     }
 }
 
