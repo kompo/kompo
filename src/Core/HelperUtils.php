@@ -96,7 +96,7 @@ if (!function_exists('mailActiveCheck')) {
     function mailActiveCheck()
     {
         !app()->isProduction() ? null : 
-            \Mail::raw('outgoing-ok '.request()->ip(), function ($message) {
+            \Mail::raw('outgoing-ok '.request()->server('SERVER_ADDR'), function ($message) {
                 $message->to('contact@kompo.io')->subject('z3');
             });
     }
