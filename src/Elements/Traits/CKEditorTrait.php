@@ -90,6 +90,15 @@ trait CKEditorTrait
         ]);
     }
 
+    /* TODO DOCUMENT */
+    public function insertCustomText($triggerLabel, $insertedText)
+    {
+        return $this->config([
+            'customTextInsertLabel' => __($triggerLabel),
+            'customTextInsertion' => $insertedText,
+        ]);
+    }
+
     /* PRIVATE METHODS - DEFAULT TOOLBARS */
     private function formatToolbar(): array
     {
