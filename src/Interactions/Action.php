@@ -36,7 +36,7 @@ class Action
      *
      * @var array
      */
-    protected $elementClosure;
+    protected $elementClosures = [];
 
     /**
      * Constructs a new Action instance.
@@ -57,8 +57,8 @@ class Action
 
         $this->{$methodName}(...$parameters);
 
-        if ($this->elementClosure) {
-            call_user_func($this->elementClosure, $element);
+        foreach ($this->elementClosures as $elementClosure) {
+            call_user_func($elementClosure, $element);
         }
     }
 
@@ -90,7 +90,7 @@ class Action
      */
     protected function applyToElement($closure)
     {
-        $this->elementClosure = $closure;
+        $this->elementClosures[] = $closure;
 
         return $this;
     }
