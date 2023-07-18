@@ -10,6 +10,10 @@ trait AxiosRequestActions
 {
     protected function prepareAxiosRequest($config)
     {
+        $this->applyToElement(function ($el) {
+            $el->class('cursor-pointer');
+        });
+
         return $this->prepareAction('axiosRequest', $config);
     }
 
@@ -161,7 +165,7 @@ trait AxiosRequestActions
     public function selfCreate($methodName, $ajaxPayload = null)
     {
         $this->applyToElement(
-            fn($el) => $el->class('cursor-pointer')->config(['refreshParent' => true])
+            fn($el) => $el->config(['refreshParent' => true])
         );
 
         return $this->selfGet($methodName, $ajaxPayload);

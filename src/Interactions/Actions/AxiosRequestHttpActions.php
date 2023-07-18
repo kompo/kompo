@@ -75,7 +75,7 @@ trait AxiosRequestHttpActions
     public function create($route, $parameters = null, $ajaxPayload = null)
     {
         $this->applyToElement(
-            fn($el) => $el->class('cursor-pointer')->config(['refreshParent' => true])
+            fn($el) => $el->config(['refreshParent' => true])
         );
 
         return $this->get($route, $parameters, $ajaxPayload);
