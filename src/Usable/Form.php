@@ -160,7 +160,7 @@ abstract class Form extends Komponent
     /**
      * Get the elements displayed in the form.
      *
-     * @return array
+     * @return array|\Kompo\Elements\Element
      */
     public function render()
     {
