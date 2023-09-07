@@ -17,7 +17,7 @@ class ValidationManager
      *
      * @throws     \Kompo\Exceptions\ValidationWarningException  (description)
      */
-    public static function confirmSubmit($confirmationElements, bool $condition)
+    public static function confirmSubmit($confirmationElements, bool $condition) //NOTE this is deprecated use abort(449, $stringOrElements);
     {
         if (!request('kompoConfirmed')) {
             if ($condition) {

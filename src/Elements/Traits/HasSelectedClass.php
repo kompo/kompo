@@ -35,4 +35,21 @@ trait HasSelectedClass
             'commonClass'   => $commonClass,
         ]);
     }
+
+    /**
+     * Sets the style for the selected option.
+     *
+     * @param string      $selectedStyle   The style(s) for the selected option
+     * @param string|null $unselectedStyle The style(s) for the unselected options
+     *
+     * @return self
+     */
+    public function selectedStyle($selectedStyle, $unselectedStyle = '')
+    {
+        //TODO: add to kompo documentation
+        return $this->config([
+            'selectedStyle'   => $selectedStyle,
+            'unselectedStyle' => $unselectedStyle,
+        ]);
+    }
 }
