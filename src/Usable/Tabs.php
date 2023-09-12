@@ -7,6 +7,8 @@ use Kompo\Elements\Traits\HasSelectedClass;
 
 class Tabs extends Layout
 {
+    use \Kompo\Interactions\Traits\HasInteractions;
+    use \Kompo\Interactions\Traits\ForwardsInteraction;
     use HasSelectedClass;
 
     public $vueComponent = 'FormTabs';
