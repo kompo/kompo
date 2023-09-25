@@ -4,7 +4,7 @@ namespace Kompo\Http\Controllers;
 
 class LocaleController
 {
-    public function __invoke($locale = 'en')
+    public function __invoke($locale = '')
     {
         if (!array_key_exists($locale, config('kompo.locales'))) {
             $locale = config('app.locale');

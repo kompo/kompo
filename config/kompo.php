@@ -10,6 +10,8 @@ return [
         //'fr' => 'Français'
     ],
 
+    'force_initial_locale' => 'en',
+
     'helpers_dir' => 'app/Kompo/Helpers', //TODO document
 
     'komponent_route_strict' => false, //TODO document

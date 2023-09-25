@@ -24,7 +24,7 @@ class SetKompoLocaleMiddleware
         /**
          * First, check what the user's browser default language is.
          */
-        $defaultLocale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
+        $defaultLocale = config('kompo.force_initial_locale') ?: substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
         /**
          * If the browser's language is not in one of the apps languages, use the default app language.
          */
