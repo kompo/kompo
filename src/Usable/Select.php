@@ -5,6 +5,7 @@ namespace Kompo;
 use Closure;
 use Illuminate\Database\Eloquent\Model;
 use Kompo\Core\DependencyResolver;
+use Kompo\Core\IconGenerator;
 use Kompo\Core\KompoTarget;
 use Kompo\Core\Util;
 use Kompo\Database\EloquentField;
@@ -15,7 +16,7 @@ use Kompo\Routing\RouteFinder;
 class Select extends Field
 {
     use \Kompo\Elements\Traits\FocusBlur;
-    
+
     public $vueComponent = 'Select';
 
     const NO_OPTIONS_FOUND = 'No results found';
@@ -37,6 +38,8 @@ class Select extends Field
         parent::initialize($label);
 
         $this->noResultsMessage(self::NO_OPTIONS_FOUND);
+
+        $this->icons(_Svg('chevron-up')->class('text-xl'), _Svg('chevron-down')->class('text-xl')); // Defaults icons
     }
 
     //TODO DOCUMENT
@@ -314,5 +317,24 @@ class Select extends Field
         $cleanName = array_map('ucfirst', explode('.', $this->name));
 
         return $step.implode('', $cleanName);
+    }
+
+    public function icons($iconUp, $iconDown)
+    {
+        return $this->iconUp($iconUp)->iconDown($iconDown);
+    }
+
+    public function iconUp($icon)
+    {
+        return $this->config([
+            'iconUp' => IconGenerator::toHtml($icon),
+        ]);
+    }
+
+    public function iconDown($icon)
+    {
+        return $this->config([
+            'iconDown' => IconGenerator::toHtml($icon),
+        ]);
     }
 }
