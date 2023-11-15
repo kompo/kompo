@@ -177,6 +177,16 @@ trait AxiosRequestActions
         return $this->selfCreate($methodName, $ajaxPayload);
     }
 
+    //TODO: document
+    public function withAllFormValues()
+    {
+        $this->applyToElement(
+            fn($el) => $el->config(['withAllFormValues' => 1])
+        );
+        
+        return $this;
+    }
+
 
 
 
