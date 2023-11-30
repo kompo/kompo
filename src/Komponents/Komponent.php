@@ -8,6 +8,7 @@ use Kompo\Elements\BaseElement;
 use Kompo\Exceptions\NotAKompoBaseElementException;
 use Kompo\Interactions\Traits\ForwardsInteraction;
 use Kompo\Interactions\Traits\HasInteractions;
+use Kompo\Komponents\Traits\HasKomponentFinder;
 use Kompo\Routing\Dispatcher;
 use Kompo\Routing\Router;
 
@@ -15,6 +16,7 @@ abstract class Komponent extends BaseElement
 {
     use HasInteractions;
     use ForwardsInteraction;
+    use HasKomponentFinder;
 
     /**
      * The Vue component to render the Komponent as a child of another Komponent.
