@@ -5,9 +5,12 @@ namespace Kompo\Elements;
 use Kompo\Elements\BaseElement;
 use Kompo\Elements\Managers\LayoutManager;
 use Kompo\Exceptions\NotAKompoBaseElementException;
+use Kompo\Komponents\Traits\HasKomponentFinder;
 
 abstract class Layout extends Element
 {
+    use HasKomponentFinder;
+    
     /**
      * Stores the child elements of the layout.
      *
