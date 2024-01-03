@@ -48,4 +48,13 @@ class Panel extends Layout
 
         return $this;
     }
+
+    public function transition($transitionName)
+    {
+        $this->config([
+            'transition' => $transitionName,
+        ]);
+
+        return $this;
+    }
 }
