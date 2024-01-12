@@ -79,7 +79,7 @@ class KomponentFinder
         return (!$this->component || class_basename($el) == class_basename($this->component))
          && (!$this->id || $el->id == $this->id)
          && (!$this->class || property_exists($el, 'class') && ($el->class == $this->class || in_array($this->class, explode(' ', $el->class))))
-         && (!$this->stringContains || str_contains($el->label, $this->stringContains));
+         && (!$this->stringContains || property_exists($el, 'label') && str_contains($el->label, $this->stringContains));
     }
 
     /**
