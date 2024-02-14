@@ -9,8 +9,14 @@ trait FillModalActions
      *
      * @return self
      */
-    public function inModal()
+    public function inModal($transitionName = 'modal')
     {
+        $this->applyToElement(function ($el) use ($transitionName) {
+            $el->config([
+                'transitionName' => $transitionName,
+            ]);
+        });
+
         return $this->prepareAction('fillModalNew');
     }
 
