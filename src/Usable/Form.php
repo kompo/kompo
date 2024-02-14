@@ -234,6 +234,21 @@ abstract class Form extends Komponent
     }
 
     /**
+     * Set a redirect url after the form submit
+     *
+     * @param string $route
+     * @param mixed  $parameters
+     * 
+     * @return mixed
+     */
+    public function kompoRedirectTo($route, $parameters = null)
+    {
+        return [
+            'kompoRedirectTo' => RouteFinder::guessRoute($route, $parameters),
+        ];
+    }
+
+    /**
      * Shortcut method to output the Komponent into it's HTML Vue tag.
      *
      * @return string
