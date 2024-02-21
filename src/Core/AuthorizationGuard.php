@@ -38,7 +38,7 @@ class AuthorizationGuard
     {
         static::checkMethodExists($komponent, $method);
 
-        static::checkMethodAllowed($komponent, $method);
+        //static::checkMethodAllowed($komponent, $method); //disabled, programmers should just know not to call Kompo's few methods
 
         $komponentType = 'Kompo\\'.Dispatcher::getKomponentType($komponent);
 

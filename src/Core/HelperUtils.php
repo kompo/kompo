@@ -4,9 +4,7 @@
 if (!function_exists('thumb')) {
     function thumb($path)
     {
-        return substr($path, 0, strrpos($path, '.')).
-               '_thumb.'.
-               substr($path, strrpos($path, '.') + 1);
+        return appendBeforeExtension($path, '_thumb');
     }
 }
 
@@ -14,6 +12,13 @@ if (!function_exists('assetThumb')) {
     function assetThumb($path)
     {
         return thumb(asset($path));
+    }
+}
+
+if (!function_exists('appendBeforeExtension')) {
+    function appendBeforeExtension($path, $appendText)
+    {
+        return substr($path, 0, strrpos($path, '.')).$appendText.'.'.substr($path, strrpos($path, '.') + 1);
     }
 }
 
