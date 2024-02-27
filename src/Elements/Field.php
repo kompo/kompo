@@ -425,4 +425,16 @@ abstract class Field extends Element
             (property_exists($this, 'castsToArray') && $this->castsToArray) &&
             (!property_exists($this, 'attributesToColumns') || (property_exists($this, 'attributesToColumns') && !$this->attributesToColumns));
     }
+
+    /**
+     * Set class for the items wrapper.
+     * 
+     * @param string $class
+     * 
+     * @return self
+     */
+    public function inputWrapperClass(string $class)
+    {
+        return $this->config(['inputWrapperClass' => $class]);
+    }
 }
