@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Carbon;
+
 /* Image & Thumbnail URLs */
 if (!function_exists('thumb')) {
     function thumb($path)
