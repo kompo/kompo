@@ -101,6 +101,23 @@ abstract class Element extends BaseElement
         }
     }
 
+    /**
+     * Apply a callback if a certain condition is met.
+     *
+     * @param mixed $condition
+     * @param closure $callback
+     *
+     * @return Element
+     */
+    public function when($condition, $callback)
+    {
+        if ($condition) {
+            $callback($this);
+        }
+
+        return $this;
+    }
+
 
     /**
      * Disables the element. Useful in _Select()->options(...) for example to disable an option.
