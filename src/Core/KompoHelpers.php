@@ -343,6 +343,13 @@ if (!function_exists('_Json')) {
     }
 }
 
+if (!function_exists('_MarkerTrigger')) {
+    function _MarkerTrigger(): \Kompo\MarkerTrigger
+    {
+        return Kompo\MarkerTrigger::form(...func_get_args());
+    }
+}
+
 if (!function_exists('_MultiCheckbox')) {
     function _MultiCheckbox(): \Kompo\MultiCheckbox
     {
