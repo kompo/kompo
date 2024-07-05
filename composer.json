@@ -21,16 +21,14 @@
             "Kompo\\": "src/Usable",
             "Kompo\\Commands\\": "src/Commands",
             "Kompo\\Core\\": "src/Core",
-            "Kompo\\Elements\\": "src/Elements",
             "Kompo\\Database\\": "src/Database",
-            "Kompo\\Eloquent\\": "src/Eloquent",
+            "Kompo\\Elements\\": "src/Elements",
             "Kompo\\Exceptions\\": "src/Exceptions",
             "Kompo\\Http\\": "src/Http",
             "Kompo\\Interactions\\": "src/Interactions",
             "Kompo\\Komponents\\": "src/Komponents",
-            "Kompo\\Layout\\": "src/Layout",
+            "Kompo\\Models\\": "src/Models",
             "Kompo\\Routing\\": "src/Routing",
-            "Kompo\\Utilities\\": "src/Utilities",
             "Kompo\\Tests\\": "tests/"
         }
     },
