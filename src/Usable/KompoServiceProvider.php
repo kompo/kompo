@@ -83,10 +83,12 @@ class KompoServiceProvider extends ServiceProvider
         $autoloadedHelpers = collect(is_dir($helpersDir) ? \File::allFiles($helpersDir) : [])
             ->map(fn($file) => $file->getRealPath());
 
-        $packageHelpers = [
+        $packageHelpers = collect([
             __DIR__.'/../Core/KompoHelpers.php', 
             __DIR__.'/../Core/HelperUtils.php',
-        ];
+        ])->concat(
+            collect(\File::allFiles(__DIR__.'/../Helpers'))->map(fn($file) => $file->getRealPath())
+        );
 
         $autoloadedHelpers->concat($packageHelpers)->each(function ($path) {
             if (file_exists($path)) {
