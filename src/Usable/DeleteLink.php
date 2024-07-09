@@ -12,12 +12,6 @@ class DeleteLink extends Link
     {
         parent::initialize($label);
 
-        $icon = config('kompo.visuals.default_delete_icon');
-        
-        if(!$label || $icon) {
-            $this->icon(_Sax($icon, 20));
-        }
-
         $this->deleteTitle('Delete this item');
         $this->confirmMessage('Are you sure?');
         $this->cancelMessage('Cancel');
