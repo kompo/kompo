@@ -3,6 +3,7 @@
 namespace Kompo\Komponents\Form;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Facade;
 
 trait HasModel
 {
@@ -40,6 +41,8 @@ trait HasModel
         if (is_null($model)) {
             return;
         }
+
+        $model = is_subclass_of($model, KompoModelFacade::class) ? $model::getClass() : $model;
 
         $this->model = $model instanceof Model ? $model : (
             $this->modelKey() ? $model::findOrNew($this->modelKey()) : new $model
