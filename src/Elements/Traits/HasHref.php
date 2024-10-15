@@ -115,12 +115,17 @@ trait HasHref
     public function checkActive()
     {
         $hrefWithoutHash = strtok($this->href, '#');
-        
-        if ($hrefWithoutHash == \Request::getSchemeAndHttpHost()) { //home page only active if matched completely
+
+        if ($hrefWithoutHash == \Request::getSchemeAndHttpHost() || $this->config('strictActive')) { //home page only active if matched completely
             $this->setActive(\Request::url() == $hrefWithoutHash? $this->getActiveClass() : '');
         } else {
             $this->setActive(substr(\Request::url(), 0, strlen($hrefWithoutHash)) == $hrefWithoutHash ? $this->getActiveClass() : '');
         }
+    }
+
+    public function strictActive()
+    {
+        return $this->config(['strictActive' => 1]);
     }
 
     protected function setActive($activeClass)
