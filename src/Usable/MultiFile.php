@@ -36,16 +36,16 @@ class MultiFile extends File
         $oldFiles = ModelManager::getValueFromDb($model, $name);
 
         $value = collect(RequestData::get($requestName))->map(function ($file) use ($model, $name) {
-            return $file instanceof UploadedFile ?
+            if($file instanceof UploadedFile) {
+                return $this->fileHandler->fileToDB($file, $model, $name, true);
+            }
 
-                $this->fileHandler->fileToDB($file, $model, $name, true) :
-
-                $this->convertBackToDb($file);
+            return $this->convertBackToDb($file);
         });
 
         $this->fileHandler->unlinkOldFilesInAttribute($oldFiles, $value);
 
-        return $value->count() ? $value : null;
+        return $value->count() ? $value->filter() : null;
     }
 
     public function setRelationFromRequest($requestName, $name, $model, $key = null)
