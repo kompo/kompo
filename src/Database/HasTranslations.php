@@ -221,11 +221,11 @@ trait HasTranslations
             return $locale;
         }
 
-        if (!is_null($fallbackLocale = config('app.fallback_locale'))) {
+        if (!is_null($fallbackLocale = config('app.fallback_locale')) && in_array($fallbackLocale, $this->getTranslatedLocales($key))) {
             return $fallbackLocale;
         }
 
-        return $locale;
+        return $this->getTranslatedLocales($key)[0] ?? $locale;
     }
 
     protected function getLocale() : string
