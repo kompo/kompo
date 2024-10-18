@@ -47,7 +47,6 @@ class ImageHandler extends FileHandler
         $filename = $this->getStoredFileName($file, $modelPath);
 
         $this->setFilePath($modelPath, $filename);
-
         if ($this->optimizeForWeb) {
             Storage::disk($this->disk)->put(
                 $this->filePath,
@@ -77,7 +76,7 @@ class ImageHandler extends FileHandler
         $image = Image::make($file)->resize($width, null, function ($constraint) {
             $constraint->aspectRatio(); //auto height
             $constraint->upsize(); //prevent upsizing
-        })->encode()->__toString();
+        })->orientate()->encode()->__toString();
 
         return $image;
     }
