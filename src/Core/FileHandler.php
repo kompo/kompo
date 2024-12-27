@@ -42,6 +42,7 @@ class FileHandler
     protected $nameKey;
     protected $mime_typeKey;
     protected $sizeKey;
+    protected $diskKey;
 
 
     protected $filePath;
@@ -191,6 +192,7 @@ class FileHandler
                 $this->pathKey      => $this->filePath,
                 $this->mime_typeKey => $file->getClientMimeType(),
                 $this->sizeKey      => $file->getSize(),
+                $this->diskKey      => $this->disk,
             ], $withId ? [
                 $this->idKey => $file->hashName(),
             ] : []),
