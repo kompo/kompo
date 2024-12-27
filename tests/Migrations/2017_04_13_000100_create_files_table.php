@@ -18,6 +18,7 @@ class CreateFilesTable extends Migration
             $table->string('name')->nullable();
             $table->string('mime_type')->nullable();
             $table->bigInteger('size')->nullable();
+            $table->string('disk')->nullable()->default('local');
             $table->unsignedInteger('order')->nullable();
             $table->string('all_columns')->nullable();
             $table->timestamps();

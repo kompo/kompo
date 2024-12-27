@@ -65,6 +65,7 @@ return [
         'mime_type' => 'mime_type',
         'size'      => 'size',
         'id'        => 'id', //not used when files are relationships => the model's primary key is used
+        'disk'      => 'disk',
     ],
 
     /*Default place column names.*/
