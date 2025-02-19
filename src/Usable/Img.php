@@ -17,23 +17,14 @@ class Img extends Block
      */
     protected $disk;
 
-    protected $originalSrc;
-
     protected function initialize($label)
     {
         $this->disk = config('kompo.default_storage_disk.image');
 
-        $this->originalSrc = $label;
+        $this->alt($label); //To avoid breadking change - to deprecate in v4
+        $this->src($label);
 
         parent::initialize('');
-    }
-
-    public function prepareForDisplay($komponent)
-    {
-        if(!$this->config('alt')) $this->alt($this->originalSrc); //To avoid breadking change - to deprecate in v4
-        if (!$this->src) $this->src($this->originalSrc); //To avoid breadking change - to deprecate in v4->);
-
-        return parent::prepareForDisplay($komponent);
     }
 
     //TODO Document
