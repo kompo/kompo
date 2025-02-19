@@ -30,8 +30,8 @@ class Img extends Block
 
     public function prepareForDisplay($komponent)
     {
-        $this->alt($this->originalSrc); //To avoid breadking change - to deprecate in v4
-        $this->src($this->originalSrc); //To avoid breadking change - to deprecate in v4->);
+        if(!$this->config('alt')) $this->alt($this->originalSrc); //To avoid breadking change - to deprecate in v4
+        if (!$this->src) $this->src($this->originalSrc); //To avoid breadking change - to deprecate in v4->);
 
         return parent::prepareForDisplay($komponent);
     }
@@ -57,6 +57,8 @@ class Img extends Block
     public function disk($disk)
     {
         $this->disk = $disk;
+
+        return $this;
     }
 
     //TODO Document
