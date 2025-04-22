@@ -55,8 +55,10 @@ class Img extends Block
     //TODO Document
     public function src($src)
     {
-        $this->src = filter_var($src, FILTER_VALIDATE_URL) ? $src : 
-            (\Storage::disk($this->disk)->exists($src) ? \Storage::url($src) : asset($src));
+        if ($src) {
+            $this->src = filter_var($src, FILTER_VALIDATE_URL) ? $src : 
+                (\Storage::disk($this->disk)->exists($src) ? \Storage::url($src) : asset($src));
+        }
 
         return $this;
     }
