@@ -56,8 +56,12 @@ class Img extends Block
     public function src($src)
     {
         if ($src) {
-            $this->src = filter_var($src, FILTER_VALIDATE_URL) ? $src : 
-                (\Storage::disk($this->disk)->exists($src) ? \Storage::url($src) : asset($src));
+            try {
+                $this->src = filter_var($src, FILTER_VALIDATE_URL) ? $src : 
+                    (\Storage::disk($this->disk)->exists($src) ? \Storage::url($src) : asset($src));
+            } catch (\Exception $e) {
+                \Log::emergency($e->getMessage());
+            }
         }
 
         return $this;
