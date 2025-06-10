@@ -11,6 +11,13 @@ class Image extends File
 
     public $vueComponent = 'Image';
 
+    protected function initialize($label)
+    {
+        parent::initialize($label);
+
+        $this->placeholder('Drop your image<br>or click to browse');
+    }
+
     protected function setupFileHandler()
     {
         $this->disk = config('kompo.default_storage_disk.image');

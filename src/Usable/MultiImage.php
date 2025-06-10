@@ -11,6 +11,13 @@ class MultiImage extends MultiFile
 
     public $vueComponent = 'Image';
 
+    protected function initialize($label)
+    {
+        parent::initialize($label);
+
+        $this->placeholder('Drop your images<br>or click to browse');
+    }
+
     protected function setupFileHandler()
     {
         $this->disk = config('kompo.default_storage_disk.image');
