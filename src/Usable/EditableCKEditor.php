@@ -11,5 +11,7 @@ class EditableCKEditor extends CKEditor
         parent::initialize($label);
 
         $this->noLabel();
+
+        $this->passLocale();
     }
 }

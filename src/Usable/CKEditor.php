@@ -16,5 +16,7 @@ class CKEditor extends Field
         parent::initialize($label);
 
         $this->setDefaultToolbar();
+
+        $this->passLocale();
     }
 }

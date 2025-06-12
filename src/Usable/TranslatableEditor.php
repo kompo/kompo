@@ -15,5 +15,7 @@ class TranslatableEditor extends Translatable
         parent::initialize($label);
 
         $this->setDefaultToolbar();
+
+        $this->passLocale();
     }
 }
