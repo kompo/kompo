@@ -61,12 +61,6 @@ class DependencyResolver
             } elseif (!isset($values[$key - $instanceCount]) &&
                       $parameter->isDefaultValueAvailable()) {
                 static::spliceIntoParameters($parameters, $key, $parameter->getDefaultValue());
-            } else {
-                $parameterName = $parameter->getName();
-
-                if (array_key_exists($parameterName, $parameters)) {
-                    static::spliceIntoParameters($parameters, $key, $parameters[$parameterName]);
-                }
             }
         }
 
