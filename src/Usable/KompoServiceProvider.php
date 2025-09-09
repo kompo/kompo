@@ -3,7 +3,10 @@
 namespace Kompo;
 
 use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Response;
+use Illuminate\Routing\ResponseFactory;
 use Illuminate\Support\ServiceProvider;
+use Kompo\Http\KompoResponse;
 use Kompo\Http\Middleware\SetKompoLocaleMiddleware;
 use Kompo\Routing\Mixins\ExtendsRoutingTrait;
 
@@ -29,6 +32,9 @@ class KompoServiceProvider extends ServiceProvider
         $this->extendRouting();
 
         static::registerHelpers();
+        
+        // Register response macros
+        $this->registerResponseMacros();
 
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -94,6 +100,40 @@ class KompoServiceProvider extends ServiceProvider
             if (file_exists($path)) {
                 require_once $path;
             }
+        });
+    }
+
+    /**
+     * Register response macros
+     */
+    protected function registerResponseMacros()
+    {
+        ResponseFactory::macro('modal', function ($content, $options = []) {
+            return KompoResponse::modal($content, $options);
+        });
+
+        ResponseFactory::macro('panel', function ($content, $panelId, $options = []) {
+            return KompoResponse::panel($content, $panelId, $options);
+        });
+
+        ResponseFactory::macro('drawer', function ($content, $options = []) {
+            return KompoResponse::drawer($content, $options);
+        });
+
+        ResponseFactory::macro('popup', function ($content, $options = []) {
+            return KompoResponse::popup($content, $options);
+        });
+
+        ResponseFactory::macro('kompoRedirect', function ($url, $options = []) {
+            return KompoResponse::redirect($url, $options);
+        });
+
+        ResponseFactory::macro('kompoAlert', function ($message, $type = 'success', $options = []) {
+            return KompoResponse::alert($message, $type, $options);
+        });
+
+        ResponseFactory::macro('kompoRefresh', function ($data = null) {
+            return KompoResponse::refresh($data);
         });
     }
 
