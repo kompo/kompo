@@ -48,6 +48,8 @@ class Img extends Block
     public function disk($disk)
     {
         $this->disk = $disk;
+
+        return $this;
     }
 
     //TODO Document
