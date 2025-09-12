@@ -3,6 +3,8 @@
     "Are you sure?": "Are you sure?",
     "Cancel": "Cancel",
 	"Delete this item": "Delete this item", 
+    "Drop your image<br>or click to browse": "Drop your image<br>or click to browse",
+    "Drop your images<br>or click to browse": "Drop your images<br>or click to browse",
     "No items found": "No items found",
     "warnBeforeClose": "Any unsaved changes will be lost. Are you sure you want to close this window?",
     "sessionTimeoutMessage": "You are either not logged in or your session has expired due to inactivity.\nWould you like to login?"

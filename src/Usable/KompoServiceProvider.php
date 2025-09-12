@@ -43,6 +43,7 @@ class KompoServiceProvider extends ServiceProvider
                 Commands\MakeTable::class,
                 Commands\MakeMenu::class,
                 Commands\PullCode::class,
+                Commands\CreateCacheFolders::class,
             ]);
         }
 

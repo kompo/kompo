@@ -18,10 +18,10 @@ class ValidationWarningException extends ValidationException
 
     public function __construct($message)
     {
-        parent::__construct($message);
-
         $this->response = new Response($message, $this->status);
         //$this->errorBag = $errorBag;
         $this->validator = Validator::make([], []);
+
+        parent::__construct($this->validator, $this->response);
     }
 }

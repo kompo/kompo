@@ -3,6 +3,8 @@
     "Are you sure?": "Confirmer",
     "Cancel": "Annuler",
 	"Delete this item": "Supprimer?", 
+    "Drop your image<br>or click to browse": "Déposez votre image<br>ou cliquez pour parcourir",
+    "Drop your images<br>or click to browse": "Déposez vos images<br>ou cliquez pour parcourir",
     "No items found": "Pas d'items trouvés",
     "warnBeforeClose": "Les changements non-sauvegardés seront perdus. Êtes-vous sûrs de vouloir fermer la fenêtre?",
     "sessionTimeoutMessage": "Cette page a expiré pour cause d'inactivité.\nVoulez-vous vous reconnecter?"
