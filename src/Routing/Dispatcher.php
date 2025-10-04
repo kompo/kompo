@@ -53,6 +53,10 @@ class Dispatcher
             return static::rebootKomponentForDisplay();
         }
 
+        if (KompoAction::is('delete-item')) {
+            return KomponentHandler::deleteRecord();
+        }
+
         return KomponentHandler::performAction(static::bootKomponentForAction());
     }
 
