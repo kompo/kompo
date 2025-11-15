@@ -52,12 +52,19 @@ class Dispatcher
         if (KompoAction::is('refresh-self')) {
             return static::rebootKomponentForDisplay();
         }
-
+      
         if (KompoAction::is('delete-item')) {
             return KomponentHandler::deleteRecord();
         }
 
-        return KomponentHandler::performAction(static::bootKomponentForAction());
+        $komponent = static::bootKomponentForAction();
+        $action = KomponentHandler::performAction($komponent);
+
+        if (method_exists($komponent, 'afterKompoAction')) {
+            $action = $komponent->afterKompoAction(KompoAction::header(), $action);
+        }
+        
+        return $action;
     }
 
     public static function bootKomponentForAction()
