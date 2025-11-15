@@ -53,7 +53,14 @@ class Dispatcher
             return static::rebootKomponentForDisplay();
         }
 
-        return KomponentHandler::performAction(static::bootKomponentForAction());
+        $komponent = static::bootKomponentForAction();
+        $action = KomponentHandler::performAction($komponent);
+
+        if (method_exists($komponent, 'afterKompoAction')) {
+            $action = $komponent->afterKompoAction(KompoAction::header(), $action);
+        }
+        
+        return $action;
     }
 
     public static function bootKomponentForAction()
