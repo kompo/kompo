@@ -32,7 +32,16 @@ class KompoInfo extends KompoAjax
             throw new KompoBootInfoNotFoundException();
         }
 
-        return Crypt::decrypt($bootInfo);
+        try {
+
+            return Crypt::decrypt($bootInfo);
+
+        } catch (\Illuminate\Contracts\Encryption\DecryptException $e) {
+            
+            logKompoRequest('Debugging invalid payload error in');
+            
+            throw $e;
+        }
     }
 
     public static function isKomponent($komponent)

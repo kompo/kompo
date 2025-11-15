@@ -152,11 +152,10 @@ class KomponentHandler
      *
      * @return \Illuminate\Http\Response [redirects back to current page]
      */
-    public static function deleteRecord($komponent)
+    public static function deleteRecord()
     {
         $model = KompoTarget::getDecrypted();
 
-        //$record = $komponent->model->newInstance()->findOrFail($deleteKey);
         $record = $model::findOrFail(request('deleteKey'));
 
         if (

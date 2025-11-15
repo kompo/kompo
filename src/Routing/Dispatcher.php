@@ -52,6 +52,10 @@ class Dispatcher
         if (KompoAction::is('refresh-self')) {
             return static::rebootKomponentForDisplay();
         }
+      
+        if (KompoAction::is('delete-item')) {
+            return KomponentHandler::deleteRecord();
+        }
 
         $komponent = static::bootKomponentForAction();
         $action = KomponentHandler::performAction($komponent);
