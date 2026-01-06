@@ -6,7 +6,7 @@ if (!function_exists('logKompoRequest')) {
     {
 		$currentKomponent = app()->bound('currentKomponent') ? app()->make('currentKomponent') : 'Unknown component yet';
 
-        \Log::error($message.' '.$currentKomponent, [
+        \Log::alert($message.' '.$currentKomponent, [
             'context' => array_merge(
                 [
                     'previous_url' => url()->previous(),
