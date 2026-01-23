@@ -104,6 +104,8 @@ abstract class Menu extends Komponent
 
         KompoInfo::saveKomponent($this);
 
+        RouteFinder::activateRoute($this);
+
         KomponentManager::booted($this);
 
         return $this;

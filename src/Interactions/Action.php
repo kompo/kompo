@@ -22,6 +22,7 @@ class Action
     use Actions\KomponentActions;
     use Actions\RedirectActions;
     use Actions\RunJsActions;
+    use Actions\JsActions;
     use Actions\SubmitFormActions;
 
     /**

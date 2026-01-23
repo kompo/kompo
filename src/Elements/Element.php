@@ -14,6 +14,9 @@ abstract class Element extends BaseElement
     use Traits\UsedInTables;
     use Traits\DoesTurboRefresh;
     use Traits\AjaxConfigurations;
+    use Traits\JsConditionals;
+    use Traits\JsComputed;
+    use Traits\JsFilter;
 
     /**
      * The component's label.

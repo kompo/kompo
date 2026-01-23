@@ -23,4 +23,22 @@ trait KomponentActions
             'ajaxPayload'           => $payload,
         ]);
     }
+
+    /**
+     * Updates specific elements within a Komponent by their IDs.
+     * The response should contain elements with IDs that match elements in the target Komponent.
+     * This is more efficient than a full refresh when only some elements change.
+     *
+     * @param string|null $komponentId The id of the target Komponent. Keep blank if targeting self.
+     * @param string|null $transition  Optional Vue transition name for animations.
+     *
+     * @return self
+     */
+    public function updateElements($komponentId = null, $transition = null)
+    {
+        return $this->prepareAction('updateElements', [
+            'kompoid'    => $komponentId,
+            'transition' => $transition,
+        ]);
+    }
 }

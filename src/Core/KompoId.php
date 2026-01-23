@@ -14,6 +14,21 @@ class KompoId extends KompoAjax
         );
     }
 
+    /**
+     * Set a stable ID for an element based on parent and position.
+     * Falls back to explicit id if set.
+     */
+    public static function setStableIdForElement($el, $parentId, $index)
+    {
+        // Priority: explicit id > position-based stable id
+        if ($el->id) {
+            return static::setForBaseElement($el, $el->id);
+        }
+
+        $stableId = $parentId . '-' . $index . '-' . class_basename($el);
+        return static::setForBaseElement($el, $stableId);
+    }
+
     public static function setForKomponent($el, $kompoId = null)
     {
         $kompoId = is_array($kompoId) ? ($kompoId[static::$key] ?? null) : $kompoId; //array is when coming from bootInfo

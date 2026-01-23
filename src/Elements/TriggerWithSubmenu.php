@@ -2,6 +2,7 @@
 
 namespace Kompo\Elements;
 
+use Kompo\Core\KompoId;
 use Kompo\Elements\Managers\LayoutManager;
 use Kompo\Elements\Traits\HasHref;
 
@@ -23,10 +24,19 @@ abstract class TriggerWithSubmenu extends Trigger
      */
     public function prepareForDisplay($komponent)
     {
-        collect($this->elements)->each(function ($element) use ($komponent) {
+        // Get this element's ID as parent for nested stable IDs
+        $parentId = KompoId::getFromElement($this);
+        $index = 0;
+
+        collect($this->elements)->each(function ($element) use ($komponent, $parentId, &$index) {
             $element->prepareForDisplay($komponent);
 
+            // Set stable ID for nested elements
+            KompoId::setStableIdForElement($element, $parentId, $index);
+
             $element->mountedHook($komponent);
+
+            $index++;
         });
     }
 

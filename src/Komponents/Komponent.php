@@ -257,15 +257,26 @@ abstract class Komponent extends BaseElement
      */
     public function prepareOwnElementsForDisplay($renderedElements)
     {
-        return Util::collect($renderedElements)->filter()->each(function ($element) {
-            
+        // Generate stable parent ID for element ID generation
+        // Use existing kompoId if set, otherwise use class name
+        $parentId = KompoId::getFromElement($this) ?: class_basename($this);
+
+        $index = 0;
+
+        return Util::collect($renderedElements)->filter()->each(function ($element) use ($parentId, &$index) {
+
             if (!$element instanceof BaseElement) {
                 throw new NotAKompoBaseElementException($element);
             }
 
             $element->prepareForDisplay($this);
 
+            // Set stable ID based on parent and position (respects explicit ->id() if set)
+            KompoId::setStableIdForElement($element, $parentId, $index);
+
             $element->mountedHook($this);
+
+            $index++;
         })->values()->all();
     }
 
