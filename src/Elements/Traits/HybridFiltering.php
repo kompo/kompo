@@ -31,7 +31,7 @@ trait HybridFiltering
      * Shows loading skeleton/overlay instead of items while waiting for server.
      * Use when instant filtering isn't possible (e.g., complex server-side filters).
      *
-     * @param string|null $queryId Target Query ID (optional - defaults to parent Query)
+     * @param string|null|string[] $queryId Target Query ID (optional - defaults to parent Query)
      * @param int $debounce Debounce ms for server request (default: 300)
      *
      * @return self
@@ -43,6 +43,7 @@ trait HybridFiltering
                 'queryId' => $queryId,
                 'debounce' => $debounce,
                 'mode' => 'server',
+                'name' => $this->name,
             ]
         ]);
     }
