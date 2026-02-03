@@ -264,6 +264,116 @@ class KompoResponse
     }
 
     /**
+     * Add an element to a Query's card list.
+     *
+     * @param string $queryId The Query component ID
+     * @param mixed $element The element to add (will be rendered)
+     * @param string|int $position 'append', 'prepend', or numeric index
+     * @param mixed $itemId Optional item ID for the card (used for updates/removals)
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function addToQuery(string $queryId, $element, $position = 'append', $itemId = null)
+    {
+        // Build the card structure expected by Query layouts
+        $card = static::wrapElementAsCard($element, $itemId);
+
+        return response()->json([
+            'kompoResponseType' => 'addToQuery',
+            'queryId' => $queryId,
+            'element' => $card,
+            'position' => $position,
+        ]);
+    }
+
+    /**
+     * Wrap a Kompo element in the card structure expected by Query layouts.
+     * Cards have structure: { attributes: { id: ... }, render: <element> }
+     *
+     * @param mixed $element The element to wrap
+     * @param mixed $itemId Optional item ID
+     *
+     * @return array
+     */
+    protected static function wrapElementAsCard($element, $itemId = null)
+    {
+        // Render element if it's a Kompo element
+        $rendered = $element;
+        if (is_object($element) && method_exists($element, 'render')) {
+            $rendered = $element->render();
+        } elseif (is_object($element) && method_exists($element, 'toArray')) {
+            $rendered = $element->toArray();
+        }
+
+        // Try to get ID from element if not provided
+        if ($itemId === null && is_object($element)) {
+            $itemId = $element->id ?? null;
+        }
+
+        // If rendered is already a card structure, return it
+        if (is_array($rendered) && isset($rendered['render']) && isset($rendered['attributes'])) {
+            return $rendered;
+        }
+
+        return [
+            'attributes' => ['id' => $itemId],
+            'render' => $rendered,
+        ];
+    }
+
+    /**
+     * Prepend an element to a Query's card list.
+     *
+     * @param string $queryId The Query component ID
+     * @param mixed $element The element to prepend
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function prependToQuery(string $queryId, $element)
+    {
+        return static::addToQuery($queryId, $element, 'prepend');
+    }
+
+    /**
+     * Remove an item from a Query by its ID.
+     *
+     * @param string $queryId The Query component ID
+     * @param mixed $itemId The item ID to remove
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function removeFromQuery(string $queryId, $itemId)
+    {
+        return response()->json([
+            'kompoResponseType' => 'removeFromQuery',
+            'queryId' => $queryId,
+            'itemId' => $itemId,
+        ]);
+    }
+
+    /**
+     * Update an item in a Query by its ID.
+     *
+     * @param string $queryId The Query component ID
+     * @param mixed $itemId The item ID to update
+     * @param mixed $element The new element
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function updateInQuery(string $queryId, $itemId, $element)
+    {
+        // Build the card structure expected by Query layouts
+        $card = static::wrapElementAsCard($element, $itemId);
+
+        return response()->json([
+            'kompoResponseType' => 'updateInQuery',
+            'queryId' => $queryId,
+            'itemId' => $itemId,
+            'element' => $card,
+        ]);
+    }
+
+    /**
      * Helper method to create a run response
      * This can be used as an alternative to response()->kompoRun()
      */

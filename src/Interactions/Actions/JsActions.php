@@ -353,6 +353,101 @@ trait JsActions
         return $this->run("({ query }) => query({$id}).sort({$col})");
     }
 
+    /**
+     * Append an element to a Query (client-side, pre-rendered)
+     * The element is rendered at page build time
+     *
+     * @param string $queryId Target query ID
+     * @param mixed $element Kompo element to append
+     * @param mixed $itemId Optional item ID (for later updates/removal)
+     */
+    public function jsAppendToQuery($queryId, $element, $itemId = null)
+    {
+        return $this->jsAddToQuery($queryId, $element, 'append', $itemId);
+    }
+
+    /**
+     * Prepend an element to a Query (client-side, pre-rendered)
+     *
+     * @param string $queryId Target query ID
+     * @param mixed $element Kompo element to prepend
+     * @param mixed $itemId Optional item ID (for later updates/removal)
+     */
+    public function jsPrependToQuery($queryId, $element, $itemId = null)
+    {
+        return $this->jsAddToQuery($queryId, $element, 'prepend', $itemId);
+    }
+
+    /**
+     * Add element to Query at specified position
+     *
+     * @param string $queryId Target query ID
+     * @param mixed $element Kompo element
+     * @param string $position 'append', 'prepend', or numeric index
+     * @param mixed $itemId Optional item ID
+     */
+    public function jsAddToQuery($queryId, $element, $position = 'append', $itemId = null)
+    {
+        // Render element if it's a Kompo element
+        $rendered = $element;
+        if (is_object($element) && method_exists($element, 'render')) {
+            $rendered = $element->render();
+        } elseif (is_object($element) && method_exists($element, 'toArray')) {
+            $rendered = $element->toArray();
+        }
+
+        // Try to get ID from element if not provided
+        if ($itemId === null && is_object($element)) {
+            $itemId = $element->id ?? null;
+        }
+
+        $id = json_encode($queryId);
+        $elementJson = json_encode($rendered);
+        $posJson = json_encode($position);
+        $itemIdJson = json_encode($itemId);
+
+        // Vue handles card wrapping via $_wrapAsCard()
+        return $this->run("({ query }) => query({$id}).add({$elementJson}, {$posJson}, {$itemIdJson})");
+    }
+
+    /**
+     * Remove an item from a Query by its ID (client-side)
+     *
+     * @param string $queryId Target query ID
+     * @param mixed $itemId The item ID to remove
+     */
+    public function jsRemoveFromQuery($queryId, $itemId)
+    {
+        $id = json_encode($queryId);
+        $item = json_encode($itemId);
+        return $this->run("({ query }) => query({$id}).remove({$item})");
+    }
+
+    /**
+     * Update an item in a Query by its ID (client-side, pre-rendered)
+     *
+     * @param string $queryId Target query ID
+     * @param mixed $itemId The item ID to update
+     * @param mixed $element New Kompo element
+     */
+    public function jsUpdateInQuery($queryId, $itemId, $element)
+    {
+        // Render element if it's a Kompo element
+        $rendered = $element;
+        if (is_object($element) && method_exists($element, 'render')) {
+            $rendered = $element->render();
+        } elseif (is_object($element) && method_exists($element, 'toArray')) {
+            $rendered = $element->toArray();
+        }
+
+        $id = json_encode($queryId);
+        $elementJson = json_encode($rendered);
+        $item = json_encode($itemId);
+
+        // Vue handles card wrapping via $_wrapAsCard()
+        return $this->run("({ query }) => query({$id}).update({$item}, {$elementJson})");
+    }
+
     // ==========================================
     // ELEMENT REMOVAL
     // ==========================================
