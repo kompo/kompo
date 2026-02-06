@@ -567,6 +567,13 @@ if (!function_exists('_SelectUpdatable')) {
     }
 }
 
+if (!function_exists('_SelectionBar')) {
+    function _SelectionBar($queryId = null): \Kompo\Elements\SelectionBar
+    {
+        return new Kompo\Elements\SelectionBar($queryId);
+    }
+}
+
 if (!function_exists('_Stripe')) {
     function _Stripe(): \Kompo\Stripe
     {
