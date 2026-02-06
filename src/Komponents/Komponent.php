@@ -123,6 +123,24 @@ abstract class Komponent extends BaseElement
     }
 
     /**
+     * Declare which methods can be called from JavaScript via selfGet/selfPost/selfPut/selfDelete.
+     * The method names are encrypted to prevent unauthorized access.
+     *
+     * @param array $methods Array of method names that can be called from JS
+     *
+     * @return self
+     */
+    public function selfMethods(array $methods)
+    {
+        $encrypted = [];
+        foreach ($methods as $method) {
+            $encrypted[$method] = \Kompo\Core\KompoTarget::getEncrypted($method);
+        }
+
+        return $this->config(['_selfMethods' => $encrypted]);
+    }
+
+    /**
      * Gets the route's parameter or the one persisted in the session.
      *
      * @param string|array|null $parameter
