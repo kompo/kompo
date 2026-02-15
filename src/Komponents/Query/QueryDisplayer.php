@@ -36,6 +36,8 @@ class QueryDisplayer
 
         QueryFilters::filterAndSort($query);
 
+        static::enrichSlicerOptions($query);
+
         CardGenerator::getTransformedCards($query);
 
         QueryFilters::prepareFiltersForDisplay($query, 'OnLoad');
@@ -120,6 +122,59 @@ class QueryDisplayer
             $komponent->query = new CollectionQuery($q, $komponent);
         } else {
             throw new BadQueryDefinitionException(class_basename($komponent));
+        }
+    }
+
+    /**
+     * Enrich Th slicer options by querying distinct values from the database.
+     * Only runs for Th elements that have a slicerName but no slicerOptions.
+     *
+     * @param Kompo\Query $komponent
+     *
+     * @return void
+     */
+    protected static function enrichSlicerOptions($komponent)
+    {
+        if (!isset($komponent->headers) || !$komponent->headers) {
+            return;
+        }
+
+        $queryWrapper = $komponent->query;
+        $isDatabase = $queryWrapper instanceof DatabaseQuery;
+
+        foreach ($komponent->headers as $header) {
+            if (!($header instanceof \Kompo\Th)) {
+                continue;
+            }
+
+            $slicerName = $header->config('slicerName');
+            $slicerOptions = $header->config('slicerOptions');
+
+            if (!$slicerName || !empty($slicerOptions)) {
+                continue;
+            }
+
+            if ($isDatabase) {
+                $values = (clone $queryWrapper->getQuery())
+                    ->select($slicerName)
+                    ->distinct()
+                    ->pluck($slicerName);
+            } else {
+                $values = collect($queryWrapper->getQuery())
+                    ->pluck($slicerName);
+            }
+
+            $options = $values
+                ->filter()
+                ->unique()
+                ->sort()
+                ->values()
+                ->mapWithKeys(function ($value) {
+                    return [$value => $value];
+                })
+                ->all();
+
+            $header->config(['slicerOptions' => $options]);
         }
     }
 }
