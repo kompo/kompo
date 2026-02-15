@@ -155,20 +155,17 @@ class QueryDisplayer
             }
 
             if ($isDatabase) {
-                $values = (clone $queryWrapper->getQuery())
-                    ->select($slicerName)
-                    ->distinct()
-                    ->pluck($slicerName);
+                $values = static::getDistinctValues($komponent, $queryWrapper, $slicerName);
             } else {
                 $values = collect($queryWrapper->getQuery())
-                    ->pluck($slicerName);
+                    ->pluck($slicerName)
+                    ->filter()
+                    ->unique()
+                    ->sort()
+                    ->values();
             }
 
             $options = $values
-                ->filter()
-                ->unique()
-                ->sort()
-                ->values()
                 ->mapWithKeys(function ($value) {
                     return [$value => $value];
                 })
@@ -176,5 +173,71 @@ class QueryDisplayer
 
             $header->config(['slicerOptions' => $options]);
         }
+    }
+
+    /**
+     * Get distinct values for a slicer column, supporting dot notation for relationships.
+     *
+     * @param Kompo\Query                 $komponent
+     * @param Kompo\Database\DatabaseQuery $queryWrapper
+     * @param string                       $slicerName
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected static function getDistinctValues($komponent, $queryWrapper, $slicerName)
+    {
+        $parts = explode('.', $slicerName);
+        $q = clone $queryWrapper->getQuery();
+
+        if (count($parts) == 2 && $komponent->model) {
+            $relationName = $parts[0];
+            $column = $parts[1];
+
+            $relation = \Kompo\Database\Lineage::findRelation($komponent->model, $relationName);
+
+            if ($relation) {
+                $modelTable = $komponent->model->getTable();
+                $relationTable = $relation->getRelated()->getTable();
+                $selectColumn = $relationTable.'.'.$column;
+
+                if ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsTo) {
+                    $q->select($selectColumn)
+                        ->leftJoin(
+                            $relationTable,
+                            $relationTable.'.'.$relation->getRelated()->getKeyName(),
+                            '=',
+                            $modelTable.'.'.$relation->getForeignKeyName()
+                        );
+                } elseif ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
+                    $pivotTable = $relation->getTable();
+
+                    $q->select($selectColumn)
+                        ->leftJoin(
+                            $pivotTable,
+                            $pivotTable.'.'.$relation->getForeignPivotKeyName(),
+                            '=',
+                            $modelTable.'.'.$komponent->model->getKeyName()
+                        )
+                        ->leftJoin(
+                            $relationTable,
+                            $relationTable.'.'.$relation->getRelatedKeyName(),
+                            '=',
+                            $pivotTable.'.'.$relation->getRelatedPivotKeyName()
+                        );
+                } else {
+                    $q->select($selectColumn)
+                        ->leftJoin(
+                            $relationTable,
+                            $relationTable.'.'.$relation->getRelated()->getKeyName(),
+                            '=',
+                            $modelTable.'.'.$komponent->model->getKeyName()
+                        );
+                }
+
+                return $q->distinct()->pluck($selectColumn)->filter()->sort()->values();
+            }
+        }
+
+        return $q->select($slicerName)->distinct()->pluck($slicerName)->filter()->sort()->values();
     }
 }
