@@ -9,17 +9,30 @@ class Th extends Trigger
     public $vueComponent = 'Th';
 
     /**
-     * Add a column filter (dropdown or text input) to this header.
+     * Add a multi-select slicer (checkboxes) to this header's dropdown.
      *
-     * @param string $name    The request parameter name for this filter.
-     * @param array  $options Key => label for dropdown. Empty = text input.
+     * @param string $name    The request parameter name for this slicer.
+     * @param array  $options Key => label pairs. If empty, values are extracted from visible cells.
      * @return self
      */
-    public function filterBy($name, $options = [])
+    public function slicer($name, $options = [])
+    {
+        return $this->config([
+            'slicerName' => $name,
+            'slicerOptions' => $options,
+        ]);
+    }
+
+    /**
+     * Add a text filter input to this header's dropdown.
+     *
+     * @param string $name The request parameter name for this filter.
+     * @return self
+     */
+    public function filter($name)
     {
         return $this->config([
             'filterName' => $name,
-            'filterOptions' => $options,
         ]);
     }
 }
