@@ -34,4 +34,21 @@ trait HasAnimation
     {
         return $this->animate($transitionName);
     }
+
+    /**
+     * Set a transition for content changes inside this element (e.g., panel content swaps).
+     * Different from transition() which animates the element itself.
+     *
+     * @param string $transitionName The Vue transition name (e.g., 'fade', 'slide-down')
+     *
+     * @return self
+     */
+    public function contentTransition($transitionName)
+    {
+        $this->config([
+            'contentTransition' => $transitionName,
+        ]);
+
+        return $this;
+    }
 }

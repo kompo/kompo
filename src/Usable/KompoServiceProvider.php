@@ -172,6 +172,10 @@ class KompoServiceProvider extends ServiceProvider
         ResponseFactory::macro('updateInQuery', function (string $queryId, $itemId, $element) {
             return KompoResponse::updateInQuery($queryId, $itemId, $element);
         });
+
+        ResponseFactory::macro('kompoMulti', function (array $responses) {
+            return KompoResponse::multi($responses);
+        });
     }
 
     protected function registerBladeDirectives()

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as RequestFacade;
 use Kompo\Core\KompoAction;
 use Kompo\Core\KompoInfo;
+use Kompo\Core\KompoTarget;
 use Kompo\Exceptions\NotBootableFromRouteException;
 use Kompo\Form;
 use Kompo\Komponents\KomponentHandler;
@@ -52,9 +53,13 @@ class Dispatcher
         if (KompoAction::is('refresh-self')) {
             return static::rebootKomponentForDisplay();
         }
-      
+
         if (KompoAction::is('delete-item')) {
             return KomponentHandler::deleteRecord();
+        }
+
+        if (KompoAction::is('broadcast-event')) {
+            return static::handleBroadcastEvent();
         }
 
         $komponent = static::bootKomponentForAction();
@@ -153,6 +158,24 @@ class Dispatcher
         }
 
         return $responses;
+    }
+
+    protected static function handleBroadcastEvent()
+    {
+        $config = json_decode(KompoTarget::getDecrypted(), true);
+
+        $channel = $config['channel'];
+        $event = $config['event'] ?? [];
+        $data = $config['data'] ?? [];
+        $type = $config['type'] ?? 'private';
+
+        if ($type === 'public') {
+            kompo_broadcast_public($channel, $event, $data);
+        } else {
+            kompo_broadcast($channel, $event, $data);
+        }
+
+        return response()->json(['success' => true]);
     }
 
     public static function getKomponentType($komponentClass)

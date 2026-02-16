@@ -319,6 +319,20 @@ abstract class Komponent extends BaseElement
         })->values()->all();
     }
 
+    /**
+     * Broadcast an event from this Komponent.
+     *
+     * @param string       $channel     Channel name
+     * @param string|array $eventOrData Event name or data
+     * @param array        $data        Payload
+     *
+     * @return \Kompo\Broadcasting\KompoEvent
+     */
+    protected function broadcast(string $channel, $eventOrData = [], array $data = [])
+    {
+        return kompo_broadcast($channel, $eventOrData, $data);
+    }
+
     //TODO: document
     public function kompoId()
     {

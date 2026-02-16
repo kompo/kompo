@@ -166,33 +166,66 @@ trait JsActions
     // ==========================================
 
     /**
-     * Fill a panel with HTML content (client-side)
+     * Fill a panel with content (client-side).
+     * Accepts raw HTML strings OR Kompo elements (single or array).
+     *
+     * @param string $panelId Target panel ID
+     * @param string|object|array $content Raw HTML string, Kompo element, or array of Kompo elements
      */
-    public function jsInPanel($panelId, $html)
+    public function jsInPanel($panelId, $content)
     {
         $id = json_encode($panelId);
-        $htmlJson = json_encode($html);
-        return $this->run("({ panel }) => panel({$id}).fill({$htmlJson})");
+
+        if (is_string($content)) {
+            $htmlJson = json_encode($content);
+            return $this->run("({ panel }) => panel({$id}).fill({$htmlJson})");
+        }
+
+        $elements = is_array($content) ? $content : [$content];
+        $elementsJson = json_encode($elements);
+        return $this->run("({ panel }) => panel({$id}).fillKompo({$elementsJson})");
     }
 
     /**
-     * Append HTML to a panel
+     * Append content to a panel.
+     * Accepts raw HTML strings OR Kompo elements (single or array).
+     *
+     * @param string $panelId Target panel ID
+     * @param string|object|array $content Raw HTML string, Kompo element, or array of Kompo elements
      */
-    public function jsAppend($panelId, $html)
+    public function jsAppend($panelId, $content)
     {
         $id = json_encode($panelId);
-        $htmlJson = json_encode($html);
-        return $this->run("({ panel }) => panel({$id}).append({$htmlJson})");
+
+        if (is_string($content)) {
+            $htmlJson = json_encode($content);
+            return $this->run("({ panel }) => panel({$id}).append({$htmlJson})");
+        }
+
+        $elements = is_array($content) ? $content : [$content];
+        $elementsJson = json_encode($elements);
+        return $this->run("({ panel }) => panel({$id}).appendKompo({$elementsJson})");
     }
 
     /**
-     * Prepend HTML to a panel
+     * Prepend content to a panel.
+     * Accepts raw HTML strings OR Kompo elements (single or array).
+     *
+     * @param string $panelId Target panel ID
+     * @param string|object|array $content Raw HTML string, Kompo element, or array of Kompo elements
      */
-    public function jsPrepend($panelId, $html)
+    public function jsPrepend($panelId, $content)
     {
         $id = json_encode($panelId);
-        $htmlJson = json_encode($html);
-        return $this->run("({ panel }) => panel({$id}).prepend({$htmlJson})");
+
+        if (is_string($content)) {
+            $htmlJson = json_encode($content);
+            return $this->run("({ panel }) => panel({$id}).prepend({$htmlJson})");
+        }
+
+        $elements = is_array($content) ? $content : [$content];
+        $elementsJson = json_encode($elements);
+        return $this->run("({ panel }) => panel({$id}).prependKompo({$elementsJson})");
     }
 
     /**
