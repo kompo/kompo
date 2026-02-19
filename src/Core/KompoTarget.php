@@ -22,14 +22,12 @@ class KompoTarget extends KompoAjax
 
     public static function getDecrypted($target = null)
     {
-        if ($target) {
-            return Crypt::decryptString($target);
+        $targetValue = $target ?: static::header();
+
+        if (!$targetValue) {
+            return null;
         }
 
-        if ($headerTarget = static::header()) {
-            return Crypt::decryptString($headerTarget);
-        }
-
-        //else return null
+        return Crypt::decryptString($targetValue);
     }
 }

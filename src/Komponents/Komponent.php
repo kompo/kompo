@@ -123,6 +123,24 @@ abstract class Komponent extends BaseElement
     }
 
     /**
+     * Declare which methods can be called from JavaScript via selfGet/selfPost/selfPut/selfDelete.
+     * The method names are encrypted to prevent unauthorized access.
+     *
+     * @param array $methods Array of method names that can be called from JS
+     *
+     * @return self
+     */
+    public function selfMethods(array $methods)
+    {
+        $encrypted = [];
+        foreach ($methods as $method) {
+            $encrypted[$method] = \Kompo\Core\KompoTarget::getEncrypted($method);
+        }
+
+        return $this->config(['_selfMethods' => $encrypted]);
+    }
+
+    /**
      * Gets the route's parameter or the one persisted in the session.
      *
      * @param string|array|null $parameter
@@ -257,15 +275,26 @@ abstract class Komponent extends BaseElement
      */
     public function prepareOwnElementsForDisplay($renderedElements)
     {
-        return Util::collect($renderedElements)->filter()->each(function ($element) {
-            
+        // Generate stable parent ID for element ID generation
+        // Use existing kompoId if set, otherwise use class name
+        $parentId = KompoId::getFromElement($this) ?: class_basename($this);
+
+        $index = 0;
+
+        return Util::collect($renderedElements)->filter()->each(function ($element) use ($parentId, &$index) {
+
             if (!$element instanceof BaseElement) {
                 throw new NotAKompoBaseElementException($element);
             }
 
             $element->prepareForDisplay($this);
 
+            // Set stable ID based on parent and position (respects explicit ->id() if set)
+            KompoId::setStableIdForElement($element, $parentId, $index);
+
             $element->mountedHook($this);
+
+            $index++;
         })->values()->all();
     }
 

@@ -133,8 +133,44 @@ class KompoServiceProvider extends ServiceProvider
             return KompoResponse::alert($message, $type, $options);
         });
 
-        ResponseFactory::macro('kompoRefresh', function ($data = null) {
-            return KompoResponse::refresh($data);
+        ResponseFactory::macro('kompoRefresh', function ($kompoids = null, $data = null) {
+            return KompoResponse::refresh($kompoids, $data);
+        });
+
+        ResponseFactory::macro('kompoUpdateElements', function (array $elements, ?string $kompoid = null, ?string $transition = null) {
+            return KompoResponse::updateElements($elements, $kompoid, $transition);
+        });
+
+        ResponseFactory::macro('closeModal', function () {
+            return KompoResponse::run('({modal}) => modal().close()');
+        });
+
+        ResponseFactory::macro('kompoRun', function (string $jsFunction, $data = null) {
+            return KompoResponse::run($jsFunction, $data);
+        });
+
+        ResponseFactory::macro('kompoUpdateElementValues', function (array $updates) {
+            return KompoResponse::updateElementValues($updates);
+        });
+
+        ResponseFactory::macro('kompoUpdateLabel', function (string $elementId, string $label) {
+            return KompoResponse::updateLabel($elementId, $label);
+        });
+
+        ResponseFactory::macro('addToQuery', function (string $queryId, $element, $position = 'append', $itemId = null) {
+            return KompoResponse::addToQuery($queryId, $element, $position, $itemId);
+        });
+
+        ResponseFactory::macro('prependToQuery', function (string $queryId, $element, $itemId = null) {
+            return KompoResponse::addToQuery($queryId, $element, 'prepend', $itemId);
+        });
+
+        ResponseFactory::macro('removeFromQuery', function (string $queryId, $itemId) {
+            return KompoResponse::removeFromQuery($queryId, $itemId);
+        });
+
+        ResponseFactory::macro('updateInQuery', function (string $queryId, $itemId, $element) {
+            return KompoResponse::updateInQuery($queryId, $itemId, $element);
         });
     }
 

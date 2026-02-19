@@ -21,4 +21,17 @@ trait HasAnimation
 
         return $this;
     }
+
+    /**
+     * Set a Vue transition name for smooth animations.
+     * Alias for animate() without the mode parameter.
+     *
+     * @param string $transitionName The Vue transition name (e.g., 'fade', 'slide')
+     *
+     * @return self
+     */
+    public function transition($transitionName)
+    {
+        return $this->animate($transitionName);
+    }
 }

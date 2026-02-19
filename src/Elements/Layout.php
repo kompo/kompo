@@ -2,6 +2,7 @@
 
 namespace Kompo\Elements;
 
+use Kompo\Core\KompoId;
 use Kompo\Elements\BaseElement;
 use Kompo\Elements\Managers\LayoutManager;
 use Kompo\Exceptions\NotAKompoBaseElementException;
@@ -64,7 +65,12 @@ abstract class Layout extends Element
      */
     protected function prepareFor($methodName, $komponent)
     {
-        collect($this->elements)->each(function ($element) use ($methodName, $komponent) {
+        // Get this layout's ID as parent for nested stable IDs
+        $parentId = KompoId::getFromElement($this);
+
+        $index = 0;
+
+        collect($this->elements)->each(function ($element) use ($methodName, $komponent, $parentId, &$index) {
 
             if (!$element instanceof BaseElement) {
                 throw new NotAKompoBaseElementException($element);
@@ -72,7 +78,14 @@ abstract class Layout extends Element
 
             $element->{$methodName}($komponent);
 
+            // Set stable ID for nested elements during display preparation
+            if ($methodName === 'prepareForDisplay') {
+                KompoId::setStableIdForElement($element, $parentId, $index);
+            }
+
             $element->mountedHook($komponent);
+
+            $index++;
         });
     }
 }
