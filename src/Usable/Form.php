@@ -44,6 +44,13 @@ abstract class Form extends Komponent
     public $emitFormData = true;
 
     /**
+     * Include fields from nested Komponents in the form submission data.
+     *
+     * @var bool
+     */
+    public $nestedFields = false;
+
+    /**
      * Prevent submitting a form.
      *
      * @var bool

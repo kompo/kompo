@@ -381,5 +381,39 @@ class KompoResponse
     {
         return static::run($jsFunction, $data);
     }
+
+    /**
+     * Execute multiple response actions from a single server call.
+     * Each action is processed sequentially on the client.
+     *
+     * Usage:
+     *   return response()->kompoMulti([
+     *       response()->panel($content1, 'panel-1'),
+     *       response()->panel($content2, 'panel-2'),
+     *       response()->kompoUpdateLabel('counter', '42'),
+     *       response()->kompoAlert('Done!', 'success'),
+     *   ]);
+     *
+     * @param array $responses Array of KompoResponse JsonResponse objects
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public static function multi(array $responses)
+    {
+        $actions = [];
+
+        foreach ($responses as $response) {
+            if ($response instanceof JsonResponse) {
+                $actions[] = $response->getData(true);
+            } elseif (is_array($response)) {
+                $actions[] = $response;
+            }
+        }
+
+        return response()->json([
+            'kompoResponseType' => 'multi',
+            'actions' => $actions,
+        ]);
+    }
 }
 

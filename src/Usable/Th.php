@@ -24,15 +24,35 @@ class Th extends Trigger
     }
 
     /**
-     * Add a text filter input to this header's dropdown.
+     * Add a filter to this table header column.
+     *
+     * When $options is provided (key => label array), renders a single-select dropdown.
+     * When empty, renders a text input.
+     *
+     * @param string $name    The request parameter name for the filter value.
+     * @param array  $options Optional key => label pairs for a dropdown select.
+     *
+     * @return self
+     */
+    public function filterBy($name, $options = [])
+    {
+        $this->config(['filterName' => $name]);
+
+        if (!empty($options)) {
+            $this->config(['filterOptions' => $options]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Retrocompat alias for filterBy() — text input filter only.
      *
      * @param string $name The request parameter name for this filter.
      * @return self
      */
-    public function filterHeader($name)
+    public function filter($name)
     {
-        return $this->config([
-            'filterName' => $name,
-        ]);
+        return $this->filterBy($name);
     }
 }

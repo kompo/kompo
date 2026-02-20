@@ -2,6 +2,10 @@
 
 namespace Kompo\Interactions\Actions;
 
+use Kompo\Core\KompoAction;
+use Kompo\Core\KompoTarget;
+use Kompo\Routing\RouteFinder;
+
 trait EmitEventActions
 {
     /**
@@ -104,5 +108,65 @@ trait EmitEventActions
     public function confirmSubmit()
     {
         return $this->emit('confirmSubmit');
+    }
+
+    /**
+     * Broadcasts a socket event to all connected clients on the given channel.
+     * The broadcast config is encrypted so it cannot be tampered with from the frontend.
+     *
+     * @param string      $channel The channel name (e.g., "order.123")
+     * @param string|null $event   The event name (e.g., "StatusChanged")
+     * @param array       $data    The event payload data
+     *
+     * @return self
+     */
+    public function emitSocketEvent($channel, $event = null, $data = [])
+    {
+        $broadcastConfig = json_encode([
+            'channel' => $channel,
+            'event' => $event,
+            'data' => $data,
+        ]);
+
+        $this->applyToElement(function ($el) {
+            $el->class('cursor-pointer');
+        });
+
+        return $this->prepareAction('axiosRequest', [
+            'route' => RouteFinder::getKompoRoute('POST'),
+            'routeMethod' => 'POST',
+            KompoAction::$key => 'broadcast-event',
+            KompoTarget::$key => KompoTarget::getEncrypted($broadcastConfig),
+        ]);
+    }
+
+    /**
+     * Broadcasts a socket event to a public channel (no auth required).
+     *
+     * @param string      $channel The channel name
+     * @param string|null $event   The event name
+     * @param array       $data    The event payload data
+     *
+     * @return self
+     */
+    public function emitPublicSocketEvent($channel, $event = null, $data = [])
+    {
+        $broadcastConfig = json_encode([
+            'channel' => $channel,
+            'event' => $event,
+            'data' => $data,
+            'type' => 'public',
+        ]);
+
+        $this->applyToElement(function ($el) {
+            $el->class('cursor-pointer');
+        });
+
+        return $this->prepareAction('axiosRequest', [
+            'route' => RouteFinder::getKompoRoute('POST'),
+            'routeMethod' => 'POST',
+            KompoAction::$key => 'broadcast-event',
+            KompoTarget::$key => KompoTarget::getEncrypted($broadcastConfig),
+        ]);
     }
 }

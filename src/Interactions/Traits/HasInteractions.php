@@ -16,7 +16,7 @@ trait HasInteractions
 
     protected static $proxies = [
         'onClick', 'onChange', 'onFocus', 'onBlur', 'onInput', 'onEnter',
-        'onSuccess', 'onError', 'onEmit', 'onLoad',
+        'onSuccess', 'onError', 'onEmit', 'onLoad', 'onSocketEventAction',
     ];
 
     /**
@@ -118,6 +118,11 @@ trait HasInteractions
     public function onLoad($function)
     {
         return $this->on('load', $function);
+    }
+
+    public function onSocketEventAction($function)
+    {
+        return $this->on('socketEvent', $function);
     }
 
     /**

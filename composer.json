@@ -19,6 +19,7 @@
     "autoload": {
         "psr-4": {
             "Kompo\\": "src/Usable",
+            "Kompo\\Broadcasting\\": "src/Broadcasting",
             "Kompo\\Commands\\": "src/Commands",
             "Kompo\\Core\\": "src/Core",
             "Kompo\\Database\\": "src/Database",

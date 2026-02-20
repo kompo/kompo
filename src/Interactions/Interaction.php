@@ -39,8 +39,9 @@ class Interaction
         //'mouseleave' => [Field::class, Trigger::class],
         'change'  => [Field::class],
         'input'   => [Field::class],
-        'success' => ['*'],
-        'error'   => ['*'],
+        'success'     => ['*'],
+        'error'       => ['*'],
+        'socketEvent' => ['*'],
     ];
 
     public $interactionType;

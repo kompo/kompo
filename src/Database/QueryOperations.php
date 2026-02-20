@@ -13,6 +13,8 @@ abstract class QueryOperations
 
     abstract public function handleFilter($field);
 
+    abstract public function applyThFilter($name, $operator, $value);
+
     abstract public function getPaginated();
 
     abstract public function orderItems();

@@ -63,11 +63,54 @@ class QueryFilters
             }
         });
 
+        static::applyThFilters($query);
+
         //When sorting and multiple queries are booted, we want to apply the sort on the Komponent from the request only
         if (($sort = request()->header('X-Kompo-Sort')) && KompoInfo::isKomponent($query)) {
             $query->query->handleSort($sort);
         }
 
         //dd($query->query->getQuery()->toSql(), $query->query->getQuery()->getBindings());
+    }
+
+    /**
+     * Apply Th header filters (filterBy and slicer) to the query.
+     *
+     * @param Kompo\Query $query
+     *
+     * @return void
+     */
+    private static function applyThFilters($query)
+    {
+        if (!method_exists($query, 'headers')) {
+            return;
+        }
+
+        collect($query->headers())->filter()->each(function ($header) use ($query) {
+            if (!($header instanceof \Kompo\Th)) {
+                return;
+            }
+
+            $filterName = $header->config('filterName');
+
+            if ($filterName) {
+                $value = request($filterName);
+
+                if ($value !== null && $value !== '' && !is_array($value)) {
+                    $operator = !empty($header->config('filterOptions')) ? '=' : 'LIKE';
+                    $query->query->applyThFilter($filterName, $operator, $value);
+                }
+            }
+
+            $slicerName = $header->config('slicerName');
+
+            if ($slicerName) {
+                $value = request($slicerName);
+
+                if ($value && is_array($value)) {
+                    $query->query->applyThFilter($slicerName, 'IN', $value);
+                }
+            }
+        });
     }
 }

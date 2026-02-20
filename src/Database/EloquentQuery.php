@@ -117,6 +117,11 @@ class EloquentQuery extends DatabaseQuery
         });
     }
 
+    public function applyThFilter($name, $operator, $value)
+    {
+        $this->query = $this->handleEloquentFilter($this->query, $this->model, $name, $operator, $value);
+    }
+
     protected function orderQuery()
     {
         return $this->model;

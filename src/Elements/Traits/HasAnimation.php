@@ -5,12 +5,17 @@ namespace Kompo\Elements\Traits;
 trait HasAnimation
 {
     /**
-     * Pass additional data to the element that can be accessed from the Front-end in the `data` property of the object - especially useful if you wish to customize or add new features to the component.
+     * Set a transition animation with optional mode.
+     *
+     * Available transitions: fadeIn (default), fade, slideRight, slideLeft, slideUp, slideDown,
+     * scale, scaleUp, elegant, magic, flip, blur, bounce, none.
+     *
+     * For Panels: controls both initial appearance AND content swap animations.
      *
      * @param string      $animation The transition name.
      * @param string|null $mode      The transition mode (optional). Default is simultaneous. Other choices: 'out-in' or 'in-out'
      *
-     * @return mixed
+     * @return self
      */
     public function animate($animation, $mode = '')
     {
@@ -23,15 +28,41 @@ trait HasAnimation
     }
 
     /**
-     * Set a Vue transition name for smooth animations.
+     * Set a transition name for smooth animations.
      * Alias for animate() without the mode parameter.
      *
-     * @param string $transitionName The Vue transition name (e.g., 'fade', 'slide')
+     * @param string $transitionName The transition name (e.g., 'elegant', 'fade', 'slideUp')
      *
      * @return self
      */
     public function transition($transitionName)
     {
         return $this->animate($transitionName);
+    }
+
+    /**
+     * Override the default duration for content swap animations (in milliseconds).
+     *
+     * @param int $durationMs Duration in milliseconds (e.g., 300, 500, 1000)
+     *
+     * @return self
+     */
+    public function transitionDuration($durationMs)
+    {
+        $this->config([
+            'transitionDuration' => $durationMs,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * Disable all transitions on this element.
+     *
+     * @return self
+     */
+    public function noTransition()
+    {
+        return $this->animate('none');
     }
 }

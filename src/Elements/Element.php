@@ -6,6 +6,7 @@ use Kompo\Core\IconGenerator;
 use Kompo\Core\KompoAction;
 use Kompo\Core\KompoId;
 use Kompo\Exceptions\NotAllowedLabelException;
+use Kompo\Interactions\Actions\SocketEventActions;
 use Kompo\Komponents\KomponentManager;
 
 abstract class Element extends BaseElement
@@ -18,6 +19,7 @@ abstract class Element extends BaseElement
     use Traits\JsComputed;
     use Traits\JsFilter;
     use Traits\HybridFiltering;
+    use SocketEventActions;
 
     /**
      * The component's label.
