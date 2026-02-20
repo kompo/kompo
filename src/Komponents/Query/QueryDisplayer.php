@@ -36,6 +36,8 @@ class QueryDisplayer
 
         QueryFilters::filterAndSort($query);
 
+        static::enrichSlicerOptions($query);
+
         CardGenerator::getTransformedCards($query);
 
         QueryFilters::prepareFiltersForDisplay($query, 'OnLoad');
@@ -121,5 +123,121 @@ class QueryDisplayer
         } else {
             throw new BadQueryDefinitionException(class_basename($komponent));
         }
+    }
+
+    /**
+     * Enrich Th slicer options by querying distinct values from the database.
+     * Only runs for Th elements that have a slicerName but no slicerOptions.
+     *
+     * @param Kompo\Query $komponent
+     *
+     * @return void
+     */
+    protected static function enrichSlicerOptions($komponent)
+    {
+        if (!isset($komponent->headers) || !$komponent->headers) {
+            return;
+        }
+
+        $queryWrapper = $komponent->query;
+        $isDatabase = $queryWrapper instanceof DatabaseQuery;
+
+        foreach ($komponent->headers as $header) {
+            if (!($header instanceof \Kompo\Th)) {
+                continue;
+            }
+
+            $slicerName = $header->config('slicerName');
+            $slicerOptions = $header->config('slicerOptions');
+
+            if (!$slicerName || !empty($slicerOptions)) {
+                continue;
+            }
+
+            if ($isDatabase) {
+                $values = static::getDistinctValues($komponent, $queryWrapper, $slicerName);
+            } else {
+                $values = collect($queryWrapper->getQuery())
+                    ->pluck($slicerName)
+                    ->filter()
+                    ->unique()
+                    ->sort()
+                    ->values();
+            }
+
+            $options = $values
+                ->mapWithKeys(function ($value) {
+                    return [$value => $value];
+                })
+                ->all();
+
+            $header->config(['slicerOptions' => $options]);
+        }
+    }
+
+    /**
+     * Get distinct values for a slicer column, supporting dot notation for relationships.
+     *
+     * @param Kompo\Query                 $komponent
+     * @param Kompo\Database\DatabaseQuery $queryWrapper
+     * @param string                       $slicerName
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    protected static function getDistinctValues($komponent, $queryWrapper, $slicerName)
+    {
+        $parts = explode('.', $slicerName);
+        $q = clone $queryWrapper->getQuery();
+
+        if (count($parts) == 2 && $komponent->model) {
+            $relationName = $parts[0];
+            $column = $parts[1];
+
+            $relation = \Kompo\Database\Lineage::findRelation($komponent->model, $relationName);
+
+            if ($relation) {
+                $modelTable = $komponent->model->getTable();
+                $relationTable = $relation->getRelated()->getTable();
+                $selectColumn = $relationTable.'.'.$column;
+
+                if ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsTo) {
+                    $q->select($selectColumn)
+                        ->leftJoin(
+                            $relationTable,
+                            $relationTable.'.'.$relation->getRelated()->getKeyName(),
+                            '=',
+                            $modelTable.'.'.$relation->getForeignKeyName()
+                        );
+                } elseif ($relation instanceof \Illuminate\Database\Eloquent\Relations\BelongsToMany) {
+                    $pivotTable = $relation->getTable();
+
+                    $q->select($selectColumn)
+                        ->leftJoin(
+                            $pivotTable,
+                            $pivotTable.'.'.$relation->getForeignPivotKeyName(),
+                            '=',
+                            $modelTable.'.'.$komponent->model->getKeyName()
+                        )
+                        ->leftJoin(
+                            $relationTable,
+                            $relationTable.'.'.$relation->getRelatedKeyName(),
+                            '=',
+                            $pivotTable.'.'.$relation->getRelatedPivotKeyName()
+                        );
+                } else {
+                    $q->select($selectColumn)
+                        ->leftJoin(
+                            $relationTable,
+                            $relationTable.'.'.$relation->getRelated()->getKeyName(),
+                            '=',
+                            $modelTable.'.'.$komponent->model->getKeyName()
+                        );
+                }
+
+                return $q->distinct()->pluck($selectColumn)->filter()->sort()->values();
+            }
+        }
+
+        return $q->select($slicerName)->distinct()->pluck($slicerName)->filter()->sort()->values();
     }
 }
