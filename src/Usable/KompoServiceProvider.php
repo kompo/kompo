@@ -194,8 +194,5 @@ class KompoServiceProvider extends ServiceProvider
 
         });
 
-        \Blade::directive('kompoDevChat', function () {
-            return "<?php echo view('kompo::dev-chat')->render(); ?>";
-        });
     }
 }
