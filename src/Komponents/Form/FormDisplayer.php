@@ -34,6 +34,7 @@ class FormDisplayer
     {
         $form->config([
             'emitFormData' => $form->emitFormData,
+            'nestedFields' => $form->nestedFields,
         ]);
 
         $options = $form->_kompo('options');

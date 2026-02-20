@@ -191,7 +191,11 @@ class KompoServiceProvider extends ServiceProvider
         \Blade::directive('kompoScripts', function () {
 
             return '<script src="https://unpkg.com/vue-kompo@^3/dist/app.min.js"></script>';
-            
+
+        });
+
+        \Blade::directive('kompoDevChat', function () {
+            return "<?php echo view('kompo::dev-chat')->render(); ?>";
         });
     }
 }
