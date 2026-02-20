@@ -62,6 +62,17 @@ class CollectionQuery extends QueryOperations
         }
     }
 
+    public function applyThFilter($name, $operator, $value)
+    {
+        if ($operator == 'IN') {
+            $this->query = $this->query->filter(fn($v) => $this->compareIn($v, $value, $name));
+        } elseif ($operator == 'LIKE') {
+            $this->query = $this->query->filter(fn($v) => $this->compareLike($v, $value, $name));
+        } else {
+            $this->query = $this->query->filter(fn($v) => $this->compareOperator($v, $value, $operator, $name));
+        }
+    }
+
     public function getPaginated()
     {
         $slice = $this->query->slice(($this->komponent->currentPage() - 1) * $this->komponent->perPage, $this->komponent->perPage)->values();

@@ -18,8 +18,17 @@ class DatabaseQuery extends QueryOperations
         return $this->query->paginate($this->komponent->perPage, ['*'], 'page', $this->komponent->currentPage());
     }
 
+    public function applyThFilter($name, $operator, $value)
+    {
+        $this->query = $this->applyWhere($this->query, $name, $operator, $value);
+    }
+
     public function applyWhere($q, $name, $operator, $value, $table = null)
     {
+        if (is_array($value) && !in_array($operator, ['IN', 'BETWEEN'])) {
+            return $q;
+        }
+
         $columnName = ($table ? ($table.'.') : '').$name;
 
         if ($operator == 'IN') {
