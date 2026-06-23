@@ -282,18 +282,24 @@ trait SocketEventActions
     /**
      * Send a whisper event on input (client-to-client, no server).
      *
-     * @param string $channel   The channel name
-     * @param string $eventName The whisper event name
+     * @param string $channel    The channel name
+     * @param string $eventName  The whisper event name
+     * @param array  $payload    Extra data sent with every whisper (e.g. ['name' => $userName],
+     *                           consumable on the listener side via [data-whisper-name])
+     * @param int    $throttleMs At most one whisper per this window while input continues
+     *                           (keep it well under the listener's hideAfter delay)
      *
      * @return self
      */
-    public function whisperOnInput($channel, $eventName)
+    public function whisperOnInput($channel, $eventName, $payload = [], $throttleMs = 2500)
     {
         return $this->config([
             'socketWhisper' => [
                 'channel' => $channel,
                 'event' => $eventName,
                 'trigger' => 'input',
+                'payload' => $payload,
+                'throttle' => $throttleMs,
             ],
         ]);
     }
