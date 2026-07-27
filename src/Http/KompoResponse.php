@@ -109,6 +109,7 @@ class KompoResponse
             'kompoResponseType' => 'refresh',
             'kompoids' => $kompoids,
             'data' => $data,
+            'route' => RouteFinder::getKompoRoute('POST'),
         ], 202);
     }
 
